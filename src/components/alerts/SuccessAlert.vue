@@ -8,7 +8,7 @@
     multi-line
   >
     <div class="text-white font-weight-medium">
-      Registrácia bola úspešná — skontrolujte svoj email pre ďalšie inštrukcie.
+      <slot>{{ message }}</slot>
     </div>
     <template #actions>
       <v-btn icon @click="model = false">
@@ -19,6 +19,9 @@
 </template>
 
 <script setup>
-import { defineModel } from 'vue'
-const model = defineModel()
+import { defineModel, defineProps } from 'vue'
+const model = defineModel({ type: Boolean })
+defineProps({
+  message: { type: String, default: 'Registrácia bola úspešná — skontrolujte svoj email.' }
+})
 </script>
