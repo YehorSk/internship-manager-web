@@ -60,6 +60,7 @@ const revalidate = async () => {
 
 watch(selectedRole, () => {
   auth.fieldErrors = {}
+  auth.error = ''
   valid.value = false
   nextTick(() => {
     const form = selectedRole.value === 'student' ? studentForm.value : companyForm.value
@@ -70,23 +71,45 @@ watch(selectedRole, () => {
 const submit = async () => {
   showSuccess.value = false
   showError.value = false
+  auth.error = ''
+  auth.fieldErrors = {}
+
   const form = selectedRole.value === 'student' ? studentForm.value : companyForm.value
   const result = await form?.validate()
   if (!result?.valid) {
     showError.value = true
     return
   }
+
   try {
     const res = selectedRole.value === 'student'
       ? await auth.registerStudent(studentData.value)
       : await auth.registerCompany(companyData.value)
     successMsg.value = res?.message || 'Registrácia prebehla úspešne'
     showSuccess.value = true
-  } catch {
+  } catch (e) {
+    if (e && e.response) {
+      const d = e.response.data
+      auth.error = typeof d === 'string' ? d : (d?.message || 'Nastala chyba')
+      if (Array.isArray(d?.errors)) {
+        for (const x of d.errors) {
+          const k = (x?.source?.pointer || '').split('/').pop() || ''
+          const m = x?.detail || x?.title || auth.error
+          if (k) (auth.fieldErrors[k] ||= []).push(m)
+        }
+      } else if (d?.errors && typeof d.errors === 'object') {
+        for (const [k, v] of Object.entries(d.errors)) auth.fieldErrors[k] = Array.isArray(v) ? v : [String(v)]
+      }
+    } else if (e && e.request) {
+      auth.error = 'Sieťová chyba'
+    } else {
+      auth.error = e?.message || 'Nastala chyba'
+    }
     showError.value = true
   }
 }
 </script>
+
 
 <template>
   <v-container class="form-container fill-height d-flex align-center justify-center">

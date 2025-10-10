@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { httpErrorHandler } from '@/utils/httpError'
+import { handleError } from '@/utils/httpError.js'
 
 const toBackendStudent = v => ({
   type: 'student',
@@ -25,42 +25,36 @@ const toBackendCompany = v => ({
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     loading: false,
-    error: null,
-    fieldErrors: {},
-    status: 0,
+    errors: {},
+    credentials: '',
+    failure: '',
   }),
-
   actions: {
     async registerStudent(studentData) {
       this.loading = true
-      this.error = null
-      this.fieldErrors = {}
+      this.errors = {}
+      this.credentials = ''
+      this.failure = ''
       try {
         const { data } = await axios.post('/auth/register', toBackendStudent(studentData))
         return data
       } catch (e) {
-        const n = e.normalized || httpErrorHandler(e)
-        this.status = n.status
-        this.error = n.message
-        this.fieldErrors = n.fieldErrors
+        handleError(e, this)
         throw e
       } finally {
         this.loading = false
       }
     },
-
     async registerCompany(companyData) {
       this.loading = true
-      this.error = null
-      this.fieldErrors = {}
+      this.errors = {}
+      this.credentials = ''
+      this.failure = ''
       try {
         const { data } = await axios.post('/auth/register', toBackendCompany(companyData))
         return data
       } catch (e) {
-        const n = e.normalized || httpErrorHandler(e)
-        this.status = n.status
-        this.error = n.message
-        this.fieldErrors = n.fieldErrors
+        handleError(e, this)
         throw e
       } finally {
         this.loading = false
