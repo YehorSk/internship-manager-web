@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-import axios from '@/plugins/axios'
+import axios from 'axios'
+import { httpErrorHandler } from '@/utils/httpError'
 
 const toBackendStudent = v => ({
   type: 'student',
@@ -21,13 +22,12 @@ const toBackendCompany = v => ({
   contact_phone: v.contact_phone,
 })
 
-const jsonCfg = { headers: { 'Content-Type': 'application/json', Accept: 'application/json' } }
-
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     loading: false,
     error: null,
     fieldErrors: {},
+    status: 0,
   }),
 
   actions: {
@@ -36,12 +36,13 @@ export const useAuthStore = defineStore('auth', {
       this.error = null
       this.fieldErrors = {}
       try {
-        const payload = toBackendStudent(studentData)
-        const { data } = await axios.post('/auth/register', payload, jsonCfg)
+        const { data } = await axios.post('/auth/register', toBackendStudent(studentData))
         return data
       } catch (e) {
-        this.error = e.normalized?.message || 'Chyba pri registrácii študenta'
-        this.fieldErrors = e.normalized?.fieldErrors || {}
+        const n = e.normalized || httpErrorHandler(e)
+        this.status = n.status
+        this.error = n.message
+        this.fieldErrors = n.fieldErrors
         throw e
       } finally {
         this.loading = false
@@ -53,12 +54,13 @@ export const useAuthStore = defineStore('auth', {
       this.error = null
       this.fieldErrors = {}
       try {
-        const payload = toBackendCompany(companyData)
-        const { data } = await axios.post('/auth/register', payload, jsonCfg)
+        const { data } = await axios.post('/auth/register', toBackendCompany(companyData))
         return data
       } catch (e) {
-        this.error = e.normalized?.message || 'Chyba pri registrácii spoločnosti'
-        this.fieldErrors = e.normalized?.fieldErrors || {}
+        const n = e.normalized || httpErrorHandler(e)
+        this.status = n.status
+        this.error = n.message
+        this.fieldErrors = n.fieldErrors
         throw e
       } finally {
         this.loading = false
