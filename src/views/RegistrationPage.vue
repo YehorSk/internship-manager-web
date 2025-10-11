@@ -1,112 +1,109 @@
-<script setup>
-import { ref, computed, watch, nextTick } from 'vue'
+<script>
 import { useAuthStore } from '@/stores/authStore.js'
 import SuccessAlert from '@/components/alerts/SuccessAlert.vue'
 import ErrorAlert from '@/components/alerts/ErrorAlert.vue'
 
-const auth = useAuthStore()
-
-const selectedRole = ref('student')
-const showSuccess = ref(false)
-const showError = ref(false)
-const valid = ref(false)
-const studentForm = ref(null)
-const companyForm = ref(null)
-const successMsg = ref('')
-const errorMsg = computed(() => auth.error || 'Nastala chyba')
-
-const fe = computed(() => auth.fieldErrors)
-const fieldMsg = k => fe.value?.[k] || []
-const clearFieldError = k => { if (auth.fieldErrors[k]) delete auth.fieldErrors[k] }
-
-const studentData = ref({
-  first_name: '',
-  last_name: '',
-  address: '',
-  student_email: '',
-  alternative_email: '',
-  phone_number: '',
-  study_program: '',
-})
-
-const companyData = ref({
-  name: '',
-  address: '',
-  contact_name: '',
-  contact_email: '',
-  contact_phone: '',
-})
-
-const fieldsOfStudy = [
-  'Bachelor in Informatics',
-  'biológia',
-  'digitálna ekonomika',
-  'fyzika',
-  'geografia v regionálnom rozvoji',
-  'umelá inteligencia - spracovanie prirodzených jazykov',
-]
-
-const rules = {
-  required: v => !!v || 'Povinné pole',
-  email: v => /.+@.+\..+/.test(v) || 'Neplatný e-mail',
-  phone: v => /^\+?\d{7,15}$/.test(v) || 'Neplatné číslo',
-}
-
-const revalidate = async () => {
-  await nextTick()
-  const form = selectedRole.value === 'student' ? studentForm.value : companyForm.value
-  await form?.validate()
-}
-
-watch(selectedRole, () => {
-  auth.fieldErrors = {}
-  auth.error = ''
-  valid.value = false
-  nextTick(() => {
-    const form = selectedRole.value === 'student' ? studentForm.value : companyForm.value
-    form?.resetValidation()
-  })
-})
-
-const submit = async () => {
-  showSuccess.value = false
-  showError.value = false
-  auth.error = ''
-  auth.fieldErrors = {}
-
-  const form = selectedRole.value === 'student' ? studentForm.value : companyForm.value
-  const result = await form?.validate()
-  if (!result?.valid) {
-    showError.value = true
-    return
-  }
-
-  try {
-    const res = selectedRole.value === 'student'
-      ? await auth.registerStudent(studentData.value)
-      : await auth.registerCompany(companyData.value)
-    successMsg.value = res?.message || 'Registrácia prebehla úspešne'
-    showSuccess.value = true
-  } catch (e) {
-    if (e && e.response) {
-      const d = e.response.data
-      auth.error = typeof d === 'string' ? d : (d?.message || 'Nastala chyba')
-      if (Array.isArray(d?.errors)) {
-        for (const x of d.errors) {
-          const k = (x?.source?.pointer || '').split('/').pop() || ''
-          const m = x?.detail || x?.title || auth.error
-          if (k) (auth.fieldErrors[k] ||= []).push(m)
-        }
-      } else if (d?.errors && typeof d.errors === 'object') {
-        for (const [k, v] of Object.entries(d.errors)) auth.fieldErrors[k] = Array.isArray(v) ? v : [String(v)]
-      }
-    } else if (e && e.request) {
-      auth.error = 'Sieťová chyba'
-    } else {
-      auth.error = e?.message || 'Nastala chyba'
+export default {
+  components: { SuccessAlert, ErrorAlert },
+  data() {
+    return {
+      auth: useAuthStore(),
+      selectedRole: 'student',
+      showSuccess: false,
+      showError: false,
+      valid: false,
+      successMsg: '',
+      studentData: this.getEmptyStudent(),
+      companyData: this.getEmptyCompany(),
+      fieldsOfStudy: [
+        'Bachelor in Informatics',
+        'Master in Informatics',
+        'Bachelor in Mathematics',
+        'Master in Mathematics',
+        'Bachelor in Physics',
+        'Master in Physics',
+      ],
+      rules: {
+        required: v => !!v || 'Povinné pole',
+        email: v => /.+@.+\..+/.test(v) || 'Neplatný e-mail',
+        phone: v => /^\+?\d{7,15}$/.test(v) || 'Neplatné číslo',
+        studentEmail: v => /@student\.ukf\.sk$/i.test(v) || 'Musí byť univerzitný e-mail (@student.ukf.sk)',
+      },
     }
-    showError.value = true
-  }
+  },
+  computed: {
+    errorMsg() {
+      return this.auth.error || 'Nastala chyba'
+    },
+  },
+  methods: {
+    getEmptyStudent() {
+      return {
+        type: '1',
+        first_name: '',
+        last_name: '',
+        address: '',
+        student_email: '',
+        primary_email: '',
+        phone: '',
+        study_program: '',
+      }
+    },
+    getEmptyCompany() {
+      return {
+        type: '3',
+        name: '',
+        address: '',
+        contact_name: '',
+        contact_email: '',
+        contact_phone: '',
+      }
+    },
+    clearFieldError(field) {
+      delete this.auth.fieldErrors?.[field]
+    },
+    fieldMsg(field) {
+      return this.auth.fieldErrors?.[field] || []
+    },
+    async submit() {
+      this.showSuccess = this.showError = false
+      this.auth.error = ''
+      this.auth.fieldErrors = {}
+
+      const isStudent = this.selectedRole === 'student'
+      const form = this.$refs[isStudent ? 'studentForm' : 'companyForm']
+      const result = await form?.validate()
+      if (!result?.valid) return (this.showError = true)
+
+      try {
+        const data = isStudent ? this.studentData : this.companyData
+        const res = await this.auth.register(data)
+        this.successMsg = res?.message || 'Registrácia prebehla úspešne'
+        this.showSuccess = true
+
+        if (isStudent) {
+          this.studentData = this.getEmptyStudent()
+          this.$refs.studentForm?.reset()
+        } else {
+          this.companyData = this.getEmptyCompany()
+          this.$refs.companyForm?.reset()
+        }
+
+        this.valid = false
+      } catch {
+        this.showError = true
+      }
+    },
+  },
+  watch: {
+    selectedRole() {
+      this.auth.fieldErrors = {}
+      this.auth.error = ''
+      this.valid = false
+      this.$refs.studentForm?.resetValidation()
+      this.$refs.companyForm?.resetValidation()
+    },
+  },
 }
 </script>
 
@@ -124,34 +121,27 @@ const submit = async () => {
 
       <v-window v-model="selectedRole" class="rounded-xl">
         <v-window-item value="student">
-          <v-form ref="studentForm" v-model="valid" class="d-flex flex-column gap-4" @submit.prevent="submit">
-            <v-row>
-              <v-col cols="12" sm="6">
-                <v-text-field
-                  v-model="studentData.first_name"
-                  :error-messages="fieldMsg('first_name')"
-                  label="Krstné meno *"
-                  :rules="[rules.required]"
-                  variant="outlined"
-                  density="comfortable"
-                  rounded="xl"
-                  @update:modelValue="clearFieldError('first_name'); revalidate()"
-                />
-              </v-col>
-              <v-col cols="12" sm="6">
-                <v-text-field
-                  v-model="studentData.last_name"
-                  :error-messages="fieldMsg('last_name')"
-                  label="Priezvisko *"
-                  :rules="[rules.required]"
-                  variant="outlined"
-                  density="comfortable"
-                  rounded="xl"
-                  @update:modelValue="clearFieldError('last_name'); revalidate()"
-                />
-              </v-col>
-            </v-row>
-
+          <v-form ref="studentForm" v-model="valid" class="form-fix" @submit.prevent="submit">
+            <v-text-field
+              v-model="studentData.first_name"
+              :error-messages="fieldMsg('first_name')"
+              label="Krstné meno *"
+              :rules="[rules.required]"
+              variant="outlined"
+              density="comfortable"
+              rounded="xl"
+              @update:modelValue="clearFieldError('first_name')"
+            />
+            <v-text-field
+              v-model="studentData.last_name"
+              :error-messages="fieldMsg('last_name')"
+              label="Priezvisko *"
+              :rules="[rules.required]"
+              variant="outlined"
+              density="comfortable"
+              rounded="xl"
+              @update:modelValue="clearFieldError('last_name')"
+            />
             <v-text-field
               v-model="studentData.address"
               :error-messages="fieldMsg('address')"
@@ -160,40 +150,40 @@ const submit = async () => {
               variant="outlined"
               density="comfortable"
               rounded="xl"
-              @update:modelValue="clearFieldError('address'); revalidate()"
+              @update:modelValue="clearFieldError('address')"
             />
             <v-text-field
               v-model="studentData.student_email"
               :error-messages="fieldMsg('student_email')"
               label="Študentský e-mail *"
               type="email"
-              :rules="[rules.required, rules.email]"
+              :rules="[rules.required, rules.email, rules.studentEmail]"
               variant="outlined"
               density="comfortable"
               rounded="xl"
-              @update:modelValue="clearFieldError('student_email'); revalidate()"
+              @update:modelValue="clearFieldError('student_email')"
             />
             <v-text-field
-              v-model="studentData.alternative_email"
-              :error-messages="[...fieldMsg('primary_email'), ...fieldMsg('alternative_email')]"
+              v-model="studentData.primary_email"
+              :error-messages="[...fieldMsg('primary_email'), ...fieldMsg('primary_email')]"
               label="Primárny/Alternatívny e-mail *"
               type="email"
               :rules="[rules.required, rules.email]"
               variant="outlined"
               density="comfortable"
               rounded="xl"
-              @update:modelValue="clearFieldError('primary_email'); clearFieldError('alternative_email'); revalidate()"
+              @update:modelValue="clearFieldError('primary_email'); clearFieldError('primary_email')"
             />
             <v-text-field
-              v-model="studentData.phone_number"
-              :error-messages="[...fieldMsg('phone_number'), ...fieldMsg('phone')]"
+              v-model="studentData.phone"
+              :error-messages="[...fieldMsg('phone'), ...fieldMsg('phone')]"
               label="Telefónne číslo *"
               type="tel"
               :rules="[rules.required, rules.phone]"
               variant="outlined"
               density="comfortable"
               rounded="xl"
-              @update:modelValue="clearFieldError('phone_number'); clearFieldError('phone'); revalidate()"
+              @update:modelValue="clearFieldError('phone'); clearFieldError('phone')"
             />
 
             <v-autocomplete
@@ -207,7 +197,7 @@ const submit = async () => {
               rounded="xl"
               clearable
               hide-details="auto"
-              @update:modelValue="clearFieldError('study_program'); revalidate()"
+              @update:modelValue="clearFieldError('study_program')"
             />
 
             <v-alert type="info" variant="tonal" class="mt-2 rounded-lg">Po registrácii dostanete heslo e-mailom.</v-alert>
@@ -218,7 +208,7 @@ const submit = async () => {
               class="mt-4 rounded-xl text-white"
               block
               :loading="auth.loading"
-              :disabled="auth.loading"
+              :disabled="!valid || auth.loading"
               type="submit"
             >
               Registrovať sa ako študent
@@ -227,7 +217,7 @@ const submit = async () => {
         </v-window-item>
 
         <v-window-item value="company">
-          <v-form ref="companyForm" v-model="valid" class="d-flex flex-column gap-4" @submit.prevent="submit">
+          <v-form ref="companyForm" v-model="valid" class="form-fix" @submit.prevent="submit">
             <v-text-field
               v-model="companyData.name"
               :error-messages="fieldMsg('name')"
@@ -236,7 +226,7 @@ const submit = async () => {
               variant="outlined"
               density="comfortable"
               rounded="xl"
-              @update:modelValue="clearFieldError('name'); revalidate()"
+              @update:modelValue="clearFieldError('name')"
             />
             <v-text-field
               v-model="companyData.address"
@@ -246,7 +236,7 @@ const submit = async () => {
               variant="outlined"
               density="comfortable"
               rounded="xl"
-              @update:modelValue="clearFieldError('address'); revalidate()"
+              @update:modelValue="clearFieldError('address')"
             />
             <v-text-field
               v-model="companyData.contact_name"
@@ -256,7 +246,7 @@ const submit = async () => {
               variant="outlined"
               density="comfortable"
               rounded="xl"
-              @update:modelValue="clearFieldError('contact_name'); revalidate()"
+              @update:modelValue="clearFieldError('contact_name')"
             />
             <v-text-field
               v-model="companyData.contact_email"
@@ -267,7 +257,7 @@ const submit = async () => {
               variant="outlined"
               density="comfortable"
               rounded="xl"
-              @update:modelValue="clearFieldError('contact_email'); revalidate()"
+              @update:modelValue="clearFieldError('contact_email')"
             />
             <v-text-field
               v-model="companyData.contact_phone"
@@ -278,7 +268,7 @@ const submit = async () => {
               variant="outlined"
               density="comfortable"
               rounded="xl"
-              @update:modelValue="clearFieldError('contact_phone'); revalidate()"
+              @update:modelValue="clearFieldError('contact_phone')"
             />
 
             <v-alert type="warning" variant="tonal" class="mt-2 rounded-lg">Váš firemný účet potrebuje aktiváciu. Po kontrole vás budeme kontaktovať.</v-alert>
@@ -289,7 +279,7 @@ const submit = async () => {
               class="mt-4 rounded-xl text-white"
               block
               :loading="auth.loading"
-              :disabled="auth.loading"
+              :disabled="!valid || auth.loading"
               type="submit"
             >
               Registrovať sa ako spoločnosť

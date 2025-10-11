@@ -34,3 +34,14 @@ a,
     height: 100vh;
   }
 }
+
+.form-fix .v-row.dense > .v-col {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.form-fix .v-input {
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+

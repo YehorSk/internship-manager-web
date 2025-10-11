@@ -13,18 +13,27 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import axios from 'axios'
 
-const b = (import.meta.env.VITE_API_BASE_URL || window.location.origin).replace(/\/$/,'')
-axios.defaults.baseURL = b.endsWith('/api') ? b : `${b}/api`
+let baseUrl = import.meta.env.VITE_API_BASE_URL
+if (!baseUrl) {
+  baseUrl = window.location.origin
+}
+axios.defaults.baseURL = baseUrl
 
-axios.interceptors.request.use(c => {
-  const m = (c.method || 'get').toLowerCase()
-  c.headers = { ...(c.headers || {}), Accept: 'application/vnd.api+json' }
-  if (m === 'post' || m === 'put' || m === 'patch') c.headers['Content-Type'] = 'application/vnd.api+json'
-  return c
+axios.interceptors.request.use(config => {
+  config.headers = {
+    ...config.headers,
+    Accept: 'application/vnd.api+json',
+  }
+
+  const method = (config.method || 'get').toLowerCase()
+  if (['post', 'put', 'patch'].includes(method)) {
+    config.headers['Content-Type'] = 'application/vnd.api+json'
+  }
+
+  return config
 })
 
 const app = createApp(App)
-app.config.globalProperties.$axios = axios
 app.use(createPinia())
 app.use(router)
 app.use(createVuetify({ components, directives }))
