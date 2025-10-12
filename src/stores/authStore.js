@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { handleError } from '@/utils/httpError.js'
+import {useStorage} from "@vueuse/core";
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     loading: false,
+    token: useStorage('token',{}),
     fieldErrors: {},
     error: ''
   }),

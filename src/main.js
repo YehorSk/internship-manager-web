@@ -12,6 +12,7 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import axios from 'axios'
+import { useAuthStore } from '@/stores/authStore.js'
 
 let baseUrl = import.meta.env.VITE_API_BASE_URL
 if (!baseUrl) {
@@ -20,18 +21,32 @@ if (!baseUrl) {
 axios.defaults.baseURL = baseUrl
 
 axios.interceptors.request.use(config => {
-  config.headers = {
-    ...config.headers,
-    Accept: 'application/vnd.api+json',
+  const store = useAuthStore();
+  if(store.token){
+    config.headers.Authorization = `Bearer ${store.token}`;
   }
-
-  const method = (config.method || 'get').toLowerCase()
-  if (['post', 'put', 'patch'].includes(method)) {
-    config.headers['Content-Type'] = 'application/vnd.api+json'
+  if (!config.headers["Content-Type"]) {
+    config.headers["Content-Type"] = "application/json";
   }
-
   return config
-})
+},
+  (error) => {
+    return Promise.reject(error);
+});
+
+axios.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  (error) => {
+    if (error.response?.status === 401) {
+      // const store = useAuthStore();
+      // store.logout();
+      console.log("Unauthorized");
+    }
+    return Promise.reject(error);
+  }
+);
 
 const app = createApp(App)
 app.use(createPinia())
