@@ -1,19 +1,22 @@
 <script>
+import { useAuthStore } from '@/stores/authStore.js'
 
 export default {
   data() {
     return {
       isLoading: false,
       valid: false,
-
+      snackbar: {
+        show: false,
+        message: '',
+      },
       loginData: {
         email: '',
         password: '',
       },
-
       rules: {
-        required: (v) => !!v || 'Field is required',
-        email: (v) => /.+@.+\..+/.test(v) || 'Invalid email',
+        required: (v) => !!v || 'Pole je povinné',
+        email: (v) => /.+@.+\..+/.test(v) || 'Neplatný e-mail',
       },
     }
   },
@@ -21,17 +24,33 @@ export default {
     async submit() {
       this.isLoading = true
 
-      await new Promise((r) => setTimeout(r, 500))
-
       const result = await this.$refs.loginForm.validate()
-
-      if (result.valid) {
-        console.log('form is valid', this.loginData)
-      } else {
-        console.log('form validation unsuccessful')
+      if (!result) {
+        this.isLoading = false
+        return
       }
 
-      this.isLoading = false
+      const auth = useAuthStore()
+
+      try {
+        const res = await auth.login(this.loginData.email, this.loginData.password)
+        const roles = res.data.roles || []
+        const roleName = roles[0]?.name || ''
+
+        const routes = {
+          student: 'StudentDashboard',
+          supervisor: 'SupervisorDashboard',
+          company: 'CompanyDashboard',
+        }
+
+        const targetRoute = routes[roleName]
+        this.$router.push({ name: targetRoute })
+      } catch {
+        this.snackbar.message = useAuthStore().error || 'prihlasenie zlyhalo.'
+        this.snackbar.show = true
+      } finally {
+        this.isLoading = false
+      }
     },
   },
 }
@@ -40,7 +59,9 @@ export default {
 <template>
   <v-container class="form-container fill-height d-flex align-center justify-center">
     <v-card elevation="12" class="pa-6 rounded-2xl" max-width="500">
-      <v-card-title class="text-h5 text-center font-weight-bold"> Prihlásenie </v-card-title>
+      <v-card-title class="text-h5 text-center font-weight-bold">
+        Prihlásenie
+      </v-card-title>
 
       <v-card-subtitle class="text-center mb-6">
         Zadajte svoj e-mail a heslo pre prihlásenie
@@ -90,15 +111,30 @@ export default {
         <div class="text-caption mt-n3 bg-white px-3 d-inline-block">Alebo</div>
       </div>
 
-      <v-btn variant="outlined" block class="mb-4 rounded-xl"> Prihlásiť sa ako hosť </v-btn>
+      <v-btn variant="outlined" block class="mb-4 rounded-xl">
+        Prihlásiť sa ako hosť
+      </v-btn>
 
       <div class="text-center">
         <span class="text-body-2">Nemáte účet?</span>
-        <v-btn variant="text" color="#3A803D" class="font-weight-bold" :to="{ name: 'Register' }">
+        <v-btn
+          variant="text"
+          color="#3A803D"
+          class="font-weight-bold"
+          :to="{ name: 'Register' }"
+        >
           Registrovať sa tu
         </v-btn>
       </div>
     </v-card>
 
+    <v-snackbar
+      v-model="snackbar.show"
+      color="red"
+      timeout="4000"
+      location="top center"
+    >
+      {{ snackbar.message }}
+    </v-snackbar>
   </v-container>
 </template>
