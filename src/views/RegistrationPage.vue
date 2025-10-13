@@ -31,6 +31,12 @@ export default {
       },
     }
   },
+  mounted() {
+    const role = this.$route.query.role
+    if (role === 'company') {
+      this.selectedRole = 'company'
+    }
+  },
   computed: {
     errorMsg() {
       return this.auth.error || 'Nastala chyba'
