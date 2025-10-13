@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import ForgotPasswordPage from '../views/ForgotPasswordPage.vue' 
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,12 +13,27 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
+    {
+      path: '/forgot-password',
+      name: 'forgot-password',
+      component: () => import('../views/ForgotPasswordPage.vue'),
+      meta: { guestOnly: true },
+    },
+    {
+     path: '/new-password',
+      name: 'new-password',
+      component: () => import('../views/NewPasswordPage.vue'),
+      meta: { guestOnly: true },
+    },
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = false // сюда потом реальную проверку (например, по токену)
+  if (to.meta.guestOnly && isAuthenticated) return next({ name: 'home' })
+  next()
 })
 
 export default router
