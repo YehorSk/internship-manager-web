@@ -2,6 +2,7 @@
 import { useAuthStore } from '@/stores/authStore.js'
 import SuccessAlert from '@/components/alerts/SuccessAlert.vue'
 import ErrorAlert from '@/components/alerts/ErrorAlert.vue'
+import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 
 export default {
   components: { SuccessAlert, ErrorAlert },
@@ -15,18 +16,7 @@ export default {
       successMsg: '',
       studentData: this.getEmptyStudent(),
       companyData: this.getEmptyCompany(),
-      fieldsOfStudy: [
-        { id: 1, name: 'Bachelor in Informatics' },
-        { id: 2, name: 'Master in Informatics' },
-        { id: 3, name: 'Bachelor in Mathematics' },
-        { id: 4, name: 'Master in Mathematics' },
-        { id: 5, name: 'Bachelor in Physics' },
-        { id: 6, name: 'Master in Physics' },
-        { id: 7, name: 'Bachelor in Chemistry' },
-        { id: 8, name: 'Bachelor in Biology' },
-        { id: 9, name: 'Bachelor in Pedagogy' },
-        { id: 10, name: 'Bachelor in English Philology' }
-      ],
+      studyPrograms: useStudyProgramsStore(),
       rules: {
         required: v => !!v || 'Povinné pole',
         email: v => /.+@.+\..+/.test(v) || 'Neplatný e-mail',
@@ -40,6 +30,7 @@ export default {
     if (role === 'company') {
       this.selectedRole = 'company'
     }
+    this.studyPrograms.fetchPrograms()
   },
   computed: {
     errorMsg() {
@@ -63,6 +54,7 @@ export default {
       return {
         type: 3,
         name: '',
+        company_email: '',
         address: '',
         contact_name: '',
         contact_email: '',
@@ -89,9 +81,6 @@ export default {
 
       try {
         const data = isStudent ? this.studentData : this.companyData
-        if (!isStudent) {
-          delete data.password_confirmation
-        }
         const res = await this.auth.register(data)
         this.successMsg = res?.message || 'Registrácia prebehla úspešne'
         this.showSuccess = true
@@ -204,7 +193,7 @@ export default {
             <v-autocomplete
               v-model="studentData.study_program"
               :error-messages="fieldMsg('study_program')"
-              :items="fieldsOfStudy"
+              :items="studyPrograms.list"
               item-title="name"
               item-value="id"
               label="Študijný odbor *"
@@ -244,6 +233,17 @@ export default {
               density="comfortable"
               rounded="xl"
               @update:modelValue="clearFieldError('name')"
+            />
+            <v-text-field
+              v-model="companyData.company_email"
+              :error-messages="fieldMsg('company_email')"
+              label="E-mail spoločnosti *"
+              type="email"
+              :rules="[rules.required, rules.email]"
+              variant="outlined"
+              density="comfortable"
+              rounded="xl"
+              @update:modelValue="clearFieldError('company_email')"
             />
             <v-text-field
               v-model="companyData.address"
@@ -327,13 +327,27 @@ export default {
 
       <div class="my-6 text-center">
         <v-divider />
-        <div class="text-caption mt-n3 bg-white px-3 d-inline-block">Or</div>
+        <div class="text-caption mt-n3 bg-white px-3 d-inline-block">Alebo</div>
       </div>
 
-      <v-btn variant="outlined" block class="mb-4 rounded-xl">Prihlásiť sa ako hosť</v-btn>
+      <v-btn
+        variant="outlined"
+        block
+        class="mb-4 rounded-xl"
+        @click="$router.push('/')"
+      >
+        Prihlásiť sa ako hosť
+      </v-btn>
       <div class="text-center">
         <span class="text-body-2">Už máte účet?</span>
-        <v-btn variant="text" color="#3A803D" class="font-weight-bold">Prihlásiť sa tu</v-btn>
+        <v-btn
+          variant="text"
+          color="#3A803D"
+          class="font-weight-bold"
+          @click="$router.push('/login')"
+        >
+          Prihlásiť sa tu
+        </v-btn>
       </div>
     </v-card>
 
