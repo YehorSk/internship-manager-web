@@ -16,12 +16,16 @@ export default {
       studentData: this.getEmptyStudent(),
       companyData: this.getEmptyCompany(),
       fieldsOfStudy: [
-        'Bachelor in Informatics',
-        'Master in Informatics',
-        'Bachelor in Mathematics',
-        'Master in Mathematics',
-        'Bachelor in Physics',
-        'Master in Physics',
+        { id: 1, name: 'Bachelor in Informatics' },
+        { id: 2, name: 'Master in Informatics' },
+        { id: 3, name: 'Bachelor in Mathematics' },
+        { id: 4, name: 'Master in Mathematics' },
+        { id: 5, name: 'Bachelor in Physics' },
+        { id: 6, name: 'Master in Physics' },
+        { id: 7, name: 'Bachelor in Chemistry' },
+        { id: 8, name: 'Bachelor in Biology' },
+        { id: 9, name: 'Bachelor in Pedagogy' },
+        { id: 10, name: 'Bachelor in English Philology' }
       ],
       rules: {
         required: v => !!v || 'Povinné pole',
@@ -39,7 +43,7 @@ export default {
   methods: {
     getEmptyStudent() {
       return {
-        type: '1',
+        type: 1,
         first_name: '',
         last_name: '',
         address: '',
@@ -51,12 +55,14 @@ export default {
     },
     getEmptyCompany() {
       return {
-        type: '3',
+        type: 3,
         name: '',
         address: '',
         contact_name: '',
         contact_email: '',
         contact_phone: '',
+        password: '',
+        password_confirmation: ''
       }
     },
     clearFieldError(field) {
@@ -77,6 +83,9 @@ export default {
 
       try {
         const data = isStudent ? this.studentData : this.companyData
+        if (!isStudent) {
+          delete data.password_confirmation
+        }
         const res = await this.auth.register(data)
         this.successMsg = res?.message || 'Registrácia prebehla úspešne'
         this.showSuccess = true
@@ -190,6 +199,8 @@ export default {
               v-model="studentData.study_program"
               :error-messages="fieldMsg('study_program')"
               :items="fieldsOfStudy"
+              item-title="name"
+              item-value="id"
               label="Študijný odbor *"
               :rules="[rules.required]"
               variant="outlined"
@@ -269,6 +280,26 @@ export default {
               density="comfortable"
               rounded="xl"
               @update:modelValue="clearFieldError('contact_phone')"
+            />
+            <v-text-field
+              v-model="companyData.password"
+              :error-messages="fieldMsg('password')"
+              label="Heslo *"
+              type="password"
+              :rules="[rules.required, v => v.length >= 8 || 'Minimálne 8 znakov']"
+              variant="outlined"
+              density="comfortable"
+              rounded="xl"
+              @update:modelValue="clearFieldError('password')"
+            />
+            <v-text-field
+              v-model="companyData.password_confirmation"
+              label="Potvrdenie hesla *"
+              type="password"
+              :rules="[rules.required, v => v === companyData.password || 'Heslá sa nezhodujú']"
+              variant="outlined"
+              density="comfortable"
+              rounded="xl"
             />
 
             <v-alert type="warning" variant="tonal" class="mt-2 rounded-lg">Váš firemný účet potrebuje aktiváciu. Po kontrole vás budeme kontaktovať.</v-alert>
