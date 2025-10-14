@@ -18,35 +18,34 @@ const router = createRouter({
     {
       path: '/register',
       name: 'Register',
-      component: RegistrationPage
-    },
-    {
-      path: '/:pathMatch(.*)*',
-      name: 'not-found',
-      component: NotFoundView
+      component: RegistrationPage,
     },
     {
       path: '/login',
       name: 'Login',
-      component: LoginPage
+      component: LoginPage,
     },
     {
       path: '/student-dashboard',
       name: 'StudentDashboard',
-      component: StudentDashboard
+      component: StudentDashboard,
     },
     {
       path: '/company-dashboard',
       name: 'CompanyDashboard',
-      component: CompanyDashboard
+      component: CompanyDashboard,
     },
     {
       path: '/supervisor-dashboard',
       name: 'SupervisorDashboard',
-      component: SupervisorDashboard
+      component: SupervisorDashboard,
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: NotFoundView,
     },
   ],
 })
 
 export default router
-
