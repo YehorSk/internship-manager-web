@@ -17,14 +17,6 @@ export const useAuthStore = defineStore('auth', {
     roles: (state) => state.user?.roles?.map(r => r.name) || [],
   },
   actions: {
-    async sendAuthPostRequest(endpoint, data) {
-      this.loading = true
-      this.fieldErrors = {}
-      try {
-        const { data: response } = await axios.post(endpoint, data)
-        return response
-      }
-    },
     async authenticate(){
       try{
         const { data: response } = await axios.get('/auth/user', null);
@@ -42,17 +34,12 @@ export const useAuthStore = defineStore('auth', {
         const { data: response } = await axios.post('/auth/register', data)
         this.success = response.message
         console.log(response)
-        // console.log(`Roles ${this.roles}`)
-        // return response
       } catch (e) {
         handleError(e, this)
         throw e
       } finally {
         this.loading = false
       }
-    },
-    async register(data) {
-      return this.sendAuthPostRequest('/auth/register', data)
     },
     async forgotPassword(data) {
       return this.sendAuthPostRequest('/api/auth/forgot-password', data)
