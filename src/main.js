@@ -13,6 +13,8 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import axios from 'axios'
 import { useAuthStore } from '@/stores/authStore.js'
+import Toast from 'vue-toastification';
+import 'vue-toastification/dist/index.css';
 
 let baseUrl = import.meta.env.VITE_API_BASE_URL
 if (!baseUrl) {
@@ -20,19 +22,29 @@ if (!baseUrl) {
 }
 axios.defaults.baseURL = baseUrl
 
+const app = createApp(App)
+app.use(Toast)
+const pinia = createPinia()
+app.use(pinia)
+app.use(router)
+app.use(createVuetify({ components, directives }))
+app.mount('#app')
+
+
+const store = useAuthStore(pinia)
+
 axios.interceptors.request.use(config => {
-  const store = useAuthStore();
-  if(store.token){
-    config.headers.Authorization = `Bearer ${store.token}`;
-  }
-  if (!config.headers["Content-Type"]) {
-    config.headers["Content-Type"] = "application/json";
-  }
-  return config
-},
+    if(store.token){
+      config.headers.Authorization = `Bearer ${store.token}`;
+    }
+    if (!config.headers["Content-Type"]) {
+      config.headers["Content-Type"] = "application/json";
+    }
+    return config
+  },
   (error) => {
     return Promise.reject(error);
-});
+  });
 
 axios.interceptors.response.use(
   (res) => {
@@ -40,16 +52,9 @@ axios.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      // const store = useAuthStore();
-      // store.logout();
-      console.log("Unauthorized");
+      store.logout()
+      console.log("Unauthorized response");
     }
     return Promise.reject(error);
   }
 );
-
-const app = createApp(App)
-app.use(createPinia())
-app.use(router)
-app.use(createVuetify({ components, directives }))
-app.mount('#app')
