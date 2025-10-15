@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async authenticate(){
       try{
-        const { data: response } = await axios.get('/auth/user', null);
+        const { data: response } = await axios.get('/api/auth/user', null);
         this.user = response.data
         this.isLoggedIn = true
       } catch (e) {
@@ -31,9 +31,22 @@ export const useAuthStore = defineStore('auth', {
       this.loading = true
       this.fieldErrors = {}
       try {
-        const { data: response } = await axios.post('/auth/register', data)
+        const { data: response } = await axios.post('/api/auth/register', data)
         this.success = response.message
         console.log(response)
+      } catch (e) {
+        handleError(e, this)
+        throw e
+      } finally {
+        this.loading = false
+      }
+    },
+    async sendAuthPostRequest(endpoint, data) {
+      this.loading = true
+      this.fieldErrors = {}
+      try {
+        const { data: response } = await axios.post(endpoint, data)
+        return response
       } catch (e) {
         handleError(e, this)
         throw e
@@ -54,7 +67,7 @@ export const useAuthStore = defineStore('auth', {
       this.loading = true
       this.error = ''
       try {
-        const { data: response } = await axios.post('/auth/login', { email, password })
+        const { data: response } = await axios.post('/api/auth/login', { email, password })
         this.user = response.data
         this.token = response.token
         this.success = response.message
@@ -73,7 +86,7 @@ export const useAuthStore = defineStore('auth', {
       this.loading = true
       this.error = ''
       try {
-        const { data: response } = await axios.post('/auth/logout', null);
+        const { data: response } = await axios.post('/api/auth/logout', null);
         this.success = response.message
       }catch (e){
         handleError(e, this)
