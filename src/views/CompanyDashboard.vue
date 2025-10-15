@@ -1,6 +1,15 @@
 <template>
   <div class="about">
-    <h1>Company Dashboard</h1>
+    <h1 class="text-primary">Company Dashboard</h1>
+    <v-btn
+      color="#3A803D"
+      size="large"
+      class="mt-2 rounded-xl text-white"
+      block
+      @click="logout"
+    >
+      Logout
+    </v-btn>
   </div>
 </template>
 
@@ -13,5 +22,19 @@
   }
 }
 </style>
-<script setup lang="ts">
+<script>
+import { useAuthStore } from '@/stores/authStore.js'
+
+export default {
+  data() {
+    return {
+      authStore: useAuthStore(),
+    }
+  },
+  methods: {
+    async logout() {
+      await this.authStore.logout()
+    }
+  }
+}
 </script>

@@ -1,19 +1,14 @@
 <script>
 import { useAuthStore } from '@/stores/authStore.js'
-import SuccessAlert from '@/components/alerts/SuccessAlert.vue'
-import ErrorAlert from '@/components/alerts/ErrorAlert.vue'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
+import { useToast } from "vue-toastification";
 
 export default {
-  components: { SuccessAlert, ErrorAlert },
   data() {
     return {
-      auth: useAuthStore(),
+      authStore: useAuthStore(),
       selectedRole: 'student',
-      showSuccess: false,
-      showError: false,
       valid: false,
-      successMsg: '',
       studentData: this.getEmptyStudent(),
       companyData: this.getEmptyCompany(),
       studyPrograms: useStudyProgramsStore(),
@@ -34,7 +29,7 @@ export default {
   },
   computed: {
     errorMsg() {
-      return this.auth.error || 'Nastala chyba'
+      return this.authStore.error || 'Nastala chyba'
     },
   },
   methods: {
@@ -64,48 +59,63 @@ export default {
       }
     },
     clearFieldError(field) {
-      delete this.auth.fieldErrors?.[field]
+      delete this.authStore.fieldErrors?.[field]
     },
     fieldMsg(field) {
-      return this.auth.fieldErrors?.[field] || []
+      return this.authStore.fieldErrors?.[field] || []
     },
     async submit() {
       this.showSuccess = this.showError = false
-      this.auth.error = ''
-      this.auth.fieldErrors = {}
+      this.authStore.error = ''
+      this.authStore.fieldErrors = {}
 
       const isStudent = this.selectedRole === 'student'
       const form = this.$refs[isStudent ? 'studentForm' : 'companyForm']
       const result = await form?.validate()
-      if (!result?.valid) return (this.showError = true)
+      if (!result?.valid) return
 
-      try {
-        const data = isStudent ? this.studentData : this.companyData
-        const res = await this.auth.register(data)
-        this.successMsg = res?.message || 'Registrácia prebehla úspešne'
-        this.showSuccess = true
+      const data = isStudent ? this.studentData : this.companyData
+      await this.authStore.register(data)
 
-        if (isStudent) {
-          this.studentData = this.getEmptyStudent()
-          this.$refs.studentForm?.reset()
-        } else {
-          this.companyData = this.getEmptyCompany()
-          this.$refs.companyForm?.reset()
-        }
-
-        this.valid = false
-      } catch {
-        this.showError = true
+      if (isStudent) {
+        this.studentData = this.getEmptyStudent()
+        this.$refs.studentForm?.reset()
+      } else {
+        this.companyData = this.getEmptyCompany()
+        this.$refs.companyForm?.reset()
       }
+
+      this.valid = false
     },
   },
   watch: {
     selectedRole() {
-      this.auth.fieldErrors = {}
-      this.auth.error = ''
+      this.authStore.fieldErrors = {}
+      this.authStore.error = ''
       this.valid = false
       this.$refs.studentForm?.resetValidation()
       this.$refs.companyForm?.resetValidation()
+    },
+    "authStore.success": {
+      handler(newValue) {
+        if (newValue) {
+          this.$refs.loginForm?.reset()
+          const toast = useToast();
+          toast.success(newValue);
+          this.authStore.success = "";
+        }
+      },
+      immediate: true,
+    },
+    'authStore.error': {
+      handler(newValue) {
+        if (newValue) {
+          const toast = useToast();
+          toast.error(newValue);
+          this.authStore.error = "";
+        }
+      },
+      immediate: true,
     },
   },
 }
@@ -213,8 +223,8 @@ export default {
               size="large"
               class="mt-4 rounded-xl text-white"
               block
-              :loading="auth.loading"
-              :disabled="!valid || auth.loading"
+              :loading="authStore.loading"
+              :disabled="!valid || authStore.loading"
               type="submit"
             >
               Registrovať sa ako študent
@@ -315,8 +325,8 @@ export default {
               size="large"
               class="mt-4 rounded-xl text-white"
               block
-              :loading="auth.loading"
-              :disabled="!valid || auth.loading"
+              :loading="authStore.loading"
+              :disabled="!valid || authStore.loading"
               type="submit"
             >
               Registrovať sa ako spoločnosť
@@ -350,11 +360,5 @@ export default {
         </v-btn>
       </div>
     </v-card>
-
-    <SuccessAlert v-model="showSuccess">
-      {{ successMsg }}
-    </SuccessAlert>
-
-    <ErrorAlert v-model="showError" :message="errorMsg" :items="auth.fieldErrors" />
   </v-container>
 </template>

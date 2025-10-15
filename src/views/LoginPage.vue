@@ -1,10 +1,11 @@
 <script>
 import { useAuthStore } from '@/stores/authStore.js'
+import { useToast } from "vue-toastification";
 
 export default {
   data() {
     return {
-      isLoading: false,
+      authStore: useAuthStore(),
       valid: false,
       snackbar: {
         show: false,
@@ -18,41 +19,41 @@ export default {
         required: (v) => !!v || 'Pole je povinné',
         email: (v) => /.+@.+\..+/.test(v) || 'Neplatný e-mail',
       },
+      toast: useToast()
     }
   },
   methods: {
     async submit() {
-      this.isLoading = true
 
       const result = await this.$refs.loginForm.validate()
-      if (!result) {
-        this.isLoading = false
-        return
-      }
+      if (!result) return
 
-      const auth = useAuthStore()
-
-      try {
-        const res = await auth.login(this.loginData.email, this.loginData.password)
-        const roles = res.data.roles || []
-        const roleName = roles[0]?.name || ''
-
-        const routes = {
-          student: 'StudentDashboard',
-          supervisor: 'SupervisorDashboard',
-          company: 'CompanyDashboard',
-        }
-
-        const targetRoute = routes[roleName]
-        this.$router.push({ name: targetRoute })
-      } catch {
-        this.snackbar.message = useAuthStore().error || 'prihlasenie zlyhalo.'
-        this.snackbar.show = true
-      } finally {
-        this.isLoading = false
-      }
+      await this.authStore.login(this.loginData.email, this.loginData.password)
     },
   },
+  watch:{
+    "authStore.success": {
+      handler(newValue) {
+        if (newValue) {
+          this.$refs.loginForm?.reset()
+          const toast = useToast();
+          toast.success(newValue);
+          this.authStore.success = "";
+        }
+      },
+      immediate: true,
+    },
+    'authStore.error': {
+      handler(newValue) {
+        if (newValue) {
+          const toast = useToast();
+          toast.error(newValue);
+          this.authStore.error = "";
+        }
+      },
+      immediate: true,
+    },
+  }
 }
 </script>
 
@@ -93,7 +94,7 @@ export default {
           size="large"
           class="mt-2 rounded-xl text-white"
           block
-          :loading="isLoading"
+          :loading="authStore.loading"
           @click="submit"
         >
           Prihlásiť sa
@@ -111,7 +112,7 @@ export default {
         <div class="text-caption mt-n3 bg-white px-3 d-inline-block">Alebo</div>
       </div>
 
-      <v-btn variant="outlined" block class="mb-4 rounded-xl">
+      <v-btn variant="outlined" block class="mb-4 rounded-xl" @click="$router.push('/')">
         Prihlásiť sa ako hosť
       </v-btn>
 

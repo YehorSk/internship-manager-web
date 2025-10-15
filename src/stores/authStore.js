@@ -6,18 +6,36 @@ import {useStorage} from "@vueuse/core";
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     loading: false,
-    token: useStorage('token',{}),
+    token: useStorage('token',''),
+    user: null,
+    isLoggedIn: false,
     fieldErrors: {},
     error: '',
-    token: '',
+    success: '',
   }),
+  getters: {
+    roles: (state) => state.user?.roles?.map(r => r.name) || [],
+  },
   actions: {
+    async authenticate(){
+      try{
+        const { data: response } = await axios.get('/auth/user', null);
+        this.user = response.data
+        this.isLoggedIn = true
+      } catch (e) {
+        handleError(e, this)
+        throw e
+      }
+    },
     async register(data) {
       this.loading = true
       this.fieldErrors = {}
       try {
         const { data: response } = await axios.post('/auth/register', data)
-        return response
+        this.success = response.message
+        console.log(response)
+        // console.log(`Roles ${this.roles}`)
+        // return response
       } catch (e) {
         handleError(e, this)
         throw e
@@ -28,34 +46,40 @@ export const useAuthStore = defineStore('auth', {
     async login(email, password) {
       this.loading = true
       this.error = ''
-
       try {
-        const { data } = await axios.post('/auth/login', { email, password })
-
-        if (data.success) {
-          this.user = data.data
-          this.token = data.token
-          axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
-          return data
-        } else {
-          this.error = data.message || 'Login failed'
-          throw new Error(this.error)
-        }
+        const { data: response } = await axios.post('/auth/login', { email, password })
+        this.user = response.data
+        this.token = response.token
+        this.success = response.message
+        this.isLoggedIn = true
+        console.log(response)
+        window.location.reload();
       } catch (e) {
-        if (e.response?.status === 401) {
-          this.error = 'Nesprávny e-mail alebo heslo.'
-        } else if (e.response?.data?.message) {
-          this.error = e.response.data.message
-        } else {
-          this.error = 'Chybaa pripojenia k serveru.'
-        }
+        handleError(e, this)
+        this.isLoggedIn = false
         throw e
+      } finally {
+        this.loading = false
       }
     },
     async logout() {
-      this.user = null
-      this.token = ''
-      delete axios.defaults.headers.common['Authorization']
+      this.loading = true
+      this.error = ''
+      try {
+        const { data: response } = await axios.post('/auth/logout', null);
+        this.success = response.message
+      }catch (e){
+        handleError(e, this)
+        this.isLoggedIn = false
+        throw e
+      }  finally {
+        console.log("Finally")
+        this.user = null;
+        this.token = null;
+        this.isLoggedIn = false;
+        this.loading = false;
+        window.location.reload();
+      }
     },
   },
 })
