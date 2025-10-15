@@ -11,11 +11,11 @@ export const useAuthStore = defineStore('auth', {
     error: ''
   }),
   actions: {
-    async register(data) {
+    async sendAuthPostRequest(endpoint, data) {
       this.loading = true
       this.fieldErrors = {}
       try {
-        const { data: response } = await axios.post('/auth/register', data)
+        const { data: response } = await axios.post(endpoint, data)
         return response
       } catch (e) {
         handleError(e, this)
@@ -24,5 +24,17 @@ export const useAuthStore = defineStore('auth', {
         this.loading = false
       }
     },
+    async register(data) {
+      return this.sendAuthPostRequest('/auth/register', data)
+    },
+    async forgotPassword(data) {
+      return this.sendAuthPostRequest('/api/auth/forgot-password', data)
+    },
+    async updatePassword(data) {
+      return this.sendAuthPostRequest('/api/auth/update-password', data)
+    },
+    async changePassword(data) {
+      return this.sendAuthPostRequest('/api/auth/change-password', data)
+    }
   },
 })
