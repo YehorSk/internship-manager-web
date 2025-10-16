@@ -304,7 +304,7 @@ export default {
     <section id="company-registration" class="py-16" style="background: rgba(0,0,0,.03)">
       <v-container class="page">
         <v-row align="center" no-gutters>
-          <v-col cols="12" md="6" order="2" order-md="1" class="mt-8 mt-md-0 pr-md-6"> <!-- додано pr-md-6 -->
+          <v-col cols="12" md="6" order="2" order-md="1" class="mt-8 mt-md-0 pr-md-6">
             <v-card class="pa-8 rounded-xl elevation-2">
               <h3 class="text-h6 mb-6 font-weight-medium">Požiadavky na registráciu</h3>
               <v-divider class="mb-4" />

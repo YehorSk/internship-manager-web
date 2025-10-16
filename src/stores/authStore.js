@@ -46,7 +46,7 @@ export const useAuthStore = defineStore('auth', {
       this.fieldErrors = {}
       try {
         const { data: response } = await axios.post(endpoint, data)
-        return response
+        this.success = response.message
       } catch (e) {
         handleError(e, this)
         throw e

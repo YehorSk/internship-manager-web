@@ -18,7 +18,7 @@ export function handleError(error, store) {
         store.error = 'Prístup zamietnutý'
         break
       case 404:
-        store.error = 'Nenájdené'
+        store.error = d.message || 'Nenájdené'
         break
       default:
         store.error = d.message || 'Neočakávaná chyba servera'

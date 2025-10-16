@@ -33,7 +33,7 @@
               size="large"
               class="mt-4 rounded-xl text-white"
               block
-              :loading="isLoading"
+              :loading="authStore.loading"
               @click="sendResetLink"
             >
               Odoslať odkaz na obnovenie
@@ -41,7 +41,7 @@
           </v-form>
         </v-window-item>
         <v-window-item value="reset">
-          <v-form ref="resetForm" v-model="validReset" class="d-flex flex-column gap-4">
+          <v-form ref="resetForm" v-model="validReset" class="form-fix">
             <v-text-field
               v-if="resetData.email"
               v-model="resetData.email"
@@ -84,7 +84,7 @@
               size="large"
               class="mt-4 rounded-xl text-white"
               block
-              :loading="isLoading"
+              :loading="authStore.loading"
               :disabled="!token"
               @click="updatePassword"
             >
@@ -103,28 +103,16 @@
         Späť na prihlásenie
       </v-btn>
     </v-card>
-
-    <SuccessAlert v-model="showSuccess">
-      Ak existuje účet s týmto e-mailom, bol odoslaný e-mail s inštrukciami na obnovenie hesla.
-    </SuccessAlert>
-    <ErrorAlert v-model="showError">
-      Pri odosielaní e-mailu došlo k chybe. Skúste to znova neskôr.
-    </ErrorAlert>
   </v-container>
 </template>
 <script>
-import SuccessAlert from '@/components/alerts/SuccessAlert.vue'
-import ErrorAlert from '@/components/alerts/ErrorAlert.vue'
 import { useAuthStore } from '@/stores/authStore.js'
+import { useToast } from 'vue-toastification'
 
 export default {
-  components: { ErrorAlert, SuccessAlert },
   data() {
     return {
-      auth: useAuthStore(),
-      isLoading: false,
-      showSuccess: false,
-      showError: false,
+      authStore: useAuthStore(),
       step: 'request', // 'request' | 'reset'
       token: null,
       validRequest: false,
@@ -132,13 +120,11 @@ export default {
       requestData: {
         email: '',
       },
-
       resetData: {
         email: '',
         newPassword: '',
         confirmPassword: '',
       },
-
       rules: {
         required: v => !!v || 'Povinné pole',
         email: v => /.+@.+\..+/.test(v) || 'Neplatný e-mail',
@@ -146,6 +132,7 @@ export default {
           /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(v) ||
           'Min. 8 znakov, aspoň 1 písmeno a 1 číslo',
       },
+      toast: useToast()
     }
   },
   created() {
@@ -159,51 +146,49 @@ export default {
   },
   methods: {
     async sendResetLink() {
-      this.showSuccess = false
-      this.showError = false
 
       const { valid } = await this.$refs.requestForm.validate()
       if (!valid) return
 
-      this.isLoading = true
-      try {
-        await this.auth.forgotPassword({email: this.requestData?.email})
-        this.showSuccess = true
-      } catch (e) {
-        this.showError = true
-        console.error(e)
-      } finally {
-        this.isLoading = false
-      }
+      await this.authStore.forgotPassword({email: this.requestData?.email})
     },
     async updatePassword() {
-      this.showSuccess = false
-      this.showError = false
       const { valid } = await this.$refs.resetForm.validate()
       if (!valid) return
 
       if (!this.token) {
-        this.showError = true
         return
       }
 
-      this.isLoading = true
-      try {
-        await this.auth.updatePassword({
-          email: this.resetData?.email,
-          token: this.token,
-          password: this.resetData?.newPassword,
-          password_confirmation: this.resetData?.confirmPassword,
-        })
-        this.showSuccess = true
-      } catch (e) {
-        this.showError = true
-        console.error(e)
-      } finally {
-        this.isLoading = false
-      }
+      await this.authStore.updatePassword({
+        email: this.resetData?.email,
+        token: this.token,
+        password: this.resetData?.newPassword,
+        password_confirmation: this.resetData?.confirmPassword,
+      })
     },
   },
+  watch:{
+    "authStore.success": {
+      handler(newValue) {
+        if (newValue) {
+          this.$refs.loginForm?.reset()
+          this.toast.success(newValue);
+          this.authStore.success = "";
+        }
+      },
+      immediate: true,
+    },
+    'authStore.error': {
+      handler(newValue) {
+        if (newValue) {
+          this.toast.error(newValue);
+          this.authStore.error = "";
+        }
+      },
+      immediate: true,
+    },
+  }
 }
 </script>
 <style>

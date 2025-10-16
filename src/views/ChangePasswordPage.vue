@@ -44,7 +44,7 @@
           size="large"
           class="mt-2 rounded-xl text-white"
           block
-          :loading="isLoading"
+          :loading="authStore.loading"
           :disabled="false"
           @click="changePassword"
         >
@@ -66,29 +66,18 @@
         Späť na prihlásenie
       </v-btn>
     </v-card>
-    <SuccessAlert v-model="showSuccess">
-      Úspech! Vaše heslo bolo zmenené.
-    </SuccessAlert>
-    <ErrorAlert v-model="showError" />
   </v-container>
 </template>
 
 <script>
-import SuccessAlert from '@/components/alerts/SuccessAlert.vue'
-import ErrorAlert from '@/components/alerts/ErrorAlert.vue'
 import { useAuthStore } from '@/stores/authStore.js'
+import { useToast } from 'vue-toastification'
 
 export default {
-  components: { SuccessAlert, ErrorAlert },
   data() {
     return {
-      auth: useAuthStore(),
-      isLoading: false,
-      showSuccess: false,
-      showError: false,
-
+      authStore: useAuthStore(),
       validReset: false,
-
       form: {
         email: '',
         currentPassword: '',
@@ -104,6 +93,7 @@ export default {
           /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(v) ||
           'Min. 8 znakov, aspoň 1 písmeno a 1 číslo',
       },
+      toast: useToast()
     }
   },
   created() {
@@ -119,42 +109,42 @@ export default {
         special: /[^A-Za-z0-9]/.test(p),
       }
     },
-    passwordAllValid() {
-      const c = this.passwordChecks
-      return c.len && c.lower && c.upper && c.digit && c.special
-    },
-    passwordRuleFn() {
-      return () =>
-        (this.passwordAllValid) ||
-        'Min. 8 znakov, malé/veľké písmená, číslo a špec. znak'
-    },
   },
   methods: {
     async changePassword() {
-      this.showSuccess = false
-      this.showError = false
       const { valid } = await this.$refs.resetForm.validate()
       if (!valid) return
       if (this.form?.newPassword === this.form?.currentPassword) {
         this.showError = true
         return
       }
-
-      this.isLoading = true
-      try {
-        await this.auth.changePassword({
-          old_password: this.form?.currentPassword,
-          new_password: this.form?.newPassword,
-        })
-        this.showSuccess = true
-      } catch (e) {
-        this.showError = true
-        console.error(e)
-      } finally {
-        this.isLoading = false
-      }
+      await this.authStore.changePassword({
+        old_password: this.form?.currentPassword,
+        new_password: this.form?.newPassword,
+      })
     },
   },
+  watch:{
+    "authStore.success": {
+      handler(newValue) {
+        if (newValue) {
+          this.$refs.loginForm?.reset()
+          this.toast.success(newValue);
+          this.authStore.success = "";
+        }
+      },
+      immediate: true,
+    },
+    'authStore.error': {
+      handler(newValue) {
+        if (newValue) {
+          this.toast.error(newValue);
+          this.authStore.error = "";
+        }
+      },
+      immediate: true,
+    },
+  }
 }
 </script>
 

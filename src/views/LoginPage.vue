@@ -36,8 +36,7 @@ export default {
       handler(newValue) {
         if (newValue) {
           this.$refs.loginForm?.reset()
-          const toast = useToast();
-          toast.success(newValue);
+          this.toast.success(newValue);
           this.authStore.success = "";
         }
       },
@@ -46,8 +45,7 @@ export default {
     'authStore.error': {
       handler(newValue) {
         if (newValue) {
-          const toast = useToast();
-          toast.error(newValue);
+          this.toast.error(newValue);
           this.authStore.error = "";
         }
       },
