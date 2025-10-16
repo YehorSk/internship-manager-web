@@ -52,7 +52,7 @@ axios.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      store.logout()
+      // store.logout()
       console.log("Unauthorized response");
     }
     return Promise.reject(error);
