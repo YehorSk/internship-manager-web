@@ -7,6 +7,7 @@ import StudentDashboard from '@/views/StudentDashboard.vue'
 import CompanyDashboard from '@/views/CompanyDashboard.vue'
 import SupervisorDashboard from '@/views/SupervisorDashboard.vue'
 import { useAuthStore } from '@/stores/authStore.js'
+import CompaniesView from '@/views/CompaniesView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
