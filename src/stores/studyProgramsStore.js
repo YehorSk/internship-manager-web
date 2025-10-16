@@ -11,7 +11,7 @@ export const useStudyProgramsStore = defineStore('studyPrograms', {
     async fetchPrograms() {
       this.loading = true
       try {
-        const res = await axios.get('/study-programs/index')
+        const res = await axios.get('api/study-programs/index')
         this.list = res.data.data
       } catch (e) {
         this.error = 'Nepodarilo sa načítať študijné programy'
