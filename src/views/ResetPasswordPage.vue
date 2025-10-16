@@ -13,7 +13,7 @@
       </v-card-subtitle>
       <v-window v-model="step" class="rounded-xl">
         <v-window-item value="request">
-          <v-form ref="requestForm" v-model="validRequest" class="d-flex flex-column gap-4">
+          <v-form ref="requestForm" v-model="validRequest" class="form-fix">
             <v-text-field
               v-model="requestData.email"
               label="E-mail *"
@@ -99,7 +99,7 @@
         <div class="text-caption mt-n3 bg-white px-3 d-inline-block">Alebo</div>
       </div>
 
-      <v-btn variant="outlined" block class="mb-4 rounded-xl" @click="$router.push({ name: 'login' })">
+      <v-btn variant="outlined" block class="mb-4 rounded-xl" :to="{ name: 'Login' }">
         Späť na prihlásenie
       </v-btn>
     </v-card>

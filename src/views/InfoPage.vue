@@ -39,7 +39,7 @@ export default {
               color="#3A803D"
               class="mr-6 text-body-1 font-weight-semibold"
               style="font-weight:600;"
-              @click="scrollTo('login')"
+              :to="{ name: 'Login' }"
             >
               Prihlásenie
             </v-btn>
@@ -271,7 +271,7 @@ export default {
               size="large"
               rounded="xl"
               style="font-weight:600; letter-spacing:0.3px;"
-              to="/register"
+              :to="{ name: 'Register' }"
             >
               Zaregistrovať sa ako študent
             </v-btn>
@@ -310,12 +310,12 @@ export default {
               <v-divider class="mb-4" />
               <div class="mb-4">
                 <div class="text-subtitle-2 mb-1 font-weight-medium">Firemné údaje</div>
-                <p class="text-body-2 text-medium-emphasis">Názov firmy, adresa sídla</p>
+                <p class="text-body-2 text-medium-emphasis">Názov firmy, adresa sídla, email</p>
               </div>
               <v-divider class="mb-4" />
               <div>
                 <div class="text-subtitle-2 mb-1 font-weight-medium">Kontaktná osoba</div>
-                <p class="text-body-2 text-medium-emphasis">Meno, pozícia, email, telefón</p>
+                <p class="text-body-2 text-medium-emphasis">Meno, email, telefón</p>
               </div>
             </v-card>
           </v-col>
@@ -386,7 +386,7 @@ export default {
                   <v-btn
                     variant="outlined"
                     size="large"
-                    to="/login"
+                    :to="{ name: 'Login' }"
                   >
                     Prihlásenie
                   </v-btn>

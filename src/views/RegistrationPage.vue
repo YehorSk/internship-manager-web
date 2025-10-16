@@ -344,7 +344,7 @@ export default {
         variant="outlined"
         block
         class="mb-4 rounded-xl"
-        @click="$router.push('/')"
+        :to="{ name: 'Info' }"
       >
         Prihlásiť sa ako hosť
       </v-btn>
@@ -354,7 +354,7 @@ export default {
           variant="text"
           color="#3A803D"
           class="font-weight-bold"
-          @click="$router.push('/login')"
+          :to="{ name: 'Login' }"
         >
           Prihlásiť sa tu
         </v-btn>

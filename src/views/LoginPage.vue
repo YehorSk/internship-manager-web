@@ -95,6 +95,7 @@ export default {
           class="mt-2 rounded-xl text-white"
           block
           :loading="authStore.loading"
+          :disabled="!valid"
           @click="submit"
         >
           Prihlásiť sa
@@ -102,7 +103,12 @@ export default {
       </v-form>
 
       <div class="text-center mt-6">
-        <v-btn variant="text" color="#3A803D" class="font-weight-bold">
+        <v-btn
+          variant="text"
+          color="#3A803D"
+          class="font-weight-bold"
+          :to="{ name: 'rest-password' }"
+        >
           Zabudnuté heslo?
         </v-btn>
       </div>
@@ -112,7 +118,7 @@ export default {
         <div class="text-caption mt-n3 bg-white px-3 d-inline-block">Alebo</div>
       </div>
 
-      <v-btn variant="outlined" block class="mb-4 rounded-xl" @click="$router.push('/')">
+      <v-btn variant="outlined" block class="mb-4 rounded-xl" :to="{ name: 'Info' }">
         Prihlásiť sa ako hosť
       </v-btn>
 
