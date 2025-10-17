@@ -5,7 +5,6 @@
       <v-card-subtitle class="text-center mb-6">Nastavte si nové heslo</v-card-subtitle>
 
       <v-form ref="resetForm" v-model="validReset" class="form-fix">
-
         <v-text-field
           v-model="form.currentPassword"
           label="Aktuálne heslo *"
@@ -58,9 +57,9 @@
         variant="outlined"
         block
         class="mb-4 rounded-xl"
-        @click="$router.push({ name: 'login' })"
+        :to="{ name: dashboardRouteName }"
       >
-        Späť na prihlásenie
+        Späť na dashboard
       </v-btn>
     </v-card>
   </v-container>
@@ -86,11 +85,25 @@ export default {
           /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(v) ||
           'Min. 8 znakov, aspoň 1 písmeno a 1 číslo',
       },
-      toast: useToast()
+      toast: useToast(),
+      roleToRouteName: {
+        student: 'StudentDashboard',
+        supervisor: 'SupervisorDashboard',
+        company: 'CompanyDashboard',
+      },
     }
   },
-  created() {
+
+  computed: {
+    dashboardRouteName() {
+      const role =
+        this.authStore.user?.role?.name ||
+        this.authStore.user?.role ||
+        ''
+      return this.roleToRouteName[role] ?? 'StudentDashboard'
+    },
   },
+
   methods: {
     async changePassword() {
       const { valid } = await this.$refs.resetForm.validate()
@@ -106,13 +119,14 @@ export default {
       })
     },
   },
-  watch:{
-    "authStore.success": {
+
+  watch: {
+    'authStore.success': {
       handler(newValue) {
         if (newValue) {
-          this.$refs.loginForm?.reset()
-          this.toast.success(newValue);
-          this.authStore.success = "";
+          this.$refs.resetForm?.reset()
+          this.toast.success(newValue)
+          this.authStore.success = ''
         }
       },
       immediate: true,
@@ -120,13 +134,13 @@ export default {
     'authStore.error': {
       handler(newValue) {
         if (newValue) {
-          this.toast.error(newValue);
-          this.authStore.error = "";
+          this.toast.error(newValue)
+          this.authStore.error = ''
         }
       },
       immediate: true,
     },
-  }
+  },
 }
 </script>
 
