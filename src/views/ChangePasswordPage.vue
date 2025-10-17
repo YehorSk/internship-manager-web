@@ -10,7 +10,7 @@
           v-model="form.currentPassword"
           label="Aktuálne heslo *"
           type="password"
-          :rules="[v => !!v || 'Povinné pole', v => /.+@.+\..+/.test(v) || 'Neplatný e-mail']"
+          :rules="[rules.required, rules.password]"
           variant="outlined"
           density="comfortable"
           rounded="xl"
@@ -30,10 +30,7 @@
           v-model="form.confirmPassword"
           type="password"
           label="Potvrdenie hesla *"
-          :rules="[
-                rules.required,
-                v => v === resetData.newPassword || 'Heslá sa nezhodujú'
-              ]"
+          :rules="[rules.required, rules.password]"
           variant="outlined"
           density="comfortable"
           rounded="xl"
@@ -79,16 +76,12 @@ export default {
       authStore: useAuthStore(),
       validReset: false,
       form: {
-        email: '',
         currentPassword: '',
         newPassword: '',
         confirmPassword: '',
-        showNew: false,
-        showConfirm: false,
       },
       rules: {
         required: v => !!v || 'Povinné pole',
-        email: v => /.+@.+\..+/.test(v) || 'Neplatný e-mail',
         password: v =>
           /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(v) ||
           'Min. 8 znakov, aspoň 1 písmeno a 1 číslo',
@@ -97,18 +90,6 @@ export default {
     }
   },
   created() {
-  },
-  computed: {
-    passwordChecks() {
-      const p = this.form.newPassword || ''
-      return {
-        len: p.length >= 8,
-        lower: /[a-z]/.test(p),
-        upper: /[A-Z]/.test(p),
-        digit: /\d/.test(p),
-        special: /[^A-Za-z0-9]/.test(p),
-      }
-    },
   },
   methods: {
     async changePassword() {
@@ -119,8 +100,9 @@ export default {
         return
       }
       await this.authStore.changePassword({
-        old_password: this.form?.currentPassword,
-        new_password: this.form?.newPassword,
+        current_password: this.form?.currentPassword,
+        password: this.form?.newPassword,
+        password_confirmation: this.form?.confirmPassword,
       })
     },
   },
