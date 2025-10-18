@@ -23,6 +23,12 @@ export const useAuthStore = defineStore('auth', {
         this.user = response.data
         this.isLoggedIn = true
       } catch (e) {
+        const status = e?.response?.status
+        if (status === 401) {
+          this.token = null
+          this.user = null
+          this.isLoggedIn = false
+        }
         handleError(e, this)
         throw e
       }
