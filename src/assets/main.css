@@ -1,11 +1,11 @@
 @import './base.css';
 
-#app {
+/*#app {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   font-weight: normal;
-}
+}*/
 
 a,
 .green {
@@ -21,7 +21,7 @@ a,
   }
 }
 
-@media (min-width: 1024px) {
+/*@media (min-width: 1024px) {
   body {
     display: flex;
     place-items: center;
@@ -33,7 +33,7 @@ a,
     align-items: center;
     height: 100vh;
   }
-}
+}*/
 
 .form-fix .v-row.dense > .v-col {
   margin-bottom: 0 !important;
@@ -45,7 +45,7 @@ a,
   margin-bottom: 4px !important;
 }
 
-.v-container.page {
+/*.v-container.page {
   max-width: 100%;
   width: 100%;
   padding-left: 0px !important;
@@ -57,11 +57,10 @@ a,
   width: 100% !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
-}
+}*/
 
 .bleed {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
 }
-

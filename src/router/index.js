@@ -60,9 +60,9 @@ const router = createRouter({
       meta: { guestOnly: true },
     },
     {
-      path: '/change-password',
-      name: 'change-password',
-      component: () => import('../views/ChangePasswordPage.vue'),
+      path: '/settings',
+      name: 'settings',
+      component: () => import('../views/SettingsPage.vue'),
       meta: { requiresAuth: true, },
     },
   ],

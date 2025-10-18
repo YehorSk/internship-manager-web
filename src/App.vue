@@ -20,8 +20,9 @@ export default {
 
 <template>
 
-
-  <RouterView />
+  <v-layout class="d-block">
+    <RouterView />
+  </v-layout>
 </template>
 
 
