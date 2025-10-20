@@ -6,8 +6,8 @@
         <v-container fluid class="pa-4">
           <v-row class="mb-4">
             <v-col cols="12">
-              <h1 class="text-h5">Profile Settings</h1>
-              <p class="text-subtitle-1">Manage your account settings and preferences</p>
+              <h1 class="text-h5">Nastavenia profilu</h1>
+              <p class="text-subtitle-1">Spravujte nastavenia a preferencie svojho účtu</p>
             </v-col>
           </v-row>
           <ChangePasswordPage />

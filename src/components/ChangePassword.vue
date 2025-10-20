@@ -1,15 +1,15 @@
 <template>
   <v-card outlined>
-    <v-card-title>Change Password</v-card-title>
+    <v-card-title>Zmeniť heslo</v-card-title>
     <v-card-subtitle>
-      Update your account password regularly to keep your account secure
+      Pravidelne aktualizujte svoje heslo, aby ste udržali svoj účet v bezpečí
     </v-card-subtitle>
     <v-card-text>
       <v-form ref="resetForm" v-model="validReset" class="form-fix">
       <v-row>
         <v-col cols="12" md="4">
           <v-label class="opacity-100">
-            <span class="font-weight-bold">Current Password</span>
+            <span class="font-weight-bold">Aktuálne heslo</span>
             <span class="font-weight-bold text-red ml-2">*</span>
           </v-label>
           <v-text-field
@@ -23,13 +23,13 @@
             :rules="[rules.required, rules.password]"
             prepend-inner-icon="mdi-lock"
             required
-            placeholder="Enter current password"
+            placeholder="Zadajte aktuálne heslo"
           />
         </v-col>
 
         <v-col cols="12" md="4">
           <v-label class="opacity-100">
-            <span class="font-weight-bold">New Password</span>
+            <span class="font-weight-bold">Nové heslo</span>
             <span class="font-weight-bold text-red ml-2">*</span>
           </v-label>
           <v-text-field
@@ -43,13 +43,13 @@
             :rules="[rules.required, rules.password, rules.match]"
             prepend-inner-icon="mdi-lock"
             required
-            placeholder="Enter new password"
+            placeholder="Zadajte nové heslo"
           />
         </v-col>
 
         <v-col cols="12" md="4">
           <v-label class="opacity-100">
-            <span class="font-weight-bold">Confirm Password</span>
+            <span class="font-weight-bold">Potvrďte heslo</span>
             <span class="font-weight-bold text-red ml-2">*</span>
           </v-label>
           <v-text-field
@@ -63,13 +63,13 @@
             :rules="[rules.required, rules.password, rules.match]"
             prepend-inner-icon="mdi-lock"
             required
-            placeholder="Confirm new password"
+            placeholder="Potvrďte nové heslo"
           />
         </v-col>
 
         <v-col cols="12">
           <v-alert type="info" variant="tonal" rounded="lg" density="compact">
-            Password must be at least 8 characters long and contain a mix of letters, numbers, and special characters
+            Heslo musí mať aspoň 8 znakov a obsahovať kombináciu písmen, číslic a špeciálnych znakov
           </v-alert>
         </v-col>
 
@@ -82,7 +82,7 @@
             class="confirm-btn text-none"
             :disabled="false"
           >
-            Change Password
+            Zmeniť heslo
           </v-btn>
         </v-col>
       </v-row>
