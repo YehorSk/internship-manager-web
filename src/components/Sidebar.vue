@@ -54,6 +54,8 @@ export default {
       activeTab: this.$route.path,
       navItems: [
         { id: 'info', label: 'Prehľad', icon: 'mdi-view-dashboard', route: '/supervisor-dashboard' },
+        { id: 'student-dashboard', label: 'Prehľad', icon: 'mdi-view-dashboard', route: '/student-dashboard' },
+        { id: 'practices-student', label: 'Zoznam praxe', icon: 'mdi-file-document-outline', route: '/student-praxe' },
         { id: 'students', label: 'Študenti', icon: 'mdi-school', route: '/students' },
         { id: 'companies', label: 'Firmy', icon: 'mdi-office-building', route: '/company' },
         { id: 'practices', label: 'Záznamy z praxe', icon: 'mdi-file-document-outline', route: '/practices' },

@@ -2,7 +2,7 @@
   <v-main>
     <v-container fluid>
       <v-row>
-        <Sidebar class="sidebar" />
+        <Sidebar/>
         <v-container fluid class="pa-4">
           <v-row class="mb-4">
             <v-col cols="12">
@@ -16,15 +16,6 @@
   </v-main>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
 <script>
 import { useAuthStore } from '@/stores/authStore.js'
 import Sidebar from '@/components/Sidebar.vue'

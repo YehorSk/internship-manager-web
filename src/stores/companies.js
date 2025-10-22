@@ -48,6 +48,19 @@ export const useCompaniesStore = defineStore('companies', {
       } finally {
         this.loading = false
       }
-    }
+    },
+
+    async searchCompanies(query = '') {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await axios.get(`/api/company/search/${query || ' '}`)
+        this.companies = res.data.data
+      } catch (e) {
+        handleError(e, this)
+      } finally {
+        this.loading = false
+      }
+    },
   }
 })

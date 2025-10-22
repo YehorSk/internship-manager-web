@@ -8,6 +8,8 @@ import CompanyDashboard from '@/views/CompanyDashboard.vue'
 import SupervisorDashboard from '@/views/SupervisorDashboard.vue'
 import { useAuthStore } from '@/stores/authStore.js'
 import CompaniesView from '@/views/CompaniesView.vue'
+import StudentPraxePage from '@/views/StudentPraxePage.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +36,12 @@ const router = createRouter({
       path: '/student-dashboard',
       name: 'StudentDashboard',
       component: StudentDashboard,
+      meta: { requiresAuth: true, roles: ['student'] }
+    },
+    {
+      path: '/student-praxe',
+      name: 'StudentPraxe',
+      component: StudentPraxePage,
       meta: { requiresAuth: true, roles: ['student'] }
     },
     {
@@ -73,7 +81,6 @@ router.beforeEach(async (to, from, next) => {
 
   const hasToken = !!authStore.token && authStore.token.trim() !== ''
   const hasUser = !!authStore.user
-  const userRoles = authStore.user?.roles?.map(r => r.name) || []
 
   if (hasToken && !hasUser && !authStore.isLoggedIn) {
     console.log("Token exists, verifying...")
@@ -81,6 +88,7 @@ router.beforeEach(async (to, from, next) => {
     console.log("User: " + JSON.stringify(authStore.user))
     console.log("Done")
   }
+  const userRoles = authStore.user?.roles?.map(r => r.name) || []
 
   if (to.meta.requiresAuth && !authStore.isLoggedIn) {
     next({ name: 'Login' })

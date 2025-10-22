@@ -162,10 +162,10 @@ export default {
   width: calc(100vw - 260px);
 }
 .confirm-btn {
-  background-color: #2563eb; /* bg-blue-600 */
+  background-color: #3A803D;
   color: white;
 }
 .confirm-btn:hover {
-  background-color: #1d4ed8 !important; /* bg-blue-700 */
+  background-color: #3A803D !important;
 }
 </style>
