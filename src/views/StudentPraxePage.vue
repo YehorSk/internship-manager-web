@@ -16,12 +16,154 @@
                 class="text-white"
                 @click="openForm"
               >
-                Pridať novú prax
+                <v-icon start>mdi-plus</v-icon>
+                <span v-if="!$vuetify.display.smAndDown">Pridať prax</span>
               </v-btn>
             </v-col>
           </v-row>
 
-          <InternshipFormDialog ref="formDialog" />
+          <v-card class="pa-6 mb-6">
+            <v-row class="align-center mb-3">
+              <v-icon color="grey-darken-1" start>mdi-filter-outline</v-icon>
+              <span class="font-weight-medium text-grey-darken-2 text-subtitle-1">Filtre</span>
+            </v-row>
+
+            <v-row class="mt-2" dense>
+              <v-col cols="12" md="3">
+                <v-text-field
+                  v-model="filters.search"
+                  placeholder="Hľadať..."
+                  prepend-inner-icon="mdi-magnify"
+                  density="comfortable"
+                  variant="outlined"
+                  clearable
+                />
+              </v-col>
+
+              <v-col cols="12" md="2">
+                <v-autocomplete
+                  v-model="filters.year"
+                  :items="years"
+                  label="Rok"
+                  variant="outlined"
+                  density="comfortable"
+                  clearable
+                />
+              </v-col>
+
+              <v-col cols="12" md="2">
+                <v-select
+                  v-model="filters.semester"
+                  :items="['Zimný', 'Letný']"
+                  item-title="label"
+                  item-value="value"
+                  label="Semester"
+                  variant="outlined"
+                  density="comfortable"
+                  clearable
+                />
+              </v-col>
+
+              <v-col cols="12" md="3">
+                <v-autocomplete
+                  v-model="filters.employer"
+                  :items="employers"
+                  label="Zamestnávateľ"
+                  variant="outlined"
+                  density="comfortable"
+                  clearable
+                />
+              </v-col>
+
+              <v-col cols="12" md="2">
+                <v-select
+                  v-model="filters.status"
+                  :items="statusOptions"
+                  item-title="label"
+                  item-value="value"
+                  label="Stav"
+                  variant="outlined"
+                  density="comfortable"
+                  clearable
+                />
+              </v-col>
+            </v-row>
+          </v-card>
+
+          <v-card class="mb-6">
+            <v-card-title class="text-h6 d-flex justify-space-between">
+              <div>Zoznam mojich praxí</div>
+              <span class="text-body-2 text-grey-darken-1">
+                 Celkovo {{ store.total_items }} praxí
+              </span>
+            </v-card-title>
+
+            <v-divider />
+
+            <v-card-text>
+              <template v-if="store.loading">
+                <div class="text-center py-10">Načítavam...</div>
+              </template>
+
+              <template v-else-if="!store.list.length">
+                <div class="text-center py-12 text-grey-darken-1">
+                  <v-icon size="64" color="#3A803D" class="mb-3">mdi-check-circle-outline</v-icon>
+                  <p>Žiadne praxe</p>
+                </div>
+              </template>
+
+              <template v-else>
+                <v-table>
+                  <thead>
+                  <tr>
+                    <th>Zamestnávateľ</th>
+                    <th>Pozícia</th>
+                    <th>Študijný program</th>
+                    <th>Semester</th>
+                    <th>Akademický rok</th>
+                    <th>Obdobie</th>
+                    <th>Stav</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr
+                    v-for="p in store.list"
+                    :key="p.id"
+                    class="hover:bg-grey-lighten-5 cursor-pointer"
+                    @click="openDetails(p)"
+                  >
+                  <td>{{ p.practice_company?.name || p.company?.name || '—' }}</td>
+                    <td>{{ p.job_title || '—' }}</td>
+                    <td>{{ p.study_program?.name || '—' }}</td>
+                    <td>{{ p.semester === 'winter' ? 'Zimný' : 'Letný' }}</td>
+                    <td>{{ p.academic_year }}</td>
+                    <td>{{ formatDate(p.start_date) }} – {{ formatDate(p.end_date) }}</td>
+                    <td>
+                      <v-chip :style="{ backgroundColor: getStatusColor(p.status) }" class="text-white" size="small">
+                        {{ getStatusText(p.status) }}
+                      </v-chip>
+                    </td>
+                  </tr>
+                  </tbody>
+                </v-table>
+
+                <v-pagination
+                  v-if="store.total_pages > 1"
+                  v-model="store.current_page"
+                  :length="store.total_pages"
+                  rounded="circle"
+                  @update:modelValue="page => store.changePage(page, filters)"
+                />
+              </template>
+            </v-card-text>
+          </v-card>
+          <StudentDetailsPraxeDialog
+            v-model="detailsDialog"
+            v-if="selectedPracticeId"
+            :practice-id="selectedPracticeId"
+            @update="updatePractice"
+          />
+          <StudentAddPraxeForm ref="formDialog" />
         </v-container>
       </v-row>
     </v-container>
@@ -29,22 +171,126 @@
 </template>
 
 <script>
-import { useAuthStore } from '@/stores/authStore.js'
 import Sidebar from '@/components/Sidebar.vue'
-import InternshipFormDialog from '@/components/StudentAddPraxeForm.vue'
+import StudentAddPraxeForm from '@/components/StudentAddPraxeForm.vue'
+import StudentDetailsPraxeDialog from '@/components/StudentDetailsPraxeDialog.vue'
+import { usePracticesStore } from '@/stores/practicesStore.js'
 
 export default {
-  components: { Sidebar, InternshipFormDialog },
+  components: { Sidebar, StudentAddPraxeForm, StudentDetailsPraxeDialog },
+
   data() {
     return {
-      authStore: useAuthStore()
+      detailsDialog: false,
+      selectedPracticeId: null,
+      store: usePracticesStore(),
+      filters: {
+        search: '',
+        year: null,
+        semester: null,
+        status: null,
+        employer: null,
+      },
     }
   },
+
+  computed: {
+    statusOptions() {
+      const statuses = [
+        'created',
+        'agreement_confirm_requested',
+        'agreement_confirmed_by_company',
+        'agreement_confirmed_by_supervisor',
+        'agreement_rejected_by_company',
+        'agreement_rejected_by_supervisor',
+        'report_confirm_requested',
+        'report_confirmed_by_company',
+        'report_confirmed_by_supervisor',
+        'report_rejected_by_company',
+        'report_rejected_by_supervisor',
+        'canceled'
+      ]
+      return statuses.map(s => ({ value: s, label: this.getStatusText(s) }))
+    },
+    years() {
+      return [...new Set(this.store.list.map(p => p.academic_year))].filter(Boolean).sort().reverse()
+    },
+    employers() {
+      return [...new Set(
+        this.store.list
+          .map(p => p.practice_company?.name || p.company?.name)
+          .filter(Boolean)
+      )].sort()
+    }
+  },
+
+  watch: {
+    filters: {
+      deep: true,
+      handler() {
+        this.store.current_page = 1
+        this.store.fetchPractices(this.filters)
+      }
+    }
+  },
+
+  async mounted() {
+    await this.store.fetchPractices()
+  },
+
   methods: {
     openForm() {
       this.$refs.formDialog.openDialog()
+    },
+    formatDate(date) {
+      if (!date) return '—'
+      const d = new Date(date)
+      return d.toISOString().split('T')[0]
+    },
+    getStatusColor(status) {
+      const map = {
+        created: '#1976D2',
+        agreement_confirm_requested: '#757575',
+        agreement_confirmed_by_company: '#2E7D32',
+        agreement_confirmed_by_supervisor: '#2E7D32',
+        agreement_rejected_by_company: '#C62828',
+        agreement_rejected_by_supervisor: '#C62828',
+        report_confirm_requested: '#616161',
+        report_confirmed_by_company: '#2E7D32',
+        report_confirmed_by_supervisor: '#2E7D32',
+        report_rejected_by_company: '#C62828',
+        report_rejected_by_supervisor: '#C62828',
+        canceled: '#000000',
+      }
+      return map[status] || '#1976D2'
+    },
+    getStatusText(status) {
+      const map = {
+        created: 'Vytvorená',
+        agreement_confirm_requested: 'Žiadosť o potvrdenie dohody',
+        agreement_confirmed_by_company: 'Dohoda potvrdená firmou',
+        agreement_confirmed_by_supervisor: 'Dohoda potvrdená garantom',
+        agreement_rejected_by_company: 'Dohoda zamietnutá firmou',
+        agreement_rejected_by_supervisor: 'Dohoda zamietnutá garantom',
+        report_confirm_requested: 'Žiadosť o potvrdenie správy',
+        report_confirmed_by_company: 'Správa potvrdená firmou',
+        report_confirmed_by_supervisor: 'Správa potvrdená garantom',
+        report_rejected_by_company: 'Správa zamietnutá firmou',
+        report_rejected_by_supervisor: 'Správa zamietnutá garantom',
+        canceled: 'Zrušená'
+      }
+      return map[status] || 'Neznámy'
+    },
+    openDetails(practice) {
+      this.selectedPracticeId = practice.id
+      this.detailsDialog = true
+    },
+    updatePractice(updated) {
+      if (!updated) return
+      const idx = this.store.list.findIndex(p => p.id === updated.id)
+      if (idx !== -1) this.store.list[idx] = { ...this.store.list[idx], ...updated }
     }
+
   }
 }
 </script>
-

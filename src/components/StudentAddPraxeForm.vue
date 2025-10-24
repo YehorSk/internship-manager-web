@@ -44,7 +44,7 @@
                       <v-icon color="grey-darken-2" start>mdi-office-building</v-icon>
                       <span class="ml-2">{{ company.company_name }}</span>
                     </div>
-                    <v-btn size="small" variant="tonal" color="grey" @click="editCompany">
+                    <v-btn size="small" variant="tonal" color="grey" @click="openCompanyDialog">
                       Zmeniť
                     </v-btn>
                   </div>
@@ -256,8 +256,6 @@ export default {
       dialog: false,
       companyDialog: false,
       employerMode: 'existing',
-      companyAdded: false,
-      editMode: false,
       valid: false,
       toast: useToast(),
       programsStore: useStudyProgramsStore(),
@@ -351,8 +349,12 @@ export default {
       const t = this.toast
       const store = usePracticesStore()
 
+      const selectedCompany = this.companiesStore.companies.find(
+        c => c.id === this.form.company
+      )
+
       const data = {
-        company_id: this.employerMode === 'existing' ? this.form.company : null,
+        company_id: this.employerMode === 'existing' ? selectedCompany?.id : null,
         study_program_id: this.form.study_program_id,
         semester: this.form.semester === 'Zimný' ? 'winter' : 'summer',
         academic_year: this.form.academic_year,
