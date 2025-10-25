@@ -36,7 +36,7 @@ export const usePracticesStore = defineStore('practices', {
         const payload = Object.keys(search).length ? { search } : {}
 
         const { data } = await axios.post(
-          `/api/practices/list?page=${this.current_page}&itemsPerPage=${this.per_page}`,
+          `/api/practices/list-student?page=${this.current_page}&itemsPerPage=${this.per_page}`,
           payload
         )
 
@@ -50,6 +50,52 @@ export const usePracticesStore = defineStore('practices', {
         this.loading = false
       }
     },
+    async fetchAllPractices(filters = {}) {
+      this.loading = true
+      try {
+        const auth = useAuthStore()
+        if (auth.token)
+          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+
+        const search = {}
+
+        if (filters.status) search.status = filters.status
+        if (filters.semester) search.semester = filters.semester === 'Zimný' ? 'winter' : 'summer'
+        if (filters.year) search.academic_year = filters.year
+        if (filters.company_name) search.company_name = filters.company_name
+        if (filters.student_name && filters.student_name.trim() !== '') {
+          search.student_name = filters.student_name
+        }
+
+        const payload = Object.keys(search).length ? { search } : {}
+
+        const { data } = await axios.post(
+          `/api/practices/list?page=${this.current_page}&itemsPerPage=${this.per_page}`,
+          payload
+        )
+
+        this.list = (data.data || []).map(p => {
+          const updated = { ...p }
+          if (p.student) {
+            const student = { ...p.student }
+            student.full_name = `${student.first_name} ${student.last_name}`
+            updated.student = student
+          } else {
+            updated.student = null
+          }
+          return updated
+        })
+
+        this.current_page = data.current_page || 1
+        this.total_pages = data.last_page || 1
+        this.total_items = data.total || this.list.length
+      } catch (e) {
+        handleError(e, this)
+      } finally {
+        this.loading = false
+      }
+    },
+
 
     async createPractice(data) {
       this.loading = true

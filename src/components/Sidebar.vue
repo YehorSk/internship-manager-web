@@ -61,6 +61,7 @@ export default {
         { id: 'practices', label: 'Záznamy z praxe', icon: 'mdi-file-document-outline', route: '/practices' },
         { id: 'documents', label: 'Dokumenty', icon: 'mdi-folder-open-outline', route: '/documents' },
         { id: 'processes', label: 'Sledovanie procesu', icon: 'mdi-source-branch', route: '/processes' },
+        { id: 'all-practices', label: 'Všetky praxe', icon: 'mdi-file-document-outline', route: '/supervisor-all-praxe' },
       ],
       settingsItems: [
         { id: 'settings', label: 'Nastavenia profilu', icon: 'mdi-cog-outline', route: '/settings' },
