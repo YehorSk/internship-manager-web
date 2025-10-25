@@ -14,7 +14,7 @@
 
     <v-list density="comfortable" nav>
       <v-list-item
-        v-for="item in navItems"
+        v-for="item in filteredNavItems"
         :key="item.id"
         :to="item.route || undefined"
         :active="activeTab === item.route"
@@ -53,9 +53,14 @@ export default {
       authStore: useAuthStore(),
       activeTab: this.$route.path,
       navItems: [
-        { id: 'info', label: 'Prehľad', icon: 'mdi-view-dashboard', route: '/supervisor-dashboard' },
-        { id: 'student-dashboard', label: 'Prehľad', icon: 'mdi-view-dashboard', route: '/student-dashboard' },
-        { id: 'practices-student', label: 'Zoznam praxe', icon: 'mdi-file-document-outline', route: '/student-praxe' },
+        { id: 'info', label: 'Prehľad', icon: 'mdi-view-dashboard', route: '/supervisor-dashboard', roles: ['supervisor'] },
+
+        { id: 'student-dashboard', label: 'Prehľad', icon: 'mdi-view-dashboard', route: '/student-dashboard', roles: ['student'] },
+        { id: 'practices-student', label: 'Zoznam praxe', icon: 'mdi-file-document-outline', route: '/student-praxe', roles: ['student'] },
+
+        { id: 'company-dashboard', label: 'Prehľad', icon: 'mdi-view-dashboard', route: '/company-dashboard', roles: ['company'] },
+        { id: 'practices-company', label: 'Zoznam praxe', icon: 'mdi-file-document-outline', route: '/company-praxe', roles: ['company'] },
+
         { id: 'students', label: 'Študenti', icon: 'mdi-school', route: '/students' },
         { id: 'companies', label: 'Firmy', icon: 'mdi-office-building', route: '/company' },
         { id: 'practices', label: 'Záznamy z praxe', icon: 'mdi-file-document-outline', route: '/practices' },
@@ -69,6 +74,23 @@ export default {
       drawer: false,
     }
   },
+  computed: {
+    currentRole () {
+      const auth = this.authStore
+      const fromStore = auth.user?.role || auth.role || auth.user?.user_type || null
+      if (fromStore) return fromStore
+      const path = this.$route.path || ''
+      if (path.startsWith('/company')) return 'company'
+      if (path.startsWith('/student')) return 'student'
+      if (path.startsWith('/supervisor')) return 'supervisor'
+      return null
+    },
+
+    filteredNavItems () {
+      return this.navItems.filter(i => !i.roles || i.roles.includes(this.currentRole))
+    }
+  },
+
   mounted() {
     console.log(`Mounted: ${this.$route.path}`)
     this.drawer = !this.$vuetify.display.mobile

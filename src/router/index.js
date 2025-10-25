@@ -9,6 +9,7 @@ import SupervisorDashboard from '@/views/SupervisorDashboard.vue'
 import { useAuthStore } from '@/stores/authStore.js'
 import CompaniesView from '@/views/CompaniesView.vue'
 import StudentPraxePage from '@/views/StudentPraxePage.vue'
+import CompanyPraxePage from '@/views/CompanyPraxePage.vue'
 
 
 const router = createRouter({
@@ -48,6 +49,12 @@ const router = createRouter({
       path: '/company-dashboard',
       name: 'CompanyDashboard',
       component: CompanyDashboard,
+      meta: { requiresAuth: true, roles: ['company'] }
+    },
+    {
+      path: '/company-praxe',
+      name: 'CompanyPraxePage',
+      component: CompanyPraxePage,
       meta: { requiresAuth: true, roles: ['company'] }
     },
     {
