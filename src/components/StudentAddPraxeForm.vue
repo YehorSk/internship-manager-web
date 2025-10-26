@@ -248,7 +248,7 @@
 import { useToast } from 'vue-toastification'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { usePracticesStore } from '@/stores/practicesStore.js'
-import { useCompaniesStore } from '@/stores/companies.js'
+import { useCompaniesStore } from '@/stores/companiesStore.js'
 
 export default {
   data() {

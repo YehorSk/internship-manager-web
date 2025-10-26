@@ -92,7 +92,7 @@
 
 <script>
 import Sidebar from '@/components/Sidebar.vue'
-import { useCompaniesStore } from '@/stores/companies'
+import { useCompaniesStore } from '@/stores/companiesStore.js'
 import { useAuthStore } from '@/stores/authStore.js'
 
 export default {

@@ -35,13 +35,15 @@ export const useCompaniesStore = defineStore('companies', {
       }
     },
 
-
     async changeStatus(id, status) {
       this.loading = true
       this.error = null
       try {
         const res = await axios.post(`/api/companies/${id}/company_change_status`, { status })
-        await this.fetchCompanies()
+        if (res.status === 200) {
+          const company = this.companies.find(c => c.id === id)
+          if (company) company.status = status === 1
+        }
         return res.data
       } catch (e) {
         handleError(e, this)

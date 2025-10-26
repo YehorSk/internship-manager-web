@@ -97,7 +97,7 @@
 
 <script>
 import Sidebar from '@/components/Sidebar.vue'
-import { useCompaniesStore } from '@/stores/companies'
+import { useCompaniesStore } from '@/stores/companiesStore.js'
 import { useToast } from 'vue-toastification'
 
 export default {
