@@ -175,6 +175,7 @@ import Sidebar from '@/components/Sidebar.vue'
 import StudentAddPraxeForm from '@/components/StudentAddPraxeForm.vue'
 import StudentDetailsPraxeDialog from '@/components/StudentDetailsPraxeDialog.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
+import { getStatusColor, getStatusText } from '@/utils/statusHelpers.js'
 
 export default {
   components: { Sidebar, StudentAddPraxeForm, StudentDetailsPraxeDialog },
@@ -228,8 +229,13 @@ export default {
     filters: {
       deep: true,
       handler() {
+        const filters = { ...this.filters }
+        if (filters.employer) {
+          filters.company_name = filters.employer
+        }
+        delete filters.employer
         this.store.current_page = 1
-        this.store.fetchPractices(this.filters)
+        this.store.fetchPractices(filters)
       }
     }
   },
@@ -247,40 +253,8 @@ export default {
       const d = new Date(date)
       return d.toISOString().split('T')[0]
     },
-    getStatusColor(status) {
-      const map = {
-        created: '#1976D2',
-        agreement_confirm_requested: '#757575',
-        agreement_confirmed_by_company: '#2E7D32',
-        agreement_confirmed_by_supervisor: '#2E7D32',
-        agreement_rejected_by_company: '#C62828',
-        agreement_rejected_by_supervisor: '#C62828',
-        report_confirm_requested: '#616161',
-        report_confirmed_by_company: '#2E7D32',
-        report_confirmed_by_supervisor: '#2E7D32',
-        report_rejected_by_company: '#C62828',
-        report_rejected_by_supervisor: '#C62828',
-        canceled: '#000000',
-      }
-      return map[status] || '#1976D2'
-    },
-    getStatusText(status) {
-      const map = {
-        created: 'Vytvorená',
-        agreement_confirm_requested: 'Žiadosť o potvrdenie dohody',
-        agreement_confirmed_by_company: 'Dohoda potvrdená firmou',
-        agreement_confirmed_by_supervisor: 'Dohoda potvrdená garantom',
-        agreement_rejected_by_company: 'Dohoda zamietnutá firmou',
-        agreement_rejected_by_supervisor: 'Dohoda zamietnutá garantom',
-        report_confirm_requested: 'Žiadosť o potvrdenie správy',
-        report_confirmed_by_company: 'Správa potvrdená firmou',
-        report_confirmed_by_supervisor: 'Správa potvrdená garantom',
-        report_rejected_by_company: 'Správa zamietnutá firmou',
-        report_rejected_by_supervisor: 'Správa zamietnutá garantom',
-        canceled: 'Zrušená'
-      }
-      return map[status] || 'Neznámy'
-    },
+    getStatusColor,
+    getStatusText,
     openDetails(practice) {
       this.selectedPracticeId = practice.id
       this.detailsDialog = true
