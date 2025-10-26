@@ -13,61 +13,45 @@
     </v-sheet>
 
     <v-list density="comfortable" nav>
-      <v-list-item
-        v-for="item in navItems"
-        :key="item.id"
-        :to="item.route || undefined"
-        :active="activeTab === item.route"
-        @click.prevent="onNavClick(item)"
-        :prepend-icon="item.icon"
-        :title="item.label"
-        class="rounded-lg"
-        :class="activeTab === item.route ? 'bg-primary text-white' : 'text-grey-darken-2'"
-      />
-    </v-list>
-
-    <v-divider class="my-4" />
-
-    <v-list density="comfortable" nav>
-      <v-list-item
-        v-for="item in settingsItems"
-        :key="item.id"
-        :to="item.route || undefined"
-        :active="activeTab === item.route"
-        @click.prevent="onNavClick(item)"
-        :prepend-icon="item.icon"
-        :title="item.label"
-        class="rounded-lg"
-        :class="activeTab === item.route ? 'bg-primary text-white' : 'text-grey-darken-2'"
-      />
+      <template v-for="item in filteredMenu" :key="item.id">
+        <v-divider v-if="item.divider" class="my-4" />
+        <v-list-item
+          v-else
+          :to="item.route"
+          :active="activeTab === item.route"
+          @click.prevent="onNavClick(item)"
+          :prepend-icon="item.icon"
+          :title="item.label"
+          class="rounded-lg"
+          :class="activeTab === item.route ? 'bg-primary text-white' : 'text-grey-darken-2'"
+        />
+      </template>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
 import { useAuthStore } from '@/stores/authStore.js'
+import { menuByRole } from '@/data/menuConfig.js'
+import { ROLES } from '@/constants/roles.js'
+import { hasAccess } from '@/utils/access.js'
 
 export default {
   data() {
     return {
       authStore: useAuthStore(),
       activeTab: this.$route.path,
-      navItems: [
-        { id: 'info', label: 'Prehľad', icon: 'mdi-view-dashboard', route: '/supervisor-dashboard' },
-        { id: 'student-dashboard', label: 'Prehľad', icon: 'mdi-view-dashboard', route: '/student-dashboard' },
-        { id: 'practices-student', label: 'Zoznam praxe', icon: 'mdi-file-document-outline', route: '/student-praxe' },
-        { id: 'students', label: 'Študenti', icon: 'mdi-school', route: '/students' },
-        { id: 'companies', label: 'Firmy', icon: 'mdi-office-building', route: '/company' },
-        { id: 'practices', label: 'Záznamy z praxe', icon: 'mdi-file-document-outline', route: '/practices' },
-        { id: 'documents', label: 'Dokumenty', icon: 'mdi-folder-open-outline', route: '/documents' },
-        { id: 'processes', label: 'Sledovanie procesu', icon: 'mdi-source-branch', route: '/processes' },
-      ],
-      settingsItems: [
-        { id: 'settings', label: 'Nastavenia profilu', icon: 'mdi-cog-outline', route: '/settings' },
-        { id: 'logout', label: 'Odhlásiť sa', icon: 'mdi-logout', route: null },
-      ],
       drawer: false,
     }
+  },
+  computed: {
+    role() {
+      return this.authStore?.user?.roles?.[0]?.name || ROLES.GUEST
+    },
+    filteredMenu() {
+      const allMenus = menuByRole[this.role] || menuByRole[ROLES.GUEST]
+      return allMenus.filter(item => !item.roles || hasAccess([this.role], item.roles))
+    },
   },
   mounted() {
     console.log(`Mounted: ${this.$route.path}`)
@@ -83,10 +67,8 @@ export default {
   },
   methods: {
     async onNavClick(item) {
-      if (!item) return
       if (item.id === 'logout') {
         await this.authStore.logout()
-        // this.$router.push('/login') // при необходимости
         return
       }
       if (item.route) {

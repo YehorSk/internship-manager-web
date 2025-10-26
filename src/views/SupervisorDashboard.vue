@@ -2,7 +2,7 @@
   <v-main>
     <v-container fluid>
       <v-row>
-        <Sidebar class="sidebar" />
+        <Sidebar/>
         <v-container fluid class="pa-4">
           <v-row class="mb-4">
             <v-col cols="12">
@@ -57,23 +57,25 @@
                       </v-chip>
                     </td>
                     <td class="text-right">
-                      <v-btn
-                        size="small"
-                        color="#3A803D"
-                        class="me-2 text-white"
-                        prepend-icon="mdi-check-circle"
-                        @click="confirmCompany(c.id)"
-                      >
-                        Potvrdiť
-                      </v-btn>
-                      <v-btn
-                        size="small"
-                        color="error"
-                        prepend-icon="mdi-close-circle"
-                        @click="rejectCompany(c.id)"
-                      >
-                        Odmietnuť
-                      </v-btn>
+                      <div class="d-flex justify-end align-center ga-2">
+                        <v-btn
+                          size="small"
+                          color="#3A803D"
+                          class="text-white"
+                          prepend-icon="mdi-check-circle"
+                          @click="confirmCompany(c.id)"
+                        >
+                          Potvrdiť
+                        </v-btn>
+                        <v-btn
+                          size="small"
+                          color="error"
+                          prepend-icon="mdi-close-circle"
+                          @click="rejectCompany(c.id)"
+                        >
+                          Odmietnuť
+                        </v-btn>
+                      </div>
                     </td>
                   </tr>
                   </tbody>
@@ -96,6 +98,7 @@
 <script>
 import Sidebar from '@/components/Sidebar.vue'
 import { useCompaniesStore } from '@/stores/companies'
+import { useToast } from 'vue-toastification'
 
 export default {
   name: 'CompaniesView',
@@ -103,16 +106,32 @@ export default {
 
   data() {
     return {
-      store: useCompaniesStore()
+      store: useCompaniesStore(),
+      toast: useToast()
     }
   },
 
   methods: {
-    confirmCompany(id) {
-      this.store.changeStatus(id, 1)
+    async confirmCompany(id) {
+      try {
+        const res = await this.store.changeStatus(id, 1)
+        const msg = res?.message
+        this.toast.success(msg)
+      } catch (e) {
+        const msg = e?.response?.data?.error || 'Chyba pri potvrdení firmy'
+        this.toast.error(msg)
+      }
     },
-    rejectCompany(id) {
-      this.store.changeStatus(id, 0)
+
+    async rejectCompany(id) {
+      try {
+        const res = await this.store.changeStatus(id, 0)
+        const msg = res?.message
+        this.toast.info(msg)
+      } catch (e) {
+        const msg = e?.response?.data?.error || 'Chyba pri odmietnutí firmy'
+        this.toast.error(msg)
+      }
     }
   },
 
