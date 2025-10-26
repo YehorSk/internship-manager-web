@@ -114,7 +114,7 @@ export default {
   methods: {
     async confirmCompany(id) {
       try {
-        const res = await this.store.changeStatus(id, 1)
+        const res = await this.store.changeStatus(id, true)
         const msg = res?.message
         this.toast.success(msg)
       } catch (e) {
@@ -125,7 +125,7 @@ export default {
 
     async rejectCompany(id) {
       try {
-        const res = await this.store.changeStatus(id, 0)
+        const res = await this.store.changeStatus(id, false)
         const msg = res?.message
         this.toast.info(msg)
       } catch (e) {

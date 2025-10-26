@@ -19,7 +19,7 @@ export const useCompaniesStore = defineStore('companies', {
       this.loading = true
       this.error = null
       try {
-        const res = await axios.post('/api/companies?page=' + this.current_page,{
+        const res = await axios.post('/api/companies/list?page=' + this.current_page,{
           params: {
             search: search
           }
@@ -39,7 +39,7 @@ export const useCompaniesStore = defineStore('companies', {
       this.loading = true
       this.error = null
       try {
-        const res = await axios.post(`/api/companies/${id}/company_change_status`, { status })
+        const res = await axios.patch(`/api/companies/${id}`, { status })
         if (res.status === 200) {
           const company = this.companies.find(c => c.id === id)
           if (company) company.status = status === 1
