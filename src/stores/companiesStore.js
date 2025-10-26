@@ -27,7 +27,6 @@ export const useCompaniesStore = defineStore('companies', {
         this.companies = res.data.data || []      // array of companies
         this.current_page = res.data.current_page || 1
         this.total_pages = res.data.last_page || 1
-        console.log('Companies', this.companies)
       } catch (e) {
         handleError(e, this)
       } finally {
@@ -35,13 +34,13 @@ export const useCompaniesStore = defineStore('companies', {
       }
     },
 
-    async changeStatus(id, status) {
+    async changeStatus(user_id, status) {
       this.loading = true
       this.error = null
       try {
-        const res = await axios.patch(`/api/companies/${id}`, { status })
+        const res = await axios.patch(`/api/companies/${user_id}`, { status })
         if (res.status === 200) {
-          const company = this.companies.find(c => c.id === id)
+          const company = this.companies.find(c => c.id === user_id)
           if (company) company.status = status === 1
         }
         return res.data

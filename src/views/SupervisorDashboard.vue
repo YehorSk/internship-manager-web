@@ -42,7 +42,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr v-for="c in store.companies" :key="c.id">
+                  <tr v-for="c in store.companies" :key="c.user_id">
                     <td>{{ c.name }}</td>
                     <td>{{ c.contact_name }}</td>
                     <td>{{ c.contact_email }}</td>
@@ -63,7 +63,7 @@
                           color="#3A803D"
                           class="text-white"
                           prepend-icon="mdi-check-circle"
-                          @click="confirmCompany(c.id)"
+                          @click="confirmCompany(c.user_id)"
                         >
                           Potvrdiť
                         </v-btn>
@@ -71,7 +71,7 @@
                           size="small"
                           color="error"
                           prepend-icon="mdi-close-circle"
-                          @click="rejectCompany(c.id)"
+                          @click="rejectCompany(c.user_id)"
                         >
                           Odmietnuť
                         </v-btn>
@@ -112,9 +112,9 @@ export default {
   },
 
   methods: {
-    async confirmCompany(id) {
+    async confirmCompany(user_id) {
       try {
-        const res = await this.store.changeStatus(id, true)
+        const res = await this.store.changeStatus(user_id, true)
         const msg = res?.message
         this.toast.success(msg)
       } catch (e) {
@@ -123,9 +123,9 @@ export default {
       }
     },
 
-    async rejectCompany(id) {
+    async rejectCompany(user_id) {
       try {
-        const res = await this.store.changeStatus(id, false)
+        const res = await this.store.changeStatus(user_id, false)
         const msg = res?.message
         this.toast.info(msg)
       } catch (e) {
