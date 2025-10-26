@@ -116,7 +116,17 @@ export default {
       try {
         const res = await this.store.changeStatus(user_id, true)
         const msg = res?.message
+
         this.toast.success(msg)
+
+        if (res?.success) {
+          this.store.$patch(state => {
+            const idx = state.companies.findIndex(p => p.user_id === user_id)
+            if (idx !== -1) {
+              state.companies[idx] = { ...state.companies[idx], status: true }
+            }
+          })
+        }
       } catch (e) {
         const msg = e?.response?.data?.error || 'Chyba pri potvrdení firmy'
         this.toast.error(msg)
@@ -128,6 +138,15 @@ export default {
         const res = await this.store.changeStatus(user_id, false)
         const msg = res?.message
         this.toast.info(msg)
+
+        if (res?.success) {
+          this.store.$patch(state => {
+            const idx = state.companies.findIndex(p => p.user_id === user_id)
+            if (idx !== -1) {
+              state.companies[idx] = { ...state.companies[idx], status: false }
+            }
+          })
+        }
       } catch (e) {
         const msg = e?.response?.data?.error || 'Chyba pri odmietnutí firmy'
         this.toast.error(msg)

@@ -35,19 +35,15 @@ export const useCompaniesStore = defineStore('companies', {
     },
 
     async changeStatus(user_id, status) {
-      this.loading = true
+      // this.loading = true
       this.error = null
       try {
         const res = await axios.patch(`/api/companies/${user_id}`, { status })
-        if (res.status === 200) {
-          const company = this.companies.find(c => c.id === user_id)
-          if (company) company.status = status === 1
-        }
         return res.data
       } catch (e) {
         handleError(e, this)
       } finally {
-        this.loading = false
+        // this.loading = false
       }
     },
 
@@ -65,3 +61,4 @@ export const useCompaniesStore = defineStore('companies', {
     },
   }
 })
+
