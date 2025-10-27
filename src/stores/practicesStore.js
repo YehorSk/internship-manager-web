@@ -26,12 +26,15 @@ export const usePracticesStore = defineStore('practices', {
 
         const search = {}
         if (filters.status) search.status = filters.status
-        if (filters.semester) {
+        if (filters.semester)
           search.semester = filters.semester === 'Zimný' ? 'winter' : 'summer'
-        }
         if (filters.year) search.academic_year = filters.year
-        if (filters.company_name || filters.search)
-          search.company_name = filters.company_name || filters.search
+        if (filters.company_name)
+          search.company_name = filters.company_name
+        if (filters.study_program)
+          search.study_program_name = filters.study_program
+        if (filters.student)
+          search.student_name = filters.student
 
         const payload = {
           page: this.current_page,
@@ -39,9 +42,20 @@ export const usePracticesStore = defineStore('practices', {
           ...(Object.keys(search).length ? { search } : {})
         }
 
-        const { data } = await axios.post('/api/practices/list', payload)
+        const endpoint = '/api/practices/list'
+        const { data } = await axios.post(endpoint, payload)
 
-        this.list = data.data || []
+        this.list = (data.data || []).map(p => {
+          const updated = { ...p }
+          if (p.student) {
+            updated.student = {
+              ...p.student,
+              full_name: `${p.student.first_name} ${p.student.last_name}`
+            }
+          }
+          return updated
+        })
+
         this.current_page = data.meta?.current_page || data.current_page || 1
         this.total_pages = data.meta?.last_page || data.last_page || 1
         this.total_items = data.meta?.total || data.total || this.list.length

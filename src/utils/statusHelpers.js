@@ -72,3 +72,8 @@ export function getStatusIcon(status) {
 export function getStatusText(status) {
   return STATUS_MAP[status]?.text || 'Neznámy'
 }
+
+export const statusOptions = Object.keys(STATUS_MAP).map(key => ({
+  value: key,
+  label: STATUS_MAP[key].text
+}))

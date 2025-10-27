@@ -9,6 +9,7 @@ import SupervisorDashboard from '@/views/SupervisorDashboard.vue'
 import { useAuthStore } from '@/stores/authStore.js'
 import CompaniesView from '@/views/CompaniesView.vue'
 import StudentPraxePage from '@/views/StudentPraxePage.vue'
+import SupervisorPraxePage from '@/views/SupervisorPraxePage.vue'
 import { ROLES } from '@/constants/roles.js'
 import { hasAccess } from '@/utils/access.js'
 
@@ -55,6 +56,12 @@ const router = createRouter({
       path: '/supervisor-dashboard',
       name: 'SupervisorDashboard',
       component: SupervisorDashboard,
+      meta: { requiresAuth: true, roles: [ROLES.SUPERVISOR] }
+    },
+    {
+      path: '/supervisor-all-praxe',
+      name: 'SupervisorPraxePage',
+      component: SupervisorPraxePage,
       meta: { requiresAuth: true, roles: [ROLES.SUPERVISOR] }
     },
     {
