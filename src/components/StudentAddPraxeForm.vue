@@ -225,7 +225,7 @@
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">Telefón</span><span class="text-red ml-2">*</span></v-label>
+              <v-label><span class="font-weight-bold">Telefón kontaktnej osoby</span><span class="text-red ml-2">*</span></v-label>
               <v-text-field v-model="company.contact_phone" :rules="[rules.required, rules.phone]" rounded="lg" density="compact" variant="solo-filled" flat single-line placeholder="+421 900 000 000" />
             </v-col>
 
@@ -248,9 +248,16 @@
 import { useToast } from 'vue-toastification'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { usePracticesStore } from '@/stores/practicesStore.js'
-import { useCompaniesStore } from '@/stores/companies.js'
+import { useCompaniesStore } from '@/stores/companiesStore.js'
 
 export default {
+  props: {
+    modelValue: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ['update:modelValue', 'update'],
   data() {
     return {
       dialog: false,
@@ -258,6 +265,7 @@ export default {
       employerMode: 'existing',
       valid: false,
       toast: useToast(),
+      companyAdded: false,
       programsStore: useStudyProgramsStore(),
       companiesStore: useCompaniesStore(),
       form: {
@@ -339,6 +347,7 @@ export default {
       if (!result.valid) return
       this.companyAdded = true
       this.companyDialog = false
+      this.form.company = this.company
       this.toast.success(this.editMode ? 'Zamestnávateľ upravený!' : 'Zamestnávateľ pridaný!')
     },
 
@@ -354,7 +363,7 @@ export default {
       )
 
       const data = {
-        company_id: this.employerMode === 'existing' ? selectedCompany?.id : null,
+        company_id: this.employerMode === 'existing' ? selectedCompany?.user_id : null,
         study_program_id: this.form.study_program_id,
         semester: this.form.semester === 'Zimný' ? 'winter' : 'summer',
         academic_year: this.form.academic_year,

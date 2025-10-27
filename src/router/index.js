@@ -10,7 +10,8 @@ import { useAuthStore } from '@/stores/authStore.js'
 import CompaniesView from '@/views/CompaniesView.vue'
 import StudentPraxePage from '@/views/StudentPraxePage.vue'
 import SupervisorPraxePage from '@/views/SupervisorPraxePage.vue'
-
+import { ROLES } from '@/constants/roles.js'
+import { hasAccess } from '@/utils/access.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,25 +38,25 @@ const router = createRouter({
       path: '/student-dashboard',
       name: 'StudentDashboard',
       component: StudentDashboard,
-      meta: { requiresAuth: true, roles: ['student'] }
+      meta: { requiresAuth: true, roles: [ROLES.STUDENT] }
     },
     {
       path: '/student-praxe',
       name: 'StudentPraxe',
       component: StudentPraxePage,
-      meta: { requiresAuth: true, roles: ['student'] }
+      meta: { requiresAuth: true, roles: [ROLES.STUDENT] }
     },
     {
       path: '/company-dashboard',
       name: 'CompanyDashboard',
       component: CompanyDashboard,
-      meta: { requiresAuth: true, roles: ['company'] }
+      meta: { requiresAuth: true, roles: [ROLES.COMPANY] }
     },
     {
       path: '/supervisor-dashboard',
       name: 'SupervisorDashboard',
       component: SupervisorDashboard,
-      meta: { requiresAuth: true, roles: ['supervisor'] }
+      meta: { requiresAuth: true, roles: [ROLES.SUPERVISOR] }
     },
     {
       path: '/supervisor-all-praxe',
@@ -101,23 +102,13 @@ router.beforeEach(async (to, from, next) => {
     next({ name: 'Login' })
     return
   }
-
-  if (to.meta.roles && to.meta.roles.length > 0) {
-    console.log("Token roles are: " + to.meta.roles)
-    console.log("User have: ", authStore.user.roles)
-    const allowedRoles = to.meta.roles
-    const hasRequiredRole = userRoles.some(role => allowedRoles.includes(role))
-    console.log("hasRequiredRole", hasRequiredRole)
-
-    if (!hasRequiredRole) {
-      return next({ name: 'Login' })
-    }
-  }
+  if (to.meta.roles?.length && !hasAccess(userRoles, to.meta.roles))
+    return next({ name: 'Login' })
 
   if (to.meta.guestOnly && authStore.isLoggedIn) {
-    if (userRoles.includes('student')) return next({ name: 'StudentDashboard' })
-    if (userRoles.includes('company')) return next({ name: 'CompanyDashboard' })
-    if (userRoles.includes('supervisor')) return next({ name: 'SupervisorDashboard' })
+    if (userRoles.includes(ROLES.STUDENT)) return next({ name: 'StudentDashboard' })
+    if (userRoles.includes(ROLES.COMPANY)) return next({ name: 'CompanyDashboard' })
+    if (userRoles.includes(ROLES.SUPERVISOR)) return next({ name: 'SupervisorDashboard' })
     return next({ name: 'Info' })
   }
 

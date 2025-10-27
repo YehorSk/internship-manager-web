@@ -19,7 +19,7 @@ export const useCompaniesStore = defineStore('companies', {
       this.loading = true
       this.error = null
       try {
-        const res = await axios.post('/api/companies?page=' + this.current_page,{
+        const res = await axios.post('/api/companies/list?page=' + this.current_page,{
           params: {
             search: search
           }
@@ -27,7 +27,6 @@ export const useCompaniesStore = defineStore('companies', {
         this.companies = res.data.data || []      // array of companies
         this.current_page = res.data.current_page || 1
         this.total_pages = res.data.last_page || 1
-        console.log('Companies', this.companies)
       } catch (e) {
         handleError(e, this)
       } finally {
@@ -35,18 +34,16 @@ export const useCompaniesStore = defineStore('companies', {
       }
     },
 
-
-    async changeStatus(id, status) {
-      this.loading = true
+    async changeStatus(user_id, status) {
+      // this.loading = true
       this.error = null
       try {
-        const res = await axios.post(`/api/companies/${id}/company_change_status`, { status })
-        await this.fetchCompanies()
+        const res = await axios.patch(`/api/companies/${user_id}`, { status })
         return res.data
       } catch (e) {
         handleError(e, this)
       } finally {
-        this.loading = false
+        // this.loading = false
       }
     },
 
@@ -64,3 +61,4 @@ export const useCompaniesStore = defineStore('companies', {
     },
   }
 })
+

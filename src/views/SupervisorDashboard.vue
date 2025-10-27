@@ -2,7 +2,7 @@
   <v-main>
     <v-container fluid>
       <v-row>
-        <Sidebar class="sidebar" />
+        <Sidebar/>
         <v-container fluid class="pa-4">
           <v-row class="mb-4">
             <v-col cols="12">
@@ -42,7 +42,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr v-for="c in store.companies" :key="c.id">
+                  <tr v-for="c in store.companies" :key="c.user_id">
                     <td>{{ c.name }}</td>
                     <td>{{ c.contact_name }}</td>
                     <td>{{ c.contact_email }}</td>
@@ -57,23 +57,25 @@
                       </v-chip>
                     </td>
                     <td class="text-right">
-                      <v-btn
-                        size="small"
-                        color="#3A803D"
-                        class="me-2 text-white"
-                        prepend-icon="mdi-check-circle"
-                        @click="confirmCompany(c.id)"
-                      >
-                        Potvrdiť
-                      </v-btn>
-                      <v-btn
-                        size="small"
-                        color="error"
-                        prepend-icon="mdi-close-circle"
-                        @click="rejectCompany(c.id)"
-                      >
-                        Odmietnuť
-                      </v-btn>
+                      <div class="d-flex justify-end align-center ga-2">
+                        <v-btn
+                          size="small"
+                          color="#3A803D"
+                          class="text-white"
+                          prepend-icon="mdi-check-circle"
+                          @click="confirmCompany(c.user_id)"
+                        >
+                          Potvrdiť
+                        </v-btn>
+                        <v-btn
+                          size="small"
+                          color="error"
+                          prepend-icon="mdi-close-circle"
+                          @click="rejectCompany(c.user_id)"
+                        >
+                          Odmietnuť
+                        </v-btn>
+                      </div>
                     </td>
                   </tr>
                   </tbody>
@@ -95,7 +97,8 @@
 
 <script>
 import Sidebar from '@/components/Sidebar.vue'
-import { useCompaniesStore } from '@/stores/companies'
+import { useCompaniesStore } from '@/stores/companiesStore.js'
+import { useToast } from 'vue-toastification'
 
 export default {
   name: 'CompaniesView',
@@ -103,16 +106,51 @@ export default {
 
   data() {
     return {
-      store: useCompaniesStore()
+      store: useCompaniesStore(),
+      toast: useToast()
     }
   },
 
   methods: {
-    confirmCompany(id) {
-      this.store.changeStatus(id, 1)
+    async confirmCompany(user_id) {
+      try {
+        const res = await this.store.changeStatus(user_id, true)
+        const msg = res?.message
+
+        this.toast.success(msg)
+
+        if (res?.success) {
+          this.store.$patch(state => {
+            const idx = state.companies.findIndex(p => p.user_id === user_id)
+            if (idx !== -1) {
+              state.companies[idx] = { ...state.companies[idx], status: true }
+            }
+          })
+        }
+      } catch (e) {
+        const msg = e?.response?.data?.error || 'Chyba pri potvrdení firmy'
+        this.toast.error(msg)
+      }
     },
-    rejectCompany(id) {
-      this.store.changeStatus(id, 0)
+
+    async rejectCompany(user_id) {
+      try {
+        const res = await this.store.changeStatus(user_id, false)
+        const msg = res?.message
+        this.toast.info(msg)
+
+        if (res?.success) {
+          this.store.$patch(state => {
+            const idx = state.companies.findIndex(p => p.user_id === user_id)
+            if (idx !== -1) {
+              state.companies[idx] = { ...state.companies[idx], status: false }
+            }
+          })
+        }
+      } catch (e) {
+        const msg = e?.response?.data?.error || 'Chyba pri odmietnutí firmy'
+        this.toast.error(msg)
+      }
     }
   },
 

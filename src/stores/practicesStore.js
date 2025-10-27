@@ -33,17 +33,18 @@ export const usePracticesStore = defineStore('practices', {
         if (filters.company_name || filters.search)
           search.company_name = filters.company_name || filters.search
 
-        const payload = Object.keys(search).length ? { search } : {}
+        const payload = {
+          page: this.current_page,
+          itemsPerPage: this.per_page,
+          ...(Object.keys(search).length ? { search } : {})
+        }
 
-        const { data } = await axios.post(
-          `/api/practices/list-student?page=${this.current_page}&itemsPerPage=${this.per_page}`,
-          payload
-        )
+        const { data } = await axios.post('/api/practices/list', payload)
 
         this.list = data.data || []
-        this.current_page = data.current_page || 1
-        this.total_pages = data.last_page || 1
-        this.total_items = data.total || this.list.length
+        this.current_page = data.meta?.current_page || data.current_page || 1
+        this.total_pages = data.meta?.last_page || data.last_page || 1
+        this.total_items = data.meta?.total || data.total || this.list.length
       } catch (e) {
         handleError(e, this)
       } finally {

@@ -230,7 +230,7 @@
               </v-col>
 
               <v-col cols="12" md="6">
-                <v-label><span class="font-weight-bold">Telefón</span></v-label>
+                <v-label><span class="font-weight-bold">Telefón kontaktnej osoby</span></v-label>
                 <v-text-field
                   v-if="isEditing && !isLocked"
                   v-model="edited.contact_phone"
@@ -481,11 +481,16 @@
 import { useToast } from 'vue-toastification'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { usePracticesStore } from '@/stores/practicesStore.js'
+import { getStatusColor, getStatusIcon, getStatusText } from '@/utils/statusHelpers.js'
 
 export default {
   props: {
     modelValue: { type: Boolean, default: false },
-    practiceId: { type: Number, required: true },
+    practiceId: {
+      type: [Number, null],
+      default: null,
+      required: false,
+    },
   },
   emits: ['update:modelValue', 'update'],
   data() {
@@ -529,6 +534,9 @@ export default {
     if (this.open) this.fetchPractice()
   },
   methods: {
+    getStatusColor,
+    getStatusIcon,
+    getStatusText,
     async fetchPractice() {
       this.loadingPractice = true
       this.practice = null
@@ -635,10 +643,10 @@ export default {
 
         this.$emit('update', this.practice)
         this.isEditing = false
-        this.toast.success('Prax bola úspešne aktualizovaná!')
+        this.toast.success(this.practicesStore.success)
       } catch (e) {
         console.error(e.response?.data || e)
-        this.toast.error('Nepodarilo sa aktualizovať prax.')
+        this.toast.error(this.practicesStore.error || 'Nepodarilo sa aktualizovať prax.')
       }
     },
 
@@ -647,8 +655,9 @@ export default {
     },
 
     formatDate(date) {
-      if (!date) return '—'
+      if (!date) return null
       const d = new Date(date)
+      if (isNaN(d)) return null
       return d.toISOString().split('T')[0]
     },
     formatDateTime(date) {
@@ -661,57 +670,6 @@ export default {
         minute: '2-digit',
       })
     },
-    getStatusColor(status) {
-      const map = {
-        created: '#1976D2',
-        agreement_confirm_requested: '#757575',
-        agreement_confirmed_by_company: '#2E7D32',
-        agreement_confirmed_by_supervisor: '#2E7D32',
-        agreement_rejected_by_company: '#C62828',
-        agreement_rejected_by_supervisor: '#C62828',
-        report_confirm_requested: '#616161',
-        report_confirmed_by_company: '#2E7D32',
-        report_confirmed_by_supervisor: '#2E7D32',
-        report_rejected_by_company: '#C62828',
-        report_rejected_by_supervisor: '#C62828',
-        canceled: '#000000',
-      }
-      return map[status] || '#1976D2'
-    },
-    getStatusIcon(status) {
-      const icons = {
-        created: 'mdi-file-plus',
-        agreement_confirm_requested: 'mdi-send',
-        agreement_confirmed_by_company: 'mdi-domain',
-        agreement_confirmed_by_supervisor: 'mdi-school',
-        agreement_rejected_by_company: 'mdi-close-circle',
-        agreement_rejected_by_supervisor: 'mdi-close-circle',
-        report_confirm_requested: 'mdi-file-send',
-        report_confirmed_by_company: 'mdi-domain',
-        report_confirmed_by_supervisor: 'mdi-school',
-        report_rejected_by_company: 'mdi-close-circle',
-        report_rejected_by_supervisor: 'mdi-close-circle',
-        canceled: 'mdi-cancel',
-      }
-      return icons[status] || 'mdi-file'
-    },
-    getStatusText(status) {
-      const map = {
-        created: 'Vytvorená',
-        agreement_confirm_requested: 'Žiadosť o potvrdenie dohody',
-        agreement_confirmed_by_company: 'Dohoda potvrdená firmou',
-        agreement_confirmed_by_supervisor: 'Dohoda potvrdená garantom',
-        agreement_rejected_by_company: 'Dohoda zamietnutá firmou',
-        agreement_rejected_by_supervisor: 'Dohoda zamietnutá garantом',
-        report_confirm_requested: 'Žiadosť o potvrdenie správy',
-        report_confirmed_by_company: 'Správa potvrdená firmou',
-        report_confirmed_by_supervisor: 'Správa potvrденá garantом',
-        report_rejected_by_company: 'Správa zamietnutá firmou',
-        report_rejected_by_supervisor: 'Správa zamietnutá garantом',
-        canceled: 'Zrušená',
-      }
-      return map[status] || 'Neznámy'
-    },
     async downloadAgreement() {
       // доробити логіку
     },
@@ -719,7 +677,7 @@ export default {
       if (!confirm('Naozaj chceš zrušiť túto prax?')) return
       try {
         await this.practicesStore.deletePractice(this.practice.id)
-        this.toast.success('Prax bola úspešne zrušená.')
+        this.toast.success(this.practicesStore.success)
 
         this.$emit('update', { id: this.practice.id, status: 'canceled' })
         if (this.practice) this.practice.status = 'canceled'
@@ -727,7 +685,7 @@ export default {
         this.open = false
       } catch (e) {
         console.error(e)
-        this.toast.error('Nepodarilo sa zrušiť prax.')
+        this.toast.error(this.practicesStore.error)
       }
     },
 
