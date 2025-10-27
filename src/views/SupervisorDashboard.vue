@@ -115,41 +115,32 @@ export default {
     async confirmCompany(user_id) {
       try {
         const res = await this.store.changeStatus(user_id, true)
-        const msg = res?.message
+        this.toast.success(res?.message)
 
-        this.toast.success(msg)
-
-        if (res?.success) {
-          this.store.$patch(state => {
-            const idx = state.companies.findIndex(p => p.user_id === user_id)
-            if (idx !== -1) {
-              state.companies[idx] = { ...state.companies[idx], status: true }
-            }
-          })
-        }
+        this.store.$patch(state => {
+          const idx = state.companies.map(c =>
+            c.user_id === user_id ? { ...c, status: true } : c
+          )
+          state.companies = idx
+        })
       } catch (e) {
-        const msg = e?.response?.data?.error || 'Chyba pri potvrdení firmy'
-        this.toast.error(msg)
+        this.toast.error(this.store.error || 'Chyba pri potvrdení firmy')
       }
     },
 
     async rejectCompany(user_id) {
       try {
         const res = await this.store.changeStatus(user_id, false)
-        const msg = res?.message
-        this.toast.info(msg)
+        this.toast.info(res?.message || 'Firma bola odmietnutá.')
 
-        if (res?.success) {
-          this.store.$patch(state => {
-            const idx = state.companies.findIndex(p => p.user_id === user_id)
-            if (idx !== -1) {
-              state.companies[idx] = { ...state.companies[idx], status: false }
-            }
-          })
-        }
+        this.store.$patch(state => {
+          const idx = state.companies.map(c =>
+            c.user_id === user_id ? { ...c, status: false } : c
+          )
+          state.companies = idx
+        })
       } catch (e) {
-        const msg = e?.response?.data?.error || 'Chyba pri odmietnutí firmy'
-        this.toast.error(msg)
+        this.toast.error(this.store.error || 'Chyba pri odmietnutí firmy')
       }
     }
   },

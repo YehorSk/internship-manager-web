@@ -129,12 +129,12 @@ export default {
       store: null,
       toast: useToast(),
       isLoading: false,
+      allPractices: [],
     }
   },
   computed: {
     activePractices() {
-      if (!this.store || !this.store.list) return []
-      return this.store.list.filter(
+      return this.allPractices.filter(
         p => !['canceled', 'report_confirmed_by_supervisor', 'report_confirmed_by_company'].includes(p.status)
       )
     },
@@ -147,7 +147,18 @@ export default {
     async loadPractices() {
       try {
         this.isLoading = true
+        this.store.current_page = 1
         await this.store.fetchPractices()
+
+        const allPractices = [...this.store.list]
+        const totalPages = this.store.total_pages
+
+        for (let page = 2; page <= totalPages; page++) {
+          await this.store.changePage(page)
+          allPractices.push(...this.store.list)
+        }
+
+        this.allPractices = allPractices
       } catch (e) {
         this.toast.error('Nepodarilo sa načítať praxe.')
       } finally {

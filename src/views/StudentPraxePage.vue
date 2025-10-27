@@ -30,12 +30,12 @@
 
             <v-row class="mt-2" dense>
               <v-col cols="12" md="3">
-                <v-text-field
-                  v-model="filters.search"
-                  placeholder="Hľadať..."
-                  prepend-inner-icon="mdi-magnify"
-                  density="comfortable"
+                <v-autocomplete
+                  v-model="filters.study_program"
+                  :items="studyPrograms"
+                  label="Študijný program"
                   variant="outlined"
+                  density="comfortable"
                   clearable
                 />
               </v-col>
@@ -78,7 +78,7 @@
               <v-col cols="12" md="2">
                 <v-select
                   v-model="filters.status"
-                  :items="statusOptions"
+                  :items="statusOptions()"
                   item-title="label"
                   item-value="value"
                   label="Stav"
@@ -175,7 +175,7 @@ import Sidebar from '@/components/Sidebar.vue'
 import StudentAddPraxeForm from '@/components/StudentAddPraxeForm.vue'
 import StudentDetailsPraxeDialog from '@/components/StudentDetailsPraxeDialog.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
-import { getStatusColor, getStatusText } from '@/utils/statusHelpers.js'
+import { getStatusColor, getStatusText, statusOptions } from '@/utils/statusHelpers.js'
 
 export default {
   components: { Sidebar, StudentAddPraxeForm, StudentDetailsPraxeDialog },
@@ -186,33 +186,16 @@ export default {
       selectedPracticeId: null,
       store: usePracticesStore(),
       filters: {
-        search: '',
         year: null,
         semester: null,
         status: null,
         employer: null,
+        study_program: null,
       },
     }
   },
 
   computed: {
-    statusOptions() {
-      const statuses = [
-        'created',
-        'agreement_confirm_requested',
-        'agreement_confirmed_by_company',
-        'agreement_confirmed_by_supervisor',
-        'agreement_rejected_by_company',
-        'agreement_rejected_by_supervisor',
-        'report_confirm_requested',
-        'report_confirmed_by_company',
-        'report_confirmed_by_supervisor',
-        'report_rejected_by_company',
-        'report_rejected_by_supervisor',
-        'canceled'
-      ]
-      return statuses.map(s => ({ value: s, label: this.getStatusText(s) }))
-    },
     years() {
       return [...new Set(this.store.list.map(p => p.academic_year))].filter(Boolean).sort().reverse()
     },
@@ -220,6 +203,13 @@ export default {
       return [...new Set(
         this.store.list
           .map(p => p.practice_company?.name || p.company?.name)
+          .filter(Boolean)
+      )].sort()
+    },
+    studyPrograms() {
+      return [...new Set(
+        this.store.list
+          .map(p => p.study_program?.name)
           .filter(Boolean)
       )].sort()
     }
@@ -245,6 +235,9 @@ export default {
   },
 
   methods: {
+    statusOptions() {
+      return statusOptions
+    },
     openForm() {
       this.$refs.formDialog.openDialog()
     },
