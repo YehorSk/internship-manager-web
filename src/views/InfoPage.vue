@@ -335,12 +335,35 @@ import AppFooter from '../components/AppFooter.vue'
 
 export default {
   components: { AppHeader, AppFooter },
+  mounted() {
+    this.scrollToHash(this.$route.hash)
+  },
+  watch: {
+    '$route.hash'(newHash) {
+      this.scrollToHash(newHash)
+    }
+  },
   methods: {
     scrollTo(id) {
       const el = document.getElementById(id)
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' })
       }
+    },
+    scrollToHash(hash) {
+      if (!hash) return
+      const id = hash.replace('#', '')
+      let tries = 0
+      const tryFind = () => {
+        tries++
+        const el = document.getElementById(id)
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' })
+          return
+        }
+        if (tries < 8) setTimeout(tryFind, 150)
+      }
+      this.$nextTick(tryFind)
     }
   }
 }

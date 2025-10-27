@@ -2,8 +2,11 @@
 import { useAuthStore } from '@/stores/authStore.js'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { useToast } from "vue-toastification";
+import AppHeader from '@/components/AppHeader.vue'
+import AppFooter from '@/components/AppFooter.vue'
 
 export default {
+  components: { AppFooter, AppHeader },
   data() {
     return {
       authStore: useAuthStore(),
@@ -122,242 +125,342 @@ export default {
 
 
 <template>
-  <v-container class="form-container fill-height d-flex align-center justify-center">
-    <v-card elevation="12" class="pa-6 rounded-2xl" max-width="600">
-      <v-card-title class="text-h5 text-center font-weight-bold">Vytvoriť účet</v-card-title>
-      <v-card-subtitle class="text-center mb-6">Vyberte si svoju rolu a dokončite registráciu</v-card-subtitle>
+  <v-app>
+    <AppHeader />
+    <section class="py-16">
+      <v-container class="form-container fill-height d-flex align-center justify-center">
+        <v-card elevation="12" class="pa-6 rounded-2xl" max-width="600">
+          <v-card-title class="text-h5 text-center font-weight-bold">Vytvoriť účet</v-card-title>
+          <v-card-subtitle class="text-center mb-6">Vyberte si svoju rolu a dokončite registráciu</v-card-subtitle>
 
-      <v-tabs v-model="selectedRole" class="mb-6 rounded-lg" color="primary" align-tabs="center" grow>
-        <v-tab value="student"><v-icon start>mdi-account</v-icon> Študent</v-tab>
-        <v-tab value="company"><v-icon start>mdi-office-building</v-icon> Spoločnosť</v-tab>
-      </v-tabs>
+          <v-tabs v-model="selectedRole" class="mb-6 rounded-lg" color="primary" align-tabs="center" grow>
+            <v-tab value="student"><v-icon start>mdi-account</v-icon> Študent</v-tab>
+            <v-tab value="company"><v-icon start>mdi-office-building</v-icon> Spoločnosť</v-tab>
+          </v-tabs>
 
-      <v-window v-model="selectedRole" class="rounded-xl">
-        <v-window-item value="student">
-          <v-form ref="studentForm" v-model="valid" class="form-fix" @submit.prevent="submit">
-            <v-text-field
-              v-model="studentData.first_name"
-              :error-messages="fieldMsg('first_name')"
-              label="Krstné meno *"
-              :rules="[rules.required]"
-              variant="outlined"
-              density="comfortable"
-              rounded="xl"
-              @update:modelValue="clearFieldError('first_name')"
-            />
-            <v-text-field
-              v-model="studentData.last_name"
-              :error-messages="fieldMsg('last_name')"
-              label="Priezvisko *"
-              :rules="[rules.required]"
-              variant="outlined"
-              density="comfortable"
-              rounded="xl"
-              @update:modelValue="clearFieldError('last_name')"
-            />
-            <v-text-field
-              v-model="studentData.address"
-              :error-messages="fieldMsg('address')"
-              label="Adresa *"
-              :rules="[rules.required]"
-              variant="outlined"
-              density="comfortable"
-              rounded="xl"
-              @update:modelValue="clearFieldError('address')"
-            />
-            <v-text-field
-              v-model="studentData.student_email"
-              :error-messages="fieldMsg('student_email')"
-              label="Študentský e-mail *"
-              type="email"
-              :rules="[rules.required, rules.email, rules.studentEmail]"
-              variant="outlined"
-              density="comfortable"
-              rounded="xl"
-              @update:modelValue="clearFieldError('student_email')"
-            />
-            <v-text-field
-              v-model="studentData.primary_email"
-              :error-messages="[...fieldMsg('primary_email'), ...fieldMsg('primary_email')]"
-              label="Primárny/Alternatívny e-mail *"
-              type="email"
-              :rules="[rules.required, rules.email]"
-              variant="outlined"
-              density="comfortable"
-              rounded="xl"
-              @update:modelValue="clearFieldError('primary_email'); clearFieldError('primary_email')"
-            />
-            <v-text-field
-              v-model="studentData.phone"
-              :error-messages="[...fieldMsg('phone'), ...fieldMsg('phone')]"
-              label="Telefónne číslo *"
-              type="tel"
-              :rules="[rules.required, rules.phone]"
-              variant="outlined"
-              density="comfortable"
-              rounded="xl"
-              @update:modelValue="clearFieldError('phone'); clearFieldError('phone')"
-            />
+          <v-window v-model="selectedRole">
+            <v-window-item value="student">
+              <v-form ref="studentForm" v-model="valid" class="form-fix" @submit.prevent="submit">
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">Krstné meno</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-text-field
+                  v-model="studentData.first_name"
+                  :error-messages="fieldMsg('first_name')"
+                  placeholder="Zadajte krstné meno"
+                  :rules="[rules.required]"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  @update:modelValue="clearFieldError('first_name')"
+                />
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">Priezvisko</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-text-field
+                  v-model="studentData.last_name"
+                  :error-messages="fieldMsg('last_name')"
+                  placeholder="Zadajte priezvisko"
+                  :rules="[rules.required]"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  @update:modelValue="clearFieldError('last_name')"
+                />
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">Adresa</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-text-field
+                  v-model="studentData.address"
+                  :error-messages="fieldMsg('address')"
+                  placeholder="Zadajte adresu"
+                  :rules="[rules.required]"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  @update:modelValue="clearFieldError('address')"
+                />
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">Študentský e-mail</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-text-field
+                  v-model="studentData.student_email"
+                  :error-messages="fieldMsg('student_email')"
+                  placeholder="Zadajte študentský e-mail"
+                  type="email"
+                  :rules="[rules.required, rules.email, rules.studentEmail]"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  @update:modelValue="clearFieldError('student_email')"
+                />
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">Primárny/Alternatívny e-mail</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-text-field
+                  v-model="studentData.primary_email"
+                  :error-messages="[...fieldMsg('primary_email'), ...fieldMsg('primary_email')]"
+                  placeholder="Zadajte primárny e-mail"
+                  type="email"
+                  :rules="[rules.required, rules.email]"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  @update:modelValue="clearFieldError('primary_email'); clearFieldError('primary_email')"
+                />
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">Telefónne číslo</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-text-field
+                  v-model="studentData.phone"
+                  :error-messages="[...fieldMsg('phone'), ...fieldMsg('phone')]"
+                  placeholder="Zadajte telefónne číslo"
+                  type="tel"
+                  :rules="[rules.required, rules.phone]"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  @update:modelValue="clearFieldError('phone'); clearFieldError('phone')"
+                />
 
-            <v-autocomplete
-              v-model="studentData.study_program"
-              :error-messages="fieldMsg('study_program')"
-              :items="studyPrograms.list"
-              item-title="name"
-              item-value="id"
-              label="Študijný odbor *"
-              :rules="[rules.required]"
-              variant="outlined"
-              density="comfortable"
-              rounded="xl"
-              clearable
-              hide-details="auto"
-              @update:modelValue="clearFieldError('study_program')"
-            />
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">Študijný odbor</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-autocomplete
+                  v-model="studentData.study_program"
+                  :error-messages="fieldMsg('study_program')"
+                  :items="studyPrograms.list"
+                  item-title="name"
+                  item-value="id"
+                  placeholder="Vyberte študijný odbor"
+                  :rules="[rules.required]"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  clearable
+                  hide-details="auto"
+                  @update:modelValue="clearFieldError('study_program')"
+                />
 
-            <v-alert type="info" variant="tonal" class="mt-2 rounded-lg">Po registrácii dostanete heslo e-mailom.</v-alert>
+                <v-alert type="info" variant="tonal" class="mt-2 rounded-lg">Po registrácii dostanete heslo e-mailom.</v-alert>
 
+                <v-btn
+                  color="#3A803D"
+                  size="large"
+                  rounded="lg"
+                  class="mt-4 text-white"
+                  block
+                  :loading="authStore.loading"
+                  :disabled="!valid || authStore.loading"
+                  type="submit"
+                >
+                  Registrovať sa ako študent
+                </v-btn>
+              </v-form>
+            </v-window-item>
+
+            <v-window-item value="company">
+              <v-form ref="companyForm" v-model="valid" class="form-fix" @submit.prevent="submit">
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">Názov spoločnosti</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-text-field
+                  v-model="companyData.name"
+                  :error-messages="fieldMsg('name')"
+                  placeholder="Zadajte názov spoločnosti"
+                  :rules="[rules.required]"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  @update:modelValue="clearFieldError('name')"
+                />
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">E-mail spoločnosti</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-text-field
+                  v-model="companyData.company_email"
+                  :error-messages="fieldMsg('company_email')"
+                  placeholder="Zadajte e-mail spoločnosti"
+                  type="email"
+                  :rules="[rules.required, rules.email]"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  @update:modelValue="clearFieldError('company_email')"
+                />
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">Adresa</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-text-field
+                  v-model="companyData.address"
+                  :error-messages="fieldMsg('address')"
+                  placeholder="Zadajte adresu spoločnosti"
+                  :rules="[rules.required]"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  @update:modelValue="clearFieldError('address')"
+                />
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">Meno kontaktnej osoby</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-text-field
+                  v-model="companyData.contact_name"
+                  :error-messages="fieldMsg('contact_name')"
+                  placeholder="Zadajte meno kontaktnej osoby"
+                  :rules="[rules.required]"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  @update:modelValue="clearFieldError('contact_name')"
+                />
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">E-mail kontaktnej osoby</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-text-field
+                  v-model="companyData.contact_email"
+                  :error-messages="fieldMsg('contact_email')"
+                  placeholder="Zadajte e-mail kontaktnej osoby"
+                  type="email"
+                  :rules="[rules.required, rules.email]"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  @update:modelValue="clearFieldError('contact_email')"
+                />
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">Telefón kontaktnej osoby</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-text-field
+                  v-model="companyData.contact_phone"
+                  :error-messages="fieldMsg('contact_phone')"
+                  placeholder="Zadajte telefón kontaktnej osoby"
+                  type="tel"
+                  :rules="[rules.required, rules.phone]"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  @update:modelValue="clearFieldError('contact_phone')"
+                />
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">Heslo</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-text-field
+                  v-model="companyData.password"
+                  :error-messages="fieldMsg('password')"
+                  placeholder="Zadajte heslo"
+                  type="password"
+                  :rules="[rules.required, v => v.length >= 8 || 'Minimálne 8 znakov']"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  @update:modelValue="clearFieldError('password')"
+                />
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">Potvrdenie hesla</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-text-field
+                  v-model="companyData.password_confirmation"
+                  placeholder="Potvrďte heslo"
+                  type="password"
+                  :rules="[rules.required, v => v === companyData.password || 'Heslá sa nezhodujú']"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                />
+
+                <v-alert type="warning" variant="tonal" class="mt-2 rounded-lg">Váš firemný účet potrebuje aktiváciu. Po kontrole vás budeme kontaktovať.</v-alert>
+
+                <v-btn
+                  color="#3A803D"
+                  size="large"
+                  rounded="lg"
+                  class="mt-4 text-white"
+                  block
+                  :loading="authStore.loading"
+                  :disabled="!valid || authStore.loading"
+                  type="submit"
+                >
+                  Registrovať sa ako spoločnosť
+                </v-btn>
+              </v-form>
+            </v-window-item>
+          </v-window>
+
+          <div class="my-6 text-center">
+            <v-divider />
+            <div class="text-caption mt-n3 bg-white px-3 d-inline-block">Alebo</div>
+          </div>
+
+          <v-btn
+            variant="outlined"
+            block
+            rounded="lg"
+            class="mb-4"
+            :to="{ name: 'Info' }"
+          >
+            Prihlásiť sa ako hosť
+          </v-btn>
+          <div class="text-center">
+            <span class="text-body-2">Už máte účet?</span>
             <v-btn
+              variant="text"
               color="#3A803D"
-              size="large"
-              class="mt-4 rounded-xl text-white"
-              block
-              :loading="authStore.loading"
-              :disabled="!valid || authStore.loading"
-              type="submit"
+              class="font-weight-bold"
+              :to="{ name: 'Login' }"
             >
-              Registrovať sa ako študent
+              Prihlásiť sa tu
             </v-btn>
-          </v-form>
-        </v-window-item>
+          </div>
+        </v-card>
+      </v-container>
 
-        <v-window-item value="company">
-          <v-form ref="companyForm" v-model="valid" class="form-fix" @submit.prevent="submit">
-            <v-text-field
-              v-model="companyData.name"
-              :error-messages="fieldMsg('name')"
-              label="Názov spoločnosti *"
-              :rules="[rules.required]"
-              variant="outlined"
-              density="comfortable"
-              rounded="xl"
-              @update:modelValue="clearFieldError('name')"
-            />
-            <v-text-field
-              v-model="companyData.company_email"
-              :error-messages="fieldMsg('company_email')"
-              label="E-mail spoločnosti *"
-              type="email"
-              :rules="[rules.required, rules.email]"
-              variant="outlined"
-              density="comfortable"
-              rounded="xl"
-              @update:modelValue="clearFieldError('company_email')"
-            />
-            <v-text-field
-              v-model="companyData.address"
-              :error-messages="fieldMsg('address')"
-              label="Adresa *"
-              :rules="[rules.required]"
-              variant="outlined"
-              density="comfortable"
-              rounded="xl"
-              @update:modelValue="clearFieldError('address')"
-            />
-            <v-text-field
-              v-model="companyData.contact_name"
-              :error-messages="fieldMsg('contact_name')"
-              label="Meno kontaktnej osoby *"
-              :rules="[rules.required]"
-              variant="outlined"
-              density="comfortable"
-              rounded="xl"
-              @update:modelValue="clearFieldError('contact_name')"
-            />
-            <v-text-field
-              v-model="companyData.contact_email"
-              :error-messages="fieldMsg('contact_email')"
-              label="E-mail kontaktnej osoby *"
-              type="email"
-              :rules="[rules.required, rules.email]"
-              variant="outlined"
-              density="comfortable"
-              rounded="xl"
-              @update:modelValue="clearFieldError('contact_email')"
-            />
-            <v-text-field
-              v-model="companyData.contact_phone"
-              :error-messages="fieldMsg('contact_phone')"
-              label="Telefón kontaktnej osoby *"
-              type="tel"
-              :rules="[rules.required, rules.phone]"
-              variant="outlined"
-              density="comfortable"
-              rounded="xl"
-              @update:modelValue="clearFieldError('contact_phone')"
-            />
-            <v-text-field
-              v-model="companyData.password"
-              :error-messages="fieldMsg('password')"
-              label="Heslo *"
-              type="password"
-              :rules="[rules.required, v => v.length >= 8 || 'Minimálne 8 znakov']"
-              variant="outlined"
-              density="comfortable"
-              rounded="xl"
-              @update:modelValue="clearFieldError('password')"
-            />
-            <v-text-field
-              v-model="companyData.password_confirmation"
-              label="Potvrdenie hesla *"
-              type="password"
-              :rules="[rules.required, v => v === companyData.password || 'Heslá sa nezhodujú']"
-              variant="outlined"
-              density="comfortable"
-              rounded="xl"
-            />
-
-            <v-alert type="warning" variant="tonal" class="mt-2 rounded-lg">Váš firemný účet potrebuje aktiváciu. Po kontrole vás budeme kontaktovať.</v-alert>
-
-            <v-btn
-              color="#3A803D"
-              size="large"
-              class="mt-4 rounded-xl text-white"
-              block
-              :loading="authStore.loading"
-              :disabled="!valid || authStore.loading"
-              type="submit"
-            >
-              Registrovať sa ako spoločnosť
-            </v-btn>
-          </v-form>
-        </v-window-item>
-      </v-window>
-
-      <div class="my-6 text-center">
-        <v-divider />
-        <div class="text-caption mt-n3 bg-white px-3 d-inline-block">Alebo</div>
-      </div>
-
-      <v-btn
-        variant="outlined"
-        block
-        class="mb-4 rounded-xl"
-        :to="{ name: 'Info' }"
-      >
-        Prihlásiť sa ako hosť
-      </v-btn>
-      <div class="text-center">
-        <span class="text-body-2">Už máte účet?</span>
-        <v-btn
-          variant="text"
-          color="#3A803D"
-          class="font-weight-bold"
-          :to="{ name: 'Login' }"
-        >
-          Prihlásiť sa tu
-        </v-btn>
-      </div>
-    </v-card>
-  </v-container>
+    </section>
+    <AppFooter />
+  </v-app>
 </template>

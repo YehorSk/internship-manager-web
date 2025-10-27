@@ -7,7 +7,6 @@ import StudentDashboard from '@/views/StudentDashboard.vue'
 import CompanyDashboard from '@/views/CompanyDashboard.vue'
 import SupervisorDashboard from '@/views/SupervisorDashboard.vue'
 import { useAuthStore } from '@/stores/authStore.js'
-import CompaniesView from '@/views/CompaniesView.vue'
 import StudentPraxePage from '@/views/StudentPraxePage.vue'
 import SupervisorPraxePage from '@/views/SupervisorPraxePage.vue'
 import { ROLES } from '@/constants/roles.js'
@@ -76,12 +75,25 @@ const router = createRouter({
       meta: { guestOnly: true },
     },
     {
+      path: '/company-activation',
+      name: 'company-activation',
+      component: () => import('../views/CompanyActivationView.vue'),
+      meta: { guestOnly: true },
+    },
+    {
       path: '/settings',
       name: 'settings',
       component: () => import('../views/SettingsPage.vue'),
       meta: { requiresAuth: true, },
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) return savedPosition
+    if (to.hash) {
+      return { el: to.hash, behavior: 'smooth' }
+    }
+    return { left: 0, top: 0 }
+  }
 })
 
 router.beforeEach(async (to, from, next) => {

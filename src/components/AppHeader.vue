@@ -65,12 +65,30 @@ export default {
     }
   },
   methods: {
-    scrollTo(id) {
-      const el = document.getElementById(id)
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' })
-        this.isMobileMenuOpen = false
+    async scrollTo(id) {
+      if (this.$route.name !== 'Info') {
+        await this.$router.push({ name: 'Info'}).catch(() => {})
+        this.tryScroll(id)
+        return
       }
+
+      this.tryScroll(id)
+    },
+    tryScroll(id, attempts = 6, delay = 150) {
+      let tries = 0
+      const attempt = () => {
+        tries++
+        const el = document.getElementById(id)
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' })
+          this.isMobileMenuOpen = false
+          return
+        }
+        if (tries < attempts) {
+          setTimeout(attempt, delay)
+        }
+      }
+      this.$nextTick(attempt)
     }
   }
 }
