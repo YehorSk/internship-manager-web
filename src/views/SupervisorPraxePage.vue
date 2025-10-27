@@ -12,7 +12,6 @@
             </v-col>
           </v-row>
 
-          <!-- Filters -->
           <v-card class="pa-6 mb-6">
             <v-row class="align-center mb-3">
               <v-icon color="grey-darken-1" start>mdi-filter-outline</v-icon>
@@ -21,12 +20,12 @@
 
             <v-row class="mt-2" dense>
               <v-col cols="12" md="3">
-                <v-text-field
-                  v-model="filters.search"
-                  placeholder="Hľadať..."
-                  prepend-inner-icon="mdi-magnify"
-                  density="comfortable"
+                <v-autocomplete
+                  v-model="filters.study_program"
+                  :items="studyPrograms"
+                  label="Študijný program"
                   variant="outlined"
+                  density="comfortable"
                   clearable
                 />
               </v-col>
@@ -67,7 +66,7 @@
               <v-col cols="12" md="2">
                 <v-select
                   v-model="filters.status"
-                  :items="statusOptions"
+                  :items="statusOptions()"
                   item-title="label"
                   item-value="value"
                   label="Stav"
@@ -153,7 +152,7 @@
                   v-model="store.current_page"
                   :length="store.total_pages"
                   rounded="circle"
-                  @update:modelValue="page => fetchPractices(page)"
+                  @update:modelValue="page => loadPractices(page)"
                 />
               </template>
             </v-card-text>
@@ -167,6 +166,7 @@
 <script>
 import Sidebar from '@/components/Sidebar.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
+import { getStatusColor, getStatusText, statusOptions } from '@/utils/statusHelpers.js'
 
 export default {
   components: { Sidebar },
@@ -175,34 +175,17 @@ export default {
     return {
       store: usePracticesStore(),
       filters: {
-        search: '',
         year: null,
         semester: null,
         status: null,
         employer: null,
         student: null,
+        study_program: null,
       },
     }
   },
 
   computed: {
-    statusOptions() {
-      const statuses = [
-        'created',
-        'agreement_confirm_requested',
-        'agreement_confirmed_by_company',
-        'agreement_confirmed_by_supervisor',
-        'agreement_rejected_by_company',
-        'agreement_rejected_by_supervisor',
-        'report_confirm_requested',
-        'report_confirmed_by_company',
-        'report_confirmed_by_supervisor',
-        'report_rejected_by_company',
-        'report_rejected_by_supervisor',
-        'canceled'
-      ]
-      return statuses.map(s => ({ value: s, label: this.getStatusText(s) }))
-    },
     years() {
       return [...new Set(this.store.list.map(p => p.academic_year))].filter(Boolean).sort().reverse()
     },
@@ -215,75 +198,57 @@ export default {
       return [...new Set(
         this.store.list.map(p => p.student?.full_name).filter(Boolean)
       )].sort()
+    },
+    studyPrograms() {
+      return [...new Set(
+        this.store.list
+          .map(p => p.study_program?.name)
+          .filter(Boolean)
+      )].sort()
     }
-
   },
 
   watch: {
     filters: {
       deep: true,
       handler() {
+        const filters = { ...this.filters }
+        if (filters.employer) {
+          filters.company_name = filters.employer
+        }
+        delete filters.employer
         this.store.current_page = 1
-        this.fetchPractices()
+        this.store.fetchPractices(filters)
       }
     }
   },
 
   async mounted() {
-    await this.fetchPractices()
+    await this.loadPractices()
   },
 
   methods: {
-    fetchPractices(page = 1) {
+    statusOptions() {
+      return statusOptions
+    },
+    loadPractices(page = 1) {
       const payload = { ...this.filters }
-      if (!payload.student || payload.student.trim() === '') {
-        delete payload.student
-      } else {
+
+      if (payload.student && payload.student.trim() !== '') {
         payload.student_name = payload.student
-        delete payload.student
       }
+      delete payload.student
+
       this.store.current_page = page
-      this.store.fetchAllPractices(payload)
+      this.store.fetchPractices(payload)
     },
     formatDate(date) {
       if (!date) return '—'
       const d = new Date(date)
       return d.toISOString().split('T')[0]
     },
-    getStatusColor(status) {
-      const map = {
-        created: '#1976D2',
-        agreement_confirm_requested: '#757575',
-        agreement_confirmed_by_company: '#2E7D32',
-        agreement_confirmed_by_supervisor: '#2E7D32',
-        agreement_rejected_by_company: '#C62828',
-        agreement_rejected_by_supervisor: '#C62828',
-        report_confirm_requested: '#616161',
-        report_confirmed_by_company: '#2E7D32',
-        report_confirmed_by_supervisor: '#2E7D32',
-        report_rejected_by_company: '#C62828',
-        report_rejected_by_supervisor: '#C62828',
-        canceled: '#000000',
-      }
-      return map[status] || '#1976D2'
-    },
-    getStatusText(status) {
-      const map = {
-        created: 'Vytvorená',
-        agreement_confirm_requested: 'Žiadosť o potvrdenie dohody',
-        agreement_confirmed_by_company: 'Dohoda potvrdená firmou',
-        agreement_confirmed_by_supervisor: 'Dohoda potvrdená garantom',
-        agreement_rejected_by_company: 'Dohoda zamietnutá firmou',
-        agreement_rejected_by_supervisor: 'Dohoda zamietnutá garantom',
-        report_confirm_requested: 'Žiadosť o potvrdenie správy',
-        report_confirmed_by_company: 'Správa potvrdená firmou',
-        report_confirmed_by_supervisor: 'Správa potvrdená garantom',
-        report_rejected_by_company: 'Správa zamietnutá firmou',
-        report_rejected_by_supervisor: 'Správa zamietnutá garantom',
-        canceled: 'Zrušená'
-      }
-      return map[status] || 'Neznámy'
-    },
+    getStatusColor,
+    getStatusText
   },
 }
 </script>

@@ -26,12 +26,15 @@ export const usePracticesStore = defineStore('practices', {
 
         const search = {}
         if (filters.status) search.status = filters.status
-        if (filters.semester) {
+        if (filters.semester)
           search.semester = filters.semester === 'Zimný' ? 'winter' : 'summer'
-        }
         if (filters.year) search.academic_year = filters.year
-        if (filters.company_name || filters.search)
-          search.company_name = filters.company_name || filters.search
+        if (filters.company_name)
+          search.company_name = filters.company_name
+        if (filters.study_program)
+          search.study_program_name = filters.study_program
+        if (filters.student)
+          search.student_name = filters.student
 
         const payload = {
           page: this.current_page,
@@ -39,9 +42,20 @@ export const usePracticesStore = defineStore('practices', {
           ...(Object.keys(search).length ? { search } : {})
         }
 
-        const { data } = await axios.post('/api/practices/list', payload)
+        const endpoint = '/api/practices/list'
+        const { data } = await axios.post(endpoint, payload)
 
-        this.list = data.data || []
+        this.list = (data.data || []).map(p => {
+          const updated = { ...p }
+          if (p.student) {
+            updated.student = {
+              ...p.student,
+              full_name: `${p.student.first_name} ${p.student.last_name}`
+            }
+          }
+          return updated
+        })
+
         this.current_page = data.meta?.current_page || data.current_page || 1
         this.total_pages = data.meta?.last_page || data.last_page || 1
         this.total_items = data.meta?.total || data.total || this.list.length
@@ -51,52 +65,6 @@ export const usePracticesStore = defineStore('practices', {
         this.loading = false
       }
     },
-    async fetchAllPractices(filters = {}) {
-      this.loading = true
-      try {
-        const auth = useAuthStore()
-        if (auth.token)
-          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-
-        const search = {}
-
-        if (filters.status) search.status = filters.status
-        if (filters.semester) search.semester = filters.semester === 'Zimný' ? 'winter' : 'summer'
-        if (filters.year) search.academic_year = filters.year
-        if (filters.company_name) search.company_name = filters.company_name
-        if (filters.student_name && filters.student_name.trim() !== '') {
-          search.student_name = filters.student_name
-        }
-
-        const payload = Object.keys(search).length ? { search } : {}
-
-        const { data } = await axios.post(
-          `/api/practices/list?page=${this.current_page}&itemsPerPage=${this.per_page}`,
-          payload
-        )
-
-        this.list = (data.data || []).map(p => {
-          const updated = { ...p }
-          if (p.student) {
-            const student = { ...p.student }
-            student.full_name = `${student.first_name} ${student.last_name}`
-            updated.student = student
-          } else {
-            updated.student = null
-          }
-          return updated
-        })
-
-        this.current_page = data.current_page || 1
-        this.total_pages = data.last_page || 1
-        this.total_items = data.total || this.list.length
-      } catch (e) {
-        handleError(e, this)
-      } finally {
-        this.loading = false
-      }
-    },
-
 
     async createPractice(data) {
       this.loading = true

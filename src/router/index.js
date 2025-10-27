@@ -62,7 +62,7 @@ const router = createRouter({
       path: '/supervisor-all-praxe',
       name: 'SupervisorPraxePage',
       component: SupervisorPraxePage,
-      meta: { requiresAuth: true, roles: ['supervisor'] }
+      meta: { requiresAuth: true, roles: [ROLES.SUPERVISOR] }
     },
     {
       path: '/:pathMatch(.*)*',
