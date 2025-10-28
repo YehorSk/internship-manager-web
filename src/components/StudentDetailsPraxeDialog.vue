@@ -16,378 +16,371 @@
 
       <v-card-subtitle>Detailné informácie o praxi</v-card-subtitle>
 
-      <v-card-text>
-        <v-form>
-          <v-row>
-            <v-col cols="12" md="6">
-              <v-label>
-                <v-icon start color="grey-darken-2">mdi-school</v-icon>
-                <span class="font-weight-bold">Študijný program</span>
-              </v-label>
-              <v-autocomplete
-                v-if="isEditing && !isLocked"
-                v-model="edited.study_program_id"
-                :items="programsStore.list.map(p => ({ title: p.name, value: p.id }))"
-                item-title="title"
-                item-value="value"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                placeholder="Vyberte študijný program"
-              />
-              <v-text-field
-                v-else
-                :value="practice.study_program?.name || '—'"
-                :disabled="true"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-              />
-            </v-col>
+        <v-card-text>
+          <v-tabs v-model="tab" align-tabs="center" rounded="xl" class="mb-6">
+            <v-tab value="info">Základné údaje</v-tab>
+            <v-tab value="agreement">Dohoda</v-tab>
+            <v-tab value="report">Správa</v-tab>
+          </v-tabs>
 
-            <v-col cols="12" md="3">
-              <v-label>
-                <v-icon start color="grey-darken-2">mdi-calendar</v-icon>
-                <span class="font-weight-bold">Semester</span>
-              </v-label>
-              <v-select
-                v-if="isEditing && !isLocked"
-                v-model="edited.semester"
-                :items="['Zimný', 'Letný']"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-              />
-              <v-text-field
-                v-else
-                :value="practice.semester === 'winter' ? 'Zimný' : 'Letný'"
-                :disabled="true"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-              />
-            </v-col>
+          <v-window v-model="tab">
+            <v-window-item value="info">
+              <v-form>
+                <v-row>
+                  <v-col cols="12" md="6">
+                    <v-label>
+                      <v-icon start color="grey-darken-2">mdi-school</v-icon>
+                      <span class="font-weight-bold">Študijný program</span>
+                    </v-label>
+                    <v-autocomplete
+                      v-if="isEditing && !isLocked"
+                      v-model="edited.study_program_id"
+                      :items="programsStore.list.map(p => ({ title: p.name, value: p.id }))"
+                      item-title="title"
+                      item-value="value"
+                      rounded="lg"
+                      density="compact"
+                      variant="solo-filled"
+                      flat
+                      single-line
+                      placeholder="Vyberte študijný program"
+                    />
+                    <v-text-field
+                      v-else
+                      :value="practice.study_program?.name || '—'"
+                      :disabled="true"
+                      rounded="lg"
+                      density="compact"
+                      variant="solo-filled"
+                      flat
+                      single-line
+                    />
+                  </v-col>
+        <v-col cols="12" md="3">
+          <v-label>
+            <v-icon start color="grey-darken-2">mdi-calendar</v-icon>
+            <span class="font-weight-bold">Semester</span>
+          </v-label>
+          <v-select
+            v-if="isEditing && !isLocked"
+            v-model="edited.semester"
+            :items="['Zimný', 'Letný']"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+          <v-text-field
+            v-else
+            :value="practice.semester === 'winter' ? 'Zimný' : 'Letný'"
+            :disabled="true"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+        </v-col>
+        <v-col cols="12" md="3">
+          <v-label>
+            <v-icon start color="grey-darken-2">mdi-calendar-range</v-icon>
+            <span class="font-weight-bold">Akademický rok</span>
+          </v-label>
+          <v-select
+            v-if="isEditing && !isLocked"
+            v-model="edited.academic_year"
+            :items="academicYears"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+          <v-text-field
+            v-else
+            :value="practice.academic_year"
+            :disabled="true"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-label>
+            <v-icon start color="grey-darken-2">mdi-briefcase-outline</v-icon>
+            <span class="font-weight-bold">Názov pozície</span>
+          </v-label>
+          <v-text-field
+            v-if="isEditing && !isLocked"
+            v-model="edited.job_title"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+            placeholder="Napr. Junior Developer"
+          />
+          <v-text-field
+            v-else
+            :value="practice.job_title || '—'"
+            :disabled="true"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-label>
+            <v-icon start color="grey-darken-2">mdi-account-tie</v-icon>
+            <span class="font-weight-bold">Vedúci praxe v organizácii</span>
+          </v-label>
+          <v-text-field
+            :value="practice.supervisor || practice.practice_company?.contact_name || '—'"
+            :disabled="true"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+        </v-col>
+        <template v-if="practice.company_id === null">
+          <v-col cols="12">
+            <v-divider class="my-6" />
+            <div class="d-flex align-center mb-3">
+              <v-icon start color="grey-darken-2">mdi-office-building</v-icon>
+              <h3 class="text-h6 ml-2 mb-0 font-weight-medium">Údaje o spoločnosti</h3>
+            </div>
+          </v-col>
+        <v-col cols="12" md="6">
+          <v-label><span class="font-weight-bold">Názov spoločnosti</span></v-label>
+          <v-text-field
+            v-if="isEditing && !isLocked"
+            v-model="edited.company_name"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+            placeholder="Zadajte názov spoločnosti"
+          />
+          <v-text-field
+            v-else
+            :value="practice.practice_company?.name || '—'"
+            :disabled="true"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-label><span class="font-weight-bold">Adresa</span></v-label>
+          <v-text-field
+            v-if="isEditing && !isLocked"
+            v-model="edited.company_address"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+            placeholder="Zadajte adresu spoločnosti"
+          />
+          <v-text-field
+            v-else
+            :value="practice.practice_company?.address || '—'"
+            :disabled="true"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-label><span class="font-weight-bold">Firemný e-mail</span></v-label>
+          <v-text-field
+            v-if="isEditing && !isLocked"
+            v-model="edited.company_email"
+            type="email"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+            placeholder="napr. info@firma.sk"
+          />
+          <v-text-field
+            v-else
+            :value="practice.practice_company?.company_email || '—'"
+            :disabled="true"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-label><span class="font-weight-bold">Telefón</span></v-label>
+          <v-text-field
+            v-if="isEditing && !isLocked"
+            v-model="edited.contact_phone"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+            placeholder="+421 900 000 000"
+          />
+          <v-text-field
+            v-else
+            :value="practice.practice_company?.contact_phone || '—'"
+            :disabled="true"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-label><span class="font-weight-bold">Kontaktná osoba</span></v-label>
+          <v-text-field
+            v-if="isEditing && !isLocked"
+            v-model="edited.contact_name"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+            placeholder="Meno kontaktnej osoby"
+          />
+          <v-text-field
+            v-else
+            :value="practice.practice_company?.contact_name || '—'"
+            :disabled="true"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-label><span class="font-weight-bold">E-mail kontaktnej osoby</span></v-label>
+          <v-text-field
+            v-if="isEditing && !isLocked"
+            v-model="edited.contact_email"
+            type="email"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+            placeholder="napr. jan@firma.sk"
+          />
+          <v-text-field
+            v-else
+            :value="practice.practice_company?.contact_email || '—'"
+            :disabled="true"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+        </v-col>
+    </template>
+        <v-col cols="12">
+          <v-label>
+            <v-icon start color="grey-darken-2">mdi-text</v-icon>
+            <span class="font-weight-bold">Popis činností</span>
+          </v-label>
+          <v-textarea
+            v-if="isEditing && !isLocked"
+            v-model="edited.job_description"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+            rows="3"
+            placeholder="Stručný popis vykonávaných činností"
+          />
+          <v-textarea
+            v-else
+            :value="practice.job_description || '—'"
+            :disabled="true"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+            rows="3"
+          />
+        </v-col>
 
-            <v-col cols="12" md="3">
-              <v-label>
-                <v-icon start color="grey-darken-2">mdi-calendar-range</v-icon>
-                <span class="font-weight-bold">Akademický rok</span>
-              </v-label>
-              <v-select
-                v-if="isEditing && !isLocked"
-                v-model="edited.academic_year"
-                :items="academicYears"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-              />
-              <v-text-field
-                v-else
-                :value="practice.academic_year"
-                :disabled="true"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-              />
-            </v-col>
-
-            <v-col cols="12" md="6">
-              <v-label>
-                <v-icon start color="grey-darken-2">mdi-briefcase-outline</v-icon>
-                <span class="font-weight-bold">Názov pozície</span>
-              </v-label>
-              <v-text-field
-                v-if="isEditing && !isLocked"
-                v-model="edited.job_title"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                placeholder="Napr. Junior Developer"
-              />
-              <v-text-field
-                v-else
-                :value="practice.job_title || '—'"
-                :disabled="true"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-              />
-            </v-col>
-
-            <v-col cols="12" md="6">
-              <v-label>
-                <v-icon start color="grey-darken-2">mdi-account-tie</v-icon>
-                <span class="font-weight-bold">Vedúci praxe v organizácii</span>
-              </v-label>
-              <v-text-field
-                :value="practice.supervisor || practice.practice_company?.contact_name || '—'"
-                :disabled="true"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-              />
-            </v-col>
-
-
-            <template v-if="practice.company_id === null">
-              <v-col cols="12">
-                <v-divider class="my-6" />
-                <div class="d-flex align-center mb-3">
-                  <v-icon start color="grey-darken-2">mdi-office-building</v-icon>
-                  <h3 class="text-h6 ml-2 mb-0 font-weight-medium">Údaje o spoločnosti</h3>
-                </div>
-              </v-col>
-
-              <v-col cols="12" md="6">
-                <v-label><span class="font-weight-bold">Názov spoločnosti</span></v-label>
-                <v-text-field
-                  v-if="isEditing && !isLocked"
-                  v-model="edited.company_name"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
-                  placeholder="Zadajte názov spoločnosti"
-                />
-                <v-text-field
-                  v-else
-                  :value="practice.practice_company?.name || '—'"
-                  :disabled="true"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
-                />
-              </v-col>
-
-              <v-col cols="12" md="6">
-                <v-label><span class="font-weight-bold">Adresa</span></v-label>
-                <v-text-field
-                  v-if="isEditing && !isLocked"
-                  v-model="edited.company_address"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
-                  placeholder="Zadajte adresu spoločnosti"
-                />
-                <v-text-field
-                  v-else
-                  :value="practice.practice_company?.address || '—'"
-                  :disabled="true"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
-                />
-              </v-col>
-
-              <v-col cols="12" md="6">
-                <v-label><span class="font-weight-bold">Firemný e-mail</span></v-label>
-                <v-text-field
-                  v-if="isEditing && !isLocked"
-                  v-model="edited.company_email"
-                  type="email"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
-                  placeholder="napr. info@firma.sk"
-                />
-                <v-text-field
-                  v-else
-                  :value="practice.practice_company?.company_email || '—'"
-                  :disabled="true"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
-                />
-              </v-col>
-
-              <v-col cols="12" md="6">
-                <v-label><span class="font-weight-bold">Telefón kontaktnej osoby</span></v-label>
-                <v-text-field
-                  v-if="isEditing && !isLocked"
-                  v-model="edited.contact_phone"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
-                  placeholder="+421 900 000 000"
-                />
-                <v-text-field
-                  v-else
-                  :value="practice.practice_company?.contact_phone || '—'"
-                  :disabled="true"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
-                />
-              </v-col>
-
-              <v-col cols="12" md="6">
-                <v-label><span class="font-weight-bold">Kontaktná osoba</span></v-label>
-                <v-text-field
-                  v-if="isEditing && !isLocked"
-                  v-model="edited.contact_name"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
-                  placeholder="Meno kontaktnej osoby"
-                />
-                <v-text-field
-                  v-else
-                  :value="practice.practice_company?.contact_name || '—'"
-                  :disabled="true"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
-                />
-              </v-col>
-
-              <v-col cols="12" md="6">
-                <v-label><span class="font-weight-bold">E-mail kontaktnej osoby</span></v-label>
-                <v-text-field
-                  v-if="isEditing && !isLocked"
-                  v-model="edited.contact_email"
-                  type="email"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
-                  placeholder="napr. jan@firma.sk"
-                />
-                <v-text-field
-                  v-else
-                  :value="practice.practice_company?.contact_email || '—'"
-                  :disabled="true"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
-                />
-              </v-col>
-            </template>
-
-            <v-col cols="12">
-              <v-label>
-                <v-icon start color="grey-darken-2">mdi-text</v-icon>
-                <span class="font-weight-bold">Popis činností</span>
-              </v-label>
-              <v-textarea
-                v-if="isEditing && !isLocked"
-                v-model="edited.job_description"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                rows="3"
-                placeholder="Stručný popis vykonávaných činností"
-              />
-              <v-textarea
-                v-else
-                :value="practice.job_description || '—'"
-                :disabled="true"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                rows="3"
-              />
-            </v-col>
-
-            <v-col cols="12" md="6">
-              <v-label>
-                <v-icon start color="grey-darken-2">mdi-calendar-start</v-icon>
-                <span class="font-weight-bold">Dátum začiatku</span>
-              </v-label>
-              <v-text-field
-                v-if="isEditing && !isLocked"
-                v-model="edited.start_date"
-                type="date"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-              />
-              <v-text-field
-                v-else
-                :value="formatDate(practice.start_date)"
-                :disabled="true"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-              />
-            </v-col>
-
-            <v-col cols="12" md="6">
-              <v-label>
-                <v-icon start color="grey-darken-2">mdi-calendar-end</v-icon>
-                <span class="font-weight-bold">Dátum konca</span>
-              </v-label>
-              <v-text-field
-                v-if="isEditing && !isLocked"
-                v-model="edited.end_date"
-                type="date"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-              />
-              <v-text-field
-                v-else
-                :value="formatDate(practice.end_date)"
-                :disabled="true"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-              />
-            </v-col>
-          </v-row>
+        <v-col cols="12" md="6">
+          <v-label>
+            <v-icon start color="grey-darken-2">mdi-calendar-start</v-icon>
+            <span class="font-weight-bold">Dátum začiatku</span>
+          </v-label>
+          <v-text-field
+            v-if="isEditing && !isLocked"
+            v-model="edited.start_date"
+            type="date"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+          <v-text-field
+            v-else
+            :value="formatDate(practice.start_date)"
+            :disabled="true"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-label>
+            <v-icon start color="grey-darken-2">mdi-calendar-end</v-icon>
+            <span class="font-weight-bold">Dátum konca</span>
+          </v-label>
+          <v-text-field
+            v-if="isEditing && !isLocked"
+            v-model="edited.end_date"
+            type="date"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+          <v-text-field
+            v-else
+            :value="formatDate(practice.end_date)"
+            :disabled="true"
+            rounded="lg"
+            density="compact"
+            variant="solo-filled"
+            flat
+            single-line
+          />
+        </v-col>
+        </v-row>
         </v-form>
-
         <v-alert
           v-if="isLocked"
           type="info"
@@ -397,7 +390,6 @@
         >
           Úpravy tejto praxe už nie sú povolené.
         </v-alert>
-
         <div class="mt-8">
           <h3 class="text-h6 mb-4 d-flex align-center">
             <v-icon start color="#3A803D">mdi-history</v-icon>
@@ -415,7 +407,272 @@
             </v-timeline-item>
           </v-timeline>
         </div>
-      </v-card-text>
+        </v-window-item>
+
+        <v-window-item value="agreement">
+          <div class="pa-6">
+            <div class="text-center mb-6">
+              <v-icon size="36" color="#3A803D" class="mb-2">mdi-file-document-outline</v-icon>
+              <h3 class="text-h6 font-weight-medium">Dohoda o vykonaní praxe</h3>
+              <p class="text-body-2 text-grey-darken-1">
+                Stiahni vzor dohody, vyplň ho a následne nahraj podpísaný dokument
+              </p>
+            </div>
+
+            <v-card
+              class="pa-4 mb-6"
+              variant="tonal"
+              color="grey-lighten-4"
+              rounded="lg"
+              elevation="0"
+            >
+              <div class="d-flex flex-column flex-md-row align-center justify-space-between ga-4">
+                <div class="d-flex align-center ga-2">
+                  <v-icon color="#3A803D" size="28">mdi-file-download-outline</v-icon>
+                  <div>
+                    <div class="font-weight-medium text-black">Krok 1 – Stiahni vzor dohody</div>
+                    <div class="text-body-2 text-grey-darken-1">
+                      Stiahni si prázdny PDF dokument dohody, ktorý treba podpísať.
+                    </div>
+                  </div>
+                </div>
+
+                <v-btn
+                  color="#3A803D"
+                  class="text-white"
+                  rounded="lg"
+                  elevation="0"
+                  prepend-icon="mdi-download"
+                  @click="downloadAgreementTemplate"
+                >
+                  Stiahnuť vzor
+                </v-btn>
+              </div>
+            </v-card>
+
+            <v-card
+              class="pa-4"
+              variant="flat"
+              style="background-color: #f9fafb;"
+              rounded="lg"
+              elevation="0"
+            >
+              <div class="d-flex flex-column flex-md-row align-center justify-space-between ga-4 mb-4">
+                <div class="d-flex align-center ga-2">
+                  <v-icon color="#3A803D" size="28">mdi-file-upload-outline</v-icon>
+                  <div>
+                    <div class="font-weight-medium">Krok 2 – Nahraj podpísanú dohodu</div>
+                    <div class="text-body-2 text-grey-darken-1">
+                      Vyber podpísaný PDF dokument a odošli ho na schválenie.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <v-form v-if="!isAgreementLocked">
+                <v-file-input
+                  v-model="agreement.file"
+                  accept="application/pdf"
+                  label="Vyber podpísaný PDF dokument"
+                  prepend-icon="mdi-file-pdf-box"
+                  rounded="lg"
+                  variant="solo-filled"
+                  flat
+                  color="#3A803D"
+                  :disabled="practice.status === 'agreement_confirm_requested' && !isEditingAgreement"
+                  class="mb-6"
+                />
+
+                <div class="d-flex justify-end flex-wrap ga-2">
+                  <v-btn
+                    v-if="canUploadAgreement"
+                    color="#3A803D"
+                    class="text-white"
+                    rounded="lg"
+                    elevation="0"
+                    @click="submitAgreement"
+                  >
+                    <v-icon start>mdi-upload</v-icon> Nahrať dohodu
+                  </v-btn>
+
+                  <v-btn
+                    v-if="canDeleteAgreement"
+                    color="red"
+                    class="text-white"
+                    rounded="lg"
+                    elevation="0"
+                    @click="deleteAgreement"
+                  >
+                    <v-icon start>mdi-delete</v-icon> Odstrániť
+                  </v-btn>
+
+                </div>
+              </v-form>
+
+              <v-alert
+                v-else
+                type="info"
+                border="start"
+                icon="mdi-lock"
+                class="mt-6"
+                rounded="lg"
+                elevation="1"
+              >
+                Úpravy alebo nahrávanie dohody už nie sú povolené (po schválení garantom alebo zrušení praxe).
+              </v-alert>
+            </v-card>
+          </div>
+        </v-window-item>
+
+        <v-window-item value="report">
+          <div class="pa-6">
+            <div class="text-center mb-6">
+              <v-icon size="36" color="#3A803D" class="mb-2">mdi-file-document</v-icon>
+              <h3 class="text-h6 font-weight-medium">Správa z praxe</h3>
+              <p class="text-body-2 text-grey-darken-1">
+                Stiahni si vzor, vyplň ho a následne ho nahraj naspäť do systému
+              </p>
+            </div>
+
+            <v-card
+              class="pa-4 mb-6"
+              variant="tonal"
+              color="grey-lighten-4"
+              rounded="lg"
+              elevation="0"
+            >
+              <div class="d-flex flex-column flex-md-row align-center justify-space-between ga-4">
+                <div class="d-flex align-center ga-2">
+                  <v-icon color="#3A803D" size="28">mdi-file-download-outline</v-icon>
+                  <div>
+                    <div class="font-weight-medium text-black" >Krok 3 – Stiahni vzor správy</div>
+                    <div class="text-body-2 text-grey-darken-1">
+                      Stiahni prázdny PDF dokument, ktorý treba vyplniť.
+                    </div>
+                  </div>
+                </div>
+
+                <v-btn
+                  color="#3A803D"
+                  class="text-white"
+                  rounded="lg"
+                  elevation="0"
+                  prepend-icon="mdi-download"
+                  @click="downloadReportTemplate"
+                >
+                  Stiahnuť vzor
+                </v-btn>
+              </div>
+            </v-card>
+
+            <v-card
+              class="pa-4"
+              variant="flat"
+              style="background-color: #f9fafb;"
+              rounded="lg"
+              elevation="0"
+            >
+              <div class="d-flex flex-column flex-md-row align-center justify-space-between ga-4 mb-4">
+                <div class="d-flex align-center ga-2">
+                  <v-icon color="#3A803D" size="28">mdi-file-upload-outline</v-icon>
+                  <div>
+                    <div class="font-weight-medium">Krok 4 – Nahraj vyplnenú správu</div>
+                    <div class="text-body-2 text-grey-darken-1">
+                      Vyber svoj vyplnený PDF súbor a odošli ho na schválenie.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <v-form v-if="!isReportLocked">
+                <v-file-input
+                  v-model="report.file"
+                  accept="application/pdf"
+                  label="Vyber PDF súbor správy"
+                  prepend-icon="mdi-file-pdf-box"
+                  rounded="lg"
+                  variant="solo-filled"
+                  flat
+                  color="#3A803D"
+                  :disabled="practice.status === 'report_confirm_requested' && !isEditingReport"
+                  class="mb-6"
+                />
+
+                <div class="d-flex justify-end flex-wrap ga-2">
+                  <v-btn
+                    v-if="canUploadReport"
+                    color="#3A803D"
+                    class="text-white"
+                    rounded="lg"
+                    elevation="0"
+                    @click="submitReport"
+                  >
+                    <v-icon start>mdi-upload</v-icon> Nahrať správu
+                  </v-btn>
+
+                  <v-btn
+                    v-if="canEditReport && !isEditingReport"
+                    variant="outlined"
+                    color="#3A803D"
+                    rounded="lg"
+                    elevation="0"
+                    @click="isEditingReport = true"
+                  >
+                    <v-icon start>mdi-pencil</v-icon> Upraviť
+                  </v-btn>
+
+                  <v-btn
+                    v-if="isEditingReport"
+                    color="#3A803D"
+                    class="text-white"
+                    rounded="lg"
+                    elevation="0"
+                    @click="editReport"
+                  >
+                    <v-icon start>mdi-check</v-icon> Uložiť
+                  </v-btn>
+
+                  <v-btn
+                    v-if="isEditingReport"
+                    variant="tonal"
+                    color="grey"
+                    rounded="lg"
+                    elevation="0"
+                    @click="cancelEditReport"
+                  >
+                    <v-icon start>mdi-cancel</v-icon> Zrušiť
+                  </v-btn>
+
+                  <v-btn
+                    v-if="canDeleteReport"
+                    color="red"
+                    class="text-white"
+                    rounded="lg"
+                    elevation="0"
+                    @click="deleteReport"
+                  >
+                    <v-icon start>mdi-delete</v-icon> Odstrániť
+                  </v-btn>
+
+                </div>
+              </v-form>
+
+              <v-alert
+                v-else
+                type="info"
+                border="start"
+                icon="mdi-lock"
+                class="mt-6"
+                rounded="lg"
+                elevation="1"
+              >
+                Úpravy alebo nahrávanie správy už nie sú povolené (po schválení garantom alebo zrušení praxe).
+              </v-alert>
+            </v-card>
+          </div>
+        </v-window-item>
+        </v-window>
+        </v-card-text>
 
       <v-card-actions class="d-flex justify-end pa-4">
         <template v-if="!isLocked">
@@ -431,21 +688,17 @@
 
           <template v-else>
             <v-btn
+              v-if="tab === 'info'"
               variant="outlined"
-              rounded="lg"
               color="#3A803D"
-              class="mr-auto"
-              prepend-icon="mdi-file-download"
-              @click="downloadAgreement"
+              rounded="lg"
+              @click="isEditing = true"
             >
-              <span class="font-weight-medium">Stiahnuť vzor dohody</span>
-            </v-btn>
-
-            <v-btn variant="outlined" color="#3A803D" rounded="lg" @click="isEditing = true">
               <v-icon start>mdi-pencil</v-icon> Upraviť
             </v-btn>
+
             <v-btn
-              v-if="practice.status === 'created'"
+              v-if="practice.status === 'created' && tab === 'agreement' || tab === 'report'"
               class="text-white ml-2"
               rounded="lg"
               @click="submit"
@@ -499,11 +752,17 @@ export default {
       practice: null,
       edited: {},
       isEditing: false,
+      tab: 'info',
       programsStore: useStudyProgramsStore(),
       practicesStore: usePracticesStore(),
       toast: useToast(),
       statusHistory: [],
       loadingPractice: false,
+      report: { file: null},
+      reportStatus: '',
+      isEditingReport: false,
+      agreement: { file: null },
+      isEditingAgreement: false,
     }
   },
   watch: {
@@ -516,6 +775,8 @@ export default {
       if (!v) {
         this.isEditing = false
         this.edited = { ...this.practice }
+      } else {
+        this.tab = 'info'
       }
     }
   },
@@ -527,6 +788,29 @@ export default {
     academicYears() {
       const year = new Date().getFullYear()
       return Array.from({ length: 5 }, (_, i) => `${year + i}/${year + i + 1}`)
+    },
+    isReportLocked() {
+      if (!this.practice) return false
+      return ['canceled', 'report_confirmed_by_supervisor', 'report_confirmed_by_company'].includes(this.practice.status)
+    },
+    canUploadReport() {
+      return ['agreement_confirmed_by_supervisor', 'report_rejected_by_supervisor', 'report_rejected_by_company'].includes(this.practice.status)
+    },
+    canEditReport() {
+      return this.practice.status === 'report_confirm_requested'
+    },
+    canDeleteReport() {
+      return this.practice.status === 'report_confirm_requested'
+    },
+    isAgreementLocked() {
+      if (!this.practice) return false
+      return ['canceled', 'agreement_confirmed_by_supervisor', 'agreement_confirmed_by_company'].includes(this.practice.status)
+    },
+    canUploadAgreement() {
+      return ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(this.practice.status)
+    },
+    canDeleteAgreement() {
+      return ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(this.practice.status)
     },
   },
   mounted() {
@@ -573,7 +857,6 @@ export default {
         this.loadingPractice = false
       }
     },
-
     close() { this.open = false },
     cancel() {
       this.edited = {
@@ -588,7 +871,6 @@ export default {
       }
       this.isEditing = false
     },
-
     async save() {
       try {
         const updated = {
@@ -650,10 +932,6 @@ export default {
       }
     },
 
-    async submit() {
-      // доробити
-    },
-
     formatDate(date) {
       if (!date) return null
       const d = new Date(date)
@@ -670,9 +948,6 @@ export default {
         minute: '2-digit',
       })
     },
-    async downloadAgreement() {
-      // доробити логіку
-    },
     async cancelPractice() {
       if (!confirm('Naozaj chceš zrušiť túto prax?')) return
       try {
@@ -688,7 +963,63 @@ export default {
         this.toast.error(this.practicesStore.error)
       }
     },
+    async submitReport() {
 
+    },
+    async editReport() {
+
+    },
+    cancelEditReport() {
+      this.isEditingReport = false
+      this.report.file = null
+    },
+    async deleteReport() {
+
+    },
+    async downloadReportTemplate() {
+
+    },
+    async downloadAgreementTemplate() {
+      try {
+        await this.practicesStore.downloadAgreementTemplate(this.practice.id)
+      } catch (e) {
+        this.toast.error(this.practicesStore.error || 'Nepodarilo sa stiahnuť dohodu.')
+      }
+    },
+    async submitAgreement() {
+      if (!this.agreement.file) {
+        this.toast.error('Vyber PDF súbor pred odoslaním!')
+        return
+      }
+
+      try {
+        await this.practicesStore.uploadAgreement(this.practice.id, this.agreement.file)
+        this.toast.success(this.practicesStore.success)
+        await this.fetchPractice()
+        this.agreement.file = null
+      } catch (e) {
+        console.error(e)
+        this.toast.error(this.practicesStore.error || 'Chyba pri nahrávaní dohody.')
+      }
+    },
+
+    async deleteAgreement() {
+
+    },
+
+    async submit() {
+      if (this.practice.status === 'created') {
+        try {
+          await this.practicesStore.requestAgreementApproval(this.practice.id)
+          this.toast.success(this.practicesStore.success)
+          await this.fetchPractice()
+          this.$emit('update', this.practice)
+        } catch (e) {
+          console.error(e)
+          this.toast.error(this.practicesStore.error || 'Chyba pri odoslaní na schválenie.')
+        }
+      }
+    }
   },
 
 }

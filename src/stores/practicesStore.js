@@ -142,5 +142,69 @@ export const usePracticesStore = defineStore('practices', {
       this.current_page = page
       await this.fetchPractices(filters)
     },
+
+    async uploadAgreement(practiceId, file) {
+      this.loading = true
+      this.error = ''
+      this.success = ''
+      try {
+        const auth = useAuthStore()
+        if (auth.token)
+          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+
+        const formData = new FormData()
+        formData.append('practice_id', practiceId)
+        formData.append('agreement', file)
+
+        const { data } = await axios.post('/api/practices/upload-agreement', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        })
+
+        this.success = data.message || 'Dohoda bola úspešne nahratá!'
+        return data
+      } catch (e) {
+        handleError(e, this)
+        throw e
+      } finally {
+        this.loading = false
+      }
+    },
+    async downloadAgreementTemplate(practiceId) {
+      try {
+        const auth = useAuthStore()
+        if (auth.token)
+          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+
+        const response = await axios.get(`/api/practices/${practiceId}/download-agreement`, {
+          responseType: 'blob',
+        })
+
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', `dohoda_${practiceId}.pdf`)
+        document.body.appendChild(link)
+        link.click()
+        link.remove()
+      } catch (e) {
+        handleError(e, this)
+        throw e
+      }
+    },
+    async requestAgreementApproval(practiceId) {
+      try {
+        const auth = useAuthStore()
+        if (auth.token)
+          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+
+        const { data } = await axios.get(`/api/practices/${practiceId}/agreement-confirmation-request`)
+        this.success = data.message || 'Žiadosť o schválenie bola odoslaná!'
+        return data
+      } catch (e) {
+        handleError(e, this)
+        throw e
+      }
+    },
+
   },
 })
