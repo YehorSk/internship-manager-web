@@ -698,14 +698,25 @@
             </v-btn>
 
             <v-btn
-              v-if="practice.status === 'created' && tab === 'agreement' || tab === 'report'"
+              v-if="tab === 'agreement' && ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(practice.status)"
               class="text-white ml-2"
               rounded="lg"
               @click="submit"
               style="background-color: #3A803D;"
             >
-              <v-icon start>mdi-check</v-icon> Odoslať na schválenie
+              <v-icon start>mdi-check</v-icon> Odoslať na schválenie dohody
             </v-btn>
+
+            <v-btn
+              v-if="tab === 'report' && ['agreement_confirmed_by_supervisor', 'report_rejected_by_company', 'report_rejected_by_supervisor'].includes(practice.status)"
+              class="text-white ml-2"
+              rounded="lg"
+              @click="submitR"
+              style="background-color: #3A803D;"
+            >
+              <v-icon start>mdi-check</v-icon> Odoslať správu na schválenie
+            </v-btn>
+
             <v-btn
               v-if="practice.status === 'created'"
               color="red"
@@ -1019,6 +1030,9 @@ export default {
           this.toast.error(this.practicesStore.error || 'Chyba pri odoslaní na schválenie.')
         }
       }
+    },
+    async submitR() {
+
     }
   },
 
