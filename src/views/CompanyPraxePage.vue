@@ -31,6 +31,18 @@
                 />
               </v-col>
 
+              <v-col cols="12" md="3">
+                <v-autocomplete
+                  v-model="studentPick"
+                  :items="students"
+                  label="Študent"
+                  density="comfortable"
+                  variant="outlined"
+                  clearable
+                  @update:modelValue="val => (filters.search = val || '')"
+                />
+              </v-col>
+
               <v-col cols="12" md="2">
                 <v-autocomplete
                   v-model="filters.year"
@@ -50,18 +62,6 @@
                   density="comfortable"
                   variant="outlined"
                   clearable
-                />
-              </v-col>
-
-              <v-col cols="12" md="3">
-                <v-autocomplete
-                  v-model="studentPick"
-                  :items="students"
-                  label="Študent"
-                  density="comfortable"
-                  variant="outlined"
-                  clearable
-                  @update:modelValue="val => (filters.search = val || '')"
                 />
               </v-col>
 
@@ -159,7 +159,8 @@
 <script>
 import { useAuthStore } from '@/stores/authStore.js'
 import Sidebar from '@/components/Sidebar.vue'
-import { usePracticesStore } from '@/stores/practicesStore.js'
+import { useCompaniesPracticesStore } from '@/stores/compeniesPricticesStore.js'
+import { storeToRefs } from 'pinia'
 
 export default {
   name: 'CompanyPraxePage',
@@ -168,7 +169,7 @@ export default {
   data () {
     return {
       authStore: useAuthStore(),
-      store: usePracticesStore(),
+      store: useCompaniesPracticesStore(),
       studentPick: null,
       filters: {
         search: '',
@@ -181,20 +182,18 @@ export default {
 
   computed: {
     years () {
-      const years = [...new Set(this.store.list.map(p => p.academic_year))]
+      const y = [...new Set(this.store.list.map(p => p.academic_year))]
         .filter(Boolean)
         .sort()
         .reverse()
-      return years
+      return y
     },
     students () {
+      console.log(this.store.list)
       return [...new Set(
         this.store.list
-          .map(p =>
-            p.student?.name ||
-            (p.student_first_name && p.student_last_name
-              ? `${p.student_first_name} ${p.student_last_name}`
-              : null)
+          ?.map(
+            p => p.student_id
           )
           .filter(Boolean)
       )].sort()
@@ -219,13 +218,13 @@ export default {
       deep: true,
       handler () {
         this.store.current_page = 1
-        this.store.fetchPractices(this.filters)
+        this.store.fetchCompanies(this.filters)
       }
     }
   },
 
   async mounted () {
-    await this.store.fetchPractices()
+    await this.store.fetchCompanies()
   },
 
   methods: {
