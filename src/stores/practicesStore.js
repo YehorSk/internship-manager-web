@@ -154,9 +154,10 @@ export const usePracticesStore = defineStore('practices', {
 
         const formData = new FormData()
         formData.append('practice_id', practiceId)
-        formData.append('agreement', file)
+        formData.append('document', file)
+        formData.append('document_type', 'agreement')
 
-        const { data } = await axios.post('/api/practices/upload-agreement', formData, {
+        const { data } = await axios.post('/api/practices/upload-document', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
 
