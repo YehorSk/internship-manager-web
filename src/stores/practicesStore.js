@@ -206,6 +206,83 @@ export const usePracticesStore = defineStore('practices', {
         throw e
       }
     },
+    async downloadUploadedDocument(practiceId, filePath) {
+      try {
+        const auth = useAuthStore()
+        if (auth.token)
+          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+
+        const { data } = await axios.get(`/api/practices/${practiceId}/download-document`, {
+          params: { file_path: filePath }
+        })
+        return data
+      } catch (e) {
+        handleError(e, this)
+        throw e
+      }
+    },
+
+    async uploadReport(practiceId, file) {
+      this.loading = true
+      this.error = ''
+      this.success = ''
+      try {
+        const auth = useAuthStore()
+        if (auth.token)
+          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+
+        const formData = new FormData()
+        formData.append('practice_id', practiceId)
+        formData.append('document', file)
+        formData.append('document_type', 'report')
+
+        const { data } = await axios.post('/api/practices/upload-document', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        })
+
+        this.success = data.message || 'Správa bola úspešne nahratá!'
+        return data
+      } catch (e) {
+        handleError(e, this)
+        throw e
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async downloadUploadedReport(practiceId, filePath) {
+      try {
+        const auth = useAuthStore()
+        if (auth.token)
+          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+
+        const { data } = await axios.get(`/api/practices/${practiceId}/download-document`, {
+          params: { file_path: filePath }
+        })
+        return data
+      } catch (e) {
+        handleError(e, this)
+        throw e
+      }
+    },
+
+    async deleteUploadedDocument(practiceId, filePath) {
+      try {
+        const auth = useAuthStore()
+        if (auth.token)
+          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+
+        const { data } = await axios.delete(`/api/practices/${practiceId}/delete-document`, {
+          data: { file_path: filePath }
+        })
+
+        this.success = data.message || 'Dokument bol úspešne odstránený!'
+        return data
+      } catch (e) {
+        handleError(e, this)
+        throw e
+      }
+    }
 
   },
 })

@@ -469,9 +469,10 @@
                 </div>
               </div>
 
-              <v-form v-if="!isAgreementLocked">
+              <v-form>
                 <v-file-input
                   v-model="agreement.file"
+                  :model-value="agreement.file || (hasUploadedAgreement ? { name: getFileName(uploadedAgreement.file_path) } : null)"
                   accept="application/pdf"
                   label="Vyber podpísaný PDF dokument"
                   prepend-icon="mdi-file-pdf-box"
@@ -479,7 +480,7 @@
                   variant="solo-filled"
                   flat
                   color="#3A803D"
-                  :disabled="practice.status === 'agreement_confirm_requested' && !isEditingAgreement"
+                  :disabled="isAgreementLocked"
                   class="mb-6"
                 />
 
@@ -496,7 +497,18 @@
                   </v-btn>
 
                   <v-btn
-                    v-if="canDeleteAgreement"
+                    v-if="hasUploadedAgreement"
+                    variant="outlined"
+                    color="#3A803D"
+                    rounded="lg"
+                    elevation="0"
+                    @click="downloadUploadedAgreement"
+                  >
+                    <v-icon start>mdi-file-pdf-box</v-icon> Stiahnuť nahratú dohodu
+                  </v-btn>
+
+                  <v-btn
+                    v-if="canDeleteAgreement && hasUploadedAgreement"
                     color="red"
                     class="text-white"
                     rounded="lg"
@@ -505,12 +517,11 @@
                   >
                     <v-icon start>mdi-delete</v-icon> Odstrániť
                   </v-btn>
-
                 </div>
               </v-form>
 
               <v-alert
-                v-else
+                v-if="isAgreementLocked"
                 type="info"
                 border="start"
                 icon="mdi-lock"
@@ -518,7 +529,7 @@
                 rounded="lg"
                 elevation="1"
               >
-                Úpravy alebo nahrávanie dohody už nie sú povolené (po schválení garantom alebo zrušení praxe).
+                Úpravy alebo nahrávanie dohody už nie sú povolené
               </v-alert>
             </v-card>
           </div>
@@ -584,9 +595,10 @@
                 </div>
               </div>
 
-              <v-form v-if="!isReportLocked">
+              <v-form>
                 <v-file-input
                   v-model="report.file"
+                  :model-value="report.file || (uploadedReport ? { name: getFileName(uploadedReport.file_path) } : null)"
                   accept="application/pdf"
                   label="Vyber PDF súbor správy"
                   prepend-icon="mdi-file-pdf-box"
@@ -594,8 +606,8 @@
                   variant="solo-filled"
                   flat
                   color="#3A803D"
-                  :disabled="practice.status === 'report_confirm_requested' && !isEditingReport"
                   class="mb-6"
+                  :disabled="isReportLocked"
                 />
 
                 <div class="d-flex justify-end flex-wrap ga-2">
@@ -611,40 +623,18 @@
                   </v-btn>
 
                   <v-btn
-                    v-if="canEditReport && !isEditingReport"
+                    v-if="uploadedReport"
                     variant="outlined"
                     color="#3A803D"
                     rounded="lg"
                     elevation="0"
-                    @click="isEditingReport = true"
+                    @click="downloadUploadedReport"
                   >
-                    <v-icon start>mdi-pencil</v-icon> Upraviť
+                    <v-icon start>mdi-file-pdf-box</v-icon> Stiahnuť nahratú správu
                   </v-btn>
 
                   <v-btn
-                    v-if="isEditingReport"
-                    color="#3A803D"
-                    class="text-white"
-                    rounded="lg"
-                    elevation="0"
-                    @click="editReport"
-                  >
-                    <v-icon start>mdi-check</v-icon> Uložiť
-                  </v-btn>
-
-                  <v-btn
-                    v-if="isEditingReport"
-                    variant="tonal"
-                    color="grey"
-                    rounded="lg"
-                    elevation="0"
-                    @click="cancelEditReport"
-                  >
-                    <v-icon start>mdi-cancel</v-icon> Zrušiť
-                  </v-btn>
-
-                  <v-btn
-                    v-if="canDeleteReport"
+                    v-if="uploadedReport && canDeleteReport"
                     color="red"
                     class="text-white"
                     rounded="lg"
@@ -653,12 +643,11 @@
                   >
                     <v-icon start>mdi-delete</v-icon> Odstrániť
                   </v-btn>
-
                 </div>
               </v-form>
 
               <v-alert
-                v-else
+                v-if="isReportLocked"
                 type="info"
                 border="start"
                 icon="mdi-lock"
@@ -666,7 +655,7 @@
                 rounded="lg"
                 elevation="1"
               >
-                Úpravy alebo nahrávanie správy už nie sú povolené (po schválení garantom alebo zrušení praxe).
+                Úpravy alebo nahrávanie správy už nie sú povolené
               </v-alert>
             </v-card>
           </div>
@@ -674,62 +663,62 @@
         </v-window>
         </v-card-text>
 
-      <v-card-actions class="d-flex justify-end pa-4">
-        <template v-if="!isLocked">
-          <template v-if="isEditing">
-            <v-btn color="#3A803D" class="text-white" rounded="lg" @click="save" style="background-color: #3A803D;">
-              <v-icon start>mdi-content-save</v-icon> Uložiť zmeny
-            </v-btn>
+        <v-card-actions class="d-flex justify-end pa-4">
+          <template v-if="!isLocked">
+            <template v-if="isEditing">
+              <v-btn color="#3A803D" class="text-white" rounded="lg" @click="save" style="background-color: #3A803D;">
+                <v-icon start>mdi-content-save</v-icon> Uložiť zmeny
+              </v-btn>
 
-            <v-btn variant="tonal" color="grey" rounded="lg" class="ml-2" @click="cancel">
-              Zrušiť
-            </v-btn>
+              <v-btn variant="tonal" color="grey" rounded="lg" class="ml-2" @click="cancel">
+                Zrušiť
+              </v-btn>
+            </template>
+
+            <template v-else>
+              <v-btn
+                v-if="tab === 'info'"
+                variant="outlined"
+                color="#3A803D"
+                rounded="lg"
+                @click="isEditing = true"
+              >
+                <v-icon start>mdi-pencil</v-icon> Upraviť
+              </v-btn>
+
+              <v-btn
+                v-if="tab === 'agreement' && ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(practice.status)"
+                class="text-white ml-2"
+                rounded="lg"
+                @click="submit"
+                style="background-color: #3A803D;"
+              >
+                <v-icon start>mdi-check</v-icon> Odoslať na schválenie dohody
+              </v-btn>
+
+              <v-btn
+                v-if="practice.status === 'created'"
+                color="red"
+                class="text-white ml-2"
+                rounded="lg"
+                @click="cancelPractice"
+              >
+                <v-icon start>mdi-cancel</v-icon> Zrušiť prax
+              </v-btn>
+            </template>
           </template>
 
-          <template v-else>
-            <v-btn
-              v-if="tab === 'info'"
-              variant="outlined"
-              color="#3A803D"
-              rounded="lg"
-              @click="isEditing = true"
-            >
-              <v-icon start>mdi-pencil</v-icon> Upraviť
-            </v-btn>
-
-            <v-btn
-              v-if="tab === 'agreement' && ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(practice.status)"
-              class="text-white ml-2"
-              rounded="lg"
-              @click="submit"
-              style="background-color: #3A803D;"
-            >
-              <v-icon start>mdi-check</v-icon> Odoslať na schválenie dohody
-            </v-btn>
-
-            <v-btn
-              v-if="tab === 'report' && ['agreement_confirmed_by_supervisor', 'report_rejected_by_company', 'report_rejected_by_supervisor'].includes(practice.status)"
-              class="text-white ml-2"
-              rounded="lg"
-              @click="submitR"
-              style="background-color: #3A803D;"
-            >
-              <v-icon start>mdi-check</v-icon> Odoslať správu na schválenie
-            </v-btn>
-
-            <v-btn
-              v-if="practice.status === 'created'"
-              color="red"
-              class="text-white ml-2"
-              rounded="lg"
-              @click="cancelPractice"
-            >
-              <v-icon start>mdi-cancel</v-icon> Zrušiť prax
-            </v-btn>
-          </template>
-        </template>
-      </v-card-actions>
-    </v-card>
+          <v-btn
+            v-if="tab === 'report' && ['agreement_confirmed_by_supervisor', 'report_rejected_by_company', 'report_rejected_by_supervisor'].includes(practice.status)"
+            class="text-white ml-2"
+            rounded="lg"
+            @click="submitR"
+            style="background-color: #3A803D;"
+          >
+            <v-icon start>mdi-check</v-icon> Odoslať správu na schválenie
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </template>
 
     <template v-if="loadingPractice">
@@ -801,21 +790,18 @@ export default {
       return Array.from({ length: 5 }, (_, i) => `${year + i}/${year + i + 1}`)
     },
     isReportLocked() {
-      if (!this.practice) return false
-      return ['canceled', 'report_confirmed_by_supervisor', 'report_confirmed_by_company'].includes(this.practice.status)
+      if (!this.practice) return true
+      return !['agreement_confirmed_by_supervisor', 'agreement_confirmed_by_company', 'report_rejected_by_supervisor', 'report_rejected_by_company'].includes(this.practice.status)
     },
     canUploadReport() {
       return ['agreement_confirmed_by_supervisor', 'report_rejected_by_supervisor', 'report_rejected_by_company'].includes(this.practice.status)
     },
-    canEditReport() {
-      return this.practice.status === 'report_confirm_requested'
-    },
     canDeleteReport() {
-      return this.practice.status === 'report_confirm_requested'
+      return ['agreement_confirmed_by_supervisor', 'agreement_confirmed_by_company', 'report_rejected_by_supervisor', 'report_rejected_by_company'].includes(this.practice.status)
     },
     isAgreementLocked() {
       if (!this.practice) return false
-      return ['canceled', 'agreement_confirmed_by_supervisor', 'agreement_confirmed_by_company'].includes(this.practice.status)
+      return ['canceled', 'agreement_confirmed_by_supervisor', 'agreement_confirmed_by_company', 'agreement_confirm_requested'].includes(this.practice.status)
     },
     canUploadAgreement() {
       return ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(this.practice.status)
@@ -823,6 +809,15 @@ export default {
     canDeleteAgreement() {
       return ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(this.practice.status)
     },
+    hasUploadedAgreement() {
+      return this.practice?.documents?.some(d => d.type === 'agreement')
+    },
+    uploadedAgreement() {
+      return this.practice?.documents?.find(d => d.type === 'agreement') || null
+    },
+    uploadedReport() {
+      return this.practice?.documents?.find(d => d.type === 'report') || null
+    }
   },
   mounted() {
     if (!this.programsStore.list.length) this.programsStore.fetchPrograms()
@@ -975,17 +970,20 @@ export default {
       }
     },
     async submitReport() {
+      if (!this.report.file) {
+        this.toast.error('Vyber PDF súbor pred odoslaním!')
+        return
+      }
 
-    },
-    async editReport() {
-
-    },
-    cancelEditReport() {
-      this.isEditingReport = false
-      this.report.file = null
-    },
-    async deleteReport() {
-
+      try {
+        await this.practicesStore.uploadReport(this.practice.id, this.report.file)
+        this.toast.success(this.practicesStore.success)
+        await this.fetchPractice()
+        this.report.file = null
+      } catch (e) {
+        console.error(e)
+        this.toast.error(this.practicesStore.error || 'Chyba pri nahrávaní správy.')
+      }
     },
     async downloadReportTemplate() {
 
@@ -1014,10 +1012,6 @@ export default {
       }
     },
 
-    async deleteAgreement() {
-
-    },
-
     async submit() {
       if (this.practice.status === 'created') {
         try {
@@ -1031,9 +1025,64 @@ export default {
         }
       }
     },
+    async downloadUploadedAgreement() {
+      if (!this.uploadedAgreement) return
+      try {
+        const { url } = await this.practicesStore.downloadUploadedDocument(
+          this.practice.id,
+          this.uploadedAgreement.file_path
+        )
+        window.open(url, '_blank')
+      } catch (e) {
+        this.toast.error(this.practicesStore.error || 'Nepodarilo sa stiahnuť nahratú dohodu.')
+      }
+    },
+    async downloadUploadedReport() {
+      if (!this.uploadedReport) return
+      try {
+        const { url } = await this.practicesStore.downloadUploadedDocument(
+          this.practice.id,
+          this.uploadedReport.file_path
+        )
+        window.open(url, '_blank')
+      } catch (e) {
+        this.toast.error(this.practicesStore.error || 'Nepodarilo sa stiahnuť nahratú správu.')
+      }
+    },
+
+    getFileName(path) {
+      if (!path) return ''
+      return path.split('/').pop()
+    },
+
     async submitR() {
 
-    }
+    },
+    async deleteAgreement() {
+      if (!this.uploadedAgreement) return
+      if (!confirm('Naozaj chcete odstrániť túto dohodu?')) return
+      try {
+        await this.practicesStore.deleteUploadedDocument(this.practice.id, this.uploadedAgreement.file_path)
+        this.toast.success(this.practicesStore.success)
+        await this.fetchPractice()
+      } catch (e) {
+        console.error(e)
+        this.toast.error(this.practicesStore.error || 'Chyba pri odstraňovaní dohody.')
+      }
+    },
+
+    async deleteReport() {
+      if (!this.uploadedReport) return
+      if (!confirm('Naozaj chcete odstrániť túto správu?')) return
+      try {
+        await this.practicesStore.deleteUploadedDocument(this.practice.id, this.uploadedReport.file_path)
+        this.toast.success(this.practicesStore.success)
+        await this.fetchPractice()
+      } catch (e) {
+        console.error(e)
+        this.toast.error(this.practicesStore.error || 'Chyba pri odstraňovaní správy.')
+      }
+    },
   },
 
 }
