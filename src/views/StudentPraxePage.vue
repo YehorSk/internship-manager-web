@@ -173,12 +173,12 @@
 <script>
 import Sidebar from '@/components/Sidebar.vue'
 import StudentAddPraxeForm from '@/components/StudentAddPraxeForm.vue'
-import StudentDetailsPraxeDialog from '@/components/StudentDetailsPraxeDialog.vue'
+import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
 import { getStatusColor, getStatusText, statusOptions } from '@/utils/statusHelpers.js'
 
 export default {
-  components: { Sidebar, StudentAddPraxeForm, StudentDetailsPraxeDialog },
+  components: { Sidebar, StudentAddPraxeForm, StudentDetailsPraxeDialog: DetailsPraxeDialog },
 
   data() {
     return {

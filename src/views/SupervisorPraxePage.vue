@@ -162,7 +162,7 @@
               </template>
             </v-card-text>
           </v-card>
-          <SupervisorDetailsPraxeDialog
+          <DetailsPraxeDialog
             v-model="detailsDialog"
             v-if="selectedPracticeId"
             :practice-id="selectedPracticeId"
@@ -178,10 +178,10 @@
 import Sidebar from '@/components/Sidebar.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
 import { getStatusColor, getStatusText, statusOptions } from '@/utils/statusHelpers.js'
-import SupervisorDetailsPraxeDialog from '@/components/SupervisorDetailsPraxeDialog.vue'
+import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
 
 export default {
-  components: { SupervisorDetailsPraxeDialog, Sidebar },
+  components: { DetailsPraxeDialog, Sidebar },
 
   data() {
     return {

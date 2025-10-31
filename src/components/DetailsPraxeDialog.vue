@@ -697,7 +697,7 @@
               </v-btn>
 
               <v-btn
-                v-if="practice.status === 'created'"
+                v-if="practice.status !== 'canceled' && (practice.status === 'created' || role === 'supervisor')"
                 color="red"
                 class="text-white ml-2"
                 rounded="lg"
@@ -732,9 +732,12 @@
 
 <script>
 import { useToast } from 'vue-toastification'
+
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { usePracticesStore } from '@/stores/practicesStore.js'
 import { getStatusColor, getStatusIcon, getStatusText } from '@/utils/statusHelpers.js'
+import { useAuthStore } from '@/stores/authStore.js'
+
 
 export default {
   props: {
@@ -753,6 +756,7 @@ export default {
       edited: {},
       isEditing: false,
       tab: 'info',
+      authStore: useAuthStore(),
       programsStore: useStudyProgramsStore(),
       practicesStore: usePracticesStore(),
       toast: useToast(),
@@ -781,10 +785,15 @@ export default {
     }
   },
   computed: {
+    role() {
+      return this.authStore?.user?.roles?.[0]?.name
+    },
     isLocked() {
       if (!this.practice) return false
+      if (this.role === 'supervisor') return false
       return this.practice.status !== 'created'
     },
+
     academicYears() {
       const year = new Date().getFullYear()
       return Array.from({ length: 5 }, (_, i) => `${year + i}/${year + i + 1}`)
