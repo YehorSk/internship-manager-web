@@ -114,36 +114,41 @@
               <template v-else>
                 <v-table>
                   <thead>
-                  <tr>
-                    <th>Študent</th>
-                    <th>Zamestnávateľ</th>
-                    <th>Pozícia</th>
-                    <th>Študijný program</th>
-                    <th>Semester</th>
-                    <th>Akademický rok</th>
-                    <th>Obdobie</th>
-                    <th>Stav</th>
-                  </tr>
+                    <tr>
+                      <th>Študent</th>
+                      <th>Zamestnávateľ</th>
+                      <th>Pozícia</th>
+                      <th>Študijný program</th>
+                      <th>Semester</th>
+                      <th>Akademický rok</th>
+                      <th>Obdobie</th>
+                      <th>Stav</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  <tr
-                    v-for="p in store.list"
-                    :key="p.id"
-                    class="hover:bg-grey-lighten-5 cursor-pointer"
-                  >
-                    <td>{{ p.student?.full_name || '—' }}</td>
-                    <td>{{ p.practice_company?.name || p.company?.name || '—' }}</td>
-                    <td>{{ p.job_title || '—' }}</td>
-                    <td>{{ p.study_program?.name || '—' }}</td>
-                    <td>{{ p.semester === 'winter' ? 'Zimný' : 'Letný' }}</td>
-                    <td>{{ p.academic_year }}</td>
-                    <td>{{ formatDate(p.start_date) }} – {{ formatDate(p.end_date) }}</td>
-                    <td>
-                      <v-chip :style="{ backgroundColor: getStatusColor(p.status) }" class="text-white" size="small">
-                        {{ getStatusText(p.status) }}
-                      </v-chip>
-                    </td>
-                  </tr>
+                    <tr
+                      v-for="p in store.list"
+                      :key="p.id"
+                      class="hover:bg-grey-lighten-5 cursor-pointer"
+                      @click="openDetails(p)"
+                    >
+                      <td>{{ p.student?.full_name || '—' }}</td>
+                      <td>{{ p.practice_company?.name || p.company?.name || '—' }}</td>
+                      <td>{{ p.job_title || '—' }}</td>
+                      <td>{{ p.study_program?.name || '—' }}</td>
+                      <td>{{ p.semester === 'winter' ? 'Zimný' : 'Letný' }}</td>
+                      <td>{{ p.academic_year }}</td>
+                      <td>{{ formatDate(p.start_date) }} – {{ formatDate(p.end_date) }}</td>
+                      <td>
+                        <v-chip
+                          :style="{ backgroundColor: getStatusColor(p.status) }"
+                          class="text-white"
+                          size="small"
+                        >
+                          {{ getStatusText(p.status) }}
+                        </v-chip>
+                      </td>
+                    </tr>
                   </tbody>
                 </v-table>
 
@@ -152,11 +157,17 @@
                   v-model="store.current_page"
                   :length="store.total_pages"
                   rounded="circle"
-                  @update:modelValue="page => loadPractices(page)"
+                  @update:modelValue="(page) => loadPractices(page)"
                 />
               </template>
             </v-card-text>
           </v-card>
+          <SupervisorDetailsPraxeDialog
+            v-model="detailsDialog"
+            v-if="selectedPracticeId"
+            :practice-id="selectedPracticeId"
+            @update="updatePractice"
+          />
         </v-container>
       </v-row>
     </v-container>
@@ -167,12 +178,15 @@
 import Sidebar from '@/components/Sidebar.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
 import { getStatusColor, getStatusText, statusOptions } from '@/utils/statusHelpers.js'
+import SupervisorDetailsPraxeDialog from '@/components/SupervisorDetailsPraxeDialog.vue'
 
 export default {
-  components: { Sidebar },
+  components: { SupervisorDetailsPraxeDialog, Sidebar },
 
   data() {
     return {
+      detailsDialog: false,
+      selectedPracticeId: null,
       store: usePracticesStore(),
       filters: {
         year: null,
@@ -187,25 +201,24 @@ export default {
 
   computed: {
     years() {
-      return [...new Set(this.store.list.map(p => p.academic_year))].filter(Boolean).sort().reverse()
+      return [...new Set(this.store.list.map((p) => p.academic_year))]
+        .filter(Boolean)
+        .sort()
+        .reverse()
     },
     employers() {
-      return [...new Set(
-        this.store.list.map(p => p.practice_company?.name || p.company?.name).filter(Boolean)
-      )].sort()
+      return [
+        ...new Set(
+          this.store.list.map((p) => p.practice_company?.name || p.company?.name).filter(Boolean),
+        ),
+      ].sort()
     },
     students() {
-      return [...new Set(
-        this.store.list.map(p => p.student?.full_name).filter(Boolean)
-      )].sort()
+      return [...new Set(this.store.list.map((p) => p.student?.full_name).filter(Boolean))].sort()
     },
     studyPrograms() {
-      return [...new Set(
-        this.store.list
-          .map(p => p.study_program?.name)
-          .filter(Boolean)
-      )].sort()
-    }
+      return [...new Set(this.store.list.map((p) => p.study_program?.name).filter(Boolean))].sort()
+    },
   },
 
   watch: {
@@ -219,8 +232,8 @@ export default {
         delete filters.employer
         this.store.current_page = 1
         this.store.fetchPractices(filters)
-      }
-    }
+      },
+    },
   },
 
   async mounted() {
@@ -247,8 +260,17 @@ export default {
       const d = new Date(date)
       return d.toISOString().split('T')[0]
     },
+    openDetails(practice) {
+      this.selectedPracticeId = practice.id
+      this.detailsDialog = true
+    },
+    updatePractice(updated) {
+      if (!updated) return
+      const idx = this.store.list.findIndex(p => p.id === updated.id)
+      if (idx !== -1) this.store.list[idx] = { ...this.store.list[idx], ...updated }
+    },
     getStatusColor,
-    getStatusText
-  },
+    getStatusText,
+  }
 }
 </script>

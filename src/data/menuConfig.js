@@ -3,7 +3,7 @@ import { ROLES } from '@/constants/roles.js'
 export const menuByRole = {
   [ROLES.STUDENT]: [
     { id: 'dashboard', label: 'Prehľad', icon: 'mdi-view-dashboard', route: '/student-dashboard' },
-    { id: 'practices', label: 'Zoznam praxe', icon: 'mdi-file-document-outline', route: '/student-praxe' },
+    { id: 'practices', label: 'Zoznam praxí', icon: 'mdi-file-document-outline', route: '/student-praxe' },
     { divider: true },
     { id: 'settings', label: 'Nastavenia profilu', icon: 'mdi-account-cog-outline', route: '/settings' },
     { id: 'logout', label: 'Odhlásiť sa', icon: 'mdi-logout', route: null },
@@ -18,7 +18,7 @@ export const menuByRole = {
     { id: 'dashboard', label: 'Prehľad', icon: 'mdi-view-dashboard', route: '/supervisor-dashboard' },
     { id: 'students', label: 'Študenti', icon: 'mdi-school', route: '/students' },
     { id: 'companies', label: 'Firmy', icon: 'mdi-office-building', route: '/company' },
-    { id: 'practices', label: 'Záznamy z praxe', icon: 'mdi-file-document-outline', route: '/supervisor-all-praxe' },
+    { id: 'practices', label: 'Zoznam praxí', icon: 'mdi-file-document-outline', route: '/supervisor-all-praxe' },
     { divider: true },
     { id: 'settings', label: 'Nastavenia profilu', icon: 'mdi-cog-outline', route: '/settings' },
     { id: 'logout', label: 'Odhlásiť sa', icon: 'mdi-logout', route: null },
