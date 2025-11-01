@@ -282,6 +282,24 @@ export const usePracticesStore = defineStore('practices', {
         handleError(e, this)
         throw e
       }
+    },
+    async updateDocumentStatus(practiceId, documentType, status, comment = '') {
+      try {
+        const auth = useAuthStore()
+        if (auth.token)
+          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+
+        const { data } = await axios.patch(`/api/practices/${practiceId}/update-document-status`, {
+          document_type: documentType,
+          status: status,
+          comment: comment
+        })
+        this.success = data.message || 'Status bol úspešne zmenený!'
+        return data
+      } catch (e) {
+        handleError(e, this)
+        throw e
+      }
     }
 
   },

@@ -409,7 +409,7 @@
         </div>
         </v-window-item>
 
-        <v-window-item value="agreement">
+        <v-window-item value="agreement" v-if="isStudent">
           <div class="pa-6">
             <div class="text-center mb-6">
               <v-icon size="36" color="#3A803D" class="mb-2">mdi-file-document-outline</v-icon>
@@ -535,7 +535,53 @@
           </div>
         </v-window-item>
 
-        <v-window-item value="report">
+        <v-window-item value="agreement" v-if="isSupervisor">
+          <div class="pa-6">
+            <div class="text-center mb-6">
+              <v-icon size="36" color="#3A803D" class="mb-2">mdi-file-document-outline</v-icon>
+              <h3 class="text-h6 font-weight-medium">Dohoda o vykonaní praxe</h3>
+            </div>
+
+            <v-card class="pa-4 mb-6" variant="tonal" color="grey-lighten-4" rounded="lg" elevation="0">
+              <div class="d-flex flex-column flex-md-row align-center justify-space-between ga-4">
+                <div class="d-flex align-center ga-2">
+                  <v-icon color="#3A803D" size="28">mdi-file-pdf-box</v-icon>
+                  <div>
+                    <div class="font-weight-medium text-black">
+                      {{ hasUploadedAgreement ? getFileName(uploadedAgreement.file_path) : 'Dohoda nebola zatial nahratá' }}
+                    </div>
+                  </div>
+
+                </div>
+                <v-btn
+                  v-if="hasUploadedAgreement"
+                  color="#3A803D"
+                  class="text-white"
+                  rounded="lg"
+                  elevation="0"
+                  prepend-icon="mdi-download"
+                  @click="downloadUploadedAgreement"
+                >
+                  Stiahnuť
+                </v-btn>
+              </div>
+              <div class="mt-4 mb-6">
+                <v-textarea
+                  v-model="commentText"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  placeholder="Pridajte komentár"
+                  rows="3"
+                />
+              </div>
+            </v-card>
+          </div>
+        </v-window-item>
+
+        <v-window-item value="report" v-if="isStudent">
           <div class="pa-6">
             <div class="text-center mb-6">
               <v-icon size="36" color="#3A803D" class="mb-2">mdi-file-document</v-icon>
@@ -660,6 +706,50 @@
             </v-card>
           </div>
         </v-window-item>
+
+        <v-window-item value="report" v-if="isSupervisor">
+          <div class="pa-6">
+            <div class="text-center mb-6">
+              <v-icon size="36" color="#3A803D" class="mb-2">mdi-file-document</v-icon>
+              <h3 class="text-h6 font-weight-medium">Správa z praxe</h3>
+            </div>
+
+            <v-card class="pa-4 mb-6" variant="tonal" color="grey-lighten-4" rounded="lg" elevation="0">
+              <div class="d-flex flex-column flex-md-row align-center justify-space-between ga-4">
+                <div class="d-flex align-center ga-2">
+                  <v-icon color="#3A803D" size="28">mdi-file-pdf-box</v-icon>
+                  <div>
+                    <div class="font-weight-medium text-black">
+                      {{ uploadedReport ? getFileName(uploadedReport.file_path) : 'Správa nebola zatial nahratá' }}
+                    </div>
+                  </div>
+                </div>
+                <v-btn
+                  v-if="uploadedReport"
+                  color="#3A803D"
+                  class="text-white"
+                  rounded="lg"
+                  elevation="0"
+                  prepend-icon="mdi-download"
+                  @click="downloadUploadedReport"
+                >
+                  Stiahnuť
+                </v-btn>
+              </div>
+              <div class="mt-4 mb-6" >
+                <v-textarea
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  placeholder="Pridajte komentár"
+                  rows="3"
+                />
+              </div>
+            </v-card>
+          </div>
+        </v-window-item>
         </v-window>
         </v-card-text>
 
@@ -687,6 +777,25 @@
               </v-btn>
 
               <v-btn
+                v-if="(tab === 'agreement' && canManageAgreement) || (tab ==='report' && canManageReport)"
+                color="green"
+                class="text-white"
+                rounded="lg" elevation="0"
+                @click="approveDocument(tab)">
+                <v-icon start>mdi-check</v-icon> Schváliť
+              </v-btn>
+
+              <v-btn
+                v-if="(tab === 'agreement' && canManageAgreement) || (tab ==='report' && canManageReport)"
+                color="red"
+                class="text-white"
+                rounded="lg"
+                elevation="0"
+                @click="rejectDocument(tab)">
+                <v-icon start>mdi-close</v-icon> Odmietnuť
+              </v-btn>
+
+              <v-btn
                 v-if="tab === 'agreement' && ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(practice.status)"
                 class="text-white ml-2"
                 rounded="lg"
@@ -697,7 +806,7 @@
               </v-btn>
 
               <v-btn
-                v-if="practice.status !== 'canceled' && (practice.status === 'created' || role === 'supervisor')"
+                v-if="practice.status !== 'canceled' && (practice.status === 'created' || (isSupervisor && tab !== 'agreement' && tab !== 'report'))"
                 color="red"
                 class="text-white ml-2"
                 rounded="lg"
@@ -767,6 +876,7 @@ export default {
       isEditingReport: false,
       agreement: { file: null },
       isEditingAgreement: false,
+      commentText: '',
     }
   },
   watch: {
@@ -787,6 +897,17 @@ export default {
   computed: {
     role() {
       return this.authStore?.user?.roles?.[0]?.name
+    },
+    isStudent() {
+      return this.role === 'student'
+    },
+
+    isSupervisor() {
+      return this.role === 'supervisor'
+    },
+
+    isCompany() {
+      return this.role === 'company'
     },
     isLocked() {
       if (!this.practice) return false
@@ -821,12 +942,18 @@ export default {
     hasUploadedAgreement() {
       return this.practice?.documents?.some(d => d.type === 'agreement')
     },
+    canManageAgreement(){
+      return this.isSupervisor && ['agreement_confirm_requested'].includes(this.practice.status)
+    },
+    canManageReport(){
+      return this.isSupervisor && ['report_confirm_requested'].includes(this.practice.status)
+    },
     uploadedAgreement() {
       return this.practice?.documents?.find(d => d.type === 'agreement') || null
     },
     uploadedReport() {
       return this.practice?.documents?.find(d => d.type === 'report') || null
-    }
+    },
   },
   mounted() {
     if (!this.programsStore.list.length) this.programsStore.fetchPrograms()
@@ -872,7 +999,9 @@ export default {
         this.loadingPractice = false
       }
     },
-    close() { this.open = false },
+    close() {
+      this.open = false
+    },
     cancel() {
       this.edited = {
         academic_year: this.practice.academic_year,
@@ -1092,8 +1221,31 @@ export default {
         this.toast.error(this.practicesStore.error || 'Chyba pri odstraňovaní správy.')
       }
     },
-  },
+    async approveDocument(documentType) {
+      try {
+        const comment = this.commentText;
+        await this.practicesStore.updateDocumentStatus(this.practice.id, documentType, 'agree', comment);
+        this.toast.success(this.practicesStore.success);
+        await this.fetchPractice();
+        this.commentText = '';
+      } catch (e) {
+        this.toast.error(this.practicesStore.error || 'Nepodarilo sa schváliť dokument');
+      }
+    },
 
-}
+    async rejectDocument(documentType) {
+      try {
+        const comment = this.commentText;
+        await this.practicesStore.updateDocumentStatus(this.practice.id, documentType, 'reject', comment);
+        this.toast.success(this.practicesStore.success);
+        await this.fetchPractice();
+        this.commentText = '';
+      } catch (e) {
+        this.toast.error(this.practicesStore.error ||'Nepodarilo sa odmietnuť dokument');
+      }
+    }
+  }
+
+  }
 </script>
 
