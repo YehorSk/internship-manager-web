@@ -995,7 +995,11 @@ export default {
       }
     },
     async downloadReportTemplate() {
-
+      try {
+        await this.practicesStore.downloadReportTemplate(this.practice.id)
+      } catch (e) {
+        this.toast.error(this.practicesStore.error || 'Nepodarilo sa stiahnuť vzor správy.')
+      }
     },
     async downloadAgreementTemplate() {
       try {
@@ -1065,7 +1069,15 @@ export default {
     },
 
     async submitR() {
-
+      try {
+        await this.practicesStore.requestReportApproval(this.practice.id)
+        this.toast.success(this.practicesStore.success)
+        await this.fetchPractice()
+        this.$emit('update', this.practice)
+      } catch (e) {
+        console.error(e)
+        this.toast.error(this.practicesStore.error || 'Chyba pri odoslaní správy na schválenie.')
+      }
     },
     async deleteAgreement() {
       if (!this.uploadedAgreement) return

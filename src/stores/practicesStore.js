@@ -282,7 +282,45 @@ export const usePracticesStore = defineStore('practices', {
         handleError(e, this)
         throw e
       }
-    }
+    },
+
+    async downloadReportTemplate(practiceId) {
+      try {
+        const auth = useAuthStore()
+        if (auth.token)
+          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+
+        const response = await axios.get(`/api/practices/${practiceId}/download-report`, {
+          responseType: 'blob',
+        })
+
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', `sprava_${practiceId}.docx`)
+        document.body.appendChild(link)
+        link.click()
+        link.remove()
+      } catch (e) {
+        handleError(e, this)
+        throw e
+      }
+    },
+
+    async requestReportApproval(practiceId) {
+      try {
+        const auth = useAuthStore()
+        if (auth.token)
+          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+
+        const { data } = await axios.get(`/api/practices/${practiceId}/report-confirmation-request`)
+        this.success = data.message || 'Žiadosť o schválenie správy bola odoslaná!'
+        return data
+      } catch (e) {
+        handleError(e, this)
+        throw e
+      }
+    },
 
   },
 })
