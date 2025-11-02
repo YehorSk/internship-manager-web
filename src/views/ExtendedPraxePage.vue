@@ -116,7 +116,7 @@
                   <thead>
                     <tr>
                       <th>Študent</th>
-                      <th>Zamestnávateľ</th>
+                      <th v-if="!isCompany">Zamestnávateľ</th>
                       <th>Pozícia</th>
                       <th>Študijný program</th>
                       <th>Semester</th>
@@ -133,7 +133,7 @@
                       @click="openDetails(p)"
                     >
                       <td>{{ p.student?.full_name || '—' }}</td>
-                      <td>{{ p.practice_company?.name || p.company?.name || '—' }}</td>
+                      <td v-if="!isCompany">{{ p.practice_company?.name || p.company?.name || '—' }}</td>
                       <td>{{ p.job_title || '—' }}</td>
                       <td>{{ p.study_program?.name || '—' }}</td>
                       <td>{{ p.semester === 'winter' ? 'Zimný' : 'Letný' }}</td>
@@ -179,6 +179,7 @@ import Sidebar from '@/components/Sidebar.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
 import { getStatusColor, getStatusText, statusOptions } from '@/utils/statusHelpers.js'
 import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
+import { useAuthStore } from '@/stores/authStore.js'
 
 export default {
   components: { DetailsPraxeDialog, Sidebar },
@@ -188,6 +189,7 @@ export default {
       detailsDialog: false,
       selectedPracticeId: null,
       store: usePracticesStore(),
+      authStore: useAuthStore(),
       filters: {
         year: null,
         semester: null,
@@ -200,6 +202,9 @@ export default {
   },
 
   computed: {
+    role() {
+      return this.authStore?.user?.roles?.[0]?.name
+    },
     years() {
       return [...new Set(this.store.list.map((p) => p.academic_year))]
         .filter(Boolean)
@@ -218,6 +223,9 @@ export default {
     },
     studyPrograms() {
       return [...new Set(this.store.list.map((p) => p.study_program?.name).filter(Boolean))].sort()
+    },
+    isCompany() {
+      return this.role === 'company'
     },
   },
 

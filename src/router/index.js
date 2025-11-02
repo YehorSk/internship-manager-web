@@ -8,9 +8,9 @@ import CompanyDashboard from '@/views/CompanyDashboard.vue'
 import SupervisorDashboard from '@/views/SupervisorDashboard.vue'
 import { useAuthStore } from '@/stores/authStore.js'
 import StudentPraxePage from '@/views/StudentPraxePage.vue'
-import SupervisorPraxePage from '@/views/SupervisorPraxePage.vue'
 import { ROLES } from '@/constants/roles.js'
 import { hasAccess } from '@/utils/access.js'
+import ExtendedPraxePage from '@/views/ExtendedPraxePage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,10 +58,10 @@ const router = createRouter({
       meta: { requiresAuth: true, roles: [ROLES.SUPERVISOR] }
     },
     {
-      path: '/supervisor-all-praxe',
+      path: '/extended-all-praxe',
       name: 'SupervisorPraxePage',
-      component: SupervisorPraxePage,
-      meta: { requiresAuth: true, roles: [ROLES.SUPERVISOR] }
+      component: ExtendedPraxePage,
+      meta: { requiresAuth: true, roles: [ROLES.SUPERVISOR, ROLES.COMPANY] }
     },
     {
       path: '/:pathMatch(.*)*',

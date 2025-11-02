@@ -7,7 +7,7 @@
           <v-btn icon variant="text" @click="close">
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
-          <span class="ml-3 text-h6">{{ practice.practice_company?.name || practice.company?.name || '—' }}</span>
+          <span class="ml-3 text-h6">{{ practice.practice_company?.name || practice.company?.name || practice.student?.first_name + " " + practice.student?.first_name || '—' }}</span>
         </div>
         <v-chip  :style="{ backgroundColor: getStatusColor(practice.status) }" class="text-white" >
           {{ getStatusText(practice.status) }}
@@ -531,11 +531,21 @@
               >
                 Úpravy alebo nahrávanie dohody už nie sú povolené
               </v-alert>
+              <v-alert
+                v-if="isStudent && lastRejectionComment('agreement')"
+                type="error"
+                border="start"
+                icon="mdi-alert"
+                class="mt-2"
+                rounded="lg"
+              >
+                {{ lastRejectionComment('agreement') }}
+              </v-alert>
             </v-card>
           </div>
         </v-window-item>
 
-        <v-window-item value="agreement" v-if="isSupervisor">
+        <v-window-item value="agreement" v-if="isSupervisor || isCompany">
           <div class="pa-6">
             <div class="text-center mb-6">
               <v-icon size="36" color="#3A803D" class="mb-2">mdi-file-document-outline</v-icon>
@@ -703,11 +713,21 @@
               >
                 Úpravy alebo nahrávanie správy už nie sú povolené
               </v-alert>
+              <v-alert
+                v-if="isStudent && lastRejectionComment('report')"
+                type="error"
+                border="start"
+                icon="mdi-alert"
+                class="mt-2"
+                rounded="lg"
+              >
+                {{ lastRejectionComment('report') }}
+              </v-alert>
             </v-card>
           </div>
         </v-window-item>
 
-        <v-window-item value="report" v-if="isSupervisor">
+        <v-window-item value="report" v-if="isSupervisor || isCompany">
           <div class="pa-6">
             <div class="text-center mb-6">
               <v-icon size="36" color="#3A803D" class="mb-2">mdi-file-document</v-icon>
@@ -738,6 +758,7 @@
               </div>
               <div class="mt-4 mb-6" >
                 <v-textarea
+                  v-model="commentText"
                   rounded="lg"
                   density="compact"
                   variant="solo-filled"
@@ -755,77 +776,81 @@
 
         <v-card-actions class="d-flex justify-end pa-4">
           <template v-if="!isLocked">
-            <template v-if="isEditing">
-              <v-btn color="#3A803D" class="text-white" rounded="lg" @click="save" style="background-color: #3A803D;">
-                <v-icon start>mdi-content-save</v-icon> Uložiť zmeny
-              </v-btn>
 
-              <v-btn variant="tonal" color="grey" rounded="lg" class="ml-2" @click="cancel">
-                Zrušiť
-              </v-btn>
-            </template>
+          </template>
+          <template v-if="isEditing">
+            <v-btn color="#3A803D" class="text-white" rounded="lg" @click="save" style="background-color: #3A803D;">
+              <v-icon start>mdi-content-save</v-icon> Uložiť zmeny
+            </v-btn>
 
-            <template v-else>
-              <v-btn
-                v-if="tab === 'info'"
-                variant="outlined"
-                color="#3A803D"
-                rounded="lg"
-                @click="isEditing = true"
-              >
-                <v-icon start>mdi-pencil</v-icon> Upraviť
-              </v-btn>
-
-              <v-btn
-                v-if="(tab === 'agreement' && canManageAgreement) || (tab ==='report' && canManageReport)"
-                color="green"
-                class="text-white"
-                rounded="lg" elevation="0"
-                @click="approveDocument(tab)">
-                <v-icon start>mdi-check</v-icon> Schváliť
-              </v-btn>
-
-              <v-btn
-                v-if="(tab === 'agreement' && canManageAgreement) || (tab ==='report' && canManageReport)"
-                color="red"
-                class="text-white"
-                rounded="lg"
-                elevation="0"
-                @click="rejectDocument(tab)">
-                <v-icon start>mdi-close</v-icon> Odmietnuť
-              </v-btn>
-
-              <v-btn
-                v-if="!isSupervisor && tab === 'agreement' && ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(practice.status)"
-                class="text-white ml-2"
-                rounded="lg"
-                @click="submit"
-                style="background-color: #3A803D;"
-              >
-                <v-icon start>mdi-check</v-icon> Odoslať na schválenie dohody
-              </v-btn>
-
-              <v-btn
-                v-if="practice.status !== 'canceled' && ((practice.status === 'created' && !isSupervisor) || (isSupervisor && tab !== 'agreement' && tab !== 'report'))"
-                color="red"
-                class="text-white ml-2"
-                rounded="lg"
-                @click="cancelPractice"
-              >
-                <v-icon start>mdi-cancel</v-icon> Zrušiť prax
-              </v-btn>
-            </template>
+            <v-btn variant="tonal" color="grey" rounded="lg" class="ml-2" @click="cancel">
+              Zrušiť
+            </v-btn>
           </template>
 
-          <v-btn
-            v-if="tab === 'report' && ['agreement_confirmed_by_supervisor', 'report_rejected_by_company', 'report_rejected_by_supervisor'].includes(practice.status)"
-            class="text-white ml-2"
-            rounded="lg"
-            @click="submitR"
-            style="background-color: #3A803D;"
-          >
-            <v-icon start>mdi-check</v-icon> Odoslať správu na schválenie
-          </v-btn>
+          <template v-else>
+            <v-btn
+              v-if="(isSupervisor || isStudent) && tab === 'info'"
+              variant="outlined"
+              color="#3A803D"
+              rounded="lg"
+              @click="isEditing = true"
+            >
+              <v-icon start>mdi-pencil</v-icon> Upraviť
+            </v-btn>
+
+            <v-btn
+              v-if="(tab === 'agreement' && canManageAgreement) || (tab ==='report' && canManageReport)"
+              color="green"
+              class="text-white"
+              rounded="lg" elevation="0"
+              @click="approveDocument(tab)">
+              <v-icon start>mdi-check</v-icon> Schváliť
+            </v-btn>
+
+            <v-btn
+              v-if="(tab === 'agreement' && canManageAgreement) || (tab ==='report' && canManageReport)"
+              color="red"
+              class="text-white"
+              rounded="lg"
+              elevation="0"
+              @click="rejectDocument(tab)">
+              <v-icon start>mdi-close</v-icon> Odmietnuť
+            </v-btn>
+
+            <v-btn
+              v-if="isStudent && tab === 'agreement' && ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(practice.status)"
+              class="text-white ml-2"
+              rounded="lg"
+              @click="submit"
+              style="background-color: #3A803D;"
+            >
+              <v-icon start>mdi-check</v-icon> Odoslať na schválenie dohody
+            </v-btn>
+
+            <v-btn
+              v-if="isStudent && tab === 'report' && ['agreement_confirmed_by_company', 'agreement_confirmed_by_supervisor', 'report_rejected_by_company', 'report_rejected_by_supervisor'].includes(practice.status)"
+              class="text-white ml-2"
+              rounded="lg"
+              @click="submitR"
+              style="background-color: #3A803D;"
+            >
+              <v-icon start>mdi-check</v-icon> Odoslať správu na schválenie
+            </v-btn>
+
+            <v-btn
+              v-if="
+                  practice.status !== 'canceled' &&
+                  ((practice.status === 'created' && isStudent))
+                "
+              color="red"
+              class="text-white ml-2"
+              rounded="lg"
+              @click="cancelPractice"
+            >
+              <v-icon start>mdi-cancel</v-icon> Zrušiť prax
+            </v-btn>
+          </template>
         </v-card-actions>
       </v-card>
     </template>
@@ -911,8 +936,9 @@ export default {
     },
     isLocked() {
       if (!this.practice) return false
-      if (this.role === 'supervisor') return false
-      return this.practice.status !== 'created'
+      if (this.role === 'supervisor' || this.role === 'company') return false
+      const allowedStatuses = ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor', 'agreement_confirmed_by_company', 'agreement_confirmed_by_supervisor', 'report_rejected_by_company', 'report_rejected_by_supervisor']
+      return !allowedStatuses.includes(this.practice.status)
     },
 
     academicYears() {
@@ -924,7 +950,7 @@ export default {
       return !['agreement_confirmed_by_supervisor', 'agreement_confirmed_by_company', 'report_rejected_by_supervisor', 'report_rejected_by_company'].includes(this.practice.status)
     },
     canUploadReport() {
-      return ['agreement_confirmed_by_supervisor', 'report_rejected_by_supervisor', 'report_rejected_by_company'].includes(this.practice.status)
+      return ['agreement_confirmed_by_company','agreement_confirmed_by_supervisor', 'report_rejected_by_supervisor', 'report_rejected_by_company'].includes(this.practice.status)
     },
     canDeleteReport() {
       return ['agreement_confirmed_by_supervisor', 'agreement_confirmed_by_company', 'report_rejected_by_supervisor', 'report_rejected_by_company'].includes(this.practice.status)
@@ -943,10 +969,10 @@ export default {
       return this.practice?.documents?.some(d => d.type === 'agreement')
     },
     canManageAgreement(){
-      return this.isSupervisor && ['agreement_confirm_requested'].includes(this.practice.status)
+      return (this.isSupervisor || this.isCompany) && ['agreement_confirm_requested'].includes(this.practice.status)
     },
     canManageReport(){
-      return this.isSupervisor && ['report_confirm_requested'].includes(this.practice.status)
+      return (this.isSupervisor || this.isCompany) && ['report_confirm_requested'].includes(this.practice.status)
     },
     uploadedAgreement() {
       return this.practice?.documents?.find(d => d.type === 'agreement') || null
@@ -966,7 +992,6 @@ export default {
     async fetchPractice() {
       this.loadingPractice = true
       this.practice = null
-      try {
         const data = await this.practicesStore.getPractice(this.practiceId)
         this.practice = data
 
@@ -990,18 +1015,18 @@ export default {
             contact_name: data.practice_company.contact_name,
           })
         }
-
-        this.statusHistory = data.practice_status_history || []
-      } catch (e) {
-        console.error(e)
+      this.loadingPractice = false
+      if (this.practicesStore.error) {
         this.toast.error('Nepodarilo sa načítať detaily praxe.')
-      } finally {
-        this.loadingPractice = false
+        return
       }
+      this.statusHistory = data.practice_status_history || []
     },
+
     close() {
       this.open = false
     },
+
     cancel() {
       this.edited = {
         academic_year: this.practice.academic_year,
@@ -1016,7 +1041,6 @@ export default {
       this.isEditing = false
     },
     async save() {
-      try {
         const updated = {
           academic_year: this.edited.academic_year,
           semester:
@@ -1068,12 +1092,12 @@ export default {
         }
 
         this.$emit('update', this.practice)
-        this.isEditing = false
-        this.toast.success(this.practicesStore.success)
-      } catch (e) {
-        console.error(e.response?.data || e)
+      if (this.practicesStore.error) {
         this.toast.error(this.practicesStore.error || 'Nepodarilo sa aktualizovať prax.')
+        return
       }
+      this.toast.success(this.practicesStore.success)
+      this.isEditing = false
     },
 
     formatDate(date) {
@@ -1094,46 +1118,41 @@ export default {
     },
     async cancelPractice() {
       if (!confirm('Naozaj chceš zrušiť túto prax?')) return
-      try {
         await this.practicesStore.deletePractice(this.practice.id)
-        this.toast.success(this.practicesStore.success)
 
         this.$emit('update', { id: this.practice.id, status: 'canceled' })
         if (this.practice) this.practice.status = 'canceled'
 
-        this.open = false
-      } catch (e) {
-        console.error(e)
+      if (this.practicesStore.error) {
         this.toast.error(this.practicesStore.error)
+        return
       }
+      this.toast.success(this.practicesStore.success)
+      this.open = false
     },
     async submitReport() {
       if (!this.report.file) {
         this.toast.error('Vyber PDF súbor pred odoslaním!')
         return
       }
-
-      try {
         await this.practicesStore.uploadReport(this.practice.id, this.report.file)
-        this.toast.success(this.practicesStore.success)
-        await this.fetchPractice()
-        this.report.file = null
-      } catch (e) {
-        console.error(e)
+      if (this.practicesStore.error) {
         this.toast.error(this.practicesStore.error || 'Chyba pri nahrávaní správy.')
+        return
       }
+      this.toast.success(this.practicesStore.success)
+      await this.fetchPractice()
+      this.report.file = null
     },
     async downloadReportTemplate() {
-      try {
         await this.practicesStore.downloadReportTemplate(this.practice.id)
-      } catch (e) {
+      if (this.practicesStore.error) {
         this.toast.error(this.practicesStore.error || 'Nepodarilo sa stiahnuť vzor správy.')
       }
     },
     async downloadAgreementTemplate() {
-      try {
-        await this.practicesStore.downloadAgreementTemplate(this.practice.id)
-      } catch (e) {
+      await this.practicesStore.downloadAgreementTemplate(this.practice.id)
+      if (this.practicesStore.error) {
         this.toast.error(this.practicesStore.error || 'Nepodarilo sa stiahnuť dohodu.')
       }
     },
@@ -1142,52 +1161,47 @@ export default {
         this.toast.error('Vyber PDF súbor pred odoslaním!')
         return
       }
-
-      try {
         await this.practicesStore.uploadAgreement(this.practice.id, this.agreement.file)
-        this.toast.success(this.practicesStore.success)
-        await this.fetchPractice()
-        this.agreement.file = null
-      } catch (e) {
-        console.error(e)
-        this.toast.error(this.practicesStore.error || 'Chyba pri nahrávaní dohody.')
-      }
+        if (this.practicesStore.error) {
+          this.toast.error(this.practicesStore.error || 'Chyba pri nahrávaní dohody.')
+          return
+        }
+      this.toast.success(this.practicesStore.success)
+      await this.fetchPractice()
+      this.agreement.file = null
     },
 
     async submit() {
       if (this.practice.status === 'created') {
-        try {
           await this.practicesStore.requestAgreementApproval(this.practice.id)
-          this.toast.success(this.practicesStore.success)
-          await this.fetchPractice()
-          this.$emit('update', this.practice)
-        } catch (e) {
-          console.error(e)
+        if (this.practicesStore.error) {
           this.toast.error(this.practicesStore.error || 'Chyba pri odoslaní na schválenie.')
+          return
         }
+        this.toast.success(this.practicesStore.success)
+        await this.fetchPractice()
+        this.$emit('update', this.practice)
       }
     },
     async downloadUploadedAgreement() {
       if (!this.uploadedAgreement) return
-      try {
         const { url } = await this.practicesStore.downloadUploadedDocument(
           this.practice.id,
           this.uploadedAgreement.file_path
         )
         window.open(url, '_blank')
-      } catch (e) {
+      if (this.practicesStore.error) {
         this.toast.error(this.practicesStore.error || 'Nepodarilo sa stiahnuť nahratú dohodu.')
       }
     },
     async downloadUploadedReport() {
       if (!this.uploadedReport) return
-      try {
         const { url } = await this.practicesStore.downloadUploadedDocument(
           this.practice.id,
           this.uploadedReport.file_path
         )
-        window.open(url, '_blank')
-      } catch (e) {
+      window.open(url, '_blank')
+      if (this.practicesStore.error) {
         this.toast.error(this.practicesStore.error || 'Nepodarilo sa stiahnuť nahratú správu.')
       }
     },
@@ -1198,66 +1212,75 @@ export default {
     },
 
     async submitR() {
-      try {
         await this.practicesStore.requestReportApproval(this.practice.id)
-        this.toast.success(this.practicesStore.success)
-        await this.fetchPractice()
-        this.$emit('update', this.practice)
-      } catch (e) {
-        console.error(e)
+      if (this.practicesStore.error) {
         this.toast.error(this.practicesStore.error || 'Chyba pri odoslaní správy na schválenie.')
+        return
       }
+      this.toast.success(this.practicesStore.success)
+      await this.fetchPractice()
+      this.$emit('update', this.practice)
     },
     async deleteAgreement() {
       if (!this.uploadedAgreement) return
       if (!confirm('Naozaj chcete odstrániť túto dohodu?')) return
-      try {
         await this.practicesStore.deleteUploadedDocument(this.practice.id, this.uploadedAgreement.file_path)
-        this.toast.success(this.practicesStore.success)
-        await this.fetchPractice()
-      } catch (e) {
-        console.error(e)
+      if (this.practicesStore.error) {
         this.toast.error(this.practicesStore.error || 'Chyba pri odstraňovaní dohody.')
+        return
       }
+      this.toast.success(this.practicesStore.success)
+      await this.fetchPractice()
     },
 
     async deleteReport() {
       if (!this.uploadedReport) return
       if (!confirm('Naozaj chcete odstrániť túto správu?')) return
-      try {
         await this.practicesStore.deleteUploadedDocument(this.practice.id, this.uploadedReport.file_path)
-        this.toast.success(this.practicesStore.success)
-        await this.fetchPractice()
-      } catch (e) {
-        console.error(e)
+      if (this.practicesStore.error) {
         this.toast.error(this.practicesStore.error || 'Chyba pri odstraňovaní správy.')
+        return
       }
+      this.toast.success(this.practicesStore.success)
+      await this.fetchPractice()
     },
     async approveDocument(documentType) {
-      try {
-        const comment = this.commentText;
-        await this.practicesStore.updateDocumentStatus(this.practice.id, documentType, 'agree', comment);
-        this.toast.success(this.practicesStore.success);
-        await this.fetchPractice();
-        this.commentText = '';
-      } catch (e) {
-        this.toast.error(this.practicesStore.error || 'Nepodarilo sa schváliť dokument');
+      const comment = this.commentText
+      await this.practicesStore.updateDocumentStatus(this.practice.id, documentType, 'agree', comment)
+
+      if (this.practicesStore.error) {
+        this.toast.error(this.practicesStore.error || 'Nepodarilo sa schváliť dokument')
+        return
       }
+      this.toast.success(this.practicesStore.success)
+      await this.fetchPractice()
+      this.commentText = ''
     },
 
     async rejectDocument(documentType) {
-      try {
         const comment = this.commentText;
         await this.practicesStore.updateDocumentStatus(this.practice.id, documentType, 'reject', comment);
-        this.toast.success(this.practicesStore.success);
-        await this.fetchPractice();
-        this.commentText = '';
-      } catch (e) {
-        this.toast.error(this.practicesStore.error ||'Nepodarilo sa odmietnuť dokument');
-      }
+        if (this.practicesStore.error) {
+          this.toast.error(this.practicesStore.error ||'Nepodarilo sa odmietnuť dokument');
+          return
+        }
+      this.toast.success(this.practicesStore.success);
+      await this.fetchPractice();
+      this.commentText = '';
+    },
+
+    lastRejectionComment(type) {
+      if (!this.practice || !this.practice.practice_status_history) return null
+      const relevantStatuses = type === 'agreement'
+        ? ['agreement_rejected_by_supervisor', 'agreement_rejected_by_company']
+        : ['report_rejected_by_supervisor', 'report_rejected_by_company']
+
+      const last = [...this.practice.practice_status_history].reverse()
+        .find(s => relevantStatuses.includes(s.status) && s.comment)
+
+      return last ? last.comment : null
     }
   }
-
-  }
+}
 </script>
 

@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { handleError } from '@/utils/httpError.js'
-import { useAuthStore } from '@/stores/authStore.js'
 
 export const usePracticesStore = defineStore('practices', {
   state: () => ({
@@ -20,9 +19,6 @@ export const usePracticesStore = defineStore('practices', {
     async fetchPractices(filters = {}) {
       this.loading = true
       try {
-        const auth = useAuthStore()
-        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-
         const search = {}
         if (filters.status) search.status = filters.status
         if (filters.semester) search.semester = filters.semester === 'Zimný' ? 'winter' : 'summer'
@@ -68,15 +64,11 @@ export const usePracticesStore = defineStore('practices', {
       this.fieldErrors = {}
 
       try {
-        const auth = useAuthStore()
-        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-
         const { data: response } = await axios.post('/api/practices/', data)
         this.success = response.message || 'Prax bola úspešne vytvorená!'
         await this.fetchPractices()
       } catch (e) {
         handleError(e, this)
-        throw e
       } finally {
         this.loading = false
       }
@@ -89,16 +81,12 @@ export const usePracticesStore = defineStore('practices', {
       this.fieldErrors = {}
 
       try {
-        const auth = useAuthStore()
-        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-
         const { data: response } = await axios.put(`/api/practices/${id}`, data)
         this.success = response.message || 'Prax bola úspešne aktualizovaná!'
         await this.fetchPractices()
       } catch (e) {
         console.error(e.response?.data || e)
         handleError(e, this)
-        throw e
       } finally {
         this.loading = false
       }
@@ -108,14 +96,10 @@ export const usePracticesStore = defineStore('practices', {
       this.loading = true
       this.error = ''
       try {
-        const auth = useAuthStore()
-        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-
         const { data } = await axios.get(`/api/practices/${id}`)
         return data.data
       } catch (e) {
         handleError(e, this)
-        throw e
       } finally {
         this.loading = false
       }
@@ -125,8 +109,8 @@ export const usePracticesStore = defineStore('practices', {
       try {
         const response = await axios.delete(`/api/practices/${id}`)
         return response.data
-      } catch (error) {
-        throw error.response?.data || error
+      } catch (e) {
+        handleError(e, this)
       }
     },
 
@@ -140,9 +124,6 @@ export const usePracticesStore = defineStore('practices', {
       this.error = ''
       this.success = ''
       try {
-        const auth = useAuthStore()
-        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-
         const formData = new FormData()
         formData.append('practice_id', practiceId)
         formData.append('document', file)
@@ -156,16 +137,12 @@ export const usePracticesStore = defineStore('practices', {
         return data
       } catch (e) {
         handleError(e, this)
-        throw e
       } finally {
         this.loading = false
       }
     },
     async downloadAgreementTemplate(practiceId) {
       try {
-        const auth = useAuthStore()
-        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-
         const response = await axios.get(`/api/practices/${practiceId}/download-agreement`, {
           responseType: 'blob',
         })
@@ -179,14 +156,10 @@ export const usePracticesStore = defineStore('practices', {
         link.remove()
       } catch (e) {
         handleError(e, this)
-        throw e
       }
     },
     async requestAgreementApproval(practiceId) {
       try {
-        const auth = useAuthStore()
-        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-
         const { data } = await axios.get(
           `/api/practices/${practiceId}/agreement-confirmation-request`
         )
@@ -194,21 +167,16 @@ export const usePracticesStore = defineStore('practices', {
         return data
       } catch (e) {
         handleError(e, this)
-        throw e
       }
     },
     async downloadUploadedDocument(practiceId, filePath) {
       try {
-        const auth = useAuthStore()
-        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-
         const { data } = await axios.get(`/api/practices/${practiceId}/download-document`, {
           params: { file_path: filePath },
         })
         return data
       } catch (e) {
         handleError(e, this)
-        throw e
       }
     },
 
@@ -217,9 +185,6 @@ export const usePracticesStore = defineStore('practices', {
       this.error = ''
       this.success = ''
       try {
-        const auth = useAuthStore()
-        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-
         const formData = new FormData()
         formData.append('practice_id', practiceId)
         formData.append('document', file)
@@ -233,7 +198,6 @@ export const usePracticesStore = defineStore('practices', {
         return data
       } catch (e) {
         handleError(e, this)
-        throw e
       } finally {
         this.loading = false
       }
@@ -241,24 +205,17 @@ export const usePracticesStore = defineStore('practices', {
 
     async downloadUploadedReport(practiceId, filePath) {
       try {
-        const auth = useAuthStore()
-        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-
         const { data } = await axios.get(`/api/practices/${practiceId}/download-document`, {
           params: { file_path: filePath },
         })
         return data
       } catch (e) {
         handleError(e, this)
-        throw e
       }
     },
 
     async deleteUploadedDocument(practiceId, filePath) {
       try {
-        const auth = useAuthStore()
-        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-
         const { data } = await axios.delete(`/api/practices/${practiceId}/delete-document`, {
           data: { file_path: filePath },
         })
@@ -267,15 +224,11 @@ export const usePracticesStore = defineStore('practices', {
         return data
       } catch (e) {
         handleError(e, this)
-        throw e
       }
     },
 
     async downloadReportTemplate(practiceId) {
       try {
-        const auth = useAuthStore()
-        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-
         const response = await axios.get(`/api/practices/${practiceId}/download-report`, {
           responseType: 'blob',
         })
@@ -289,29 +242,21 @@ export const usePracticesStore = defineStore('practices', {
         link.remove()
       } catch (e) {
         handleError(e, this)
-        throw e
       }
     },
 
     async requestReportApproval(practiceId) {
       try {
-        const auth = useAuthStore()
-        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-
         const { data } = await axios.get(`/api/practices/${practiceId}/report-confirmation-request`)
         this.success = data.message || 'Žiadosť o schválenie správy bola odoslaná!'
         return data
       } catch (e) {
         handleError(e, this)
-        throw e
       }
     },
 
     async updateDocumentStatus(practiceId, documentType, status, comment = '') {
       try {
-        const auth = useAuthStore()
-        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-
         const { data } = await axios.patch(`/api/practices/${practiceId}/update-document-status`, {
           document_type: documentType,
           status: status,
@@ -321,7 +266,6 @@ export const usePracticesStore = defineStore('practices', {
         return data
       } catch (e) {
         handleError(e, this)
-        throw e
       }
     },
   },

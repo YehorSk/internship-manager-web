@@ -10,6 +10,7 @@ export const menuByRole = {
   ],
   [ROLES.COMPANY]: [
     { id: 'dashboard', label: 'Prehľad', icon: 'mdi-view-dashboard', route: '/company-dashboard' },
+    { id: 'practices', label: 'Zoznam praxí', icon: 'mdi-file-document-outline', route: '/extended-all-praxe' },
     { divider: true },
     { id: 'settings', label: 'Nastavenia profilu', icon: 'mdi-cog-outline', route: '/settings' },
     { id: 'logout', label: 'Odhlásiť sa', icon: 'mdi-logout', route: null },
@@ -18,7 +19,7 @@ export const menuByRole = {
     { id: 'dashboard', label: 'Prehľad', icon: 'mdi-view-dashboard', route: '/supervisor-dashboard' },
     { id: 'students', label: 'Študenti', icon: 'mdi-school', route: '/students' },
     { id: 'companies', label: 'Firmy', icon: 'mdi-office-building', route: '/company' },
-    { id: 'practices', label: 'Zoznam praxí', icon: 'mdi-file-document-outline', route: '/supervisor-all-praxe' },
+    { id: 'practices', label: 'Zoznam praxí', icon: 'mdi-file-document-outline', route: '/extended-all-praxe' },
     { divider: true },
     { id: 'settings', label: 'Nastavenia profilu', icon: 'mdi-cog-outline', route: '/settings' },
     { id: 'logout', label: 'Odhlásiť sa', icon: 'mdi-logout', route: null },
