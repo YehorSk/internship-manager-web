@@ -21,36 +21,31 @@ export const usePracticesStore = defineStore('practices', {
       this.loading = true
       try {
         const auth = useAuthStore()
-        if (auth.token)
-          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
 
         const search = {}
         if (filters.status) search.status = filters.status
-        if (filters.semester)
-          search.semester = filters.semester === 'Zimný' ? 'winter' : 'summer'
+        if (filters.semester) search.semester = filters.semester === 'Zimný' ? 'winter' : 'summer'
         if (filters.year) search.academic_year = filters.year
-        if (filters.company_name)
-          search.company_name = filters.company_name
-        if (filters.study_program)
-          search.study_program_name = filters.study_program
-        if (filters.student)
-          search.student_name = filters.student
+        if (filters.company_name) search.company_name = filters.company_name
+        if (filters.study_program) search.study_program_name = filters.study_program
+        if (filters.student) search.student_name = filters.student
 
         const payload = {
           page: this.current_page,
           itemsPerPage: this.per_page,
-          ...(Object.keys(search).length ? { search } : {})
+          ...(Object.keys(search).length ? { search } : {}),
         }
 
         const endpoint = '/api/practices/list'
         const { data } = await axios.post(endpoint, payload)
 
-        this.list = (data.data || []).map(p => {
+        this.list = (data.data || []).map((p) => {
           const updated = { ...p }
           if (p.student) {
             updated.student = {
               ...p.student,
-              full_name: `${p.student.first_name} ${p.student.last_name}`
+              full_name: `${p.student.first_name} ${p.student.last_name}`,
             }
           }
           return updated
@@ -74,8 +69,7 @@ export const usePracticesStore = defineStore('practices', {
 
       try {
         const auth = useAuthStore()
-        if (auth.token)
-          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
 
         const { data: response } = await axios.post('/api/practices/', data)
         this.success = response.message || 'Prax bola úspešne vytvorená!'
@@ -96,8 +90,7 @@ export const usePracticesStore = defineStore('practices', {
 
       try {
         const auth = useAuthStore()
-        if (auth.token)
-          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
 
         const { data: response } = await axios.put(`/api/practices/${id}`, data)
         this.success = response.message || 'Prax bola úspešne aktualizovaná!'
@@ -116,8 +109,7 @@ export const usePracticesStore = defineStore('practices', {
       this.error = ''
       try {
         const auth = useAuthStore()
-        if (auth.token)
-          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
 
         const { data } = await axios.get(`/api/practices/${id}`)
         return data.data
@@ -149,8 +141,7 @@ export const usePracticesStore = defineStore('practices', {
       this.success = ''
       try {
         const auth = useAuthStore()
-        if (auth.token)
-          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
 
         const formData = new FormData()
         formData.append('practice_id', practiceId)
@@ -173,8 +164,7 @@ export const usePracticesStore = defineStore('practices', {
     async downloadAgreementTemplate(practiceId) {
       try {
         const auth = useAuthStore()
-        if (auth.token)
-          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
 
         const response = await axios.get(`/api/practices/${practiceId}/download-agreement`, {
           responseType: 'blob',
@@ -195,10 +185,11 @@ export const usePracticesStore = defineStore('practices', {
     async requestAgreementApproval(practiceId) {
       try {
         const auth = useAuthStore()
-        if (auth.token)
-          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
 
-        const { data } = await axios.get(`/api/practices/${practiceId}/agreement-confirmation-request`)
+        const { data } = await axios.get(
+          `/api/practices/${practiceId}/agreement-confirmation-request`
+        )
         this.success = data.message || 'Žiadosť o schválenie bola odoslaná!'
         return data
       } catch (e) {
@@ -209,11 +200,10 @@ export const usePracticesStore = defineStore('practices', {
     async downloadUploadedDocument(practiceId, filePath) {
       try {
         const auth = useAuthStore()
-        if (auth.token)
-          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
 
         const { data } = await axios.get(`/api/practices/${practiceId}/download-document`, {
-          params: { file_path: filePath }
+          params: { file_path: filePath },
         })
         return data
       } catch (e) {
@@ -228,8 +218,7 @@ export const usePracticesStore = defineStore('practices', {
       this.success = ''
       try {
         const auth = useAuthStore()
-        if (auth.token)
-          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
 
         const formData = new FormData()
         formData.append('practice_id', practiceId)
@@ -253,11 +242,10 @@ export const usePracticesStore = defineStore('practices', {
     async downloadUploadedReport(practiceId, filePath) {
       try {
         const auth = useAuthStore()
-        if (auth.token)
-          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
 
         const { data } = await axios.get(`/api/practices/${practiceId}/download-document`, {
-          params: { file_path: filePath }
+          params: { file_path: filePath },
         })
         return data
       } catch (e) {
@@ -269,11 +257,10 @@ export const usePracticesStore = defineStore('practices', {
     async deleteUploadedDocument(practiceId, filePath) {
       try {
         const auth = useAuthStore()
-        if (auth.token)
-          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
 
         const { data } = await axios.delete(`/api/practices/${practiceId}/delete-document`, {
-          data: { file_path: filePath }
+          data: { file_path: filePath },
         })
 
         this.success = data.message || 'Dokument bol úspešne odstránený!'
@@ -287,8 +274,7 @@ export const usePracticesStore = defineStore('practices', {
     async downloadReportTemplate(practiceId) {
       try {
         const auth = useAuthStore()
-        if (auth.token)
-          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
 
         const response = await axios.get(`/api/practices/${practiceId}/download-report`, {
           responseType: 'blob',
@@ -310,8 +296,7 @@ export const usePracticesStore = defineStore('practices', {
     async requestReportApproval(practiceId) {
       try {
         const auth = useAuthStore()
-        if (auth.token)
-          axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
 
         const { data } = await axios.get(`/api/practices/${practiceId}/report-confirmation-request`)
         this.success = data.message || 'Žiadosť o schválenie správy bola odoslaná!'
@@ -322,5 +307,22 @@ export const usePracticesStore = defineStore('practices', {
       }
     },
 
+    async updateDocumentStatus(practiceId, documentType, status, comment = '') {
+      try {
+        const auth = useAuthStore()
+        if (auth.token) axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
+
+        const { data } = await axios.patch(`/api/practices/${practiceId}/update-document-status`, {
+          document_type: documentType,
+          status: status,
+          comment: comment,
+        })
+        this.success = data.message || 'Status bol úspešne zmenený!'
+        return data
+      } catch (e) {
+        handleError(e, this)
+        throw e
+      }
+    },
   },
 })
