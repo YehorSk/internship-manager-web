@@ -796,7 +796,7 @@
               </v-btn>
 
               <v-btn
-                v-if="tab === 'agreement' && ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(practice.status)"
+                v-if="!isSupervisor && tab === 'agreement' && ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(practice.status)"
                 class="text-white ml-2"
                 rounded="lg"
                 @click="submit"
@@ -806,7 +806,7 @@
               </v-btn>
 
               <v-btn
-                v-if="practice.status !== 'canceled' && (practice.status === 'created' || (isSupervisor && tab !== 'agreement' && tab !== 'report'))"
+                v-if="practice.status !== 'canceled' && ((practice.status === 'created' && !isSupervisor) || (isSupervisor && tab !== 'agreement' && tab !== 'report'))"
                 color="red"
                 class="text-white ml-2"
                 rounded="lg"
