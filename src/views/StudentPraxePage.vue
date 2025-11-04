@@ -176,6 +176,7 @@ import StudentAddPraxeForm from '@/components/StudentAddPraxeForm.vue'
 import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
 import { getStatusColor, getStatusText, statusOptions } from '@/utils/statusHelpers.js'
+import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 
 export default {
   components: { Sidebar, StudentAddPraxeForm, StudentDetailsPraxeDialog: DetailsPraxeDialog },
@@ -185,6 +186,7 @@ export default {
       detailsDialog: false,
       selectedPracticeId: null,
       store: usePracticesStore(),
+      programsStore: useStudyProgramsStore(),
       filters: {
         year: null,
         semester: null,
@@ -207,12 +209,8 @@ export default {
       )].sort()
     },
     studyPrograms() {
-      return [...new Set(
-        this.store.list
-          .map(p => p.study_program?.name)
-          .filter(Boolean)
-      )].sort()
-    }
+      return this.programsStore.list.map(p => p.name)
+    },
   },
 
   watch: {
@@ -231,6 +229,7 @@ export default {
   },
 
   async mounted() {
+    await this.programsStore.fetchPrograms()
     await this.store.fetchPractices()
   },
 

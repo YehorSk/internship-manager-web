@@ -52,7 +52,7 @@
                 />
               </v-col>
 
-              <v-col cols="12" md="3">
+              <v-col v-if="isSupervisor" cols="12" md="3">
                 <v-autocomplete
                   v-model="filters.employer"
                   :items="employers"
@@ -116,7 +116,7 @@
                   <thead>
                     <tr>
                       <th>Študent</th>
-                      <th v-if="!isCompany">Zamestnávateľ</th>
+                      <th v-if="isSupervisor">Zamestnávateľ</th>
                       <th>Pozícia</th>
                       <th>Študijný program</th>
                       <th>Semester</th>
@@ -133,7 +133,7 @@
                       @click="openDetails(p)"
                     >
                       <td>{{ p.student?.full_name || '—' }}</td>
-                      <td v-if="!isCompany">{{ p.practice_company?.name || p.company?.name || '—' }}</td>
+                      <td v-if="isSupervisor">{{ p.practice_company?.name || p.company?.name || '—' }}</td>
                       <td>{{ p.job_title || '—' }}</td>
                       <td>{{ p.study_program?.name || '—' }}</td>
                       <td>{{ p.semester === 'winter' ? 'Zimný' : 'Letný' }}</td>
@@ -180,6 +180,7 @@ import { usePracticesStore } from '@/stores/practicesStore.js'
 import { getStatusColor, getStatusText, statusOptions } from '@/utils/statusHelpers.js'
 import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
 import { useAuthStore } from '@/stores/authStore.js'
+import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 
 export default {
   components: { DetailsPraxeDialog, Sidebar },
@@ -190,6 +191,7 @@ export default {
       selectedPracticeId: null,
       store: usePracticesStore(),
       authStore: useAuthStore(),
+      programsStore: useStudyProgramsStore(),
       filters: {
         year: null,
         semester: null,
@@ -222,10 +224,10 @@ export default {
       return [...new Set(this.store.list.map((p) => p.student?.full_name).filter(Boolean))].sort()
     },
     studyPrograms() {
-      return [...new Set(this.store.list.map((p) => p.study_program?.name).filter(Boolean))].sort()
+      return this.programsStore.list.map(p => p.name)
     },
-    isCompany() {
-      return this.role === 'company'
+    isSupervisor() {
+      return this.role === 'supervisor'
     },
   },
 
@@ -245,6 +247,7 @@ export default {
   },
 
   async mounted() {
+    await this.programsStore.fetchPrograms()
     await this.loadPractices()
   },
 

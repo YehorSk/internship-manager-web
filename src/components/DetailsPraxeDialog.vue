@@ -403,6 +403,7 @@
               :icon="getStatusIcon(item.status)"
             >
               <div class="font-weight-medium">{{ getStatusText(item.status) }}</div>
+              <div class="font-weight">{{ item.comment }}</div>
               <div class="text-grey-darken-1 text-body-2">{{ formatDateTime(item.created_at) }}</div>
             </v-timeline-item>
           </v-timeline>
@@ -486,7 +487,7 @@
 
                 <div class="d-flex justify-end flex-wrap ga-2">
                   <v-btn
-                    v-if="canUploadAgreement"
+                    v-if="canDeleteAgreementOrUploadAgreement"
                     color="#3A803D"
                     class="text-white"
                     rounded="lg"
@@ -508,7 +509,7 @@
                   </v-btn>
 
                   <v-btn
-                    v-if="canDeleteAgreement && hasUploadedAgreement"
+                    v-if="canDeleteAgreementOrUploadAgreement && hasUploadedAgreement"
                     color="red"
                     class="text-white"
                     rounded="lg"
@@ -668,7 +669,7 @@
 
                 <div class="d-flex justify-end flex-wrap ga-2">
                   <v-btn
-                    v-if="canUploadReport"
+                    v-if="canDeleteReportOrUploadReport"
                     color="#3A803D"
                     class="text-white"
                     rounded="lg"
@@ -690,7 +691,7 @@
                   </v-btn>
 
                   <v-btn
-                    v-if="uploadedReport && canDeleteReport"
+                    v-if="uploadedReport && canDeleteReportOrUploadReport"
                     color="red"
                     class="text-white"
                     rounded="lg"
@@ -775,9 +776,6 @@
         </v-card-text>
 
         <v-card-actions class="d-flex justify-end pa-4">
-          <template v-if="!isLocked">
-
-          </template>
           <template v-if="isEditing">
             <v-btn color="#3A803D" class="text-white" rounded="lg" @click="save" style="background-color: #3A803D;">
               <v-icon start>mdi-content-save</v-icon> Uložiť zmeny
@@ -790,7 +788,7 @@
 
           <template v-else>
             <v-btn
-              v-if="(isSupervisor || isStudent) && tab === 'info'"
+              v-if="(isStudent && tab === 'info' && ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(practice.status)) || (isSupervisor && tab === 'info')"
               variant="outlined"
               color="#3A803D"
               rounded="lg"
@@ -926,11 +924,9 @@ export default {
     isStudent() {
       return this.role === 'student'
     },
-
     isSupervisor() {
       return this.role === 'supervisor'
     },
-
     isCompany() {
       return this.role === 'company'
     },
@@ -940,7 +936,6 @@ export default {
       const allowedStatuses = ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor', 'agreement_confirmed_by_company', 'agreement_confirmed_by_supervisor', 'report_rejected_by_company', 'report_rejected_by_supervisor']
       return !allowedStatuses.includes(this.practice.status)
     },
-
     academicYears() {
       const year = new Date().getFullYear()
       return Array.from({ length: 5 }, (_, i) => `${year + i}/${year + i + 1}`)
@@ -949,20 +944,14 @@ export default {
       if (!this.practice) return true
       return !['agreement_confirmed_by_supervisor', 'agreement_confirmed_by_company', 'report_rejected_by_supervisor', 'report_rejected_by_company'].includes(this.practice.status)
     },
-    canUploadReport() {
-      return ['agreement_confirmed_by_company','agreement_confirmed_by_supervisor', 'report_rejected_by_supervisor', 'report_rejected_by_company'].includes(this.practice.status)
-    },
-    canDeleteReport() {
+    canDeleteReportOrUploadReport() {
       return ['agreement_confirmed_by_supervisor', 'agreement_confirmed_by_company', 'report_rejected_by_supervisor', 'report_rejected_by_company'].includes(this.practice.status)
     },
     isAgreementLocked() {
       if (!this.practice) return false
       return ['canceled', 'agreement_confirmed_by_supervisor', 'agreement_confirmed_by_company', 'agreement_confirm_requested'].includes(this.practice.status)
     },
-    canUploadAgreement() {
-      return ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(this.practice.status)
-    },
-    canDeleteAgreement() {
+    canDeleteAgreementOrUploadAgreement() {
       return ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(this.practice.status)
     },
     hasUploadedAgreement() {
