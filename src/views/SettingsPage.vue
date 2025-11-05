@@ -10,6 +10,8 @@
               <p class="text-subtitle-1">Spravujte nastavenia a preferencie svojho účtu</p>
             </v-col>
           </v-row>
+          <ProfileSettingsPage />
+          <v-spacer class="my-6" />
           <ChangePasswordPage />
         </v-container>
       </v-row>
@@ -20,10 +22,11 @@
 <script>
 import Sidebar from '@/components/Sidebar.vue'
 import ChangePassword from '@/components/ChangePassword.vue'
+import ProfileSettings from '@/components/ProfileSettings.vue'
 
 export default {
   name: 'SettingsPage',
-  components: { ChangePasswordPage: ChangePassword, Sidebar },
+  components: { ChangePasswordPage: ChangePassword, Sidebar, ProfileSettingsPage: ProfileSettings, },
 }
 </script>
 
