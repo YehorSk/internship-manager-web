@@ -376,7 +376,6 @@ export default {
 
       try {
         await store.createPractice(data)
-        t.success(store.success)
         this.$emit('update')
         this.resetForm()
         this.closeDialog()

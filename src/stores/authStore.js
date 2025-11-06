@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { handleError } from '@/utils/httpError.js'
 import {useStorage} from "@vueuse/core";
+import { useToastStore } from '@/stores/toastStore.js'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -10,14 +11,13 @@ export const useAuthStore = defineStore('auth', {
     user: null,
     isLoggedIn: false,
     fieldErrors: {},
-    error: '',
-    success: '',
   }),
   getters: {
     roles: (state) => state.user?.roles?.map(r => r.name) || [],
   },
   actions: {
     async authenticate(){
+      const toast = useToastStore()
       try{
         const { data: response } = await axios.get('/api/auth/user', null);
         this.user = response.data
@@ -29,16 +29,17 @@ export const useAuthStore = defineStore('auth', {
           this.user = null
           this.isLoggedIn = false
         }
-        handleError(e, this)
+        handleError(e, this, toast)
         throw e
       }
     },
     async register(data) {
+      const toast = useToastStore()
       this.loading = true
       this.fieldErrors = {}
       try {
         const { data: response } = await axios.post('/api/auth/register', data)
-        this.success = response.message
+        toast.showSuccess(response.message)
         console.log(response)
       } catch (e) {
         handleError(e, this)
@@ -48,13 +49,14 @@ export const useAuthStore = defineStore('auth', {
       }
     },
     async sendAuthPostRequest(endpoint, data) {
+      const toast = useToastStore()
       this.loading = true
       this.fieldErrors = {}
       try {
         const { data: response } = await axios.post(endpoint, data)
-        this.success = response.message
+        toast.showSuccess(response.message)
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
         throw e
       } finally {
         this.loading = false
@@ -70,18 +72,18 @@ export const useAuthStore = defineStore('auth', {
       return this.sendAuthPostRequest('/api/auth/change-password', data)
     },
     async login(email, password) {
+      const toast = useToastStore()
       this.loading = true
-      this.error = ''
       try {
         const { data: response } = await axios.post('/api/auth/login', { email, password })
         this.user = response.data
         this.token = response.token
-        this.success = response.message
+        toast.showSuccess(response.message)
         this.isLoggedIn = true
         console.log(response)
         window.location.reload();
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
         this.isLoggedIn = false
         throw e
       } finally {
@@ -89,13 +91,13 @@ export const useAuthStore = defineStore('auth', {
       }
     },
     async logout() {
+      const toast = useToastStore()
       this.loading = true
-      this.error = ''
       try {
         const { data: response } = await axios.post('/api/auth/logout', null);
-        this.success = response.message
+        toast.showSuccess(response.message)
       }catch (e){
-        handleError(e, this)
+        handleError(e, this, toast)
         this.isLoggedIn = false
         throw e
       }  finally {

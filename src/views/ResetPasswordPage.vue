@@ -139,7 +139,6 @@
 </template>
 <script>
 import { useAuthStore } from '@/stores/authStore.js'
-import { useToast } from 'vue-toastification'
 import AppFooter from '@/components/AppFooter.vue'
 import AppHeader from '@/components/AppHeader.vue'
 
@@ -166,8 +165,7 @@ export default {
         password: v =>
           /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(v) ||
           'Min. 8 znakov, aspoň 1 písmeno a 1 číslo',
-      },
-      toast: useToast()
+      }
     }
   },
   created() {
@@ -201,27 +199,6 @@ export default {
         password: this.resetData?.newPassword,
         password_confirmation: this.resetData?.confirmPassword,
       })
-    },
-  },
-  watch:{
-    "authStore.success": {
-      handler(newValue) {
-        if (newValue) {
-          this.$refs.loginForm?.reset()
-          this.toast.success(newValue);
-          this.authStore.success = "";
-        }
-      },
-      immediate: true,
-    },
-    'authStore.error': {
-      handler(newValue) {
-        if (newValue) {
-          this.toast.error(newValue);
-          this.authStore.error = "";
-        }
-      },
-      immediate: true,
     },
   }
 }

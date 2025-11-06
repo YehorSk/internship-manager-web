@@ -89,7 +89,6 @@
 
 <script>
 import { useAuthStore } from '@/stores/authStore.js'
-import { useToast } from 'vue-toastification'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 
@@ -111,7 +110,6 @@ export default {
         required: (v) => !!v || 'Pole je povinné',
         email: (v) => /.+@.+\..+/.test(v) || 'Neplatný e-mail',
       },
-      toast: useToast(),
     }
   },
   methods: {
@@ -120,27 +118,6 @@ export default {
       if (!result) return
 
       await this.authStore.login(this.loginData.email, this.loginData.password)
-    },
-  },
-  watch: {
-    'authStore.success': {
-      handler(newValue) {
-        if (newValue) {
-          this.$refs.loginForm?.reset()
-          this.toast.success(newValue)
-          this.authStore.success = ''
-        }
-      },
-      immediate: true,
-    },
-    'authStore.error': {
-      handler(newValue) {
-        if (newValue) {
-          this.toast.error(newValue)
-          this.authStore.error = ''
-        }
-      },
-      immediate: true,
     },
   },
 }

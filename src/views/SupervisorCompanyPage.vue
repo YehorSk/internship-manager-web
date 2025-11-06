@@ -98,7 +98,6 @@
 <script>
 import Sidebar from '@/components/Sidebar.vue'
 import { useCompaniesStore } from '@/stores/companiesStore.js'
-import { useToast } from 'vue-toastification'
 
 export default {
   name: 'CompaniesView',
@@ -107,41 +106,29 @@ export default {
   data() {
     return {
       store: useCompaniesStore(),
-      toast: useToast()
     }
   },
 
   methods: {
     async confirmCompany(user_id) {
-      try {
-        const res = await this.store.changeStatus(user_id, true)
-        this.toast.success(res?.message)
+      await this.store.changeStatus(user_id, true)
 
-        this.store.$patch(state => {
-          const idx = state.companies.map(c =>
-            c.user_id === user_id ? { ...c, status: true } : c
-          )
-          state.companies = idx
-        })
-      } catch (e) {
-        this.toast.error(this.store.error || 'Chyba pri potvrdení firmy')
-      }
+      this.store.$patch(state => {
+        const idx = state.companies.map(c =>
+          c.user_id === user_id ? { ...c, status: true } : c
+        )
+        state.companies = idx
+      })
     },
 
     async rejectCompany(user_id) {
-      try {
-        const res = await this.store.changeStatus(user_id, false)
-        this.toast.info(res?.message || 'Firma bola odmietnutá.')
-
-        this.store.$patch(state => {
-          const idx = state.companies.map(c =>
-            c.user_id === user_id ? { ...c, status: false } : c
-          )
-          state.companies = idx
-        })
-      } catch (e) {
-        this.toast.error(this.store.error || 'Chyba pri odmietnutí firmy')
-      }
+      await this.store.changeStatus(user_id, false)
+      this.store.$patch(state => {
+        const idx = state.companies.map(c =>
+          c.user_id === user_id ? { ...c, status: false } : c
+        )
+        state.companies = idx
+      })
     }
   },
 

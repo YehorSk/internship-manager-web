@@ -1,13 +1,12 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { handleError } from '@/utils/httpError.js'
+import { useToastStore } from '@/stores/toastStore.js'
 
 export const usePracticesStore = defineStore('practices', {
   state: () => ({
     list: [],
     loading: false,
-    error: '',
-    success: '',
     fieldErrors: {},
     current_page: 1,
     total_pages: 1,
@@ -33,8 +32,7 @@ export const usePracticesStore = defineStore('practices', {
           ...(Object.keys(search).length ? { search } : {}),
         }
 
-        const endpoint = '/api/practices/list'
-        const { data } = await axios.post(endpoint, payload)
+        const { data } = await axios.post('/api/practices/list', payload)
 
         this.list = (data.data || []).map((p) => {
           const updated = { ...p }
@@ -58,14 +56,12 @@ export const usePracticesStore = defineStore('practices', {
     },
 
     async createPractice(data) {
+      const toast = useToastStore()
       this.loading = true
-      this.error = ''
-      this.success = ''
       this.fieldErrors = {}
-
       try {
         const { data: response } = await axios.post('/api/practices/', data)
-        this.success = response.message || 'Prax bola úspešne vytvorená!'
+        toast.showSuccess(response.message)
         await this.fetchPractices()
       } catch (e) {
         handleError(e, this)
@@ -75,42 +71,42 @@ export const usePracticesStore = defineStore('practices', {
     },
 
     async updatePractice(id, data) {
+      const toast = useToastStore()
       this.loading = true
-      this.error = ''
-      this.success = ''
       this.fieldErrors = {}
-
       try {
         const { data: response } = await axios.put(`/api/practices/${id}`, data)
-        this.success = response.message || 'Prax bola úspešne aktualizovaná!'
+        toast.showSuccess(response.message)
         await this.fetchPractices()
       } catch (e) {
         console.error(e.response?.data || e)
-        handleError(e, this)
+        handleError(e, this, toast)
       } finally {
         this.loading = false
       }
     },
 
     async getPractice(id) {
+      const toast = useToastStore()
       this.loading = true
-      this.error = ''
       try {
         const { data } = await axios.get(`/api/practices/${id}`)
         return data.data
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
       } finally {
         this.loading = false
       }
     },
 
     async deletePractice(id) {
+      const toast = useToastStore()
       try {
-        const response = await axios.delete(`/api/practices/${id}`)
+        const { data: response } = await axios.delete(`/api/practices/${id}`)
+        toast.showSuccess(response.message)
         return response.data
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
       }
     },
 
@@ -120,9 +116,8 @@ export const usePracticesStore = defineStore('practices', {
     },
 
     async uploadAgreement(practiceId, file) {
+      const toast = useToastStore()
       this.loading = true
-      this.error = ''
-      this.success = ''
       try {
         const formData = new FormData()
         formData.append('practice_id', practiceId)
@@ -133,15 +128,16 @@ export const usePracticesStore = defineStore('practices', {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
 
-        this.success = data.message || 'Dohoda bola úspešne nahratá!'
+        toast.showSuccess(data.message)
         return data
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
       } finally {
         this.loading = false
       }
     },
     async downloadAgreementTemplate(practiceId) {
+      const toast = useToastStore()
       try {
         const response = await axios.get(`/api/practices/${practiceId}/download-agreement`, {
           responseType: 'blob',
@@ -155,35 +151,36 @@ export const usePracticesStore = defineStore('practices', {
         link.click()
         link.remove()
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
       }
     },
     async requestAgreementApproval(practiceId) {
+      const toast = useToastStore()
       try {
         const { data } = await axios.get(
           `/api/practices/${practiceId}/agreement-confirmation-request`
         )
-        this.success = data.message || 'Žiadosť o schválenie bola odoslaná!'
+        toast.showSuccess(data.message || 'Žiadosť o schválenie bola odoslaná!')
         return data
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
       }
     },
     async downloadUploadedDocument(practiceId, filePath) {
+      const toast = useToastStore()
       try {
         const { data } = await axios.get(`/api/practices/${practiceId}/download-document`, {
           params: { file_path: filePath },
         })
         return data
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
       }
     },
 
     async uploadReport(practiceId, file) {
+      const toast = useToastStore()
       this.loading = true
-      this.error = ''
-      this.success = ''
       try {
         const formData = new FormData()
         formData.append('practice_id', practiceId)
@@ -194,7 +191,7 @@ export const usePracticesStore = defineStore('practices', {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
 
-        this.success = data.message || 'Správa bola úspešne nahratá!'
+        toast.showSuccess(data.message || 'Správa bola úspešne nahratá!')
         return data
       } catch (e) {
         handleError(e, this)
@@ -204,23 +201,25 @@ export const usePracticesStore = defineStore('practices', {
     },
 
     async downloadUploadedReport(practiceId, filePath) {
+      const toast = useToastStore()
       try {
         const { data } = await axios.get(`/api/practices/${practiceId}/download-document`, {
           params: { file_path: filePath },
         })
         return data
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
       }
     },
 
     async deleteUploadedDocument(practiceId, filePath) {
+      const toast = useToastStore()
       try {
         const { data } = await axios.delete(`/api/practices/${practiceId}/delete-document`, {
           data: { file_path: filePath },
         })
 
-        this.success = data.message || 'Dokument bol úspešne odstránený!'
+        toast.showSuccess(data.message || 'Dokument bol úspešne odstránený!')
         return data
       } catch (e) {
         handleError(e, this)
@@ -228,6 +227,7 @@ export const usePracticesStore = defineStore('practices', {
     },
 
     async downloadReportTemplate(practiceId) {
+      const toast = useToastStore()
       try {
         const response = await axios.get(`/api/practices/${practiceId}/download-report`, {
           responseType: 'blob',
@@ -241,31 +241,33 @@ export const usePracticesStore = defineStore('practices', {
         link.click()
         link.remove()
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
       }
     },
 
     async requestReportApproval(practiceId) {
+      const toast = useToastStore()
       try {
         const { data } = await axios.get(`/api/practices/${practiceId}/report-confirmation-request`)
         this.success = data.message || 'Žiadosť o schválenie správy bola odoslaná!'
         return data
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
       }
     },
 
     async updateDocumentStatus(practiceId, documentType, status, comment = '') {
+      const toast = useToastStore()
       try {
         const { data } = await axios.patch(`/api/practices/${practiceId}/update-document-status`, {
           document_type: documentType,
           status: status,
           comment: comment,
         })
-        this.success = data.message || 'Status bol úspešne zmenený!'
+        toast.showSuccess(data.message || 'Status bol úspešne zmenený!')
         return data
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
       }
     },
   },

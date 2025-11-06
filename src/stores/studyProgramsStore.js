@@ -1,21 +1,22 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { useToastStore } from '@/stores/toastStore.js'
+import { handleError } from '@/utils/httpError.js'
 
 export const useStudyProgramsStore = defineStore('studyPrograms', {
   state: () => ({
     list: [],
     loading: false,
-    error: ''
   }),
   actions: {
     async fetchPrograms() {
+      const toast = useToastStore()
       this.loading = true
       try {
         const res = await axios.get('api/study-programs/index')
         this.list = res.data.data
       } catch (e) {
-        this.error = 'Nepodarilo sa načítať študijné programy'
-        console.error(e)
+        handleError(e, this, toast)
       } finally {
         this.loading = false
       }

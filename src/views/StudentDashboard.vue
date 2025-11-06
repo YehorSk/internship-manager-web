@@ -14,7 +14,7 @@
             </v-col>
           </v-row>
 
-          <v-row v-if="isLoading" class="justify-center py-12">
+          <v-row v-if="store.loading" class="justify-center py-12">
             <v-progress-circular indeterminate color="#3A803D" size="48" />
           </v-row>
 
@@ -79,7 +79,7 @@
             </v-col>
           </v-row>
 
-          <v-row v-if="!isLoading && !activePractices.length">
+          <v-row v-if="!store.loading && !activePractices.length">
             <v-col cols="12" class="text-center py-14">
               <v-icon size="72" color="#3A803D" class="mb-4">mdi-domain-off</v-icon>
               <h2 class="text-h5 font-weight-medium mb-2 text-grey-darken-4">Žiadna aktívna prax</h2>
@@ -117,7 +117,6 @@ import Sidebar from '@/components/Sidebar.vue'
 import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
 import StudentAddPraxeForm from '@/components/StudentAddPraxeForm.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
-import { useToast } from 'vue-toastification'
 import { getStatusColor, getStatusText } from '@/utils/statusHelpers.js'
 
 export default {
@@ -126,9 +125,7 @@ export default {
     return {
       showPracticeDialog: false,
       selectedPracticeId: null,
-      store: null,
-      toast: useToast(),
-      isLoading: false,
+      store: usePracticesStore(),
       allPractices: [],
     }
   },
@@ -140,30 +137,22 @@ export default {
     },
   },
   async mounted() {
-    this.store = usePracticesStore()
     await this.loadPractices()
   },
   methods: {
     async loadPractices() {
-      try {
-        this.isLoading = true
-        this.store.current_page = 1
-        await this.store.fetchPractices()
+      this.store.current_page = 1
+      await this.store.fetchPractices()
 
-        const allPractices = [...this.store.list]
-        const totalPages = this.store.total_pages
+      const allPractices = [...this.store.list]
+      const totalPages = this.store.total_pages
 
-        for (let page = 2; page <= totalPages; page++) {
-          await this.store.changePage(page)
-          allPractices.push(...this.store.list)
-        }
-
-        this.allPractices = allPractices
-      } catch (e) {
-        this.toast.error('Nepodarilo sa načítať praxe.')
-      } finally {
-        this.isLoading = false
+      for (let page = 2; page <= totalPages; page++) {
+        await this.store.changePage(page)
+        allPractices.push(...this.store.list)
       }
+
+      this.allPractices = allPractices
     },
     openPractice(id) {
       this.selectedPracticeId = id

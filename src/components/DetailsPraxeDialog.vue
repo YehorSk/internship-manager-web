@@ -1005,10 +1005,6 @@ export default {
           })
         }
       this.loadingPractice = false
-      if (this.practicesStore.error) {
-        this.toast.error('Nepodarilo sa načítať detaily praxe.')
-        return
-      }
       this.statusHistory = data.practice_status_history || []
     },
 
@@ -1081,11 +1077,6 @@ export default {
         }
 
         this.$emit('update', this.practice)
-      if (this.practicesStore.error) {
-        this.toast.error(this.practicesStore.error || 'Nepodarilo sa aktualizovať prax.')
-        return
-      }
-      this.toast.success(this.practicesStore.success)
       this.isEditing = false
     },
 
@@ -1112,11 +1103,6 @@ export default {
         this.$emit('update', { id: this.practice.id, status: 'canceled' })
         if (this.practice) this.practice.status = 'canceled'
 
-      if (this.practicesStore.error) {
-        this.toast.error(this.practicesStore.error)
-        return
-      }
-      this.toast.success(this.practicesStore.success)
       this.open = false
     },
     async submitReport() {
@@ -1124,50 +1110,29 @@ export default {
         this.toast.error('Vyber PDF súbor pred odoslaním!')
         return
       }
-        await this.practicesStore.uploadReport(this.practice.id, this.report.file)
-      if (this.practicesStore.error) {
-        this.toast.error(this.practicesStore.error || 'Chyba pri nahrávaní správy.')
-        return
-      }
-      this.toast.success(this.practicesStore.success)
+      await this.practicesStore.uploadReport(this.practice.id, this.report.file)
       await this.fetchPractice()
       this.report.file = null
     },
     async downloadReportTemplate() {
-        await this.practicesStore.downloadReportTemplate(this.practice.id)
-      if (this.practicesStore.error) {
-        this.toast.error(this.practicesStore.error || 'Nepodarilo sa stiahnuť vzor správy.')
-      }
+      await this.practicesStore.downloadReportTemplate(this.practice.id)
     },
     async downloadAgreementTemplate() {
       await this.practicesStore.downloadAgreementTemplate(this.practice.id)
-      if (this.practicesStore.error) {
-        this.toast.error(this.practicesStore.error || 'Nepodarilo sa stiahnuť dohodu.')
-      }
     },
     async submitAgreement() {
       if (!this.agreement.file) {
         this.toast.error('Vyber PDF súbor pred odoslaním!')
         return
       }
-        await this.practicesStore.uploadAgreement(this.practice.id, this.agreement.file)
-        if (this.practicesStore.error) {
-          this.toast.error(this.practicesStore.error || 'Chyba pri nahrávaní dohody.')
-          return
-        }
-      this.toast.success(this.practicesStore.success)
+      await this.practicesStore.uploadAgreement(this.practice.id, this.agreement.file)
       await this.fetchPractice()
       this.agreement.file = null
     },
 
     async submit() {
       if (this.practice.status === 'created') {
-          await this.practicesStore.requestAgreementApproval(this.practice.id)
-        if (this.practicesStore.error) {
-          this.toast.error(this.practicesStore.error || 'Chyba pri odoslaní na schválenie.')
-          return
-        }
-        this.toast.success(this.practicesStore.success)
+        await this.practicesStore.requestAgreementApproval(this.practice.id)
         await this.fetchPractice()
         this.$emit('update', this.practice)
       }
@@ -1179,9 +1144,6 @@ export default {
           this.uploadedAgreement.file_path
         )
         window.open(url, '_blank')
-      if (this.practicesStore.error) {
-        this.toast.error(this.practicesStore.error || 'Nepodarilo sa stiahnuť nahratú dohodu.')
-      }
     },
     async downloadUploadedReport() {
       if (!this.uploadedReport) return
@@ -1190,9 +1152,6 @@ export default {
           this.uploadedReport.file_path
         )
       window.open(url, '_blank')
-      if (this.practicesStore.error) {
-        this.toast.error(this.practicesStore.error || 'Nepodarilo sa stiahnuť nahratú správu.')
-      }
     },
 
     getFileName(path) {
@@ -1202,23 +1161,13 @@ export default {
 
     async submitR() {
         await this.practicesStore.requestReportApproval(this.practice.id)
-      if (this.practicesStore.error) {
-        this.toast.error(this.practicesStore.error || 'Chyba pri odoslaní správy na schválenie.')
-        return
-      }
-      this.toast.success(this.practicesStore.success)
       await this.fetchPractice()
       this.$emit('update', this.practice)
     },
     async deleteAgreement() {
       if (!this.uploadedAgreement) return
       if (!confirm('Naozaj chcete odstrániť túto dohodu?')) return
-        await this.practicesStore.deleteUploadedDocument(this.practice.id, this.uploadedAgreement.file_path)
-      if (this.practicesStore.error) {
-        this.toast.error(this.practicesStore.error || 'Chyba pri odstraňovaní dohody.')
-        return
-      }
-      this.toast.success(this.practicesStore.success)
+      await this.practicesStore.deleteUploadedDocument(this.practice.id, this.uploadedAgreement.file_path)
       await this.fetchPractice()
     },
 
@@ -1226,34 +1175,18 @@ export default {
       if (!this.uploadedReport) return
       if (!confirm('Naozaj chcete odstrániť túto správu?')) return
         await this.practicesStore.deleteUploadedDocument(this.practice.id, this.uploadedReport.file_path)
-      if (this.practicesStore.error) {
-        this.toast.error(this.practicesStore.error || 'Chyba pri odstraňovaní správy.')
-        return
-      }
-      this.toast.success(this.practicesStore.success)
       await this.fetchPractice()
     },
     async approveDocument(documentType) {
       const comment = this.commentText
       await this.practicesStore.updateDocumentStatus(this.practice.id, documentType, 'agree', comment)
-
-      if (this.practicesStore.error) {
-        this.toast.error(this.practicesStore.error || 'Nepodarilo sa schváliť dokument')
-        return
-      }
-      this.toast.success(this.practicesStore.success)
       await this.fetchPractice()
       this.commentText = ''
     },
 
     async rejectDocument(documentType) {
-        const comment = this.commentText;
-        await this.practicesStore.updateDocumentStatus(this.practice.id, documentType, 'reject', comment);
-        if (this.practicesStore.error) {
-          this.toast.error(this.practicesStore.error ||'Nepodarilo sa odmietnuť dokument');
-          return
-        }
-      this.toast.success(this.practicesStore.success);
+      const comment = this.commentText;
+      await this.practicesStore.updateDocumentStatus(this.practice.id, documentType, 'reject', comment);
       await this.fetchPractice();
       this.commentText = '';
     },
