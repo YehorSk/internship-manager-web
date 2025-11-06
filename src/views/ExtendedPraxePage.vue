@@ -55,11 +55,15 @@
               <v-col v-if="isSupervisor" cols="12" md="3">
                 <v-autocomplete
                   v-model="filters.employer"
-                  :items="employers"
+                  :items="companiesStore.companies"
+                  item-title="name"
+                  item-value="id"
                   label="Zamestnávateľ"
                   variant="outlined"
                   density="comfortable"
                   clearable
+                  :loading="companiesStore.loading"
+                  @update:search="searchCompanies"
                 />
               </v-col>
 
@@ -181,6 +185,7 @@ import { getStatusColor, getStatusText, statusOptions } from '@/utils/statusHelp
 import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
 import { useAuthStore } from '@/stores/authStore.js'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
+import { useCompaniesStore } from '@/stores/companiesStore.js'
 
 export default {
   components: { DetailsPraxeDialog, Sidebar },
@@ -192,6 +197,7 @@ export default {
       store: usePracticesStore(),
       authStore: useAuthStore(),
       programsStore: useStudyProgramsStore(),
+      companiesStore: useCompaniesStore(),
       filters: {
         year: null,
         semester: null,
@@ -213,13 +219,6 @@ export default {
         .sort()
         .reverse()
     },
-    employers() {
-      return [
-        ...new Set(
-          this.store.list.map((p) => p.practice_company?.name || p.company?.name).filter(Boolean),
-        ),
-      ].sort()
-    },
     students() {
       return [...new Set(this.store.list.map((p) => p.student?.full_name).filter(Boolean))].sort()
     },
@@ -237,7 +236,10 @@ export default {
       handler() {
         const filters = { ...this.filters }
         if (filters.employer) {
-          filters.company_name = filters.employer
+          const company = this.companiesStore.companies.find(c => c.id === filters.employer)
+          if (company) {
+            filters.company_name = company.name
+          }
         }
         delete filters.employer
         this.store.current_page = 1
@@ -249,6 +251,7 @@ export default {
   async mounted() {
     await this.programsStore.fetchPrograms()
     await this.loadPractices()
+    await this.searchCompanies('')
   },
 
   methods: {
@@ -282,6 +285,11 @@ export default {
     },
     getStatusColor,
     getStatusText,
+    async searchCompanies(query) {
+      if (query?.trim().length >= 1) {
+        await this.companiesStore.searchCompanies(query.trim())
+      }
+    },
   }
 }
 </script>
