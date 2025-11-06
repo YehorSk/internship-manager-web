@@ -159,15 +159,16 @@
               ><span class="font-weight-bold">Akademický rok</span
               ><span class="text-red ml-2">*</span></v-label
               >
-              <v-select
+              <v-autocomplete
                 v-model="form.academic_year"
-                :items="academicYears"
+                :items="yearSuggestions"
                 :rules="[rules.required]"
                 rounded="lg"
                 density="compact"
                 variant="solo-filled"
                 flat
                 single-line
+                @update:search="generateYearSuggestions"
               />
             </v-col>
 
@@ -249,6 +250,8 @@ import { useToast } from 'vue-toastification'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { usePracticesStore } from '@/stores/practicesStore.js'
 import { useCompaniesStore } from '@/stores/companiesStore.js'
+import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
+import { useAuthStore } from '@/stores/authStore.js'
 
 export default {
   props: {
@@ -268,6 +271,8 @@ export default {
       companyAdded: false,
       programsStore: useStudyProgramsStore(),
       companiesStore: useCompaniesStore(),
+      yearSuggestions: [],
+      authStore: useAuthStore(),
       form: {
         company: '',
         semester: '',
@@ -295,9 +300,8 @@ export default {
   },
 
   computed: {
-    academicYears() {
-      const year = new Date().getFullYear()
-      return Array.from({ length: 5 }, (_, i) => `${year + i}/${year + i + 1}`)
+    role() {
+      return this.authStore?.user?.roles?.[0]?.name
     },
   },
 
@@ -384,6 +388,9 @@ export default {
           .flat()
           .forEach(msg => t.error(msg))
       }
+    },
+    generateYearSuggestions(query) {
+      this.yearSuggestions = generateAcademicYearSuggestions(query, this.role)
     },
   },
 }

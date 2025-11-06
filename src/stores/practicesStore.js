@@ -6,6 +6,7 @@ import { useToastStore } from '@/stores/toastStore.js'
 export const usePracticesStore = defineStore('practices', {
   state: () => ({
     list: [],
+    students: [],
     loading: false,
     fieldErrors: {},
     current_page: 1,
@@ -270,5 +271,16 @@ export const usePracticesStore = defineStore('practices', {
         handleError(e, this, toast)
       }
     },
+    async searchStudents(query = '') {
+      this.loading = true
+      try {
+        const res = await axios.get(`/api/students/search/${query || ' '}`)
+        this.students = res.data.data.map(s => `${s.first_name} ${s.last_name}`.trim())
+      } catch (e) {
+        console.error(e)
+      } finally {
+        this.loading = false
+      }
+    }
   },
 })

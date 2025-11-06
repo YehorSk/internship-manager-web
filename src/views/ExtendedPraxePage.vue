@@ -33,11 +33,12 @@
               <v-col cols="12" md="2">
                 <v-autocomplete
                   v-model="filters.year"
-                  :items="years"
+                  :items="yearSuggestions"
                   label="Rok"
                   variant="outlined"
                   density="comfortable"
                   clearable
+                  @update:search="generateYearSuggestions"
                 />
               </v-col>
 
@@ -83,11 +84,15 @@
               <v-col cols="12" md="3">
                 <v-autocomplete
                   v-model="filters.student"
-                  :items="students"
+                  :items="store.students"
+                  item-title="full_name"
+                  item-value="full_name"
                   label="Študent"
                   variant="outlined"
                   density="comfortable"
                   clearable
+                  :loading="store.loading"
+                  @update:search="searchStudents"
                 />
               </v-col>
             </v-row>
@@ -186,6 +191,7 @@ import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
 import { useAuthStore } from '@/stores/authStore.js'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { useCompaniesStore } from '@/stores/companiesStore.js'
+import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
 
 export default {
   components: { DetailsPraxeDialog, Sidebar },
@@ -198,6 +204,7 @@ export default {
       authStore: useAuthStore(),
       programsStore: useStudyProgramsStore(),
       companiesStore: useCompaniesStore(),
+      yearSuggestions: [],
       filters: {
         year: null,
         semester: null,
@@ -212,15 +219,6 @@ export default {
   computed: {
     role() {
       return this.authStore?.user?.roles?.[0]?.name
-    },
-    years() {
-      return [...new Set(this.store.list.map((p) => p.academic_year))]
-        .filter(Boolean)
-        .sort()
-        .reverse()
-    },
-    students() {
-      return [...new Set(this.store.list.map((p) => p.student?.full_name).filter(Boolean))].sort()
     },
     studyPrograms() {
       return this.programsStore.list.map(p => p.name)
@@ -252,6 +250,7 @@ export default {
     await this.programsStore.fetchPrograms()
     await this.loadPractices()
     await this.searchCompanies('')
+    await this.searchStudents('')
   },
 
   methods: {
@@ -261,7 +260,7 @@ export default {
     loadPractices(page = 1) {
       const payload = { ...this.filters }
 
-      if (payload.student && payload.student.trim() !== '') {
+      if (payload.student) {
         payload.student_name = payload.student
       }
       delete payload.student
@@ -288,6 +287,14 @@ export default {
     async searchCompanies(query) {
       if (query?.trim().length >= 1) {
         await this.companiesStore.searchCompanies(query.trim())
+      }
+    },
+    generateYearSuggestions(query) {
+      this.yearSuggestions = generateAcademicYearSuggestions(query, this.role)
+    },
+    async searchStudents(query) {
+      if (query?.trim().length >= 1) {
+        await this.store.searchStudents(query.trim())
       }
     },
   }

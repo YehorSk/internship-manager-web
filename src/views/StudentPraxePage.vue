@@ -43,11 +43,12 @@
               <v-col cols="12" md="2">
                 <v-autocomplete
                   v-model="filters.year"
-                  :items="years"
+                  :items="yearSuggestions"
                   label="Rok"
                   variant="outlined"
                   density="comfortable"
                   clearable
+                  @update:search="generateYearSuggestions"
                 />
               </v-col>
 
@@ -180,6 +181,8 @@ import { usePracticesStore } from '@/stores/practicesStore.js'
 import { useCompaniesStore } from '@/stores/companiesStore.js'
 import { getStatusColor, getStatusText, statusOptions } from '@/utils/statusHelpers.js'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
+import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
+import { useAuthStore } from '@/stores/authStore.js'
 
 export default {
   components: { Sidebar, StudentAddPraxeForm, StudentDetailsPraxeDialog: DetailsPraxeDialog },
@@ -191,6 +194,8 @@ export default {
       store: usePracticesStore(),
       programsStore: useStudyProgramsStore(),
       companiesStore: useCompaniesStore(),
+      yearSuggestions: [],
+      authStore: useAuthStore(),
       filters: {
         year: null,
         semester: null,
@@ -202,11 +207,11 @@ export default {
   },
 
   computed: {
-    years() {
-      return [...new Set(this.store.list.map(p => p.academic_year))].filter(Boolean).sort().reverse()
-    },
     studyPrograms() {
       return this.programsStore.list.map(p => p.name)
+    },
+    role() {
+      return this.authStore?.user?.roles?.[0]?.name
     },
   },
 
@@ -261,6 +266,9 @@ export default {
       if (query?.trim().length >= 1) {
         await this.companiesStore.searchCompanies(query.trim())
       }
+    },
+    generateYearSuggestions(query) {
+      this.yearSuggestions = generateAcademicYearSuggestions(query, this.role)
     },
   },
 }
