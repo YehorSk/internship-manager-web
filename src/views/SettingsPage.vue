@@ -10,7 +10,7 @@
               <p class="text-subtitle-1">Spravujte nastavenia a preferencie svojho účtu</p>
             </v-col>
           </v-row>
-          <ProfileSettingsPage />
+          <StudentProfileSettings v-if="isStudent" />
           <v-spacer class="my-6" />
           <ChangePasswordPage />
         </v-container>
@@ -22,10 +22,17 @@
 <script>
 import Sidebar from '@/components/Sidebar.vue'
 import ChangePassword from '@/components/ChangePassword.vue'
-import ProfileSettings from '@/components/ProfileSettings.vue'
+import StudentProfileSettings from '@/components/StudentProfileSettings.vue'
+import { useAuthStore } from '@/stores/authStore.js'
 
 export default {
   name: 'SettingsPage',
-  components: { ChangePasswordPage: ChangePassword, Sidebar, ProfileSettingsPage: ProfileSettings, },
+  components: { ChangePasswordPage: ChangePassword, Sidebar, StudentProfileSettings: StudentProfileSettings, },
+  computed: {
+    isStudent() {
+      const authStore = useAuthStore()
+      return authStore.user?.roles?.[0]?.name === 'student'
+    },
+  },
 }
 </script>
