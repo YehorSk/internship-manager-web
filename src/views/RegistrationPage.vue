@@ -1,7 +1,6 @@
 <script>
 import { useAuthStore } from '@/stores/authStore.js'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
-import { useToast } from "vue-toastification";
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 
@@ -21,7 +20,6 @@ export default {
         phone: v => /^\+?\d{7,15}$/.test(v) || 'Neplatné číslo',
         studentEmail: v => /@student\.ukf\.sk$/i.test(v) || 'Musí byť univerzitný e-mail (@student.ukf.sk)',
       },
-      toast: useToast()
     }
   },
   mounted() {
@@ -99,26 +97,7 @@ export default {
       this.valid = false
       this.$refs.studentForm?.resetValidation()
       this.$refs.companyForm?.resetValidation()
-    },
-    "authStore.success": {
-      handler(newValue) {
-        if (newValue) {
-          this.$refs.loginForm?.reset()
-          this.toast.success(newValue);
-          this.authStore.success = "";
-        }
-      },
-      immediate: true,
-    },
-    'authStore.error': {
-      handler(newValue) {
-        if (newValue) {
-          this.toast.error(newValue);
-          this.authStore.error = "";
-        }
-      },
-      immediate: true,
-    },
+    }
   },
 }
 </script>

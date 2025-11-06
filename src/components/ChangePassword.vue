@@ -93,7 +93,6 @@
 
 <script>
 import { useAuthStore } from '@/stores/authStore.js'
-import { useToast } from 'vue-toastification'
 
 export default {
   data() {
@@ -112,8 +111,7 @@ export default {
           'Min. 8 znakov, aspoň 1 písmeno a 1 číslo',
         match: v =>
           v === this.form.newPassword || 'Heslá sa nezhodujú',
-      },
-      toast: useToast()
+      }
     }
   },
   created() {
@@ -131,27 +129,6 @@ export default {
         password: this.form?.newPassword,
         password_confirmation: this.form?.confirmPassword,
       })
-    },
-  },
-  watch:{
-    "authStore.success": {
-      handler(newValue) {
-        if (newValue) {
-          this.$refs.loginForm?.reset()
-          this.toast.success(newValue);
-          this.authStore.success = "";
-        }
-      },
-      immediate: true,
-    },
-    'authStore.error': {
-      handler(newValue) {
-        if (newValue) {
-          this.toast.error(newValue);
-          this.authStore.error = "";
-        }
-      },
-      immediate: true,
     },
   }
 }

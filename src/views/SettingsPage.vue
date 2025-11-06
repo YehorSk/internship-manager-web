@@ -29,9 +29,3 @@ export default {
   components: { ChangePasswordPage: ChangePassword, Sidebar, ProfileSettingsPage: ProfileSettings, },
 }
 </script>
-
-<style>
-body {
-  background-color: #f9fafb !important;
-}
-</style>

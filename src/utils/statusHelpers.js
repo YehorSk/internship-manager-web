@@ -42,7 +42,7 @@ export const STATUS_MAP = {
   report_confirmed_by_supervisor: {
     color: '#2E7D32',
     icon: 'mdi-school',
-    text: 'Správa potvrdená garantом',
+    text: 'Správa potvrdená garantоm',
   },
   report_rejected_by_company: {
     color: '#C62828',
@@ -52,7 +52,7 @@ export const STATUS_MAP = {
   report_rejected_by_supervisor: {
     color: '#C62828',
     icon: 'mdi-close-circle',
-    text: 'Správa zamietnutá garantом',
+    text: 'Správa zamietnutá garantоm',
   },
   canceled: {
     color: '#000000',

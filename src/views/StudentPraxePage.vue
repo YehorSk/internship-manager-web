@@ -43,11 +43,12 @@
               <v-col cols="12" md="2">
                 <v-autocomplete
                   v-model="filters.year"
-                  :items="years"
+                  :items="yearSuggestions"
                   label="Rok"
                   variant="outlined"
                   density="comfortable"
                   clearable
+                  @update:search="generateYearSuggestions"
                 />
               </v-col>
 
@@ -55,8 +56,6 @@
                 <v-select
                   v-model="filters.semester"
                   :items="['Zimný', 'Letný']"
-                  item-title="label"
-                  item-value="value"
                   label="Semester"
                   variant="outlined"
                   density="comfortable"
@@ -67,11 +66,15 @@
               <v-col cols="12" md="3">
                 <v-autocomplete
                   v-model="filters.employer"
-                  :items="employers"
+                  :items="companiesStore.companies"
+                  item-title="name"
+                  item-value="id"
                   label="Zamestnávateľ"
                   variant="outlined"
                   density="comfortable"
                   clearable
+                  :loading="companiesStore.loading"
+                  @update:search="searchCompanies"
                 />
               </v-col>
 
@@ -175,8 +178,11 @@ import Sidebar from '@/components/Sidebar.vue'
 import StudentAddPraxeForm from '@/components/StudentAddPraxeForm.vue'
 import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
+import { useCompaniesStore } from '@/stores/companiesStore.js'
 import { getStatusColor, getStatusText, statusOptions } from '@/utils/statusHelpers.js'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
+import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
+import { useAuthStore } from '@/stores/authStore.js'
 
 export default {
   components: { Sidebar, StudentAddPraxeForm, StudentDetailsPraxeDialog: DetailsPraxeDialog },
@@ -187,6 +193,9 @@ export default {
       selectedPracticeId: null,
       store: usePracticesStore(),
       programsStore: useStudyProgramsStore(),
+      companiesStore: useCompaniesStore(),
+      yearSuggestions: [],
+      authStore: useAuthStore(),
       filters: {
         year: null,
         semester: null,
@@ -198,18 +207,11 @@ export default {
   },
 
   computed: {
-    years() {
-      return [...new Set(this.store.list.map(p => p.academic_year))].filter(Boolean).sort().reverse()
-    },
-    employers() {
-      return [...new Set(
-        this.store.list
-          .map(p => p.practice_company?.name || p.company?.name)
-          .filter(Boolean)
-      )].sort()
-    },
     studyPrograms() {
       return this.programsStore.list.map(p => p.name)
+    },
+    role() {
+      return this.authStore?.user?.roles?.[0]?.name
     },
   },
 
@@ -219,7 +221,10 @@ export default {
       handler() {
         const filters = { ...this.filters }
         if (filters.employer) {
-          filters.company_name = filters.employer
+          const company = this.companiesStore.companies.find(c => c.id === filters.employer)
+          if (company) {
+            filters.company_name = company.name
+          }
         }
         delete filters.employer
         this.store.current_page = 1
@@ -231,6 +236,7 @@ export default {
   async mounted() {
     await this.programsStore.fetchPrograms()
     await this.store.fetchPractices()
+    await this.searchCompanies('')
   },
 
   methods: {
@@ -255,8 +261,15 @@ export default {
       if (!updated) return
       const idx = this.store.list.findIndex(p => p.id === updated.id)
       if (idx !== -1) this.store.list[idx] = { ...this.store.list[idx], ...updated }
-    }
-
-  }
+    },
+    async searchCompanies(query) {
+      if (query?.trim().length >= 1) {
+        await this.companiesStore.searchCompanies(query.trim())
+      }
+    },
+    generateYearSuggestions(query) {
+      this.yearSuggestions = generateAcademicYearSuggestions(query, this.role)
+    },
+  },
 }
 </script>
