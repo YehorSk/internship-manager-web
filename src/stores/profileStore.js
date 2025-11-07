@@ -7,6 +7,7 @@ import { handleError } from '@/utils/httpError.js'
 export const useProfileStore = defineStore('profile', {
   state: () => ({
     loading: false,
+    fieldErrors: {},
   }),
 
   actions: {
@@ -14,6 +15,7 @@ export const useProfileStore = defineStore('profile', {
       const toast = useToastStore()
       const authStore = useAuthStore()
       this.loading = true
+      this.fieldErrors = {}
 
       try {
         const response = await axios.post('/api/auth/update-profile', data)
