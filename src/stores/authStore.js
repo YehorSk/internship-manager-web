@@ -42,7 +42,7 @@ export const useAuthStore = defineStore('auth', {
         toast.showSuccess(response.message)
         console.log(response)
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
         throw e
       } finally {
         this.loading = false

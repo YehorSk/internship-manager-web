@@ -3,7 +3,7 @@
     <v-card-title>Nastavenia profilu</v-card-title>
     <v-card-subtitle>Spravujte svoje osobné údaje podľa svojej roly</v-card-subtitle>
     <v-card-text>
-      <v-form ref="profileForm" v-model="valid" class="form-fix">
+      <v-form ref="profileForm" v-model="valid" lazy-validation class="form-fix">
         <v-row>
 
           <template v-if="role === 'student'">
@@ -121,11 +121,12 @@
 
           <v-col cols="12" class="text-right">
             <v-btn
-              :loading="authStore.loading"
               rounded="lg"
-              @click="saveProfile"
+              :disabled="!valid || !isChanged || profileStore.loading"
+              :loading="profileStore.loading"
               prepend-icon="mdi-content-save"
               class="confirm-btn text-none"
+              @click="saveProfile"
             >
               Uložiť zmeny
             </v-btn>
@@ -140,18 +141,20 @@
 <script>
 import { useAuthStore } from '@/stores/authStore.js'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
+import { useProfileStore } from '@/stores/profileStore.js'
 
 export default {
   data() {
     return {
       authStore: useAuthStore(),
       programsStore: useStudyProgramsStore(),
+      profileStore: useProfileStore(),
       valid: false,
       form: {},
       role: '',
       rules: {
         required: v => !!v || 'Povinné pole',
-        email: v => /.+@.+\..+/.test(v) || 'Neplatný e-mail',
+        email: v => /^(?!.*\.\.)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v) || 'Neplatný e-mail',
         phone: v => /^\+?\d{7,15}$/.test(v) || 'Neplatné číslo',
       },
     }
@@ -162,18 +165,34 @@ export default {
     this.role = user.roles?.[0]?.name || 'student'
 
     if (this.role === 'student') {
-      this.form = {
-        ...user.student,
-        study_program_id: user.student?.study_program?.[0]?.id || null,
+      const formData = {
+        first_name: user.student?.first_name || '',
+        last_name: user.student?.last_name || '',
+        address: user.student?.address || '',
+        primary_email: user.student?.primary_email || '',
+        phone: user.student?.phone || '',
+        student_email: user.student?.student_email || '',
+        study_program_id: user.student?.study_program?.at(-1)?.id || null,
       }
+      this.form = { ...formData }
+      this.initialForm = { ...formData }
       await this.programsStore.fetchPrograms()
     }
+  },
+  computed: {
+    isChanged() {
+      return JSON.stringify(this.form) !== JSON.stringify(this.initialForm)
+    },
   },
 
   methods: {
     async saveProfile() {
-
-    },
+      const isValid = await this.$refs.profileForm.validate()
+      if (!isValid) return
+      const data = { ...this.form, study_program: this.form.study_program_id }
+      await this.profileStore.updateProfile(data)
+      this.initialForm = { ...this.form }
+    }
   },
 }
 </script>

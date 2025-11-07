@@ -17,6 +17,7 @@ export const usePracticesStore = defineStore('practices', {
 
   actions: {
     async fetchPractices(filters = {}) {
+      const toast = useToastStore()
       this.loading = true
       try {
         const search = {}
@@ -50,7 +51,7 @@ export const usePracticesStore = defineStore('practices', {
         this.total_pages = data.meta?.last_page || data.last_page || 1
         this.total_items = data.meta?.total || data.total || this.list.length
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
       } finally {
         this.loading = false
       }
@@ -65,7 +66,7 @@ export const usePracticesStore = defineStore('practices', {
         toast.showSuccess(response.message)
         await this.fetchPractices()
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
       } finally {
         this.loading = false
       }
@@ -195,7 +196,7 @@ export const usePracticesStore = defineStore('practices', {
         toast.showSuccess(data.message || 'Správa bola úspešne nahratá!')
         return data
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
       } finally {
         this.loading = false
       }
@@ -223,7 +224,7 @@ export const usePracticesStore = defineStore('practices', {
         toast.showSuccess(data.message || 'Dokument bol úspešne odstránený!')
         return data
       } catch (e) {
-        handleError(e, this)
+        handleError(e, this, toast)
       }
     },
 
@@ -272,12 +273,13 @@ export const usePracticesStore = defineStore('practices', {
       }
     },
     async searchStudents(query = '') {
+      const toast = useToastStore()
       this.loading = true
       try {
         const res = await axios.get(`/api/students/search/${query || ' '}`)
         this.students = res.data.data.map(s => `${s.first_name} ${s.last_name}`.trim())
       } catch (e) {
-        console.error(e)
+        handleError(e, this, toast)
       } finally {
         this.loading = false
       }
