@@ -17,7 +17,7 @@ export const menuByRole = {
   ],
   [ROLES.SUPERVISOR]: [
     { id: 'dashboard', label: 'Prehľad', icon: 'mdi-view-dashboard', route: '/supervisor-dashboard' },
-    { id: 'students', label: 'Študenti', icon: 'mdi-school', route: '/students' },
+    { id: 'students', label: 'Študenti', icon: 'mdi-school', route: '/supervisor-all-students' },
     { id: 'companies', label: 'Firmy', icon: 'mdi-office-building', route: '/supervisor-company' },
     { id: 'practices', label: 'Zoznam praxí', icon: 'mdi-file-document-outline', route: '/extended-all-praxe' },
     { divider: true },

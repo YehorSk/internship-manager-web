@@ -272,17 +272,5 @@ export const usePracticesStore = defineStore('practices', {
         handleError(e, this, toast)
       }
     },
-    async searchStudents(query = '') {
-      const toast = useToastStore()
-      this.loading = true
-      try {
-        const res = await axios.get(`/api/students/search/${query || ' '}`)
-        this.students = res.data.data.map(s => `${s.first_name} ${s.last_name}`.trim())
-      } catch (e) {
-        handleError(e, this, toast)
-      } finally {
-        this.loading = false
-      }
-    }
   },
 })
