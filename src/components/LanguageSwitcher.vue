@@ -28,7 +28,7 @@ export default {
     const { locale } = useI18n()
 
     const lang = store.lang
-    const languages = ['sk', 'en', 'uk', 'ru', 'be']
+    const languages = ['sk', 'en', 'ua', 'ru', 'be']
 
     async function setLang(l) {
       await store.setLanguage(l)

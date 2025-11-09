@@ -144,7 +144,10 @@
               >
               <v-select
                 v-model="form.semester"
-                :items="[$t('StudentAddPraxeForm.form.winter'), $t('StudentAddPraxeForm.form.summer')]"
+                :items="[
+                  { title: $t('semesters.winter'), value: 'winter' },
+                  { title: $t('semesters.summer'), value: 'summer' }
+                ]"
                 :rules="[rules.required]"
                 rounded="lg"
                 density="compact"
@@ -373,9 +376,7 @@ export default {
       const data = {
         company_id: this.employerMode === 'existing' ? selectedCompany?.user_id : null,
         study_program_id: this.form.study_program_id,
-        semester: this.form.semester === 'winter'
-          ? this.$t('StudentAddPraxeForm.form.winter')
-          : this.$t('StudentAddPraxeForm.form.summer'),
+        semester: this.form.semester,
         academic_year: this.form.academic_year,
         start_date: this.formatDate(this.form.start_date),
         end_date: this.formatDate(this.form.end_date),

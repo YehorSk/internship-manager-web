@@ -22,7 +22,7 @@ export const usePracticesStore = defineStore('practices', {
       try {
         const search = {}
         if (filters.status) search.status = filters.status
-        if (filters.semester) search.semester = filters.semester === 'Zimný' ? 'winter' : 'summer'
+        if (filters.semester) search.semester = filters.semester
         if (filters.year) search.academic_year = filters.year
         if (filters.company_name) search.company_name = filters.company_name
         if (filters.study_program) search.study_program_name = filters.study_program
@@ -162,7 +162,7 @@ export const usePracticesStore = defineStore('practices', {
         const { data } = await axios.get(
           `/api/practices/${practiceId}/agreement-confirmation-request`
         )
-        toast.showSuccess(data.message || 'Žiadosť o schválenie bola odoslaná!')
+        toast.showSuccess(data.message)
         return data
       } catch (e) {
         handleError(e, this, toast)
@@ -193,7 +193,7 @@ export const usePracticesStore = defineStore('practices', {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
 
-        toast.showSuccess(data.message || 'Správa bola úspešne nahratá!')
+        toast.showSuccess(data.message)
         return data
       } catch (e) {
         handleError(e, this, toast)
@@ -221,7 +221,7 @@ export const usePracticesStore = defineStore('practices', {
           data: { file_path: filePath },
         })
 
-        toast.showSuccess(data.message || 'Dokument bol úspešne odstránený!')
+        toast.showSuccess(data.message)
         return data
       } catch (e) {
         handleError(e, this, toast)
@@ -251,7 +251,7 @@ export const usePracticesStore = defineStore('practices', {
       const toast = useToastStore()
       try {
         const { data } = await axios.get(`/api/practices/${practiceId}/report-confirmation-request`)
-        this.success = data.message || 'Žiadosť o schválenie správy bola odoslaná!'
+        this.success = data.message
         return data
       } catch (e) {
         handleError(e, this, toast)
@@ -266,7 +266,7 @@ export const usePracticesStore = defineStore('practices', {
           status: status,
           comment: comment,
         })
-        toast.showSuccess(data.message || 'Status bol úspešne zmenený!')
+        toast.showSuccess(data.message)
         return data
       } catch (e) {
         handleError(e, this, toast)

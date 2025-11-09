@@ -84,21 +84,18 @@
     "title": "Practice CRM",
     "desc": "Váš portál pre vyhľadávanie a správu stáží. Prepojujeme študentov s firmami a vytvárame príležitosti pre rast a spoluprácu.",
     "status": "Aktívny portál",
-
     "quick_links": "Rýchle odkazy",
     "home": "Domov",
     "about": "O odbornej praxi",
     "student_registration": "Registrácia študenta",
     "company_registration": "Registrácia firmy",
     "login": "Prihlásenie",
-
     "contact": "Kontakt vedúceho fakulty",
     "email": "fakulta@univerzita.sk",
     "phone": "+421 123 456 789",
     "address_line1": "Fakulta informatiky",
     "address_line2": "Univerzitná 1",
     "address_line3": "811 06 Bratislava",
-
     "copyright": "Practice CRM",
     "copyright2": ". Všetky práva vyhradené.",
     "made_with": "Vytvorené s ❤️ pre študentov",
@@ -115,19 +112,14 @@
   "ChangePassword": {
     "title": "Zmeniť heslo",
     "subtitle": "Pravidelne aktualizujte svoje heslo, aby ste udržali svoj účet v bezpečí",
-
     "current": "Aktuálne heslo",
     "new": "Nové heslo",
     "confirm": "Potvrďte heslo",
-
     "placeholder_current": "Zadajte aktuálne heslo",
     "placeholder_new": "Zadajte nové heslo",
     "placeholder_confirm": "Potvrďte nové heslo",
-
     "alert": "Heslo musí mať aspoň 8 znakov a obsahovať kombináciu písmen, číslic a špeciálnych znakov",
-
     "button": "Zmeniť heslo",
-
     "rules": {
       "required": "Povinné pole",
       "password": "Min. 8 znakov, aspoň 1 písmeno a 1 číslo",
@@ -135,15 +127,12 @@
     }
   },
   "DetailsPraxeDialog": {
-    "loading": "Načítavam detaily praxe...",
     "subtitle": "Detailné informácie o praxi",
-
     "tabs": {
       "info": "Základné údaje",
       "agreement": "Dohoda",
       "report": "Správa"
     },
-
     "fields": {
       "study_program": "Študijný program",
       "semester": "Semester",
@@ -161,10 +150,7 @@
       "start_date": "Dátum začiatku",
       "end_date": "Dátum konca"
     },
-
     "labels": {
-      "winter": "Zimný",
-      "summer": "Letný",
       "choose_program": "Vyberte študijný program",
       "enter_job_title": "Napr. Junior Developer",
       "enter_company_name": "Zadajte názov spoločnosti",
@@ -175,17 +161,14 @@
       "enter_contact_email": "napr. jan@firma.sk",
       "enter_description": "Stručný popis vykonávaných činností"
     },
-
     "alerts": {
       "locked": "Úpravy tejto praxe už nie sú povolené.",
       "agreement_locked": "Úpravy alebo nahrávanie dohody už nie sú povolené",
       "report_locked": "Úpravy alebo nahrávanie správy už nie sú povolené"
     },
-
     "history": {
       "title": "História stavov praxe"
     },
-
     "agreement": {
       "title": "Dohoda o vykonaní praxe",
       "desc": "Stiahni vzor dohody, vyplň ho a následne nahraj podpísaný dokument",
@@ -201,7 +184,6 @@
       "not_uploaded": "Dohoda nebola zatial nahratá",
       "comment_placeholder": "Pridajte komentár"
     },
-
     "report": {
       "title": "Správa z praxe",
       "desc": "Stiahni si vzor, vyplň ho a následne ho nahraj naspäť do systému",
@@ -216,7 +198,6 @@
       "delete_btn": "Odstrániť",
       "not_uploaded": "Správa nebola zatial nahratá"
     },
-
     "buttons": {
       "save": "Uložiť zmeny",
       "download": "Uložiť zmeny",
@@ -228,13 +209,11 @@
       "submit_report": "Odoslať správu na schválenie",
       "cancel_practice": "Zrušiť prax"
     },
-
     "confirm": {
       "cancel_practice": "Naozaj chceš zrušiť túto prax?",
       "delete_agreement": "Naozaj chcete odstrániť túto dohodu?",
       "delete_report": "Naozaj chcete odstrániť túto správu?"
     },
-
     "toast": {
       "missing_file": "Vyber PDF súbor pred odoslaním!"
     }
@@ -271,9 +250,7 @@
       "academicYear": "Akademický rok",
       "requiredField": "Povinné pole",
       "invalidEmail": "Neplatný e-mail",
-      "invalidPhone": "Neplatné číslo",
-      "winter": "Zimný",
-      "summer": "Letný"
+      "invalidPhone": "Neplatné číslo"
     },
     "buttons": {
       "save": "Uložiť prax",
@@ -341,7 +318,6 @@
     "title": "Aktivácia spoločnosti",
     "description": "Kliknite na tlačidlo nižšie pre aktiváciu vašej spoločnosti. Ak už máte aktivovaný účet, môžete sa prihlásiť pomocou tlačidla \"Prihlásiť sa\".",
     "missingToken": "Chýba aktivačný token. Skontrolujte aktivačný odkaz vo vašom e-maile.",
-
     "buttons": {
       "activate": "Aktivovať",
       "activating": "Aktivujem…",
@@ -355,7 +331,6 @@
   "ExtendedPraxePage": {
     "title": "Prax študentov",
     "subtitle": "Prehľad všetkých praxí študentov",
-
     "filters": {
       "title": "Filtre",
       "studyProgram": "Študijný program",
@@ -363,16 +338,12 @@
       "semester": "Semester",
       "employer": "Zamestnávateľ",
       "status": "Stav",
-      "student": "Študent",
-      "winter": "Zimný",
-      "summer": "Letný"
+      "student": "Študent"
     },
-
     "table": {
       "title": "Zoznam praxí",
       "total": "Celkovo ",
       "total2": " praxí",
-
       "student": "Študent",
       "employer": "Zamestnávateľ",
       "position": "Pozícia",
@@ -381,32 +352,24 @@
       "academicYear": "Akademický rok",
       "period": "Obdobie",
       "status": "Stav",
-      "semesters": {
-        "winter": "Zimný",
-        "summer": "Letný"
-      },
-      "noData": "Žiadne praxe",
-      "loading": "Načítavam…"
+      "noData": "Žiadne praxe"
     }
   },
   "LoginPage": {
     "title": "Prihlásenie",
     "subtitle": "Zadajte svoj e-mail a heslo pre prihlásenie",
-
     "form": {
       "email": "E-mail *",
       "password": "Heslo *",
       "required": "Pole je povinné",
       "invalidEmail": "Neplatný e-mail"
     },
-
     "buttons": {
       "login": "Prihlásiť sa",
       "forgot": "Zabudnuté heslo?",
       "guest": "Prihlásiť sa ako hosť",
       "registerHere": "Registrovať sa tu"
     },
-
     "other": {
       "or": "Alebo",
       "noAccount": "Nemáte účet?"
@@ -421,12 +384,10 @@
   "RegistrationPage": {
     "title": "Vytvoriť účet",
     "subtitle": "Vyberte si svoju rolu a dokončite registráciu",
-
     "tabs": {
       "student": "Študent",
       "company": "Spoločnosť"
     },
-
     "student": {
       "first_name": "Krstné meno",
       "first_name2": "Zadajte krstné meno",
@@ -445,7 +406,6 @@
       "student_info": "Po registrácii dostanete heslo e-mailom.",
       "button": "Registrovať sa ako študent"
     },
-
     "company": {
       "name": "Názov spoločnosti",
       "name2": "Zadajte názov spoločnosti",
@@ -466,12 +426,10 @@
       "company_warning": "Váš firemný účet potrebuje aktiváciu. Po kontrole vás budeme kontaktovať.",
       "button": "Registrovať sa ako spoločnosť"
     },
-
     "or": "Alebo",
     "guest": "Prihlásiť sa ako hosť",
     "have_account": "Už máte účet?",
     "login_here": "Prihlásiť sa tu",
-
     "errors": {
       "required": "Povinné pole",
       "email": "Neplatný e-mail",
@@ -481,35 +439,26 @@
   },
   "ResetPasswordPage": {
     "title": "Obnova hesla",
-
     "subtitle_request": "Zadajte svoj e-mail a pošleme vám odkaz na obnovenie hesla",
     "subtitle_reset": "Nastavte si nové heslo",
-
     "form": {
       "email": "E-mail",
       "email_placeholder": "Zadajte váš e-mail",
-
       "new_password": "Nové heslo",
       "new_password_placeholder": "Zadajte nové heslo",
-
       "confirm_password": "Potvrdenie hesla",
       "confirm_password_placeholder": "Potvrďte nové heslo",
-
       "info_reset": "Ak existuje účet s týmto e-mailom, odošleme odkaz na obnovenie hesla."
     },
-
     "buttons": {
       "send_reset": "Odoslať odkaz na obnovenie",
       "update_password": "Aktualizovať heslo",
       "back_to_login": "Späť na prihlásenie"
     },
-
     "or": "Alebo",
-
     "alerts": {
       "invalid_token": "Neplatný alebo chýbajúci token. Skúste znova požiadať o odkaz na obnovenie."
     },
-
     "rules": {
       "required": "Povinné pole",
       "email": "Neplatný e-mail",
@@ -544,12 +493,7 @@
     "listTitle": "Zoznam mojich praxí",
     "total": "Celkovo",
     "total2": "praxí",
-    "loading": "Načítavam...",
-    "noPractices": "Žiadne praxe",
-    "semesters": {
-      "winter": "Zimný",
-      "summer": "Letný"
-    }
+    "noPractices": "Žiadne praxe"
   },
   "SupervisorCompanyPage": {
     "title": "Rozhranie garanta",
@@ -557,7 +501,6 @@
     "listTitle": "Zoznam firiem",
     "total": "Celkovo",
     "total2": "firiem",
-    "loading": "Načítavam...",
     "empty": "Žiadne firmy",
     "name": "Názov",
     "contact": "Kontakt",
@@ -587,5 +530,29 @@
     "report_rejected_by_supervisor": "Správa zamietnutá garantom",
     "canceled": "Zrušená",
     "unknown": "Neznámy"
+  },
+  "SupervisorStudentsPage": {
+    "title": "Študenti",
+    "subtitle": "Prehľad všetkých študentov",
+    "filters": "Filtre",
+    "studyProgram": "Študijný program",
+    "student": "Študent",
+    "listTitle": "Zoznam študentov",
+    "total": "Celkovo",
+    "students": "študentov",
+    "noStudents": "Žiadni študenti",
+    "columns": {
+      "firstName": "Meno",
+      "lastName": "Priezvisko",
+      "email": "Email",
+      "studyProgram": "Študijný program"
+    }
+  },
+  "semesters": {
+    "winter": "Zimný",
+    "summer": "Letný"
+  },
+  "common": {
+    "loading": "Načítavam..."
   }
 }

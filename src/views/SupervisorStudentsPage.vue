@@ -7,15 +7,15 @@
         <v-container fluid class="pa-4">
           <v-row class="align-center mb-4">
             <v-col cols="12">
-              <h1 class="text-h5 mb-1">Študenti</h1>
-              <p class="text-subtitle-1">Prehľad všetkých študentov</p>
+              <h1 class="text-h5 mb-1">{{ $t('SupervisorStudentsPage.title') }}</h1>
+              <p class="text-subtitle-1">{{ $t('SupervisorStudentsPage.subtitle') }}</p>
             </v-col>
           </v-row>
-          
+
           <v-card class="pa-6 mb-6">
             <v-row class="align-center mb-3">
               <v-icon color="grey-darken-1" start>mdi-filter-outline</v-icon>
-              <span class="font-weight-medium text-grey-darken-2 text-subtitle-1">Filtre</span>
+              <span class="font-weight-medium text-grey-darken-2 text-subtitle-1">{{ $t('SupervisorStudentsPage.filters') }}</span>
             </v-row>
 
             <v-row class="mt-2" dense>
@@ -23,7 +23,7 @@
                 <v-autocomplete
                   v-model="filters.study_program"
                   :items="studyPrograms"
-                  label="Študijný program"
+                  :label="$t('SupervisorStudentsPage.studyProgram')"
                   variant="outlined"
                   density="comfortable"
                   clearable
@@ -36,7 +36,7 @@
                   :items="store.students"
                   item-title="full_name"
                   item-value="full_name"
-                  label="Študent"
+                  :label="$t('SupervisorStudentsPage.student')"
                   variant="outlined"
                   density="comfortable"
                   clearable
@@ -49,9 +49,9 @@
 
           <v-card class="mb-6">
             <v-card-title class="text-h6 d-flex justify-space-between">
-              <div>Zoznam študentov</div>
+              <div>{{ $t('SupervisorStudentsPage.listTitle') }}</div>
               <span class="text-body-2 text-grey-darken-1">
-                Celkovo {{ store.total_items }} študentov
+                {{ $t('SupervisorStudentsPage.total') }} {{ store.total_items }} {{ $t('SupervisorStudentsPage.students') }}
               </span>
             </v-card-title>
 
@@ -59,13 +59,13 @@
 
             <v-card-text>
               <template v-if="store.loading">
-                <div class="text-center py-10">Načítavam...</div>
+                <div class="text-center py-10">{{ $t('common.loading') }}</div>
               </template>
 
               <template v-else-if="!store.students.length">
                 <div class="text-center py-12 text-grey-darken-1">
                   <v-icon size="64" color="#3A803D" class="mb-3">mdi-account-off-outline</v-icon>
-                  <p>Žiadni študenti</p>
+                  <p>{{ $t('SupervisorStudentsPage.noStudents') }}</p>
                 </div>
               </template>
 
@@ -73,10 +73,10 @@
                 <v-table>
                   <thead>
                   <tr>
-                    <th>Meno</th>
-                    <th>Priezvisko</th>
-                    <th>Email</th>
-                    <th>Študijný program</th>
+                    <th>{{ $t('SupervisorStudentsPage.columns.firstName') }}</th>
+                    <th>{{ $t('SupervisorStudentsPage.columns.lastName') }}</th>
+                    <th>{{ $t('SupervisorStudentsPage.columns.email') }}</th>
+                    <th>{{ $t('SupervisorStudentsPage.columns.studyProgram') }}</th>
                   </tr>
                   </thead>
                   <tbody>

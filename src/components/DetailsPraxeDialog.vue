@@ -64,7 +64,10 @@
           <v-select
             v-if="isEditing && !isLocked"
             v-model="edited.semester"
-            :items="[$t('DetailsPraxeDialog.labels.winter'), $t('DetailsPraxeDialog.labels.summer')]"
+            :items="[
+              { title: $t('semesters.winter'), value: 'winter' },
+              { title: $t('semesters.summer'), value: 'summer' }
+            ]"
             rounded="lg"
             density="compact"
             variant="solo-filled"
@@ -73,7 +76,7 @@
           />
           <v-text-field
             v-else
-            :value="practice.semester === 'winter' ? $t('DetailsPraxeDialog.labels.winter') : $t('DetailsPraxeDialog.labels.summer')"
+            :value="$t('semesters.' + practice.semester)"
             :disabled="true"
             rounded="lg"
             density="compact"
@@ -856,7 +859,7 @@
     <template v-if="loadingPractice">
       <v-card class="pa-8 text-center">
         <v-progress-circular indeterminate color="#3A803D" size="48" />
-        <p class="mt-4">{{ $t('DetailsPraxeDialog.loading') }}</p>
+        <p class="mt-4">{{ $t('common.loading') }}</p>
       </v-card>
     </template>
   </v-dialog>
@@ -987,9 +990,7 @@ export default {
         this.edited = {
           academic_year: data.academic_year,
           study_program_id: data.study_program?.id || null,
-          semester: data.semester === 'winter'
-            ? this.$t('DetailsPraxeDialog.labels.winter')
-            : this.$t('DetailsPraxeDialog.labels.summer'),
+          semester: data.semester,
           start_date: this.formatDate(data.start_date),
           end_date: this.formatDate(data.end_date),
           job_title: data.job_title,
@@ -1018,9 +1019,7 @@ export default {
       this.edited = {
         academic_year: this.practice.academic_year,
         study_program_id: this.practice.study_program?.id || null,
-        semester: this.practice.semester === 'winter'
-          ? this.$t('DetailsPraxeDialog.labels.winter')
-          : this.$t('DetailsPraxeDialog.labels.summer'),
+        semester: this.practice.semester,
         start_date: this.formatDate(this.practice.start_date),
         end_date: this.formatDate(this.practice.end_date),
         job_title: this.practice.job_title,
@@ -1032,12 +1031,7 @@ export default {
     async save() {
         const updated = {
           academic_year: this.edited.academic_year,
-          semester:
-            this.edited.semester === this.$t('DetailsPraxeDialog.labels.winter')
-              ? 'winter'
-              : this.edited.semester === this.$t('DetailsPraxeDialog.labels.summer')
-                ? 'summer'
-                : this.edited.semester,
+          semester: this.edited.semester,
           study_program_id: this.edited.study_program_id || this.practice.study_program?.id,
           start_date: this.edited.start_date,
           end_date: this.edited.end_date,

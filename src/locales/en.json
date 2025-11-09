@@ -127,7 +127,6 @@
     }
   },
   "DetailsPraxeDialog": {
-    "loading": "Loading practice details...",
     "subtitle": "Detailed information about the practice",
     "tabs": {
       "info": "Basic Info",
@@ -152,8 +151,6 @@
       "end_date": "End Date"
     },
     "labels": {
-      "winter": "Winter",
-      "summer": "Summer",
       "choose_program": "Select study program",
       "enter_job_title": "e.g. Junior Developer",
       "enter_company_name": "Enter company name",
@@ -253,9 +250,7 @@
       "academicYear": "Academic Year",
       "requiredField": "Required field",
       "invalidEmail": "Invalid email",
-      "invalidPhone": "Invalid phone number",
-      "winter": "Winter",
-      "summer": "Summer"
+      "invalidPhone": "Invalid phone number"
     },
     "buttons": {
       "save": "Save practice",
@@ -343,9 +338,7 @@
       "semester": "Semester",
       "employer": "Employer",
       "status": "Status",
-      "student": "Student",
-      "winter": "Winter",
-      "summer": "Summer"
+      "student": "Student"
     },
     "table": {
       "title": "Practice List",
@@ -359,12 +352,7 @@
       "academicYear": "Academic Year",
       "period": "Period",
       "status": "Status",
-      "semesters": {
-        "winter": "Winter",
-        "summer": "Summer"
-      },
-      "noData": "No practices",
-      "loading": "Loading…"
+      "noData": "No practices"
     }
   },
   "LoginPage": {
@@ -505,12 +493,7 @@
     "listTitle": "My Practice List",
     "total": "Total",
     "total2": "practices",
-    "loading": "Loading...",
-    "noPractices": "No practices",
-    "semesters": {
-      "winter": "Winter",
-      "summer": "Summer"
-    }
+    "noPractices": "No practices"
   },
   "SupervisorCompanyPage": {
     "title": "Supervisor Dashboard",
@@ -518,7 +501,6 @@
     "listTitle": "Company List",
     "total": "Total",
     "total2": "companies",
-    "loading": "Loading...",
     "empty": "No companies",
     "name": "Name",
     "contact": "Contact",
@@ -548,5 +530,29 @@
     "report_rejected_by_supervisor": "Report rejected by supervisor",
     "canceled": "Canceled",
     "unknown": "Unknown"
+  },
+  "StudentsPage": {
+    "title": "Students",
+    "subtitle": "Overview of all students",
+    "filters": "Filters",
+    "studyProgram": "Study program",
+    "student": "Student",
+    "listTitle": "List of students",
+    "total": "Total",
+    "students": "students",
+    "noStudents": "No students found",
+    "columns": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "studyProgram": "Study program"
+    }
+  },
+  "semesters": {
+    "winter": "Winter",
+    "summer": "Summer"
+  },
+  "common": {
+    "loading": "Loading..."
   }
 }

@@ -21,7 +21,7 @@
             <v-divider />
             <v-card-text>
               <template v-if="store.loading">
-                <div class="text-center py-10">{{ $t('SupervisorCompanyPage.loading') }}</div>
+                <div class="text-center py-10">{{ $t('common.loading') }}</div>
               </template>
               <template v-else-if="!store.companies.length">
                 <div class="text-center py-12 text-grey-darken-1">

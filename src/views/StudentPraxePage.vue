@@ -55,7 +55,10 @@
               <v-col cols="12" md="2">
                 <v-select
                   v-model="filters.semester"
-                  :items="[$t('StudentPraxePage.semesters.winter'), $t('StudentPraxePage.semesters.summer')]"
+                  :items="[
+                    { title: $t('semesters.winter'), value: 'winter' },
+                    { title: $t('semesters.summer'), value: 'summer' }
+                  ]"
                   label="Semester"
                   variant="outlined"
                   density="comfortable"
@@ -105,7 +108,7 @@
 
             <v-card-text>
               <template v-if="store.loading">
-                <div class="text-center py-10">{{ $t('StudentPraxePage.loading') }}</div>
+                <div class="text-center py-10">{{ $t('common.loading') }}</div>
               </template>
 
               <template v-else-if="!store.list.length">
@@ -138,7 +141,7 @@
                   <td>{{ p.practice_company?.name || p.company?.name || '—' }}</td>
                     <td>{{ p.job_title || '—' }}</td>
                     <td>{{ p.study_program?.name || '—' }}</td>
-                    <td>{{ $t('StudentPraxePage.semesters.' + (p.semester === 'winter' ? 'winter' : 'summer')) }}</td>
+                    <td>{{ $t('semesters.' + p.semester) }}</td>
                     <td>{{ p.academic_year }}</td>
                     <td>{{ formatDate(p.start_date) }} – {{ formatDate(p.end_date) }}</td>
                     <td>

@@ -1,13 +1,13 @@
 import { createI18n } from 'vue-i18n'
 import en from './locales/en.json'
-import uk from './locales/uk.json'
+import ua from './locales/ua.json'
 import sk from './locales/sk.json'
 import ru from './locales/ru.json'
 import be from './locales/be.json'
 import {useStorage} from "@vueuse/core";
 
 function loadLocaleMessages() {
-  const locales = [{ sk: sk}, { en: en }, { uk: uk }, { ru: ru}, { be: be}]
+  const locales = [{ sk: sk}, { en: en }, { ua: ua }, { ru: ru}, { be: be}]
   const messages = {}
   locales.forEach(lang => {
     const key = Object.keys(lang)
