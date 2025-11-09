@@ -84,14 +84,14 @@
               <v-col cols="12" md="3">
                 <v-autocomplete
                   v-model="filters.student"
-                  :items="store.students"
+                  :items="studentsStore.students"
                   item-title="full_name"
                   item-value="full_name"
                   :label="$t('ExtendedPraxePage.filters.student')"
                   variant="outlined"
                   density="comfortable"
                   clearable
-                  :loading="store.loading"
+                  :loading="studentsStore.loading"
                   @update:search="searchStudents"
                 />
               </v-col>
@@ -191,6 +191,7 @@ import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
 import { useAuthStore } from '@/stores/authStore.js'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { useCompaniesStore } from '@/stores/companiesStore.js'
+import { useStudentsStore } from '@/stores/studentsStore.js'
 import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
 
 export default {
@@ -204,6 +205,7 @@ export default {
       authStore: useAuthStore(),
       programsStore: useStudyProgramsStore(),
       companiesStore: useCompaniesStore(),
+      studentsStore: useStudentsStore(),
       yearSuggestions: [],
       filters: {
         year: null,
@@ -250,7 +252,7 @@ export default {
     await this.programsStore.fetchPrograms()
     await this.loadPractices()
     await this.searchCompanies('')
-    await this.searchStudents('')
+    await this.studentsStore.searchStudents('')
   },
 
   methods: {
@@ -294,7 +296,7 @@ export default {
     },
     async searchStudents(query) {
       if (query?.trim().length >= 1) {
-        await this.store.searchStudents(query.trim())
+        await this.studentsStore.searchStudents(query.trim())
       }
     },
   }
