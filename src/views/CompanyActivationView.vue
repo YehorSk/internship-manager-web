@@ -5,16 +5,15 @@
       <v-container class="form-container fill-height d-flex align-center justify-center">
         <v-card elevation="12" class="pa-6 rounded-2xl" max-width="600">
           <v-card-title class="text-h5 text-center font-weight-bold">
-            Aktivácia spoločnosti
+            {{ $t('CompanyActivationView.title') }}
           </v-card-title>
 
           <v-card-text class="text-center">
             <div>
-              Kliknite na tlačidlo nižšie pre aktiváciu vašej spoločnosti. Ak už máte aktivovaný účet,
-              môžete sa prihlásiť pomocou tlačidla "Prihlásiť sa".
+              {{ $t('CompanyActivationView.description') }}
             </div>
             <div v-if="!token" class="mt-4 text-red-600">
-              Chýba aktivačný token. Skontrolujte aktivačný odkaz vo vašom e-maile.
+              {{ $t('CompanyActivationView.missingToken') }}
             </div>
           </v-card-text>
 
@@ -28,8 +27,8 @@
                 block
                 @click="activateCompany"
               >
-                <span v-if="!loading">Aktivovať</span>
-                <span v-else>Aktivujem…</span>
+                <span v-if="!loading">{{ $t('CompanyActivationView.buttons.activate') }}</span>
+                <span v-else>{{ $t('CompanyActivationView.buttons.activating') }}</span>
               </v-btn>
             </v-col>
 
@@ -39,9 +38,9 @@
                 rounded="lg"
                 class="login-btn text-none"
                 block
-                @click="$router.push('/login')"
+                :to="{ name: 'Login' }"
               >
-                Prihlásiť sa
+                {{ $t('CompanyActivationView.buttons.login') }}
               </v-btn>
             </v-col>
           </v-row>
@@ -55,8 +54,7 @@
 <script>
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
-import axios from 'axios'
-import { useToast } from 'vue-toastification'
+import { useCompaniesStore } from '@/stores/companiesStore.js'
 
 export default {
   name: 'CompanyActivationView',
@@ -64,41 +62,26 @@ export default {
   data() {
     return {
       token: null,
-      loading: false,
-      toast: useToast(),
-      activated: false
+      companiesStore: useCompaniesStore()
     }
   },
-  created: function () {
+  created() {
     const q = this.$route?.query || {}
     if (q?.token) {
       this.token = String(q.token)
     }
   },
+  computed: {
+    loading() {
+      return this.companiesStore.loading
+    },
+    activated() {
+      return this.companiesStore.activated
+    }
+  },
   methods: {
-    async activateCompany() {
-      if (!this.token) return
-      this.loading = true
-      let message = ''
-      try {
-        const baseUrl = import.meta.env.VITE_API_BASE_URL || ''
-        const url = `${baseUrl.replace(/\/$/, '')}/api/company/activate/${this.token}`
-        const { data } = await axios.get(url)
-
-        if (data?.success) {
-          message = data.message || 'Aktivácia prebehla úspešne.'
-          this.toast.success(message)
-          this.activated = true
-        } else {
-          message = data?.message || 'Chyba pri aktivácii.'
-          this.toast.error(message)
-        }
-      } catch (e) {
-        message = e?.response?.data?.message || e.message || 'Chyba pri komunikácii so serverom.'
-        this.toast.error(message)
-      } finally {
-        this.loading = false
-      }
+    activateCompany() {
+      this.companiesStore.activateCompany(this.token)
     }
   }
 }

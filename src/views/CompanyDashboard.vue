@@ -6,8 +6,8 @@
         <v-container fluid class="pa-4">
           <v-row class="mb-4">
             <v-col cols="12">
-              <h1 class="text-h5">Rozhranie spoločnosti</h1>
-              <p class="text-subtitle-1">Prehľad odborných praxí študentov</p>
+              <h1 class="text-h5">{{ $t('CompanyDashboard.title') }}</h1>
+              <p class="text-subtitle-1">{{ $t('CompanyDashboard.subtitle') }}</p>
             </v-col>
           </v-row>
         </v-container>

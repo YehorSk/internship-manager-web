@@ -7,15 +7,15 @@
         <v-container fluid class="pa-4">
           <v-row class="align-center mb-4">
             <v-col cols="12">
-              <h1 class="text-h5 mb-1">Prax študentov</h1>
-              <p class="text-subtitle-1">Prehľad všetkých praxí študentov</p>
+              <h1 class="text-h5 mb-1">{{ $t('ExtendedPraxePage.title') }}</h1>
+              <p class="text-subtitle-1">{{ $t('ExtendedPraxePage.subtitle') }}</p>
             </v-col>
           </v-row>
 
           <v-card class="pa-6 mb-6">
             <v-row class="align-center mb-3">
               <v-icon color="grey-darken-1" start>mdi-filter-outline</v-icon>
-              <span class="font-weight-medium text-grey-darken-2 text-subtitle-1">Filtre</span>
+              <span class="font-weight-medium text-grey-darken-2 text-subtitle-1">{{ $t('ExtendedPraxePage.filters.title') }}</span>
             </v-row>
 
             <v-row class="mt-2" dense>
@@ -23,7 +23,7 @@
                 <v-autocomplete
                   v-model="filters.study_program"
                   :items="studyPrograms"
-                  label="Študijný program"
+                  :label="$t('ExtendedPraxePage.filters.studyProgram')"
                   variant="outlined"
                   density="comfortable"
                   clearable
@@ -34,7 +34,7 @@
                 <v-autocomplete
                   v-model="filters.year"
                   :items="yearSuggestions"
-                  label="Rok"
+                  :label="$t('ExtendedPraxePage.filters.year')"
                   variant="outlined"
                   density="comfortable"
                   clearable
@@ -45,7 +45,7 @@
               <v-col cols="12" md="2">
                 <v-select
                   v-model="filters.semester"
-                  :items="['Zimný', 'Letný']"
+                  :items="[$t('ExtendedPraxePage.filters.winter'), $t('ExtendedPraxePage.filters.summer')]"
                   label="Semester"
                   variant="outlined"
                   density="comfortable"
@@ -59,7 +59,7 @@
                   :items="companiesStore.companies"
                   item-title="name"
                   item-value="id"
-                  label="Zamestnávateľ"
+                  :label="$t('ExtendedPraxePage.filters.employer')"
                   variant="outlined"
                   density="comfortable"
                   clearable
@@ -74,7 +74,7 @@
                   :items="statusOptions()"
                   item-title="label"
                   item-value="value"
-                  label="Stav"
+                  :label="$t('ExtendedPraxePage.filters.status')"
                   variant="outlined"
                   density="comfortable"
                   clearable
@@ -87,7 +87,7 @@
                   :items="store.students"
                   item-title="full_name"
                   item-value="full_name"
-                  label="Študent"
+                  :label="$t('ExtendedPraxePage.filters.student')"
                   variant="outlined"
                   density="comfortable"
                   clearable
@@ -100,9 +100,9 @@
 
           <v-card class="mb-6">
             <v-card-title class="text-h6 d-flex justify-space-between">
-              <div>Zoznam praxí</div>
+              <div>{{ $t('ExtendedPraxePage.table.title') }}</div>
               <span class="text-body-2 text-grey-darken-1">
-                Celkovo {{ store.total_items }} praxí
+                {{ $t('ExtendedPraxePage.table.total') }} {{ store.total_items }} {{ $t('ExtendedPraxePage.table.total2') }}
               </span>
             </v-card-title>
 
@@ -110,13 +110,13 @@
 
             <v-card-text>
               <template v-if="store.loading">
-                <div class="text-center py-10">Načítavam...</div>
+                <div class="text-center py-10">{{ $t('ExtendedPraxePage.table.loading') }}</div>
               </template>
 
               <template v-else-if="!store.list.length">
                 <div class="text-center py-12 text-grey-darken-1">
                   <v-icon size="64" color="#3A803D" class="mb-3">mdi-check-circle-outline</v-icon>
-                  <p>Žiadne praxe</p>
+                  <p>{{ $t('ExtendedPraxePage.table.noData') }}</p>
                 </div>
               </template>
 
@@ -124,14 +124,14 @@
                 <v-table>
                   <thead>
                     <tr>
-                      <th>Študent</th>
-                      <th v-if="isSupervisor">Zamestnávateľ</th>
-                      <th>Pozícia</th>
-                      <th>Študijný program</th>
-                      <th>Semester</th>
-                      <th>Akademický rok</th>
-                      <th>Obdobie</th>
-                      <th>Stav</th>
+                      <th>{{ $t('ExtendedPraxePage.table.student') }}</th>
+                      <th v-if="isSupervisor">{{ $t('ExtendedPraxePage.table.employer') }}</th>
+                      <th>{{ $t('ExtendedPraxePage.table.position') }}</th>
+                      <th>{{ $t('ExtendedPraxePage.table.studyProgram') }}</th>
+                      <th>{{ $t('ExtendedPraxePage.table.semester') }}</th>
+                      <th>{{ $t('ExtendedPraxePage.table.academicYear') }}</th>
+                      <th>{{ $t('ExtendedPraxePage.table.period') }}</th>
+                      <th>{{ $t('ExtendedPraxePage.table.status') }}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -145,7 +145,7 @@
                       <td v-if="isSupervisor">{{ p.practice_company?.name || p.company?.name || '—' }}</td>
                       <td>{{ p.job_title || '—' }}</td>
                       <td>{{ p.study_program?.name || '—' }}</td>
-                      <td>{{ p.semester === 'winter' ? 'Zimný' : 'Letný' }}</td>
+                      <td>{{ $t('ExtendedPraxePage.table.semesters.' + (p.semester === 'winter' ? 'winter' : 'summer')) }}</td>
                       <td>{{ p.academic_year }}</td>
                       <td>{{ formatDate(p.start_date) }} – {{ formatDate(p.end_date) }}</td>
                       <td>
@@ -154,7 +154,7 @@
                           class="text-white"
                           size="small"
                         >
-                          {{ getStatusText(p.status) }}
+                          {{ $t(getStatusText(p.status)) }}
                         </v-chip>
                       </td>
                     </tr>

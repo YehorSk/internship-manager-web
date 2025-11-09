@@ -1,0 +1,552 @@
+{
+  "Hero": {
+    "badge": "Connect students with companies",
+    "title": "Practice CRM",
+    "subtitle": "Your complete portal for finding and managing internships. We connect students with companies for mutual growth.",
+    "student_btn": "Student Registration",
+    "company_btn": "Company Registration",
+    "login_btn": "Login"
+  },
+  "About": {
+    "badge": "Course information",
+    "title": "About the Professional Practice",
+    "subtitle": "KI/OP/22 – Professional Practice",
+    "steps": {
+      "1": {
+        "title": "Step 1",
+        "desc1": "Preparation of documents for the practice",
+        "desc2": "Preparing all required documents according to faculty guidelines",
+        "time": "Home preparation: 1 hour"
+      },
+      "2": {
+        "title": "Step 2",
+        "desc": "Active participation in professional practice",
+        "desc1": "At least 150 hours of participation",
+        "desc2": "Development of practical experience and soft skills",
+        "desc3": "Performing assigned work tasks",
+        "time": "Minimum 150 hours"
+      },
+      "3": {
+        "title": "Step 3",
+        "desc": "Presentation of practice results",
+        "desc1": "Finalization of required documents",
+        "desc2": "Preparing a poster in the required structure",
+        "desc3": "Presentation of results and gained skills",
+        "time": "Home preparation: 1 hour"
+      }
+    },
+    "summary_title": "Course overview",
+    "summary_text": "The Professional Practice course provides students with real experience in companies or organizations. Students complete a minimum of 150 hours focused on hands-on work and soft-skill development.",
+    "summary_data": {
+      "hours": "Practice hours",
+      "steps": "Main steps",
+      "poster": "Poster presentation"
+    }
+  },
+  "Student": {
+    "title": "Student Registration",
+    "desc": "Create your profile and discover internships that match your skills and career goals.",
+    "points": {
+      "desc": "Access to internship positions in various fields",
+      "desc1": "New offers every day based on your preferences",
+      "desc2": "Possibility to earn certificates and references",
+      "desc3": "Easy management of applications and communication"
+    },
+    "btn": "Register as Student",
+    "requirements_title": "Registration Requirements",
+    "basic_info": "Basic Information",
+    "basic_info_desc": "First name, last name, address, email, phone number",
+    "education": "Education",
+    "education_desc": "Field of study, student email"
+  },
+  "Company": {
+    "title": "Company Registration",
+    "desc": "Register your company, create internship positions, and find talented students for your projects.",
+    "points": {
+      "desc": "Unlimited internship listings",
+      "desc1": "Direct access to motivated and qualified students",
+      "desc2": "Tools for managing applications and communication",
+      "desc3": "Possibility to build long-term partnerships"
+    },
+    "btn": "Register as Company",
+    "requirements_title": "Registration Requirements",
+    "company_info": "Company Information",
+    "company_info_desc": "Company name, address, email",
+    "contact_person": "Contact Person",
+    "contact_person_desc": "Name, email, phone"
+  },
+  "Login": {
+    "title": "Already have an account?",
+    "desc": "Log in to continue exploring internships or managing your listings.",
+    "btn": "Login"
+  },
+  "Footer": {
+    "title": "Practice CRM",
+    "desc": "Your portal for finding and managing internships. We connect students with companies and create opportunities for growth.",
+    "status": "Active portal",
+    "quick_links": "Quick links",
+    "home": "Home",
+    "about": "About practice",
+    "student_registration": "Student Registration",
+    "company_registration": "Company Registration",
+    "login": "Login",
+    "contact": "Faculty Contact",
+    "email": "faculty@university.sk",
+    "phone": "+421 123 456 789",
+    "address_line1": "Faculty of Informatics",
+    "address_line2": "University Street 1",
+    "address_line3": "811 06 Bratislava",
+    "copyright": "Practice CRM",
+    "copyright2": ". All rights reserved.",
+    "made_with": "Made with ❤️ for students",
+    "version": "Version 1.0"
+  },
+  "Header": {
+    "title": "Practice CRM",
+    "home": "Home",
+    "about": "About practice",
+    "student_registration": "Student Registration",
+    "company_registration": "Company Registration",
+    "login": "Login"
+  },
+  "ChangePassword": {
+    "title": "Change Password",
+    "subtitle": "Update your password regularly to keep your account secure",
+    "current": "Current password",
+    "new": "New password",
+    "confirm": "Confirm password",
+    "placeholder_current": "Enter current password",
+    "placeholder_new": "Enter new password",
+    "placeholder_confirm": "Confirm new password",
+    "alert": "Password must have at least 8 characters and contain a combination of letters, numbers, and special characters",
+    "button": "Change password",
+    "rules": {
+      "required": "Required field",
+      "password": "Min. 8 characters, at least 1 letter and 1 number",
+      "match": "Passwords do not match"
+    }
+  },
+  "DetailsPraxeDialog": {
+    "loading": "Loading practice details...",
+    "subtitle": "Detailed information about the practice",
+    "tabs": {
+      "info": "Basic Info",
+      "agreement": "Agreement",
+      "report": "Report"
+    },
+    "fields": {
+      "study_program": "Study Program",
+      "semester": "Semester",
+      "academic_year": "Academic Year",
+      "job_title": "Job Title",
+      "supervisor": "Practice Supervisor",
+      "company_section": "Company Information",
+      "company_name": "Company Name",
+      "company_address": "Address",
+      "company_email": "Company Email",
+      "contact_phone": "Phone",
+      "contact_name": "Contact Person",
+      "contact_email": "Contact Email",
+      "job_description": "Job Description",
+      "start_date": "Start Date",
+      "end_date": "End Date"
+    },
+    "labels": {
+      "winter": "Winter",
+      "summer": "Summer",
+      "choose_program": "Select study program",
+      "enter_job_title": "e.g. Junior Developer",
+      "enter_company_name": "Enter company name",
+      "enter_address": "Enter company address",
+      "enter_email": "e.g. info@company.com",
+      "enter_phone": "+421 900 000 000",
+      "enter_contact_name": "Enter contact person name",
+      "enter_contact_email": "e.g. john@company.com",
+      "enter_description": "Short description of tasks"
+    },
+    "alerts": {
+      "locked": "Editing this practice is no longer allowed.",
+      "agreement_locked": "Agreement editing or upload is no longer allowed",
+      "report_locked": "Report editing or upload is no longer allowed"
+    },
+    "history": {
+      "title": "Practice Status History"
+    },
+    "agreement": {
+      "title": "Practice Agreement",
+      "desc": "Download the template, fill it out, and upload the signed agreement",
+      "download_step": "Step 1 – Download template",
+      "download_desc": "Download the blank PDF document.",
+      "download_btn": "Download template",
+      "upload_step": "Step 2 – Upload signed agreement",
+      "upload_desc": "Select and upload signed PDF.",
+      "upload_label": "Choose signed PDF",
+      "upload_btn": "Upload agreement",
+      "uploaded_btn": "Download uploaded agreement",
+      "delete_btn": "Delete",
+      "not_uploaded": "No agreement uploaded yet",
+      "comment_placeholder": "Add a comment"
+    },
+    "report": {
+      "title": "Practice Report",
+      "desc": "Download the report template, fill it out, and upload it back",
+      "download_step": "Step 3 – Download report template",
+      "download_desc": "Download the blank PDF document.",
+      "download_btn": "Download template",
+      "upload_step": "Step 4 – Upload completed report",
+      "upload_desc": "Select your completed PDF.",
+      "upload_label": "Choose PDF report",
+      "upload_btn": "Upload report",
+      "uploaded_btn": "Download uploaded report",
+      "delete_btn": "Delete",
+      "not_uploaded": "No report uploaded yet"
+    },
+    "buttons": {
+      "save": "Save changes",
+      "download": "Save changes",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "approve": "Approve",
+      "reject": "Reject",
+      "submit_agreement": "Submit agreement for approval",
+      "submit_report": "Submit report for approval",
+      "cancel_practice": "Cancel practice"
+    },
+    "confirm": {
+      "cancel_practice": "Do you really want to cancel this practice?",
+      "delete_agreement": "Are you sure you want to delete this agreement?",
+      "delete_report": "Are you sure you want to delete this report?"
+    },
+    "toast": {
+      "missing_file": "Select a PDF file before submitting!"
+    }
+  },
+  "SideBar": {
+    "title": "Practice CRM",
+    "subtitle": "Practice management system",
+    "menu": {
+      "dashboard": "Dashboard",
+      "practices": "Practices",
+      "students": "Students",
+      "companies": "Companies",
+      "settings": "Profile Settings",
+      "logout": "Logout"
+    }
+  },
+  "StudentAddPraxeForm": {
+    "title": "Create New Practice",
+    "subtitle": "Fill in your practice details",
+    "form": {
+      "employer": "Employer",
+      "chooseExisting": "Choose from database",
+      "addNew": "New employer",
+      "searchEmployer": "Search employer",
+      "studyProgram": "Study program",
+      "selectStudyProgram": "Select study program",
+      "position": "Position",
+      "positionPlaceholder": "e.g. Frontend Developer",
+      "description": "Description",
+      "descriptionPlaceholder": "Short description of tasks",
+      "start": "Start",
+      "end": "End",
+      "semester": "Semester",
+      "academicYear": "Academic Year",
+      "requiredField": "Required field",
+      "invalidEmail": "Invalid email",
+      "invalidPhone": "Invalid phone number",
+      "winter": "Winter",
+      "summer": "Summer"
+    },
+    "buttons": {
+      "save": "Save practice",
+      "cancel": "Cancel",
+      "addEmployer": "+ Add new employer",
+      "change": "Change"
+    },
+    "companyDialog": {
+      "titleNew": "Add New Employer",
+      "titleEdit": "Edit Employer",
+      "subtitle": "Fill in all company information",
+      "fields": {
+        "name": "Company Name",
+        "name2": "Enter company name",
+        "address": "Address",
+        "address2": "Enter company address",
+        "contactName": "Contact Person",
+        "contactName2": "Enter contact person name",
+        "companyEmail": "Company Email",
+        "companyEmail2": "e.g. info@company.com",
+        "contactEmail": "Contact Email",
+        "contactEmail2": "e.g. john@company.com",
+        "contactPhone": "Contact Phone",
+        "contactPhone2": "+421 900 000 000"
+      },
+      "buttons": {
+        "save": "Save",
+        "saveChanges": "Save changes",
+        "cancel": "Cancel"
+      },
+      "messages": {
+        "added": "Employer added!",
+        "updated": "Employer updated!"
+      }
+    }
+  },
+  "StudentProfileSettings": {
+    "title": "Profile Settings",
+    "subtitle": "Manage your personal information",
+    "form": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "address": "Address",
+      "studentEmail": "Student Email",
+      "primaryEmail": "Primary/Alternative Email",
+      "phone": "Phone Number",
+      "studyProgram": "Field of Study",
+      "requiredField": "Required field",
+      "invalidEmail": "Invalid email",
+      "invalidPhone": "Invalid phone number",
+      "placeholders": {
+        "firstName": "Enter first name",
+        "lastName": "Enter last name",
+        "address": "Enter address",
+        "primaryEmail": "Enter primary email",
+        "phone": "Enter phone number",
+        "studyProgram": "Select field of study"
+      }
+    },
+    "buttons": {
+      "saveChanges": "Save changes"
+    }
+  },
+  "CompanyActivationView": {
+    "title": "Company Activation",
+    "description": "Click the button below to activate your company account. If your account is already activated, you can log in.",
+    "missingToken": "Activation token is missing. Check the activation link in your email.",
+    "buttons": {
+      "activate": "Activate",
+      "activating": "Activating…",
+      "login": "Login"
+    }
+  },
+  "CompanyDashboard": {
+    "title": "Company Dashboard",
+    "subtitle": "Overview of student practices"
+  },
+  "ExtendedPraxePage": {
+    "title": "Student Practices",
+    "subtitle": "Overview of all student practices",
+    "filters": {
+      "title": "Filters",
+      "studyProgram": "Study Program",
+      "year": "Year",
+      "semester": "Semester",
+      "employer": "Employer",
+      "status": "Status",
+      "student": "Student",
+      "winter": "Winter",
+      "summer": "Summer"
+    },
+    "table": {
+      "title": "Practice List",
+      "total": "Total ",
+      "total2": " practices",
+      "student": "Student",
+      "employer": "Employer",
+      "position": "Position",
+      "studyProgram": "Study Program",
+      "semester": "Semester",
+      "academicYear": "Academic Year",
+      "period": "Period",
+      "status": "Status",
+      "semesters": {
+        "winter": "Winter",
+        "summer": "Summer"
+      },
+      "noData": "No practices",
+      "loading": "Loading…"
+    }
+  },
+  "LoginPage": {
+    "title": "Login",
+    "subtitle": "Enter your email and password",
+    "form": {
+      "email": "Email *",
+      "password": "Password *",
+      "required": "Required field",
+      "invalidEmail": "Invalid email"
+    },
+    "buttons": {
+      "login": "Login",
+      "forgot": "Forgot password?",
+      "guest": "Login as guest",
+      "registerHere": "Register here"
+    },
+    "other": {
+      "or": "Or",
+      "noAccount": "Don't have an account?"
+    }
+  },
+  "NotFoundView": {
+    "title": "Page Not Found",
+    "description": "It seems you're lost.",
+    "description2": "Check the URL or return to the home page.",
+    "button": "GO HOME"
+  },
+  "RegistrationPage": {
+    "title": "Create an Account",
+    "subtitle": "Choose your role and complete the registration",
+    "tabs": {
+      "student": "Student",
+      "company": "Company"
+    },
+    "student": {
+      "first_name": "First Name",
+      "first_name2": "Enter first name",
+      "last_name": "Last Name",
+      "last_name2": "Enter last name",
+      "address": "Address",
+      "address2": "Enter address",
+      "student_email": "Student Email",
+      "student_email2": "Enter student email",
+      "primary_email": "Primary/Alternative Email",
+      "primary_email2": "Enter primary email",
+      "phone": "Phone Number",
+      "phone2": "Enter phone number",
+      "study_program": "Study Program",
+      "study_program2": "Select study program",
+      "student_info": "You will receive your password via email after registration.",
+      "button": "Register as Student"
+    },
+    "company": {
+      "name": "Company Name",
+      "name2": "Enter company name",
+      "email": "Company Email",
+      "email2": "Enter company email",
+      "address": "Address",
+      "address2": "Enter company address",
+      "contact_name": "Contact Person",
+      "contact_name2": "Enter contact person name",
+      "contact_email": "Contact Email",
+      "contact_email2": "Enter contact email",
+      "contact_phone": "Contact Phone",
+      "contact_phone2": "Enter contact phone",
+      "password": "Password",
+      "password2": "Enter password",
+      "confirm_password": "Confirm Password",
+      "confirm_password2": "Confirm password",
+      "company_warning": "Your company account requires activation. We will contact you after verification.",
+      "button": "Register as Company"
+    },
+    "or": "Or",
+    "guest": "Login as guest",
+    "have_account": "Already have an account?",
+    "login_here": "Login here",
+    "errors": {
+      "required": "Required field",
+      "email": "Invalid email",
+      "student_email": "Must be university email (@student.ukf.sk)",
+      "phone": "Invalid phone"
+    }
+  },
+  "ResetPasswordPage": {
+    "title": "Reset Password",
+    "subtitle_request": "Enter your email and we will send you a reset link",
+    "subtitle_reset": "Set a new password",
+    "form": {
+      "email": "Email",
+      "email_placeholder": "Enter your email",
+      "new_password": "New password",
+      "new_password_placeholder": "Enter new password",
+      "confirm_password": "Confirm password",
+      "confirm_password_placeholder": "Confirm new password",
+      "info_reset": "If an account with this email exists, a reset link will be sent."
+    },
+    "buttons": {
+      "send_reset": "Send reset link",
+      "update_password": "Update password",
+      "back_to_login": "Back to login"
+    },
+    "or": "Or",
+    "alerts": {
+      "invalid_token": "Invalid or missing token. Please request a new reset link."
+    },
+    "rules": {
+      "required": "Required field",
+      "email": "Invalid email",
+      "password": "Min. 8 characters, at least 1 letter and 1 number",
+      "password_match": "Passwords do not match"
+    }
+  },
+  "SettingsPage": {
+    "title": "Profile Settings",
+    "subtitle": "Manage your account preferences"
+  },
+  "StudentDashboard": {
+    "title": "Student Dashboard",
+    "subtitle": "Overview of your current practices",
+    "unknownCompany": "Unknown company",
+    "noActiveTitle": "No active practice",
+    "noActiveText": "You currently have no active practice. Create a new one.",
+    "addPractice": "Add new practice"
+  },
+  "StudentPraxePage": {
+    "title": "My Practices",
+    "subtitle": "Overview of all your practices",
+    "addPractice": "Add practice",
+    "filters": "Filters",
+    "studyProgram": "Study Program",
+    "year": "Year",
+    "pozicia": "Position",
+    "obdobie": "Period",
+    "semester": "Semester",
+    "employer": "Employer",
+    "status": "Status",
+    "listTitle": "My Practice List",
+    "total": "Total",
+    "total2": "practices",
+    "loading": "Loading...",
+    "noPractices": "No practices",
+    "semesters": {
+      "winter": "Winter",
+      "summer": "Summer"
+    }
+  },
+  "SupervisorCompanyPage": {
+    "title": "Supervisor Dashboard",
+    "subtitle": "Company Verification",
+    "listTitle": "Company List",
+    "total": "Total",
+    "total2": "companies",
+    "loading": "Loading...",
+    "empty": "No companies",
+    "name": "Name",
+    "contact": "Contact",
+    "email": "Email",
+    "phone": "Phone",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "actions": "Actions",
+    "confirm": "Approve",
+    "reject": "Reject"
+  },
+  "SupervisorDashboard": {
+    "title": "Supervisor Dashboard"
+  },
+  "Status": {
+    "created": "Created",
+    "agreement_confirm_requested": "Agreement confirmation requested",
+    "agreement_confirmed_by_company": "Agreement confirmed by company",
+    "agreement_confirmed_by_supervisor": "Agreement confirmed by supervisor",
+    "agreement_rejected_by_company": "Agreement rejected by company",
+    "agreement_rejected_by_supervisor": "Agreement rejected by supervisor",
+    "report_confirm_requested": "Report confirmation requested",
+    "report_confirmed_by_company": "Report confirmed by company",
+    "report_confirmed_by_supervisor": "Report confirmed by supervisor",
+    "report_rejected_by_company": "Report rejected by company",
+    "report_rejected_by_supervisor": "Report rejected by supervisor",
+    "canceled": "Canceled",
+    "unknown": "Unknown"
+  }
+}

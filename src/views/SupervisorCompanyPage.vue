@@ -6,39 +6,39 @@
         <v-container fluid class="pa-4">
           <v-row class="mb-4">
             <v-col cols="12">
-              <h1 class="text-h5">Rozhranie garanta</h1>
-              <p class="text-subtitle-1">Potvrdenie firiem</p>
+              <h1 class="text-h5">{{ $t('SupervisorCompanyPage.title') }}</h1>
+              <p class="text-subtitle-1">{{ $t('SupervisorCompanyPage.subtitle') }}</p>
             </v-col>
           </v-row>
 
           <v-card class="mb-6">
             <v-card-title class="text-h6 d-flex justify-space-between">
-              <div>Zoznam firiem</div>
+              <div>{{ $t('SupervisorCompanyPage.listTitle') }}</div>
               <span class="text-body-2 text-grey-darken-1">
-              Celkovo {{ store.companies.length }} firiem
+              {{ $t('SupervisorCompanyPage.total') }} {{ store.companies.length }} {{ $t('SupervisorCompanyPage.total2') }}
             </span>
             </v-card-title>
             <v-divider />
             <v-card-text>
               <template v-if="store.loading">
-                <div class="text-center py-10">Načítavam...</div>
+                <div class="text-center py-10">{{ $t('SupervisorCompanyPage.loading') }}</div>
               </template>
               <template v-else-if="!store.companies.length">
                 <div class="text-center py-12 text-grey-darken-1">
                   <v-icon size="64" color="#3A803D" class="mb-3">mdi-check-circle-outline</v-icon>
-                  <p>Žiadne firmy</p>
+                  <p>{{ $t('SupervisorCompanyPage.empty') }}</p>
                 </div>
               </template>
               <template v-else>
                 <v-table>
                   <thead>
                   <tr>
-                    <th>Názov</th>
-                    <th>Kontakt</th>
-                    <th>Email</th>
-                    <th>Telefón</th>
-                    <th>Stav</th>
-                    <th class="text-right">Akcie</th>
+                    <th>{{ $t('SupervisorCompanyPage.name') }}</th>
+                    <th>{{ $t('SupervisorCompanyPage.contact') }}</th>
+                    <th>{{ $t('SupervisorCompanyPage.email') }}</th>
+                    <th>{{ $t('SupervisorCompanyPage.phone') }}</th>
+                    <th>{{ $t('SupervisorCompanyPage.status') }}</th>
+                    <th class="text-right">{{ $t('SupervisorCompanyPage.actions') }}</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -53,7 +53,10 @@
                         class="text-white"
                         size="small"
                       >
-                        {{ c.status === true ? 'Aktívna' : 'Neaktívna' }}
+                        {{ c.status === true
+                        ? $t('SupervisorCompanyPage.active')
+                        : $t('SupervisorCompanyPage.inactive')
+                        }}
                       </v-chip>
                     </td>
                     <td class="text-right">
@@ -65,7 +68,7 @@
                           prepend-icon="mdi-check-circle"
                           @click="confirmCompany(c.user_id)"
                         >
-                          Potvrdiť
+                          {{ $t('SupervisorCompanyPage.confirm') }}
                         </v-btn>
                         <v-btn
                           size="small"
@@ -73,7 +76,7 @@
                           prepend-icon="mdi-close-circle"
                           @click="rejectCompany(c.user_id)"
                         >
-                          Odmietnuť
+                          {{ $t('SupervisorCompanyPage.reject') }}
                         </v-btn>
                       </div>
                     </td>

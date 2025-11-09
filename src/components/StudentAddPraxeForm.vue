@@ -1,21 +1,21 @@
 <template>
   <v-dialog v-model="dialog" max-width="900">
     <v-card outlined>
-      <v-card-title>Vytvoriť novú prax</v-card-title>
-      <v-card-subtitle>Vyplňte údaje o vašej odbornej praxi</v-card-subtitle>
+      <v-card-title>{{ $t('StudentAddPraxeForm.title') }}</v-card-title>
+      <v-card-subtitle>{{ $t('StudentAddPraxeForm.subtitle') }}</v-card-subtitle>
 
       <v-card-text>
         <v-form ref="internForm" v-model="valid">
           <v-row>
             <v-col cols="12" md="6">
               <v-label>
-                <span class="font-weight-bold">Zamestnávateľ</span>
+                <span class="font-weight-bold">{{ $t('StudentAddPraxeForm.form.employer') }}</span>
                 <span class="font-weight-bold text-red ml-2">*</span>
               </v-label>
 
               <v-radio-group v-model="employerMode" row>
-                <v-radio label="Vybrať z databázy" value="existing" />
-                <v-radio label="Nový zamestnávateľ" value="new" />
+                <v-radio :label="$t('StudentAddPraxeForm.form.chooseExisting')" value="existing" />
+                <v-radio :label="$t('StudentAddPraxeForm.form.addNew')" value="new" />
               </v-radio-group>
 
               <v-autocomplete
@@ -31,7 +31,7 @@
                 variant="solo-filled"
                 flat
                 single-line
-                placeholder="Vyhľadajte zamestnávateľa"
+                :placeholder="$t('StudentAddPraxeForm.form.searchEmployer')"
                 @update:search="searchCompanies"
               />
 
@@ -45,7 +45,7 @@
                       <span class="ml-2">{{ company.company_name }}</span>
                     </div>
                     <v-btn size="small" variant="tonal" color="grey" @click="openCompanyDialog">
-                      Zmeniť
+                      {{ $t('StudentAddPraxeForm.buttons.change') }}
                     </v-btn>
                   </div>
                 </div>
@@ -57,7 +57,7 @@
                     rounded="lg"
                     @click="openCompanyDialog"
                   >
-                    + Pridať nového zamestnávateľa
+                    {{ $t('StudentAddPraxeForm.buttons.addEmployer') }}
                   </v-btn>
                 </div>
               </div>
@@ -65,7 +65,7 @@
 
             <v-col cols="12" md="6">
               <v-label>
-                <span class="font-weight-bold">Študijný program</span>
+                <span class="font-weight-bold">{{ $t('StudentAddPraxeForm.form.studyProgram') }}</span>
                 <span class="font-weight-bold text-red ml-2">*</span>
               </v-label>
               <v-autocomplete
@@ -80,12 +80,12 @@
                 variant="solo-filled"
                 flat
                 single-line
-                placeholder="Vyberte študijný program"
+                :placeholder="$t('StudentAddPraxeForm.form.selectStudyProgram')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">Pozícia</span></v-label>
+              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.form.position') }}</span></v-label>
               <v-text-field
                 v-model="form.position"
                 rounded="lg"
@@ -93,12 +93,12 @@
                 variant="solo-filled"
                 flat
                 single-line
-                placeholder="Napr. Frontend Developer"
+                :placeholder="$t('StudentAddPraxeForm.form.positionPlaceholder')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">Popis činností</span></v-label>
+              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.form.description') }}</span></v-label>
               <v-textarea
                 v-model="form.description"
                 rounded="lg"
@@ -106,13 +106,13 @@
                 variant="solo-filled"
                 flat
                 single-line
-                placeholder="Stručný popis činností počas praxe"
+                :placeholder="$t('StudentAddPraxeForm.form.descriptionPlaceholder')"
                 rows="3"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">Začiatok</span></v-label>
+              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.form.start') }}</span></v-label>
               <v-text-field
                 v-model="form.start_date"
                 type="date"
@@ -125,7 +125,7 @@
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">Koniec</span></v-label>
+              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.form.end') }}</span></v-label>
               <v-text-field
                 v-model="form.end_date"
                 type="date"
@@ -139,12 +139,12 @@
 
             <v-col cols="12" md="6">
               <v-label
-              ><span class="font-weight-bold">Semester</span
+              ><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.form.semester') }}</span
               ><span class="text-red ml-2">*</span></v-label
               >
               <v-select
                 v-model="form.semester"
-                :items="['Zimný', 'Letný']"
+                :items="[$t('StudentAddPraxeForm.form.winter'), $t('StudentAddPraxeForm.form.summer')]"
                 :rules="[rules.required]"
                 rounded="lg"
                 density="compact"
@@ -156,7 +156,7 @@
 
             <v-col cols="12" md="6">
               <v-label
-              ><span class="font-weight-bold">Akademický rok</span
+              ><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.form.academicYear') }}</span
               ><span class="text-red ml-2">*</span></v-label
               >
               <v-autocomplete
@@ -174,7 +174,7 @@
 
             <v-col cols="12" class="text-right mt-4">
               <v-btn color="#3A803D" class="text-white" rounded="lg" @click="submitForm">
-                <v-icon start>mdi-check</v-icon> Uložiť prax
+                <v-icon start>mdi-check</v-icon> {{ $t('StudentAddPraxeForm.buttons.save') }}
               </v-btn>
               <v-btn
                 variant="tonal"
@@ -183,7 +183,7 @@
                 class="ml-2"
                 @click="closeDialog"
               >
-                Zrušiť
+                {{ $t('StudentAddPraxeForm.buttons.cancel') }}
               </v-btn>
             </v-col>
           </v-row>
@@ -194,48 +194,48 @@
 
   <v-dialog v-model="companyDialog" max-width="700">
     <v-card outlined>
-      <v-card-title>{{ editMode ? 'Upraviť zamestnávateľa' : 'Pridať nového zamestnávateľa' }}</v-card-title>
-      <v-card-subtitle>Vyplňte všetky informácie o spoločnosti</v-card-subtitle>
+      <v-card-title>  {{ editMode ? $t('StudentAddPraxeForm.companyDialog.titleEdit') : $t('StudentAddPraxeForm.companyDialog.titleNew') }}</v-card-title>
+      <v-card-subtitle>{{ $t('StudentAddPraxeForm.companyDialog.subtitle') }}</v-card-subtitle>
 
       <v-card-text>
         <v-form ref="companyForm">
           <v-row>
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">Názov spoločnosti</span><span class="text-red ml-2">*</span></v-label>
-              <v-text-field v-model="company.company_name" :rules="[rules.required]" rounded="lg" density="compact" variant="solo-filled" flat single-line placeholder="Zadajte názov spoločnosti" />
+              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.name') }}</span><span class="text-red ml-2">*</span></v-label>
+              <v-text-field v-model="company.company_name" :rules="[rules.required]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.name2')" />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">Adresa</span><span class="text-red ml-2">*</span></v-label>
-              <v-text-field v-model="company.company_address" :rules="[rules.required]" rounded="lg" density="compact" variant="solo-filled" flat single-line placeholder="Zadajte adresu spoločnosti" />
+              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.address') }}</span><span class="text-red ml-2">*</span></v-label>
+              <v-text-field v-model="company.company_address" :rules="[rules.required]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.address2')" />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">Kontaktná osoba</span><span class="text-red ml-2">*</span></v-label>
-              <v-text-field v-model="company.contact_name" :rules="[rules.required]" rounded="lg" density="compact" variant="solo-filled" flat single-line placeholder="Zadajte meno kontaktnej osoby" />
+              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.contactName') }}</span><span class="text-red ml-2">*</span></v-label>
+              <v-text-field v-model="company.contact_name" :rules="[rules.required]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.contactName2')" />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">Firemný email</span><span class="text-red ml-2">*</span></v-label>
-              <v-text-field v-model="company.company_email" :rules="[rules.required, rules.email]" type="email" rounded="lg" density="compact" variant="solo-filled" flat single-line placeholder="napr. info@firma.sk" />
+              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.companyEmail') }}</span><span class="text-red ml-2">*</span></v-label>
+              <v-text-field v-model="company.company_email" :rules="[rules.required, rules.email]" type="email" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.companyEmail2')" />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">Email kontaktnej osoby</span><span class="text-red ml-2">*</span></v-label>
-              <v-text-field v-model="company.contact_email" :rules="[rules.required, rules.email]" type="email" rounded="lg" density="compact" variant="solo-filled" flat single-line placeholder="napr. jan@firma.sk" />
+              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.contactEmail') }}</span><span class="text-red ml-2">*</span></v-label>
+              <v-text-field v-model="company.contact_email" :rules="[rules.required, rules.email]" type="email" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.contactEmail2')" />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">Telefón kontaktnej osoby</span><span class="text-red ml-2">*</span></v-label>
-              <v-text-field v-model="company.contact_phone" :rules="[rules.required, rules.phone]" rounded="lg" density="compact" variant="solo-filled" flat single-line placeholder="+421 900 000 000" />
+              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.contactPhone') }}</span><span class="text-red ml-2">*</span></v-label>
+              <v-text-field v-model="company.contact_phone" :rules="[rules.required, rules.phone]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.contactPhone2')" />
             </v-col>
 
             <v-col cols="12" class="text-right mt-4">
               <v-btn color="#3A803D" class="text-white" rounded="lg" @click="saveCompany">
-                <v-icon start>mdi-check</v-icon>{{ editMode ? 'Uložiť zmeny' : 'Uložiť' }}
+                <v-icon start>mdi-check</v-icon>{{ editMode ? $t('StudentAddPraxeForm.companyDialog.buttons.saveChanges') : $t('StudentAddPraxeForm.companyDialog.buttons.save') }}
               </v-btn>
               <v-btn variant="tonal" color="grey" rounded="lg" class="ml-2" @click="companyDialog = false">
-                Zrušiť
+                {{ $t('StudentAddPraxeForm.companyDialog.buttons.cancel') }}
               </v-btn>
             </v-col>
           </v-row>
@@ -292,9 +292,9 @@ export default {
         contact_phone: '',
       },
       rules: {
-        required: v => !!v || 'Povinné pole',
-        email: v => /.+@.+\..+/.test(v) || 'Neplatný e-mail',
-        phone: v => /^\+?\d{7,15}$/.test(v) || 'Neplatné číslo',
+        required: v => !!v || this.$t('StudentAddPraxeForm.form.requiredField'),
+        email: v => /.+@.+\..+/.test(v) || this.$t('StudentAddPraxeForm.form.invalidEmail'),
+        phone: v => /^\+?\d{7,15}$/.test(v) || this.$t('StudentAddPraxeForm.form.invalidPhone')
       }
     }
   },
@@ -352,7 +352,11 @@ export default {
       this.companyAdded = true
       this.companyDialog = false
       this.form.company = this.company
-      this.toast.success(this.editMode ? 'Zamestnávateľ upravený!' : 'Zamestnávateľ pridaný!')
+      this.toast.success(
+        this.editMode
+          ? this.$t('StudentAddPraxeForm.companyDialog.messages.updated')
+          : this.$t('StudentAddPraxeForm.companyDialog.messages.added')
+      )
     },
 
     async submitForm() {
@@ -369,7 +373,9 @@ export default {
       const data = {
         company_id: this.employerMode === 'existing' ? selectedCompany?.user_id : null,
         study_program_id: this.form.study_program_id,
-        semester: this.form.semester === 'Zimný' ? 'winter' : 'summer',
+        semester: this.form.semester === 'winter'
+          ? this.$t('StudentAddPraxeForm.form.winter')
+          : this.$t('StudentAddPraxeForm.form.summer'),
         academic_year: this.form.academic_year,
         start_date: this.formatDate(this.form.start_date),
         end_date: this.formatDate(this.form.end_date),

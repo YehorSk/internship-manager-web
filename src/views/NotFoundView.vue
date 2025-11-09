@@ -3,20 +3,20 @@
     <div class="notfound-bg"></div>
     <div class="notfound-content">
       <h1 class="notfound-code">404</h1>
-      <h2 class="notfound-title">Stránka sa nenašla</h2>
+      <h2 class="notfound-title">{{ $t('NotFoundView.title') }}</h2>
       <p class="notfound-text">
-        Vyzerá to, že ste sa stratili. <br />
-        Skontrolujte adresu alebo sa vráťte na domovskú stránku.
+        {{ $t('NotFoundView.description') }} <br />
+        {{ $t('NotFoundView.description2') }}
       </p>
       <v-btn
         color="#3A803D"
         size="x-large"
         class="rounded-xl text-white px-10 py-4 notfound-btn mt-8"
         elevation="12"
-        @click="$router.push('/')"
+        :to="{ name: 'Info' }"
       >
         <v-icon start>mdi-home</v-icon>
-        NÁVRAT DOMOV
+        {{ $t('NotFoundView.button') }}
       </v-btn>
     </div>
   </div>
