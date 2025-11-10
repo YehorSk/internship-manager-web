@@ -7,9 +7,9 @@
         <v-container fluid class="pa-8">
           <v-row class="mb-6">
             <v-col cols="12" class="text-center">
-              <h1 class="text-h4 font-weight-bold mb-1 text-grey-darken-4">Rozhranie študenta</h1>
+              <h1 class="text-h4 font-weight-bold mb-1 text-grey-darken-4">{{ $t('StudentDashboard.title') }}</h1>
               <p class="text-subtitle-1 text-grey-darken-1">
-                Prehľad tvojich odborných praxí a ich aktuálny stav
+                {{ $t('StudentDashboard.subtitle') }}
               </p>
             </v-col>
           </v-row>
@@ -43,7 +43,7 @@
                 >
                   <div class="d-flex justify-space-between align-center mb-3">
                     <h3 class="text-h6 font-weight-medium text-grey-darken-4">
-                      {{ practice.practice_company?.name || practice.company?.name || 'Neznáma firma' }}
+                      {{ practice.practice_company?.name || practice.company?.name || $t('StudentDashboard.unknownCompany') }}
                     </h3>
                     <v-chip
                       :style="{
@@ -54,7 +54,7 @@
                       size="small"
                       class="px-3"
                     >
-                      {{ getStatusText(practice.status) }}
+                      {{ $t(getStatusText(practice.status)) }}
                     </v-chip>
                   </div>
 
@@ -82,9 +82,9 @@
           <v-row v-if="!store.loading && !activePractices.length">
             <v-col cols="12" class="text-center py-14">
               <v-icon size="72" color="#3A803D" class="mb-4">mdi-domain-off</v-icon>
-              <h2 class="text-h5 font-weight-medium mb-2 text-grey-darken-4">Žiadna aktívna prax</h2>
+              <h2 class="text-h5 font-weight-medium mb-2 text-grey-darken-4">{{ $t('StudentDashboard.noActiveTitle') }}</h2>
               <p class="text-body-2 text-grey-darken-1 mb-8">
-                Momentálne nemáš žiadnu prebiehajúcu odbornú prax. Vytvor si novú.
+                {{ $t('StudentDashboard.noActiveText') }}
               </p>
               <v-btn
                 color="#3A803D"
@@ -94,7 +94,7 @@
                 prepend-icon="mdi-plus-circle-outline"
                 @click="openCreatePractice"
               >
-                Pridať novú prax
+                {{ $t('StudentDashboard.addPractice') }}
               </v-btn>
             </v-col>
           </v-row>

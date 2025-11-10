@@ -1,14 +1,14 @@
 <template>
   <v-card outlined>
-    <v-card-title>Nastavenia profilu</v-card-title>
-    <v-card-subtitle>Spravujte svoje osobné údaje podľa svojej roly</v-card-subtitle>
+    <v-card-title>{{ $t('StudentProfileSettings.title') }}</v-card-title>
+    <v-card-subtitle>{{ $t('StudentProfileSettings.subtitle') }}</v-card-subtitle>
     <v-card-text>
       <v-form ref="profileForm" v-model="valid" lazy-validation class="form-fix">
         <v-row>
 
           <template v-if="role === 'student'">
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">Krstné meno</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('StudentProfileSettings.form.firstName') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
               <v-text-field
                 v-model="form.first_name"
                 rounded="lg"
@@ -18,12 +18,12 @@
                 single-line
                 prepend-inner-icon="mdi-account"
                 :rules="[rules.required]"
-                placeholder="Zadajte krstné meno"
+                :placeholder="$t('StudentProfileSettings.form.placeholders.firstName')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">Priezvisko</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('StudentProfileSettings.form.lastName') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
               <v-text-field
                 v-model="form.last_name"
                 rounded="lg"
@@ -33,12 +33,12 @@
                 single-line
                 prepend-inner-icon="mdi-account"
                 :rules="[rules.required]"
-                placeholder="Zadajte priezvisko"
+                :placeholder="$t('StudentProfileSettings.form.placeholders.lastName')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">Adresa</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('StudentProfileSettings.form.address') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
               <v-text-field
                 v-model="form.address"
                 rounded="lg"
@@ -48,12 +48,12 @@
                 single-line
                 prepend-inner-icon="mdi-map-marker"
                 :rules="[rules.required]"
-                placeholder="Zadajte adresu"
+                :placeholder="$t('StudentProfileSettings.form.placeholders.address')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">Študentský e-mail</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('StudentProfileSettings.form.studentEmail') }}</span></v-label>
               <v-text-field
                 v-model="form.student_email"
                 rounded="lg"
@@ -70,7 +70,7 @@
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">Primárny/Alternatívny e-mail</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('StudentProfileSettings.form.primaryEmail') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
               <v-text-field
                 v-model="form.primary_email"
                 rounded="lg"
@@ -80,12 +80,12 @@
                 single-line
                 prepend-inner-icon="mdi-email"
                 :rules="[rules.required, rules.email]"
-                placeholder="Zadajte primárny e-mail"
+                :placeholder="$t('StudentProfileSettings.form.placeholders.primaryEmail')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">Telefónne číslo</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('StudentProfileSettings.form.phone') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
               <v-text-field
                 v-model="form.phone"
                 rounded="lg"
@@ -95,12 +95,12 @@
                 single-line
                 prepend-inner-icon="mdi-phone"
                 :rules="[rules.required, rules.phone]"
-                placeholder="Zadajte telefónne číslo"
+                :placeholder="$t('StudentProfileSettings.form.placeholders.phone')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">Študijný odbor</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('StudentProfileSettings.form.studyProgram') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
               <v-autocomplete
                 v-model="form.study_program_id"
                 :items="programsStore.list.map(p => ({ title: p.name, value: p.id }))"
@@ -114,7 +114,7 @@
                 prepend-inner-icon="mdi-school"
                 :loading="programsStore.loading"
                 :rules="[rules.required]"
-                placeholder="Vyberte študijný odbor"
+                :placeholder="$t('StudentProfileSettings.form.placeholders.studyProgram')"
               />
             </v-col>
           </template>
@@ -128,7 +128,7 @@
               class="confirm-btn text-none"
               @click="saveProfile"
             >
-              Uložiť zmeny
+              {{ $t('StudentProfileSettings.buttons.saveChanges') }}
             </v-btn>
           </v-col>
 
@@ -153,10 +153,14 @@ export default {
       form: {},
       role: '',
       rules: {
-        required: v => !!v || 'Povinné pole',
-        email: v => /^(?!.*\.\.)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v) || 'Neplatný e-mail',
-        phone: v => /^\+?\d{7,15}$/.test(v) || 'Neplatné číslo',
-      },
+        required: v => !!v || this.$t('StudentProfileSettings.form.requiredField'),
+        email: v =>
+          /^(?!.*\.\.)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v) ||
+          this.$t('StudentProfileSettings.form.invalidEmail'),
+        phone: v =>
+          /^\+?\d{7,15}$/.test(v) ||
+          this.$t('StudentProfileSettings.form.invalidPhone')
+      }
     }
   },
 

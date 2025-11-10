@@ -7,26 +7,26 @@
         <v-row class="align-center" no-gutters>
           <v-col cols="12" md="6" class="pr-md-8">
             <div class="d-inline-flex px-4 py-2 rounded-lg" style="background: rgba(58,128,61,.1)">
-              <span class="text-primary">Spojte študentov s firmami</span>
+              <span class="text-primary">{{ $t('Hero.badge') }}</span>
             </div>
-            <div class="text-h2 mt-4">Practice CRM</div>
+            <div class="text-h2 mt-4">{{ $t('Hero.title') }}</div>
             <div class="text-body-1 text-medium-emphasis mt-3">
-              Váš komplexný portál pre vyhľadávanie a správu stáží. Prepojujeme študentov s firmami pre vzájomnú spoluprácu a rast.
+              {{ $t('Hero.subtitle') }}
             </div>
             <div class="d-flex flex-column flex-sm-row ga-3 mt-6">
               <v-btn color="#3A803D" class="text-white" size="large" @click="scrollTo('student-registration')">
                 <v-icon start>mdi-school</v-icon>
-                Registrácia študenta
+                {{ $t('Hero.student_btn') }}
               </v-btn>
               <v-btn variant="outlined" size="large" @click="scrollTo('company-registration')">
                 <v-icon start>mdi-office-building</v-icon>
-                Registrácia firmy
+                {{ $t('Hero.company_btn') }}
               </v-btn>
             </div>
             <div class="mt-4">
               <v-btn variant="tonal" size="large" @click="scrollTo('login')">
                 <v-icon start>mdi-login</v-icon>
-                Prihlásenie
+                {{ $t('Hero.login_btn') }}
               </v-btn>
             </div>
           </v-col>
@@ -48,10 +48,10 @@
         <v-container class="page">
           <div class="text-center mb-10">
             <div class="d-inline-flex px-4 py-2 rounded-lg mb-3" style="background: rgba(58,128,61,.1)">
-              <span class="text-primary">Informácie o predmete</span>
+              <span class="text-primary">{{ $t('About.badge') }}</span>
             </div>
-            <div class="text-h4 mb-2">O odbornej praxi</div>
-            <div class="text-subtitle-1 text-medium-emphasis">KI/OP/22 – Odborná prax</div>
+            <div class="text-h4 mb-2">{{ $t('About.title') }}</div>
+            <div class="text-subtitle-1 text-medium-emphasis">{{ $t('About.subtitle') }}</div>
           </div>
 
           <v-row class="mb-10" align="stretch">
@@ -61,16 +61,16 @@
                   <v-icon color="primary">mdi-file-document-outline</v-icon>
                 </div>
                 <div class="d-inline-flex px-3 py-1 rounded-pill mb-3" style="background: rgba(58,128,61,.1)">
-                  <span class="text-caption text-primary">Krok 1</span>
+                  <span class="text-caption text-primary">{{ $t('About.steps.1.title') }}</span>
                 </div>
-                <div class="text-h6 mb-3">Príprava podkladov k realizácii odbornej praxe</div>
+                <div class="text-h6 mb-3">{{ $t('About.steps.1.desc1') }}</div>
                 <div class="d-flex align-start ga-3">
                   <v-icon color="primary" size="20">mdi-check-circle</v-icon>
-                  <div class="text-body-2">Príprava podkladov pre absolvovanie praxe v súlade so smernicami fakulty</div>
+                  <div class="text-body-2">{{ $t('About.steps.1.desc2') }}</div>
                 </div>
                 <div class="d-flex align-center ga-2 mt-4 text-medium-emphasis">
                   <v-icon size="16">mdi-clock-outline</v-icon>
-                  <span class="text-body-2">Domáca príprava: 1 hodina</span>
+                  <span class="text-body-2">{{ $t('About.steps.1.time') }}</span>
                 </div>
               </v-card>
             </v-col>
@@ -81,24 +81,24 @@
                   <v-icon color="primary">mdi-account-group-outline</v-icon>
                 </div>
                 <div class="d-inline-flex px-3 py-1 rounded-pill mb-3" style="background: rgba(58,128,61,.1)">
-                  <span class="text-caption text-primary">Krok 2</span>
+                  <span class="text-caption text-primary">{{ $t('About.steps.2.title') }}</span>
                 </div>
-                <div class="text-h6 mb-3">Aktívna účasť na odbornej praxi</div>
+                <div class="text-h6 mb-3">{{ $t('About.steps.2.desc') }}</div>
                 <div class="d-flex align-start ga-3 mb-2">
                   <v-icon color="primary" size="20">mdi-check-circle</v-icon>
-                  <div class="text-body-2">Účasť v rozsahu najmenej 150 hodín</div>
+                  <div class="text-body-2">{{ $t('About.steps.2.desc1') }}</div>
                 </div>
                 <div class="d-flex align-start ga-3 mb-2">
                   <v-icon color="primary" size="20">mdi-check-circle</v-icon>
-                  <div class="text-body-2">Rozvoj praktických skúseností a mäkkých zručností</div>
+                  <div class="text-body-2">{{ $t('About.steps.2.desc2') }}</div>
                 </div>
                 <div class="d-flex align-start ga-3">
                   <v-icon color="primary" size="20">mdi-check-circle</v-icon>
-                  <div class="text-body-2">Plnenie pracovných úloh podľa inštrukcií tutora</div>
+                  <div class="text-body-2">{{ $t('About.steps.2.desc3') }}</div>
                 </div>
                 <div class="d-flex align-center ga-2 mt-4 text-medium-emphasis">
                   <v-icon size="16">mdi-clock-outline</v-icon>
-                  <span class="text-body-2">Minimálne 150 hodín praxe</span>
+                  <span class="text-body-2">{{ $t('About.steps.2.time') }}</span>
                 </div>
               </v-card>
             </v-col>
@@ -109,24 +109,24 @@
                   <v-icon color="primary">mdi-presentation</v-icon>
                 </div>
                 <div class="d-inline-flex px-3 py-1 rounded-pill mb-3" style="background: rgba(58,128,61,.1)">
-                  <span class="text-caption text-primary">Krok 3</span>
+                  <span class="text-caption text-primary">{{ $t('About.steps.3.title') }}</span>
                 </div>
-                <div class="text-h6 mb-3">Prezentácia výsledkov odbornej praxe</div>
+                <div class="text-h6 mb-3">{{ $t('About.steps.3.desc') }}</div>
                 <div class="d-flex align-start ga-3 mb-2">
                   <v-icon color="primary" size="20">mdi-check-circle</v-icon>
-                  <div class="text-body-2">Finalizácia dokumentov o priebehu praxe</div>
+                  <div class="text-body-2">{{ $t('About.steps.3.desc1') }}</div>
                 </div>
                 <div class="d-flex align-start ga-3 mb-2">
                   <v-icon color="primary" size="20">mdi-check-circle</v-icon>
-                  <div class="text-body-2">Príprava posteru v definovanej štruktúre</div>
+                  <div class="text-body-2">{{ $t('About.steps.3.desc2') }}</div>
                 </div>
                 <div class="d-flex align-start ga-3">
                   <v-icon color="primary" size="20">mdi-check-circle</v-icon>
-                  <div class="text-body-2">Prezentácia výsledkov a získaných zručností</div>
+                  <div class="text-body-2">{{ $t('About.steps.3.desc3') }}</div>
                 </div>
                 <div class="d-flex align-center ga-2 mt-4 text-medium-emphasis">
                   <v-icon size="16">mdi-clock-outline</v-icon>
-                  <span class="text-body-2">Domáca príprava: 1 hodina</span>
+                  <span class="text-body-2">{{ $t('About.steps.3.time') }}</span>
                 </div>
               </v-card>
             </v-col>
@@ -134,27 +134,27 @@
 
           <v-card class="pa-10 rounded-xl" color="#3A803D" theme="dark">
             <div class="text-center mx-auto" style="max-width: 900px">
-              <div class="text-h5 mb-4">Stručná osnova predmetu</div>
+              <div class="text-h5 mb-4">{{ $t('About.summary_title') }}</div>
               <div class="text-subtitle-1 mb-8" style="opacity:.9">
-                Predmet Odborná prax poskytuje študentom príležitosť získať praktické skúsenosti vo firmách alebo organizáciách. Študenti absolvujú minimálne 150 hodín praxe zameranej na rozvoj praktických skúseností a mäkkých zručností.
+                {{ $t('About.summary_text') }}
               </div>
               <v-row>
                 <v-col cols="12" md="4">
                   <v-sheet class="rounded-lg pa-6" color="white" theme="light" style="background: rgba(255,255,255,.1)">
                     <div class="text-h4">150+</div>
-                    <div class="text-body-2" style="opacity:.9">Hodín praxe</div>
+                    <div class="text-body-2" style="opacity:.9">{{ $t('About.summary_data.hours') }}</div>
                   </v-sheet>
                 </v-col>
                 <v-col cols="12" md="4">
                   <v-sheet class="rounded-lg pa-6" color="white" theme="light" style="background: rgba(255,255,255,.1)">
                     <div class="text-h4">3</div>
-                    <div class="text-body-2" style="opacity:.9">Hlavné kroky</div>
+                    <div class="text-body-2" style="opacity:.9">{{ $t('About.summary_data.steps') }}</div>
                   </v-sheet>
                 </v-col>
                 <v-col cols="12" md="4">
                   <v-sheet class="rounded-lg pa-6" color="white" theme="light" style="background: rgba(255,255,255,.1)">
                     <div class="text-h4">1</div>
-                    <div class="text-body-2" style="opacity:.9">Posterová prezentácia</div>
+                    <div class="text-body-2" style="opacity:.9">{{ $t('About.summary_data.poster') }}</div>
                   </v-sheet>
                 </v-col>
               </v-row>
@@ -170,27 +170,27 @@
             <v-sheet class="d-inline-flex pa-3 rounded-lg mb-4" color="rgba(58,128,61,.1)">
               <v-icon color="primary">mdi-school</v-icon>
             </v-sheet>
-            <h2 class="text-h4 mb-2 font-weight-bold">Registrácia pre študentov</h2>
+            <h2 class="text-h4 mb-2 font-weight-bold">{{ $t('Student.title') }}</h2>
             <p class="text-body-1 text-medium-emphasis mb-4">
-              Vytvorte si profil a objavte stáže, ktoré zodpovedajú vašim zručnostiam a kariérnym cieľom.
+              {{ $t('Student.desc') }}
             </p>
 
             <v-list lines="one" density="compact" class="mb-6">
               <v-list-item class="pa-0">
                 <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>Prístup k stážovým pozíciám v rôznych odboroch</v-list-item-title>
+                <v-list-item-title>{{ $t('Student.points.desc') }}</v-list-item-title>
               </v-list-item>
               <v-list-item class="pa-0">
                 <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>Nové ponuky stáží každý deň priamo podľa vašich preferencií</v-list-item-title>
+                <v-list-item-title>{{ $t('Student.points.desc1') }}</v-list-item-title>
               </v-list-item>
               <v-list-item class="pa-0">
                 <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>Možnosť získať certifikáty a referencie</v-list-item-title>
+                <v-list-item-title>{{ $t('Student.points.desc2') }}</v-list-item-title>
               </v-list-item>
               <v-list-item class="pa-0">
                 <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>Jednoduchá správa žiadostí a komunikácia</v-list-item-title>
+                <v-list-item-title>{{ $t('Student.points.desc3') }}</v-list-item-title>
               </v-list-item>
             </v-list>
 
@@ -202,26 +202,26 @@
               style="font-weight:600; letter-spacing:0.3px;"
               :to="{ name: 'Register' }"
             >
-              Zaregistrovať sa ako študent
+              {{ $t('Student.btn') }}
             </v-btn>
 
           </v-col>
 
           <v-col cols="12" md="6" class="mt-8 mt-md-0">
             <v-card class="pa-8 rounded-xl elevation-2">
-              <h3 class="text-h6 mb-6 font-weight-medium">Požiadavky na registráciu</h3>
+              <h3 class="text-h6 mb-6 font-weight-medium">{{ $t('Student.requirements_title') }}</h3>
               <v-divider class="mb-4" />
               <div class="mb-4">
-                <div class="text-subtitle-2 mb-1 font-weight-medium">Základné informácie</div>
+                <div class="text-subtitle-2 mb-1 font-weight-medium">{{ $t('Student.basic_info') }}</div>
                 <p class="text-body-2 text-medium-emphasis">
-                  Meno, priezvisko, adresa, email, telefónne číslo
+                  {{ $t('Student.basic_info_desc') }}
                 </p>
               </div>
               <v-divider class="mb-4" />
               <div>
-                <div class="text-subtitle-2 mb-1 font-weight-medium">Vzdelanie</div>
+                <div class="text-subtitle-2 mb-1 font-weight-medium">{{ $t('Student.education') }}</div>
                 <p class="text-body-2 text-medium-emphasis">
-                  Študijný odbor, študentský e-mail
+                  {{ $t('Student.education_desc') }}
                 </p>
               </div>
             </v-card>
@@ -235,16 +235,16 @@
         <v-row align="center" no-gutters>
           <v-col cols="12" md="6" order="2" order-md="1" class="mt-8 mt-md-0 pr-md-6">
             <v-card class="pa-8 rounded-xl elevation-2">
-              <h3 class="text-h6 mb-6 font-weight-medium">Požiadavky na registráciu</h3>
+              <h3 class="text-h6 mb-6 font-weight-medium">{{ $t('Company.requirements_title') }}</h3>
               <v-divider class="mb-4" />
               <div class="mb-4">
-                <div class="text-subtitle-2 mb-1 font-weight-medium">Firemné údaje</div>
-                <p class="text-body-2 text-medium-emphasis">Názov firmy, adresa sídla, email</p>
+                <div class="text-subtitle-2 mb-1 font-weight-medium">{{ $t('Company.company_info') }}</div>
+                <p class="text-body-2 text-medium-emphasis">{{ $t('Company.company_info_desc') }}</p>
               </div>
               <v-divider class="mb-4" />
               <div>
-                <div class="text-subtitle-2 mb-1 font-weight-medium">Kontaktná osoba</div>
-                <p class="text-body-2 text-medium-emphasis">Meno, email, telefón</p>
+                <div class="text-subtitle-2 mb-1 font-weight-medium">{{ $t('Company.contact_person') }}</div>
+                <p class="text-body-2 text-medium-emphasis">{{ $t('Company.contact_person_desc') }}</p>
               </div>
             </v-card>
           </v-col>
@@ -253,27 +253,27 @@
             <v-sheet class="d-inline-flex pa-3 rounded-lg mb-4" color="rgba(58,128,61,.1)">
               <v-icon color="primary">mdi-office-building</v-icon>
             </v-sheet>
-            <h2 class="text-h4 mb-2 font-weight-bold">Registrácia pre firmy</h2>
+            <h2 class="text-h4 mb-2 font-weight-bold">{{ $t('Company.title') }}</h2>
             <p class="text-body-1 text-medium-emphasis mb-4">
-              Zaregistrujte svoju firmu, vytvárajte stážové pozície a nájdite talentovaných študentov pre vaše projekty.
+              {{ $t('Company.desc') }}
             </p>
 
             <v-list lines="one" density="compact" class="mb-6">
               <v-list-item class="pa-0">
                 <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>Neobmedzený počet stážových ponúk</v-list-item-title>
+                <v-list-item-title>{{ $t('Company.points.desc') }}</v-list-item-title>
               </v-list-item>
               <v-list-item class="pa-0">
                 <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>Priamy prístup ku kvalifikovaným a motivovaným študentom</v-list-item-title>
+                <v-list-item-title>{{ $t('Company.points.desc1') }}</v-list-item-title>
               </v-list-item>
               <v-list-item class="pa-0">
                 <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>Nástroje na správu žiadostí a komunikáciu</v-list-item-title>
+                <v-list-item-title>{{ $t('Company.points.desc2') }}</v-list-item-title>
               </v-list-item>
               <v-list-item class="pa-0">
                 <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>Možnosť budovať dlhodobé partnerstvá</v-list-item-title>
+                <v-list-item-title>{{ $t('Company.points.desc3') }}</v-list-item-title>
               </v-list-item>
             </v-list>
 
@@ -285,7 +285,7 @@
               style="font-weight:600; letter-spacing:0.3px;"
               :to="{ path: '/register', query: { role: 'company' } }"
             >
-              Zaregistrovať sa ako firma
+              {{ $t('Company.btn') }}
             </v-btn>
 
           </v-col>
@@ -307,9 +307,9 @@
                 <div class="d-inline-flex pa-3 rounded-lg mb-4" style="background: rgba(58,128,61,.1)">
                   <v-icon color="primary">mdi-login</v-icon>
                 </div>
-                <div class="text-h4 mb-2">Už máte účet?</div>
+                <div class="text-h4 mb-2">{{ $t('Login.title') }}</div>
                 <div class="text-body-1 text-medium-emphasis mb-6">
-                  Prihláste sa do svojho účtu a pokračujte v hľadaní stáží alebo správe ponúk.
+                  {{ $t('Login.desc') }}
                 </div>
                 <div class="d-flex flex-column flex-sm-row justify-center ga-3">
                   <v-btn
@@ -317,7 +317,7 @@
                     size="large"
                     :to="{ name: 'Login' }"
                   >
-                    Prihlásenie
+                    {{ $t('Login.btn') }}
                   </v-btn>
                 </div>
               </v-card>

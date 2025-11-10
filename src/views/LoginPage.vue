@@ -4,16 +4,16 @@
     <section class="py-16">
       <v-container class="form-container fill-height d-flex align-center justify-center">
         <v-card elevation="12" class="pa-6 rounded-2xl" max-width="500">
-          <v-card-title class="text-h5 text-center font-weight-bold"> Prihlásenie </v-card-title>
+          <v-card-title class="text-h5 text-center font-weight-bold"> {{ $t('LoginPage.title') }} </v-card-title>
 
           <v-card-subtitle class="text-center mb-6">
-            Zadajte svoj e-mail a heslo pre prihlásenie
+            {{ $t('LoginPage.subtitle') }}
           </v-card-subtitle>
 
           <v-form ref="loginForm" v-model="valid" class="d-flex flex-column gap-4">
             <v-text-field
               v-model="loginData.email"
-              label="E-mail *"
+              :label="$t('LoginPage.form.email')"
               type="email"
               :rules="[rules.required, rules.email]"
               variant="outlined"
@@ -23,7 +23,7 @@
 
             <v-text-field
               v-model="loginData.password"
-              label="Heslo *"
+              :label="$t('LoginPage.form.password')"
               type="password"
               :rules="[rules.required]"
               variant="outlined"
@@ -41,7 +41,7 @@
               :disabled="!valid"
               @click="submit"
             >
-              Prihlásiť sa
+              {{ $t('LoginPage.buttons.login') }}
             </v-btn>
           </v-form>
 
@@ -52,28 +52,28 @@
               class="font-weight-bold"
               :to="{ name: 'rest-password' }"
             >
-              Zabudnuté heslo?
+              {{ $t('LoginPage.buttons.forgot') }}
             </v-btn>
           </div>
 
           <div class="my-6 text-center">
             <v-divider />
-            <div class="text-caption mt-n3 bg-white px-3 d-inline-block">Alebo</div>
+            <div class="text-caption mt-n3 bg-white px-3 d-inline-block">{{ $t('LoginPage.other.or') }}</div>
           </div>
 
           <v-btn variant="outlined" rounded="lg" block class="home-btn mb-4" :to="{ name: 'Info' }">
-            Prihlásiť sa ako hosť
+            {{ $t('LoginPage.buttons.guest') }}
           </v-btn>
 
           <div class="text-center">
-            <span class="text-body-2">Nemáte účet?</span>
+            <span class="text-body-2">{{ $t('LoginPage.other.noAccount') }}</span>
             <v-btn
               variant="text"
               color="#3A803D"
               class="font-weight-bold"
               :to="{ name: 'Register' }"
             >
-              Registrovať sa tu
+              {{ $t('LoginPage.buttons.registerHere') }}
             </v-btn>
           </div>
         </v-card>
@@ -107,8 +107,8 @@ export default {
         password: '',
       },
       rules: {
-        required: (v) => !!v || 'Pole je povinné',
-        email: (v) => /.+@.+\..+/.test(v) || 'Neplatný e-mail',
+        required: v => !!v || this.$t('LoginPage.form.required'),
+        email: v => /.+@.+\..+/.test(v) || this.$t('LoginPage.form.invalidEmail'),
       },
     }
   },

@@ -3,10 +3,12 @@ import axios from 'axios'
 import { useAuthStore } from '@/stores/authStore.js'
 import { useToastStore } from '@/stores/toastStore.js'
 import { handleError } from '@/utils/httpError.js'
+import { useStorage } from '@vueuse/core'
 
 export const useProfileStore = defineStore('profile', {
   state: () => ({
     loading: false,
+    lang: useStorage('language', 'sk')
   }),
 
   actions: {
@@ -25,7 +27,15 @@ export const useProfileStore = defineStore('profile', {
       } finally {
         this.loading = false
       }
-    }
+    },
+    async setLanguage(l) {
+      const auth = useAuthStore()
 
-  },
+      this.lang = l
+
+      if (auth.token) {
+        await axios.put('/api/auth/update-language', { language: l }).catch(() => {})
+      }
+    }
+  }
 })

@@ -12,6 +12,7 @@ export const useCompaniesStore = defineStore('companies', {
     current_page_items: 1,
     total_pages: 1,
     total_pages_items: 1,
+    activated: false
   }),
 
   actions: {
@@ -57,6 +58,30 @@ export const useCompaniesStore = defineStore('companies', {
         this.loading = false
       }
     },
+    async activateCompany(token) {
+      if (!token) return
+      const toast = useToastStore()
+      this.loading = true
+      let message = ''
+      try {
+        const baseUrl = import.meta.env.VITE_API_BASE_URL || ''
+        const url = `${baseUrl.replace(/\/$/, '')}/api/company/activate/${token}`
+        const { data } = await axios.get(url)
+        if (data?.success) {
+          message = data.message
+          toast.showSuccess(message)
+          this.activated = true
+        } else {
+          message = data?.message
+          toast.showError(message)
+        }
+      } catch (e) {
+        message = e?.response?.data?.message || e.message
+        toast.showError(message)
+      } finally {
+        this.loading = false
+      }
+    }
   }
 })
 

@@ -15,6 +15,8 @@ import axios from 'axios'
 import { useAuthStore } from '@/stores/authStore.js'
 import Toast from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
+import i18n from './i18n';
+import { useProfileStore } from '@/stores/profileStore.js'
 
 let baseUrl = import.meta.env.VITE_API_BASE_URL
 if (!baseUrl) {
@@ -24,10 +26,16 @@ axios.defaults.baseURL = baseUrl
 
 const app = createApp(App)
 app.use(Toast)
-const pinia = createPinia()
+const pinia = createPinia().use(() => {
+  const  t  = i18n.global.t
+  return { t }
+})
 app.use(pinia)
+app.use(i18n);
 app.use(router)
 app.use(createVuetify({ components, directives }))
+const ls = useProfileStore()
+i18n.global.locale.value = ls.lang
 app.mount('#app')
 
 
@@ -40,6 +48,7 @@ axios.interceptors.request.use(config => {
     if (!config.headers["Content-Type"]) {
       config.headers["Content-Type"] = "application/json";
     }
+    config.headers["lang"] = ls.lang;
     return config
   },
   (error) => {
