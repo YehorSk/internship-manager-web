@@ -8,12 +8,10 @@
   </v-app>
   <v-main v-else>
     <v-container fluid class="pa-0">
-      <v-row>
         <Sidebar class="sidebar" />
         <v-container fluid class="pa-0 full-height">
           <NotFoundComponent :is-guest-layout="isGuestLayout" />
         </v-container>
-      </v-row>
     </v-container>
   </v-main>
 </template>
