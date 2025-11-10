@@ -50,7 +50,7 @@
               variant="text"
               color="#3A803D"
               class="font-weight-bold"
-              :to="{ name: 'rest-password' }"
+              :to="{ name: 'reset-password' }"
             >
               {{ $t('LoginPage.buttons.forgot') }}
             </v-btn>

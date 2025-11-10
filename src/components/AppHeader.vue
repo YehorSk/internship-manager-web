@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar flat density="comfortable" class="bg-white bleed">
+    <v-app-bar flat density="comfortable" class="bg-white">
       <v-container class="full px-4 pr-6">
         <div class="d-flex align-center justify-space-between w-100">
           <div
