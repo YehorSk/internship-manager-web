@@ -417,6 +417,8 @@
       "contact_name2": "Enter contact person name",
       "contact_email": "Contact Email",
       "contact_email2": "Enter contact email",
+      "contact_position": "Contact person position",
+      "contact_position2": "Enter the contact person's position",
       "contact_phone": "Contact Phone",
       "contact_phone2": "Enter contact phone",
       "password": "Password",

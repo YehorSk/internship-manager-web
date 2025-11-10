@@ -415,6 +415,8 @@
       "address2": "Введіть адресу",
       "contact_name": "Контактна особа",
       "contact_name2": "Введіть ім’я",
+      "contact_position": "Посада контактної особи",
+      "contact_position2": "Введіть посаду контактної особи",
       "contact_email": "Email контактної особи",
       "contact_email2": "Введіть email контактної особи",
       "contact_phone": "Телефон",
