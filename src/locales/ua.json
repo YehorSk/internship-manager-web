@@ -1,0 +1,558 @@
+{
+  "Hero": {
+    "badge": "Поєднуємо студентів з компаніями",
+    "title": "Practice CRM",
+    "subtitle": "Ваш комплексний портал для пошуку та управління практиками. Ми поєднуємо студентів та компанії заради співпраці та розвитку.",
+    "student_btn": "Реєстрація студента",
+    "company_btn": "Реєстрація компанії",
+    "login_btn": "Увійти"
+  },
+  "About": {
+    "badge": "Інформація про предмет",
+    "title": "Про виробничу практику",
+    "subtitle": "KI/OP/22 – Виробнича практика",
+    "steps": {
+      "1": {
+        "title": "Крок 1",
+        "desc1": "Підготовка матеріалів для проходження практики",
+        "desc2": "Підготовка документів відповідно до вимог факультету",
+        "time": "Домашня підготовка: 1 година"
+      },
+      "2": {
+        "title": "Крок 2",
+        "desc": "Активна участь у виробничій практиці",
+        "desc1": "Участь тривалістю щонайменше 150 годин",
+        "desc2": "Розвиток практичних навичок та soft-skills",
+        "desc3": "Виконання завдань згідно з інструкціями тьютора",
+        "time": "Мінімум 150 годин практики"
+      },
+      "3": {
+        "title": "Крок 3",
+        "desc": "Презентація результатів практики",
+        "desc1": "Завершення всіх документів щодо проходження практики",
+        "desc2": "Підготовка постеру за заданою структурою",
+        "desc3": "Презентація результатів і здобутих навичок",
+        "time": "Домашня підготовка: 1 година"
+      }
+    },
+    "summary_title": "Коротка програма предмета",
+    "summary_text": "Предмет «Виробнича практика» надає студентам можливість здобути реальний досвід роботи. Студенти проходять мінімум 150 годин практики, спрямованої на розвиток навичок і компетенцій.",
+    "summary_data": {
+      "hours": "Годин практики",
+      "steps": "Основні кроки",
+      "poster": "Постерна презентація"
+    }
+  },
+  "Student": {
+    "title": "Реєстрація для студентів",
+    "desc": "Створіть профіль та знайдіть практику, що відповідає вашим навичкам і цілям.",
+    "points": {
+      "desc": "Доступ до практик у різних сферах",
+      "desc1": "Нові пропозиції щодня відповідно до ваших інтересів",
+      "desc2": "Можливість отримати сертифікати та рекомендації",
+      "desc3": "Зручне управління заявками та комунікацією"
+    },
+    "btn": "Зареєструватися як студент",
+    "requirements_title": "Вимоги до реєстрації",
+    "basic_info": "Основна інформація",
+    "basic_info_desc": "Ім’я, прізвище, адреса, email, номер телефону",
+    "education": "Освіта",
+    "education_desc": "Спеціальність, студентський email"
+  },
+  "Company": {
+    "title": "Реєстрація для компаній",
+    "desc": "Зареєструйте компанію, створюйте позиції для практики та знаходьте талановитих студентів.",
+    "points": {
+      "desc": "Необмежена кількість вакансій",
+      "desc1": "Прямий доступ до мотивованих студентів",
+      "desc2": "Інструменти для управління заявками та спілкування",
+      "desc3": "Можливість формування довгострокового партнерства"
+    },
+    "btn": "Зареєструватися як компанія",
+    "requirements_title": "Вимоги до реєстрації",
+    "company_info": "Дані компанії",
+    "company_info_desc": "Назва, адреса, email",
+    "contact_person": "Контактна особа",
+    "contact_person_desc": "Ім’я, email, телефон"
+  },
+  "Login": {
+    "title": "Вже маєте акаунт?",
+    "desc": "Увійдіть до системи, щоб продовжити.",
+    "btn": "Увійти"
+  },
+  "Footer": {
+    "title": "Practice CRM",
+    "desc": "Ваш портал для пошуку та управління практиками. Ми створюємо можливості для росту та співпраці.",
+    "status": "Активний портал",
+    "quick_links": "Швидкі посилання",
+    "home": "Головна",
+    "about": "Про практику",
+    "student_registration": "Реєстрація студента",
+    "company_registration": "Реєстрація компанії",
+    "login": "Увійти",
+    "contact": "Контакт факультету",
+    "email": "fakulta@univerzita.sk",
+    "phone": "+421 123 456 789",
+    "address_line1": "Факультет інформатики",
+    "address_line2": "Університетська 1",
+    "address_line3": "811 06 Братислава",
+    "copyright": "Practice CRM",
+    "copyright2": ". Всі права захищені.",
+    "made_with": "Створено з ❤️ для студентів",
+    "version": "Версія 1.0"
+  },
+  "Header": {
+    "title": "Practice CRM",
+    "home": "Головна",
+    "about": "Про практику",
+    "student_registration": "Реєстрація студента",
+    "company_registration": "Реєстрація компанії",
+    "login": "Увійти"
+  },
+  "ChangePassword": {
+    "title": "Змінити пароль",
+    "subtitle": "Регулярно оновлюйте пароль для безпеки вашого акаунту",
+    "current": "Поточний пароль",
+    "new": "Новий пароль",
+    "confirm": "Підтвердьте пароль",
+    "placeholder_current": "Введіть поточний пароль",
+    "placeholder_new": "Введіть новий пароль",
+    "placeholder_confirm": "Підтвердьте новий пароль",
+    "alert": "Пароль має містити щонайменше 8 символів, включаючи літери, цифри та спеціальні символи",
+    "button": "Змінити пароль",
+    "rules": {
+      "required": "Обов’язкове поле",
+      "password": "Мін. 8 символів, щонайменше 1 літера та 1 цифра",
+      "match": "Паролі не співпадають"
+    }
+  },
+  "DetailsPraxeDialog": {
+    "subtitle": "Детальна інформація",
+    "tabs": {
+      "info": "Основні дані",
+      "agreement": "Договір",
+      "report": "Звіт"
+    },
+    "fields": {
+      "study_program": "Освітня програма",
+      "semester": "Семестр",
+      "academic_year": "Академічний рік",
+      "job_title": "Назва позиції",
+      "supervisor": "Куратор практики в компанії",
+      "company_section": "Дані компанії",
+      "company_name": "Назва компанії",
+      "company_address": "Адреса",
+      "company_email": "Корпоративний email",
+      "contact_phone": "Телефон",
+      "contact_name": "Контактна особа",
+      "contact_email": "Email контактної особи",
+      "job_description": "Опис діяльності",
+      "start_date": "Дата початку",
+      "end_date": "Дата завершення"
+    },
+    "labels": {
+      "choose_program": "Оберіть освітню програму",
+      "enter_job_title": "Напр. Junior Developer",
+      "enter_company_name": "Введіть назву компанії",
+      "enter_address": "Введіть адресу",
+      "enter_email": "Напр. info@company.sk",
+      "enter_phone": "+421 900 000 000",
+      "enter_contact_name": "Введіть ім’я контактної особи",
+      "enter_contact_email": "Напр. jan@firma.sk",
+      "enter_description": "Короткий опис виконуваних завдань"
+    },
+    "alerts": {
+      "locked": "Редагування цієї практики більше недоступне.",
+      "agreement_locked": "Редагування або завантаження договору неможливе",
+      "report_locked": "Редагування або завантаження звіту неможливе"
+    },
+    "history": {
+      "title": "Історія статусів"
+    },
+    "agreement": {
+      "title": "Договір про проходження практики",
+      "desc": "Завантажте шаблон, заповніть і завантажте підписаний документ",
+      "download_step": "Крок 1 – Завантажте шаблон",
+      "download_desc": "Завантажте порожній PDF документ.",
+      "download_btn": "Завантажити шаблон",
+      "upload_step": "Крок 2 – Завантажте підписаний документ",
+      "upload_desc": "Оберіть PDF-файл та відправте на підтвердження.",
+      "upload_label": "Оберіть підписаний PDF документ",
+      "upload_btn": "Завантажити договір",
+      "uploaded_btn": "Завантажити вже завантажений договір",
+      "delete_btn": "Видалити",
+      "not_uploaded": "Договір ще не завантажений",
+      "comment_placeholder": "Додайте коментар"
+    },
+    "report": {
+      "title": "Звіт з практики",
+      "desc": "Завантажте шаблон, заповніть та завантажте назад",
+      "download_step": "Крок 3 – Завантажити шаблон звіту",
+      "download_desc": "Завантажте порожній PDF документ.",
+      "download_btn": "Завантажити шаблон",
+      "upload_step": "Крок 4 – Завантажити заповнений звіт",
+      "upload_desc": "Оберіть PDF-файл та відправте.",
+      "upload_label": "Оберіть PDF-файл звіту",
+      "upload_btn": "Завантажити звіт",
+      "uploaded_btn": "Завантажити завантажений звіт",
+      "delete_btn": "Видалити",
+      "not_uploaded": "Звіт ще не завантажений"
+    },
+    "buttons": {
+      "save": "Зберегти зміни",
+      "download": "Завантажити",
+      "cancel": "Скасувати",
+      "edit": "Редагувати",
+      "approve": "Підтвердити",
+      "reject": "Відхилити",
+      "submit_agreement": "Надіслати договір на підтвердження",
+      "submit_report": "Надіслати звіт на підтвердження",
+      "cancel_practice": "Скасувати практику"
+    },
+    "confirm": {
+      "cancel_practice": "Ви дійсно хочете скасувати цю практику?",
+      "delete_agreement": "Видалити договір?",
+      "delete_report": "Видалити звіт?"
+    },
+    "toast": {
+      "missing_file": "Оберіть PDF-файл перед відправкою!"
+    }
+  },
+  "SideBar": {
+    "title": "Practice CRM",
+    "subtitle": "Система управління виробничою практикою",
+    "menu": {
+      "dashboard": "Огляд",
+      "practices": "Список практик",
+      "students": "Студенти",
+      "companies": "Компанії",
+      "settings": "Налаштування профілю",
+      "logout": "Вийти"
+    }
+  },
+  "StudentAddPraxeForm": {
+    "title": "Створити нову практику",
+    "subtitle": "Заповніть дані про вашу практику",
+    "form": {
+      "employer": "Роботодавець",
+      "chooseExisting": "Вибрати з бази",
+      "addNew": "Новий роботодавець",
+      "searchEmployer": "Пошук роботодавця",
+      "studyProgram": "Освітня програма",
+      "selectStudyProgram": "Виберіть програму",
+      "position": "Позиція",
+      "positionPlaceholder": "Напр. Frontend Developer",
+      "description": "Опис діяльності",
+      "descriptionPlaceholder": "Короткий опис діяльності",
+      "start": "Початок",
+      "end": "Кінець",
+      "semester": "Семестр",
+      "academicYear": "Академічний рік",
+      "requiredField": "Обов’язкове поле",
+      "invalidEmail": "Некоректний email",
+      "invalidPhone": "Некоректний номер"
+    },
+    "buttons": {
+      "save": "Зберегти",
+      "cancel": "Скасувати",
+      "addEmployer": "+ Додати нового роботодавця",
+      "change": "Змінити"
+    },
+    "companyDialog": {
+      "titleNew": "Додати роботодавця",
+      "titleEdit": "Редагувати роботодавця",
+      "subtitle": "Заповніть всі дані",
+      "fields": {
+        "name": "Назва компанії",
+        "name2": "Введіть назву компанії",
+        "address": "Адреса",
+        "address2": "Введіть адресу",
+        "contactName": "Контактна особа",
+        "contactName2": "Введіть ім’я",
+        "companyEmail": "Email компанії",
+        "companyEmail2": "Напр. info@firma.sk",
+        "contactEmail": "Email контактної особи",
+        "contactEmail2": "Напр. jan@firma.sk",
+        "contactPhone": "Телефон",
+        "contactPhone2": "+421 900 000 000"
+      },
+      "buttons": {
+        "save": "Зберегти",
+        "saveChanges": "Зберегти зміни",
+        "cancel": "Скасувати"
+      },
+      "messages": {
+        "added": "Роботодавця додано!",
+        "updated": "Роботодавця оновлено!"
+      }
+    }
+  },
+  "StudentProfileSettings": {
+    "title": "Налаштування профілю",
+    "subtitle": "Керуйте своїми персональними даними",
+    "form": {
+      "firstName": "Ім’я",
+      "lastName": "Прізвище",
+      "address": "Адреса",
+      "studentEmail": "Студентський email",
+      "primaryEmail": "Основний email",
+      "phone": "Телефон",
+      "studyProgram": "Освітня програма",
+      "requiredField": "Обов’язкове поле",
+      "invalidEmail": "Некоректний email",
+      "invalidPhone": "Некоректний номер",
+      "placeholders": {
+        "firstName": "Введіть ім’я",
+        "lastName": "Введіть прізвище",
+        "address": "Введіть адресу",
+        "primaryEmail": "Введіть email",
+        "phone": "Введіть номер телефону",
+        "studyProgram": "Виберіть програму"
+      }
+    },
+    "buttons": {
+      "saveChanges": "Зберегти зміни"
+    }
+  },
+  "CompanyActivationView": {
+    "title": "Активація компанії",
+    "description": "Натисніть кнопку нижче для активації. Якщо ваш акаунт уже активовано — увійдіть.",
+    "missingToken": "Відсутній токен активації. Перевірте лист у вашій пошті.",
+    "buttons": {
+      "activate": "Активувати",
+      "activating": "Активую…",
+      "login": "Увійти"
+    }
+  },
+  "CompanyDashboard": {
+    "title": "Панель компанії",
+    "subtitle": "Огляд практик студентів"
+  },
+  "ExtendedPraxePage": {
+    "title": "Практики студентів",
+    "subtitle": "Огляд усіх практик",
+    "filters": {
+      "title": "Фільтри",
+      "studyProgram": "Освітня програма",
+      "year": "Рік",
+      "semester": "Семестр",
+      "employer": "Роботодавець",
+      "status": "Статус",
+      "student": "Студент"
+    },
+    "table": {
+      "title": "Список практик",
+      "total": "Всього ",
+      "total2": " практик",
+      "student": "Студент",
+      "employer": "Роботодавець",
+      "position": "Позиція",
+      "studyProgram": "Освітня програма",
+      "semester": "Семестр",
+      "academicYear": "Академічний рік",
+      "period": "Період",
+      "status": "Статус",
+      "noData": "Немає практик"
+    }
+  },
+  "LoginPage": {
+    "title": "Увійти",
+    "subtitle": "Введіть email і пароль",
+    "form": {
+      "email": "Email *",
+      "password": "Пароль *",
+      "required": "Обов’язкове поле",
+      "invalidEmail": "Некоректний email"
+    },
+    "buttons": {
+      "login": "Увійти",
+      "forgot": "Забули пароль?",
+      "guest": "Увійти як гість",
+      "registerHere": "Зареєструватися"
+    },
+    "other": {
+      "or": "Або",
+      "noAccount": "Ще немає акаунта?"
+    }
+  },
+  "NotFoundView": {
+    "title": "Сторінку не знайдено",
+    "description": "Схоже, ви потрапили не туди.",
+    "description2": "Перевірте адресу або поверніться на головну.",
+    "button": "Повернутися"
+  },
+  "RegistrationPage": {
+    "title": "Створити акаунт",
+    "subtitle": "Оберіть роль і завершіть реєстрацію",
+    "tabs": {
+      "student": "Студент",
+      "company": "Компанія"
+    },
+    "student": {
+      "first_name": "Ім’я",
+      "first_name2": "Введіть ім’я",
+      "last_name": "Прізвище",
+      "last_name2": "Введіть прізвище",
+      "address": "Адреса",
+      "address2": "Введіть адресу",
+      "student_email": "Студентський email",
+      "student_email2": "Введіть студентський email",
+      "primary_email": "Основний email",
+      "primary_email2": "Введіть email",
+      "phone": "Телефон",
+      "phone2": "Введіть номер телефону",
+      "study_program": "Освітня програма",
+      "study_program2": "Оберіть програму",
+      "student_info": "Після реєстрації пароль прийде вам на пошту.",
+      "button": "Зареєструватися як студент"
+    },
+    "company": {
+      "name": "Назва компанії",
+      "name2": "Введіть назву компанії",
+      "email": "Email компанії",
+      "email2": "Введіть email компанії",
+      "address": "Адреса",
+      "address2": "Введіть адресу",
+      "contact_name": "Контактна особа",
+      "contact_name2": "Введіть ім’я",
+      "contact_email": "Email контактної особи",
+      "contact_email2": "Введіть email контактної особи",
+      "contact_phone": "Телефон",
+      "contact_phone2": "Введіть номер телефону",
+      "password": "Пароль",
+      "password2": "Введіть пароль",
+      "confirm_password": "Підтвердження пароля",
+      "confirm_password2": "Підтвердіть пароль",
+      "company_warning": "Ваш акаунт потребує активації. Після перевірки ми з вами зв’яжемося.",
+      "button": "Зареєструватися як компанія"
+    },
+    "or": "Або",
+    "guest": "Увійти як гість",
+    "have_account": "Вже є акаунт?",
+    "login_here": "Увійти тут",
+    "errors": {
+      "required": "Обов’язкове поле",
+      "email": "Некоректний email",
+      "student_email": "Має бути університетський email (@student.ukf.sk)",
+      "phone": "Некоректний номер"
+    }
+  },
+  "ResetPasswordPage": {
+    "title": "Скидання пароля",
+    "subtitle_request": "Введіть email — ми надішлемо посилання для скидання",
+    "subtitle_reset": "Встановіть новий пароль",
+    "form": {
+      "email": "Email",
+      "email_placeholder": "Введіть email",
+      "new_password": "Новий пароль",
+      "new_password_placeholder": "Введіть новий пароль",
+      "confirm_password": "Підтвердження пароля",
+      "confirm_password_placeholder": "Підтвердіть пароль",
+      "info_reset": "Якщо акаунт існує, ми надішлемо лист для скидання."
+    },
+    "buttons": {
+      "send_reset": "Надіслати посилання",
+      "update_password": "Оновити пароль",
+      "back_to_login": "Повернутися"
+    },
+    "or": "Або",
+    "alerts": {
+      "invalid_token": "Невірний або відсутній токен. Спробуйте ще раз."
+    },
+    "rules": {
+      "required": "Обов’язкове поле",
+      "email": "Некоректний email",
+      "password": "Мін. 8 символів, 1 літера та 1 цифра",
+      "password_match": "Паролі не співпадають"
+    }
+  },
+  "SettingsPage": {
+    "title": "Налаштування профілю",
+    "subtitle": "Керуйте налаштуваннями вашого акаунта"
+  },
+  "StudentDashboard": {
+    "title": "Панель студента",
+    "subtitle": "Огляд ваших практик",
+    "unknownCompany": "Невідома компанія",
+    "noActiveTitle": "Немає активної практики",
+    "noActiveText": "Поки що у вас немає активної практики. Створіть нову.",
+    "addPractice": "Додати практику"
+  },
+  "StudentPraxePage": {
+    "title": "Мої практики",
+    "subtitle": "Огляд ваших практик",
+    "addPractice": "Додати",
+    "filters": "Фільтри",
+    "studyProgram": "Освітня програма",
+    "year": "Рік",
+    "pozicia": "Позиція",
+    "obdobie": "Період",
+    "semester": "Семестр",
+    "employer": "Роботодавець",
+    "status": "Статус",
+    "listTitle": "Список моїх практик",
+    "total": "Всього",
+    "total2": "практик",
+    "noPractices": "Немає практик"
+  },
+  "SupervisorCompanyPage": {
+    "title": "Панель куратора",
+    "subtitle": "Підтвердження компаній",
+    "listTitle": "Список компаній",
+    "total": "Всього",
+    "total2": "компаній",
+    "empty": "Немає компаній",
+    "name": "Назва",
+    "contact": "Контакт",
+    "email": "Email",
+    "phone": "Телефон",
+    "status": "Статус",
+    "active": "Активна",
+    "inactive": "Неактивна",
+    "actions": "Дії",
+    "confirm": "Підтвердити",
+    "reject": "Відхилити"
+  },
+  "SupervisorDashboard": {
+    "title": "Панель куратора"
+  },
+  "Status": {
+    "created": "Створена",
+    "agreement_confirm_requested": "Запит на підтвердження договору",
+    "agreement_confirmed_by_company": "Договір підтверджено компанією",
+    "agreement_confirmed_by_supervisor": "Договір підтверджено куратором",
+    "agreement_rejected_by_company": "Договір відхилено компанією",
+    "agreement_rejected_by_supervisor": "Договір відхилено куратором",
+    "report_confirm_requested": "Запит на підтвердження звіту",
+    "report_confirmed_by_company": "Звіт підтверджено компанією",
+    "report_confirmed_by_supervisor": "Звіт підтверджено куратором",
+    "report_rejected_by_company": "Звіт відхилено компанією",
+    "report_rejected_by_supervisor": "Звіт відхилено куратором",
+    "canceled": "Скасована",
+    "unknown": "Невідомий"
+  },
+  "StudentsPage": {
+    "title": "Студенти",
+    "subtitle": "Огляд усіх студентів",
+    "filters": "Фільтри",
+    "studyProgram": "Навчальна програма",
+    "student": "Студент",
+    "listTitle": "Список студентів",
+    "total": "Всього",
+    "students": "студентів",
+    "noStudents": "Студентів не знайдено",
+    "columns": {
+      "firstName": "Ім’я",
+      "lastName": "Прізвище",
+      "email": "Електронна пошта",
+      "studyProgram": "Навчальна програма"
+    }
+  },
+  "semesters": {
+    "winter": "Зимовий",
+    "summer": "Літній"
+  },
+  "common": {
+    "loading": "Завантаження..."
+  }
+}

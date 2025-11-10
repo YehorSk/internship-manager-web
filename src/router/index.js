@@ -12,6 +12,7 @@ import { ROLES } from '@/constants/roles.js'
 import { hasAccess } from '@/utils/access.js'
 import ExtendedPraxePage from '@/views/ExtendedPraxePage.vue'
 import SupervisorCompanyPage from '@/views/SupervisorCompanyPage.vue'
+import SupervisorStudentsPage from '@/views/SupervisorStudentsPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -69,6 +70,12 @@ const router = createRouter({
       name: 'SupervisorPraxePage',
       component: ExtendedPraxePage,
       meta: { requiresAuth: true, roles: [ROLES.SUPERVISOR, ROLES.COMPANY] }
+    },
+    {
+      path: '/supervisor-all-students',
+      name: 'SupervisorStudentsPage',
+      component: SupervisorStudentsPage,
+      meta: { requiresAuth: true, roles: [ROLES.SUPERVISOR] }
     },
     {
       path: '/:pathMatch(.*)*',

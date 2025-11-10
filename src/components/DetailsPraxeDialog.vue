@@ -10,17 +10,17 @@
           <span class="ml-3 text-h6">{{ practice.practice_company?.name || practice.company?.name || practice.student?.first_name + " " + practice.student?.first_name || '—' }}</span>
         </div>
         <v-chip  :style="{ backgroundColor: getStatusColor(practice.status) }" class="text-white" >
-          {{ getStatusText(practice.status) }}
+          {{  $t(getStatusText(practice.status)) }}
         </v-chip>
       </v-card-title>
 
-      <v-card-subtitle>Detailné informácie o praxi</v-card-subtitle>
+      <v-card-subtitle>{{ $t('DetailsPraxeDialog.subtitle') }}</v-card-subtitle>
 
         <v-card-text>
           <v-tabs v-model="tab" align-tabs="center" rounded="xl" class="mb-6">
-            <v-tab value="info">Základné údaje</v-tab>
-            <v-tab value="agreement">Dohoda</v-tab>
-            <v-tab value="report">Správa</v-tab>
+            <v-tab value="info">{{ $t('DetailsPraxeDialog.tabs.info') }}</v-tab>
+            <v-tab value="agreement">{{ $t('DetailsPraxeDialog.tabs.agreement') }}</v-tab>
+            <v-tab value="report">{{ $t('DetailsPraxeDialog.tabs.report') }}</v-tab>
           </v-tabs>
 
           <v-window v-model="tab">
@@ -30,7 +30,7 @@
                   <v-col cols="12" md="6">
                     <v-label>
                       <v-icon start color="grey-darken-2">mdi-school</v-icon>
-                      <span class="font-weight-bold">Študijný program</span>
+                      <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.study_program') }}</span>
                     </v-label>
                     <v-autocomplete
                       v-if="isEditing && !isLocked"
@@ -43,7 +43,7 @@
                       variant="solo-filled"
                       flat
                       single-line
-                      placeholder="Vyberte študijný program"
+                      :placeholder="$t('DetailsPraxeDialog.labels.choose_program')"
                     />
                     <v-text-field
                       v-else
@@ -59,12 +59,15 @@
         <v-col cols="12" md="3">
           <v-label>
             <v-icon start color="grey-darken-2">mdi-calendar</v-icon>
-            <span class="font-weight-bold">Semester</span>
+            <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.semester') }}</span>
           </v-label>
           <v-select
             v-if="isEditing && !isLocked"
             v-model="edited.semester"
-            :items="['Zimný', 'Letný']"
+            :items="[
+              { title: $t('semesters.winter'), value: 'winter' },
+              { title: $t('semesters.summer'), value: 'summer' }
+            ]"
             rounded="lg"
             density="compact"
             variant="solo-filled"
@@ -73,7 +76,7 @@
           />
           <v-text-field
             v-else
-            :value="practice.semester === 'winter' ? 'Zimný' : 'Letný'"
+            :value="$t('semesters.' + practice.semester)"
             :disabled="true"
             rounded="lg"
             density="compact"
@@ -85,7 +88,7 @@
         <v-col cols="12" md="3">
           <v-label>
             <v-icon start color="grey-darken-2">mdi-calendar-range</v-icon>
-            <span class="font-weight-bold">Akademický rok</span>
+            <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.academic_year') }}</span>
           </v-label>
           <v-select
             v-if="isEditing && !isLocked"
@@ -111,7 +114,7 @@
         <v-col cols="12" md="6">
           <v-label>
             <v-icon start color="grey-darken-2">mdi-briefcase-outline</v-icon>
-            <span class="font-weight-bold">Názov pozície</span>
+            <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.job_title') }}</span>
           </v-label>
           <v-text-field
             v-if="isEditing && !isLocked"
@@ -121,7 +124,7 @@
             variant="solo-filled"
             flat
             single-line
-            placeholder="Napr. Junior Developer"
+            :placeholder="$t('DetailsPraxeDialog.labels.enter_job_title')"
           />
           <v-text-field
             v-else
@@ -137,7 +140,7 @@
         <v-col cols="12" md="6">
           <v-label>
             <v-icon start color="grey-darken-2">mdi-account-tie</v-icon>
-            <span class="font-weight-bold">Vedúci praxe v organizácii</span>
+            <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.supervisor') }}</span>
           </v-label>
           <v-text-field
             :value="practice.supervisor || practice.practice_company?.contact_name || '—'"
@@ -154,11 +157,11 @@
             <v-divider class="my-6" />
             <div class="d-flex align-center mb-3">
               <v-icon start color="grey-darken-2">mdi-office-building</v-icon>
-              <h3 class="text-h6 ml-2 mb-0 font-weight-medium">Údaje o spoločnosti</h3>
+              <h3 class="text-h6 ml-2 mb-0 font-weight-medium">{{ $t('DetailsPraxeDialog.fields.company_section') }}</h3>
             </div>
           </v-col>
         <v-col cols="12" md="6">
-          <v-label><span class="font-weight-bold">Názov spoločnosti</span></v-label>
+          <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.company_name') }}</span></v-label>
           <v-text-field
             v-if="isEditing && !isLocked"
             v-model="edited.company_name"
@@ -167,7 +170,7 @@
             variant="solo-filled"
             flat
             single-line
-            placeholder="Zadajte názov spoločnosti"
+            :placeholder="$t('DetailsPraxeDialog.labels.enter_company_name')"
           />
           <v-text-field
             v-else
@@ -181,7 +184,7 @@
           />
         </v-col>
         <v-col cols="12" md="6">
-          <v-label><span class="font-weight-bold">Adresa</span></v-label>
+          <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.company_address') }}</span></v-label>
           <v-text-field
             v-if="isEditing && !isLocked"
             v-model="edited.company_address"
@@ -190,7 +193,7 @@
             variant="solo-filled"
             flat
             single-line
-            placeholder="Zadajte adresu spoločnosti"
+            :placeholder="$t('DetailsPraxeDialog.labels.enter_address')"
           />
           <v-text-field
             v-else
@@ -204,7 +207,7 @@
           />
         </v-col>
         <v-col cols="12" md="6">
-          <v-label><span class="font-weight-bold">Firemný e-mail</span></v-label>
+          <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.company_email') }}</span></v-label>
           <v-text-field
             v-if="isEditing && !isLocked"
             v-model="edited.company_email"
@@ -214,7 +217,7 @@
             variant="solo-filled"
             flat
             single-line
-            placeholder="napr. info@firma.sk"
+            :placeholder="$t('DetailsPraxeDialog.labels.enter_email')"
           />
           <v-text-field
             v-else
@@ -228,7 +231,7 @@
           />
         </v-col>
         <v-col cols="12" md="6">
-          <v-label><span class="font-weight-bold">Telefón</span></v-label>
+          <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.contact_phone') }}</span></v-label>
           <v-text-field
             v-if="isEditing && !isLocked"
             v-model="edited.contact_phone"
@@ -237,7 +240,7 @@
             variant="solo-filled"
             flat
             single-line
-            placeholder="+421 900 000 000"
+            :placeholder="$t('DetailsPraxeDialog.labels.enter_phone')"
           />
           <v-text-field
             v-else
@@ -251,7 +254,7 @@
           />
         </v-col>
         <v-col cols="12" md="6">
-          <v-label><span class="font-weight-bold">Kontaktná osoba</span></v-label>
+          <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.contact_name') }}</span></v-label>
           <v-text-field
             v-if="isEditing && !isLocked"
             v-model="edited.contact_name"
@@ -260,7 +263,7 @@
             variant="solo-filled"
             flat
             single-line
-            placeholder="Meno kontaktnej osoby"
+            :placeholder="$t('DetailsPraxeDialog.labels.enter_contact_name')"
           />
           <v-text-field
             v-else
@@ -274,7 +277,7 @@
           />
         </v-col>
         <v-col cols="12" md="6">
-          <v-label><span class="font-weight-bold">E-mail kontaktnej osoby</span></v-label>
+          <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.contact_email') }}</span></v-label>
           <v-text-field
             v-if="isEditing && !isLocked"
             v-model="edited.contact_email"
@@ -284,7 +287,7 @@
             variant="solo-filled"
             flat
             single-line
-            placeholder="napr. jan@firma.sk"
+            :placeholder="$t('DetailsPraxeDialog.labels.enter_contact_email')"
           />
           <v-text-field
             v-else
@@ -301,7 +304,7 @@
         <v-col cols="12">
           <v-label>
             <v-icon start color="grey-darken-2">mdi-text</v-icon>
-            <span class="font-weight-bold">Popis činností</span>
+            <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.job_description') }}</span>
           </v-label>
           <v-textarea
             v-if="isEditing && !isLocked"
@@ -312,7 +315,7 @@
             flat
             single-line
             rows="3"
-            placeholder="Stručný popis vykonávaných činností"
+            :placeholder="$t('DetailsPraxeDialog.labels.enter_description')"
           />
           <v-textarea
             v-else
@@ -330,7 +333,7 @@
         <v-col cols="12" md="6">
           <v-label>
             <v-icon start color="grey-darken-2">mdi-calendar-start</v-icon>
-            <span class="font-weight-bold">Dátum začiatku</span>
+            <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.start_date') }}</span>
           </v-label>
           <v-text-field
             v-if="isEditing && !isLocked"
@@ -356,7 +359,7 @@
         <v-col cols="12" md="6">
           <v-label>
             <v-icon start color="grey-darken-2">mdi-calendar-end</v-icon>
-            <span class="font-weight-bold">Dátum konca</span>
+            <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.end_date') }}</span>
           </v-label>
           <v-text-field
             v-if="isEditing && !isLocked"
@@ -388,12 +391,12 @@
           class="mt-4"
           icon="mdi-lock"
         >
-          Úpravy tejto praxe už nie sú povolené.
+          {{ $t('DetailsPraxeDialog.alerts.locked') }}
         </v-alert>
         <div class="mt-8">
           <h3 class="text-h6 mb-4 d-flex align-center">
             <v-icon start color="#3A803D">mdi-history</v-icon>
-            História stavov praxe
+            {{ $t('DetailsPraxeDialog.history.title') }}
           </h3>
           <v-timeline side="end" align="start" density="comfortable">
             <v-timeline-item
@@ -402,7 +405,7 @@
               :dot-color="getStatusColor(item.status)"
               :icon="getStatusIcon(item.status)"
             >
-              <div class="font-weight-medium">{{ getStatusText(item.status) }}</div>
+              <div class="font-weight-medium">{{  $t(getStatusText(item.status)) }}</div>
               <div class="font-weight">{{ item.comment }}</div>
               <div class="text-grey-darken-1 text-body-2">{{ formatDateTime(item.created_at) }}</div>
             </v-timeline-item>
@@ -414,9 +417,9 @@
           <div class="pa-6">
             <div class="text-center mb-6">
               <v-icon size="36" color="#3A803D" class="mb-2">mdi-file-document-outline</v-icon>
-              <h3 class="text-h6 font-weight-medium">Dohoda o vykonaní praxe</h3>
+              <h3 class="text-h6 font-weight-medium">{{ $t('DetailsPraxeDialog.agreement.title') }}</h3>
               <p class="text-body-2 text-grey-darken-1">
-                Stiahni vzor dohody, vyplň ho a následne nahraj podpísaný dokument
+                {{ $t('DetailsPraxeDialog.agreement.desc') }}
               </p>
             </div>
 
@@ -431,9 +434,9 @@
                 <div class="d-flex align-center ga-2">
                   <v-icon color="#3A803D" size="28">mdi-file-download-outline</v-icon>
                   <div>
-                    <div class="font-weight-medium text-black">Krok 1 – Stiahni vzor dohody</div>
+                    <div class="font-weight-medium text-black">{{ $t('DetailsPraxeDialog.agreement.download_step') }}</div>
                     <div class="text-body-2 text-grey-darken-1">
-                      Stiahni si prázdny PDF dokument dohody, ktorý treba podpísať.
+                      {{ $t('DetailsPraxeDialog.agreement.download_desc') }}
                     </div>
                   </div>
                 </div>
@@ -446,7 +449,7 @@
                   prepend-icon="mdi-download"
                   @click="downloadAgreementTemplate"
                 >
-                  Stiahnuť vzor
+                  {{ $t('DetailsPraxeDialog.agreement.download_btn') }}
                 </v-btn>
               </div>
             </v-card>
@@ -462,9 +465,9 @@
                 <div class="d-flex align-center ga-2">
                   <v-icon color="#3A803D" size="28">mdi-file-upload-outline</v-icon>
                   <div>
-                    <div class="font-weight-medium">Krok 2 – Nahraj podpísanú dohodu</div>
+                    <div class="font-weight-medium">{{ $t('DetailsPraxeDialog.agreement.upload_step') }}</div>
                     <div class="text-body-2 text-grey-darken-1">
-                      Vyber podpísaný PDF dokument a odošli ho na schválenie.
+                      {{ $t('DetailsPraxeDialog.agreement.upload_desc') }}
                     </div>
                   </div>
                 </div>
@@ -475,7 +478,7 @@
                   v-model="agreement.file"
                   :model-value="agreement.file || (hasUploadedAgreement ? { name: getFileName(uploadedAgreement.file_path) } : null)"
                   accept="application/pdf"
-                  label="Vyber podpísaný PDF dokument"
+                  :label="$t('DetailsPraxeDialog.agreement.upload_label')"
                   prepend-icon="mdi-file-pdf-box"
                   rounded="lg"
                   variant="solo-filled"
@@ -494,7 +497,7 @@
                     elevation="0"
                     @click="submitAgreement"
                   >
-                    <v-icon start>mdi-upload</v-icon> Nahrať dohodu
+                    <v-icon start>mdi-upload</v-icon> {{ $t('DetailsPraxeDialog.agreement.upload_btn') }}
                   </v-btn>
 
                   <v-btn
@@ -505,7 +508,7 @@
                     elevation="0"
                     @click="downloadUploadedAgreement"
                   >
-                    <v-icon start>mdi-file-pdf-box</v-icon> Stiahnuť nahratú dohodu
+                    <v-icon start>mdi-file-pdf-box</v-icon> {{ $t('DetailsPraxeDialog.agreement.uploaded_btn') }}
                   </v-btn>
 
                   <v-btn
@@ -516,7 +519,7 @@
                     elevation="0"
                     @click="deleteAgreement"
                   >
-                    <v-icon start>mdi-delete</v-icon> Odstrániť
+                    <v-icon start>mdi-delete</v-icon> {{ $t('DetailsPraxeDialog.agreement.delete_btn') }}
                   </v-btn>
                 </div>
               </v-form>
@@ -530,7 +533,7 @@
                 rounded="lg"
                 elevation="1"
               >
-                Úpravy alebo nahrávanie dohody už nie sú povolené
+                {{ $t('DetailsPraxeDialog.alerts.agreement_locked') }}
               </v-alert>
               <v-alert
                 v-if="isStudent && lastRejectionComment('agreement')"
@@ -550,7 +553,7 @@
           <div class="pa-6">
             <div class="text-center mb-6">
               <v-icon size="36" color="#3A803D" class="mb-2">mdi-file-document-outline</v-icon>
-              <h3 class="text-h6 font-weight-medium">Dohoda o vykonaní praxe</h3>
+              <h3 class="text-h6 font-weight-medium">{{ $t('DetailsPraxeDialog.agreement.title') }}</h3>
             </div>
 
             <v-card class="pa-4 mb-6" variant="tonal" color="grey-lighten-4" rounded="lg" elevation="0">
@@ -559,7 +562,7 @@
                   <v-icon color="#3A803D" size="28">mdi-file-pdf-box</v-icon>
                   <div>
                     <div class="font-weight-medium text-black">
-                      {{ hasUploadedAgreement ? getFileName(uploadedAgreement.file_path) : 'Dohoda nebola zatial nahratá' }}
+                      {{ hasUploadedAgreement ? getFileName(uploadedAgreement.file_path) : $t('DetailsPraxeDialog.agreement.not_uploaded')  }}
                     </div>
                   </div>
 
@@ -584,7 +587,7 @@
                   variant="solo-filled"
                   flat
                   single-line
-                  placeholder="Pridajte komentár"
+                  :placeholder="$t('DetailsPraxeDialog.agreement.comment_placeholder')"
                   rows="3"
                 />
               </div>
@@ -596,9 +599,9 @@
           <div class="pa-6">
             <div class="text-center mb-6">
               <v-icon size="36" color="#3A803D" class="mb-2">mdi-file-document</v-icon>
-              <h3 class="text-h6 font-weight-medium">Správa z praxe</h3>
+              <h3 class="text-h6 font-weight-medium">{{ $t('DetailsPraxeDialog.report.title') }}</h3>
               <p class="text-body-2 text-grey-darken-1">
-                Stiahni si vzor, vyplň ho a následne ho nahraj naspäť do systému
+                {{ $t('DetailsPraxeDialog.report.desc') }}
               </p>
             </div>
 
@@ -613,9 +616,9 @@
                 <div class="d-flex align-center ga-2">
                   <v-icon color="#3A803D" size="28">mdi-file-download-outline</v-icon>
                   <div>
-                    <div class="font-weight-medium text-black" >Krok 3 – Stiahni vzor správy</div>
+                    <div class="font-weight-medium text-black" >{{ $t('DetailsPraxeDialog.report.download_step') }}</div>
                     <div class="text-body-2 text-grey-darken-1">
-                      Stiahni prázdny PDF dokument, ktorý treba vyplniť.
+                      {{ $t('DetailsPraxeDialog.report.download_desc') }}
                     </div>
                   </div>
                 </div>
@@ -628,7 +631,7 @@
                   prepend-icon="mdi-download"
                   @click="downloadReportTemplate"
                 >
-                  Stiahnuť vzor
+                  {{ $t('DetailsPraxeDialog.report.download_btn') }}
                 </v-btn>
               </div>
             </v-card>
@@ -644,9 +647,9 @@
                 <div class="d-flex align-center ga-2">
                   <v-icon color="#3A803D" size="28">mdi-file-upload-outline</v-icon>
                   <div>
-                    <div class="font-weight-medium">Krok 4 – Nahraj vyplnenú správu</div>
+                    <div class="font-weight-medium">{{ $t('DetailsPraxeDialog.report.upload_step') }}</div>
                     <div class="text-body-2 text-grey-darken-1">
-                      Vyber svoj vyplnený PDF súbor a odošli ho na schválenie.
+                      {{ $t('DetailsPraxeDialog.report.upload_desc') }}
                     </div>
                   </div>
                 </div>
@@ -657,7 +660,7 @@
                   v-model="report.file"
                   :model-value="report.file || (uploadedReport ? { name: getFileName(uploadedReport.file_path) } : null)"
                   accept="application/pdf"
-                  label="Vyber PDF súbor správy"
+                  :label="$t('DetailsPraxeDialog.report.upload_label')"
                   prepend-icon="mdi-file-pdf-box"
                   rounded="lg"
                   variant="solo-filled"
@@ -676,7 +679,7 @@
                     elevation="0"
                     @click="submitReport"
                   >
-                    <v-icon start>mdi-upload</v-icon> Nahrať správu
+                    <v-icon start>mdi-upload</v-icon> {{ $t('DetailsPraxeDialog.report.upload_btn') }}
                   </v-btn>
 
                   <v-btn
@@ -687,7 +690,7 @@
                     elevation="0"
                     @click="downloadUploadedReport"
                   >
-                    <v-icon start>mdi-file-pdf-box</v-icon> Stiahnuť nahratú správu
+                    <v-icon start>mdi-file-pdf-box</v-icon> {{ $t('DetailsPraxeDialog.report.uploaded_btn') }}
                   </v-btn>
 
                   <v-btn
@@ -698,7 +701,7 @@
                     elevation="0"
                     @click="deleteReport"
                   >
-                    <v-icon start>mdi-delete</v-icon> Odstrániť
+                    <v-icon start>mdi-delete</v-icon> {{ $t('DetailsPraxeDialog.report.delete_btn') }}
                   </v-btn>
                 </div>
               </v-form>
@@ -712,7 +715,7 @@
                 rounded="lg"
                 elevation="1"
               >
-                Úpravy alebo nahrávanie správy už nie sú povolené
+                {{ $t('DetailsPraxeDialog.alerts.report_locked') }}
               </v-alert>
               <v-alert
                 v-if="isStudent && lastRejectionComment('report')"
@@ -732,7 +735,7 @@
           <div class="pa-6">
             <div class="text-center mb-6">
               <v-icon size="36" color="#3A803D" class="mb-2">mdi-file-document</v-icon>
-              <h3 class="text-h6 font-weight-medium">Správa z praxe</h3>
+              <h3 class="text-h6 font-weight-medium">{{ $t('DetailsPraxeDialog.report.title') }}</h3>
             </div>
 
             <v-card class="pa-4 mb-6" variant="tonal" color="grey-lighten-4" rounded="lg" elevation="0">
@@ -741,7 +744,7 @@
                   <v-icon color="#3A803D" size="28">mdi-file-pdf-box</v-icon>
                   <div>
                     <div class="font-weight-medium text-black">
-                      {{ uploadedReport ? getFileName(uploadedReport.file_path) : 'Správa nebola zatial nahratá' }}
+                      {{ uploadedReport ? getFileName(uploadedReport.file_path) : $t('DetailsPraxeDialog.report.not_uploaded') }}
                     </div>
                   </div>
                 </div>
@@ -754,7 +757,7 @@
                   prepend-icon="mdi-download"
                   @click="downloadUploadedReport"
                 >
-                  Stiahnuť
+                  {{ $t('DetailsPraxeDialog.buttons.download') }}
                 </v-btn>
               </div>
               <div class="mt-4 mb-6" >
@@ -765,7 +768,7 @@
                   variant="solo-filled"
                   flat
                   single-line
-                  placeholder="Pridajte komentár"
+                  :placeholder="$t('DetailsPraxeDialog.agreement.comment_placeholder')"
                   rows="3"
                 />
               </div>
@@ -778,11 +781,11 @@
         <v-card-actions class="d-flex justify-end pa-4">
           <template v-if="isEditing">
             <v-btn color="#3A803D" class="text-white" rounded="lg" @click="save" style="background-color: #3A803D;">
-              <v-icon start>mdi-content-save</v-icon> Uložiť zmeny
+              <v-icon start>mdi-content-save</v-icon> {{ $t('DetailsPraxeDialog.buttons.save') }}
             </v-btn>
 
             <v-btn variant="tonal" color="grey" rounded="lg" class="ml-2" @click="cancel">
-              Zrušiť
+              {{ $t('DetailsPraxeDialog.buttons.cancel') }}
             </v-btn>
           </template>
 
@@ -794,7 +797,7 @@
               rounded="lg"
               @click="isEditing = true"
             >
-              <v-icon start>mdi-pencil</v-icon> Upraviť
+              <v-icon start>mdi-pencil</v-icon> {{ $t('DetailsPraxeDialog.buttons.edit') }}
             </v-btn>
 
             <v-btn
@@ -803,7 +806,7 @@
               class="text-white"
               rounded="lg" elevation="0"
               @click="approveDocument(tab)">
-              <v-icon start>mdi-check</v-icon> Schváliť
+              <v-icon start>mdi-check</v-icon> {{ $t('DetailsPraxeDialog.buttons.approve') }}
             </v-btn>
 
             <v-btn
@@ -813,7 +816,7 @@
               rounded="lg"
               elevation="0"
               @click="rejectDocument(tab)">
-              <v-icon start>mdi-close</v-icon> Odmietnuť
+              <v-icon start>mdi-close</v-icon> {{ $t('DetailsPraxeDialog.buttons.reject') }}
             </v-btn>
 
             <v-btn
@@ -823,7 +826,7 @@
               @click="submit"
               style="background-color: #3A803D;"
             >
-              <v-icon start>mdi-check</v-icon> Odoslať na schválenie dohody
+              <v-icon start>mdi-check</v-icon> {{ $t('DetailsPraxeDialog.buttons.submit_agreement') }}
             </v-btn>
 
             <v-btn
@@ -833,7 +836,7 @@
               @click="submitR"
               style="background-color: #3A803D;"
             >
-              <v-icon start>mdi-check</v-icon> Odoslať správu na schválenie
+              <v-icon start>mdi-check</v-icon> {{ $t('DetailsPraxeDialog.buttons.submit_report') }}
             </v-btn>
 
             <v-btn
@@ -846,7 +849,7 @@
               rounded="lg"
               @click="cancelPractice"
             >
-              <v-icon start>mdi-cancel</v-icon> Zrušiť prax
+              <v-icon start>mdi-cancel</v-icon> {{ $t('DetailsPraxeDialog.buttons.cancel_practice') }}
             </v-btn>
           </template>
         </v-card-actions>
@@ -856,7 +859,7 @@
     <template v-if="loadingPractice">
       <v-card class="pa-8 text-center">
         <v-progress-circular indeterminate color="#3A803D" size="48" />
-        <p class="mt-4">Načítavam detaily praxe...</p>
+        <p class="mt-4">{{ $t('common.loading') }}</p>
       </v-card>
     </template>
   </v-dialog>
@@ -987,7 +990,7 @@ export default {
         this.edited = {
           academic_year: data.academic_year,
           study_program_id: data.study_program?.id || null,
-          semester: data.semester === 'winter' ? 'Zimný' : 'Letný',
+          semester: data.semester,
           start_date: this.formatDate(data.start_date),
           end_date: this.formatDate(data.end_date),
           job_title: data.job_title,
@@ -1016,7 +1019,7 @@ export default {
       this.edited = {
         academic_year: this.practice.academic_year,
         study_program_id: this.practice.study_program?.id || null,
-        semester: this.practice.semester === 'winter' ? 'Zimný' : 'Letný',
+        semester: this.practice.semester,
         start_date: this.formatDate(this.practice.start_date),
         end_date: this.formatDate(this.practice.end_date),
         job_title: this.practice.job_title,
@@ -1028,12 +1031,7 @@ export default {
     async save() {
         const updated = {
           academic_year: this.edited.academic_year,
-          semester:
-            this.edited.semester === 'Zimný'
-              ? 'winter'
-              : this.edited.semester === 'Letný'
-                ? 'summer'
-                : this.edited.semester,
+          semester: this.edited.semester,
           study_program_id: this.edited.study_program_id || this.practice.study_program?.id,
           start_date: this.edited.start_date,
           end_date: this.edited.end_date,
@@ -1097,7 +1095,7 @@ export default {
       })
     },
     async cancelPractice() {
-      if (!confirm('Naozaj chceš zrušiť túto prax?')) return
+      if (!confirm(this.$t('DetailsPraxeDialog.confirm.cancel_practice'))) return
         await this.practicesStore.deletePractice(this.practice.id)
 
         this.$emit('update', { id: this.practice.id, status: 'canceled' })
@@ -1107,7 +1105,7 @@ export default {
     },
     async submitReport() {
       if (!this.report.file) {
-        this.toast.error('Vyber PDF súbor pred odoslaním!')
+        this.toast.error(this.$t('DetailsPraxeDialog.delete_report.missing_file'))
         return
       }
       await this.practicesStore.uploadReport(this.practice.id, this.report.file)
@@ -1122,7 +1120,7 @@ export default {
     },
     async submitAgreement() {
       if (!this.agreement.file) {
-        this.toast.error('Vyber PDF súbor pred odoslaním!')
+        this.toast.error(this.$t('DetailsPraxeDialog.delete_report.missing_file'))
         return
       }
       await this.practicesStore.uploadAgreement(this.practice.id, this.agreement.file)
@@ -1166,14 +1164,14 @@ export default {
     },
     async deleteAgreement() {
       if (!this.uploadedAgreement) return
-      if (!confirm('Naozaj chcete odstrániť túto dohodu?')) return
+      if (!confirm(this.$t('DetailsPraxeDialog.confirm.delete_agreement'))) return
       await this.practicesStore.deleteUploadedDocument(this.practice.id, this.uploadedAgreement.file_path)
       await this.fetchPractice()
     },
 
     async deleteReport() {
       if (!this.uploadedReport) return
-      if (!confirm('Naozaj chcete odstrániť túto správu?')) return
+      if (!confirm(this.$t('DetailsPraxeDialog.confirm.delete_report'))) return
         await this.practicesStore.deleteUploadedDocument(this.practice.id, this.uploadedReport.file_path)
       await this.fetchPractice()
     },

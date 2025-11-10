@@ -1,15 +1,15 @@
 <template>
   <v-card outlined>
-    <v-card-title>Zmeniť heslo</v-card-title>
+    <v-card-title>{{ $t('ChangePassword.title') }}</v-card-title>
     <v-card-subtitle>
-      Pravidelne aktualizujte svoje heslo, aby ste udržali svoj účet v bezpečí
+      {{ $t('ChangePassword.subtitle') }}
     </v-card-subtitle>
     <v-card-text>
       <v-form ref="resetForm" v-model="validReset" class="form-fix">
       <v-row>
         <v-col cols="12" md="4">
           <v-label class="opacity-100">
-            <span class="font-weight-bold">Aktuálne heslo</span>
+            <span class="font-weight-bold">{{ $t('ChangePassword.current') }}</span>
             <span class="font-weight-bold text-red ml-2">*</span>
           </v-label>
           <v-text-field
@@ -23,13 +23,13 @@
             :rules="[rules.required, rules.password]"
             prepend-inner-icon="mdi-lock"
             required
-            placeholder="Zadajte aktuálne heslo"
+            :placeholder="$t('ChangePassword.placeholder_current')"
           />
         </v-col>
 
         <v-col cols="12" md="4">
           <v-label class="opacity-100">
-            <span class="font-weight-bold">Nové heslo</span>
+            <span class="font-weight-bold">{{ $t('ChangePassword.new') }}</span>
             <span class="font-weight-bold text-red ml-2">*</span>
           </v-label>
           <v-text-field
@@ -43,13 +43,13 @@
             :rules="[rules.required, rules.password, rules.match]"
             prepend-inner-icon="mdi-lock"
             required
-            placeholder="Zadajte nové heslo"
+            :placeholder="$t('ChangePassword.placeholder_new')"
           />
         </v-col>
 
         <v-col cols="12" md="4">
           <v-label class="opacity-100">
-            <span class="font-weight-bold">Potvrďte heslo</span>
+            <span class="font-weight-bold">{{ $t('ChangePassword.confirm') }}</span>
             <span class="font-weight-bold text-red ml-2">*</span>
           </v-label>
           <v-text-field
@@ -63,13 +63,13 @@
             :rules="[rules.required, rules.password, rules.match]"
             prepend-inner-icon="mdi-lock"
             required
-            placeholder="Potvrďte nové heslo"
+            :placeholder="$t('ChangePassword.placeholder_confirm')"
           />
         </v-col>
 
         <v-col cols="12">
           <v-alert type="info" variant="tonal" rounded="lg" density="compact">
-            Heslo musí mať aspoň 8 znakov a obsahovať kombináciu písmen, číslic a špeciálnych znakov
+            {{ $t('ChangePassword.alert') }}
           </v-alert>
         </v-col>
 
@@ -82,7 +82,7 @@
             class="confirm-btn text-none"
             :disabled="false"
           >
-            Zmeniť heslo
+            {{ $t('ChangePassword.button') }}
           </v-btn>
         </v-col>
       </v-row>
@@ -105,12 +105,12 @@ export default {
         confirmPassword: '',
       },
       rules: {
-        required: v => !!v || 'Povinné pole',
+        required: v => !!v || this.$t('ChangePassword.rules.required'),
         password: v =>
           /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(v) ||
-          'Min. 8 znakov, aspoň 1 písmeno a 1 číslo',
+          this.$t('ChangePassword.rules.password'),
         match: v =>
-          v === this.form.newPassword || 'Heslá sa nezhodujú',
+          v === this.form.newPassword || this.$t('ChangePassword.rules.match'),
       }
     }
   },

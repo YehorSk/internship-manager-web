@@ -2,62 +2,62 @@ export const STATUS_MAP = {
   created: {
     color: '#1976D2',
     icon: 'mdi-file-plus',
-    text: 'Vytvorená',
+    text: 'Status.created'
   },
   agreement_confirm_requested: {
     color: '#757575',
     icon: 'mdi-send',
-    text: 'Žiadosť o potvrdenie dohody',
+    text: 'Status.agreement_confirm_requested',
   },
   agreement_confirmed_by_company: {
     color: '#2E7D32',
     icon: 'mdi-domain',
-    text: 'Dohoda potvrdená firmou',
+    text: 'Status.agreement_confirmed_by_company',
   },
   agreement_confirmed_by_supervisor: {
     color: '#2E7D32',
     icon: 'mdi-school',
-    text: 'Dohoda potvrdená garantom',
+    text: 'Status.agreement_confirmed_by_supervisor',
   },
   agreement_rejected_by_company: {
     color: '#C62828',
     icon: 'mdi-close-circle',
-    text: 'Dohoda zamietnutá firmou',
+    text: 'Status.agreement_rejected_by_company',
   },
   agreement_rejected_by_supervisor: {
     color: '#C62828',
     icon: 'mdi-close-circle',
-    text: 'Dohoda zamietnutá garantom',
+    text: 'Status.agreement_rejected_by_supervisor',
   },
   report_confirm_requested: {
     color: '#616161',
     icon: 'mdi-file-send',
-    text: 'Žiadosť o potvrdenie správy',
+    text: 'Status.report_confirm_requested',
   },
   report_confirmed_by_company: {
     color: '#2E7D32',
     icon: 'mdi-domain',
-    text: 'Správa potvrdená firmou',
+    text: 'Status.report_confirmed_by_company',
   },
   report_confirmed_by_supervisor: {
     color: '#2E7D32',
     icon: 'mdi-school',
-    text: 'Správa potvrdená garantоm',
+    text: 'Status.report_confirmed_by_supervisor',
   },
   report_rejected_by_company: {
     color: '#C62828',
     icon: 'mdi-close-circle',
-    text: 'Správa zamietnutá firmou',
+    text: 'Status.report_rejected_by_company',
   },
   report_rejected_by_supervisor: {
     color: '#C62828',
     icon: 'mdi-close-circle',
-    text: 'Správa zamietnutá garantоm',
+    text: 'Status.report_rejected_by_supervisor',
   },
   canceled: {
     color: '#000000',
     icon: 'mdi-cancel',
-    text: 'Zrušená',
+    text: 'Status.canceled',
   },
 }
 
@@ -70,7 +70,7 @@ export function getStatusIcon(status) {
 }
 
 export function getStatusText(status) {
-  return STATUS_MAP[status]?.text || 'Neznámy'
+  return STATUS_MAP[status]?.text || 'Status.unknown'
 }
 
 export const statusOptions = Object.keys(STATUS_MAP).map(key => ({
