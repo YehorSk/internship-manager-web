@@ -91,7 +91,7 @@
     "company_registration": "Реєстрація компанії",
     "login": "Увійти",
     "contact": "Контакт факультету",
-    "email": "fakulta@univerzita.sk",
+    "email": "{'fakulta@univerzita.sk'}",
     "phone": "+421 123 456 789",
     "address_line1": "Факультет інформатики",
     "address_line2": "Університетська 1",
@@ -155,10 +155,10 @@
       "enter_job_title": "Напр. Junior Developer",
       "enter_company_name": "Введіть назву компанії",
       "enter_address": "Введіть адресу",
-      "enter_email": "Напр. info@company.sk",
+      "enter_email": "{'Напр. info@company.sk'}",
       "enter_phone": "+421 900 000 000",
       "enter_contact_name": "Введіть ім’я контактної особи",
-      "enter_contact_email": "Напр. jan@firma.sk",
+      "enter_contact_email": "{'Напр. jan@firma.sk'}",
       "enter_description": "Короткий опис виконуваних завдань"
     },
     "alerts": {
@@ -270,9 +270,9 @@
         "contactName": "Контактна особа",
         "contactName2": "Введіть ім’я",
         "companyEmail": "Email компанії",
-        "companyEmail2": "Напр. info@firma.sk",
+        "companyEmail2": "{'Напр. info@firma.sk'}",
         "contactEmail": "Email контактної особи",
-        "contactEmail2": "Напр. jan@firma.sk",
+        "contactEmail2": "{'Напр. jan@firma.sk'}",
         "contactPhone": "Телефон",
         "contactPhone2": "+421 900 000 000"
       },
@@ -433,7 +433,7 @@
     "errors": {
       "required": "Обов’язкове поле",
       "email": "Некоректний email",
-      "student_email": "Має бути університетський email (@student.ukf.sk)",
+      "student_email": "{'Має бути університетський email (@student.ukf.sk)'}",
       "phone": "Некоректний номер"
     }
   },
