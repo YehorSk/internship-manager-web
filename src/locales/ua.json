@@ -561,5 +561,14 @@
   },
   "ReportsHistoryPage": {
     "title": "Історія звітів"
+  },
+  "httpError": {
+    "validationError": "Помилка валідації",
+    "badRequest": "Неправильний запит",
+    "unauthorized": "Несанкціонований доступ",
+    "forbidden": "Доступ заборонено",
+    "notFound": "Не знайдено",
+    "serverError": "Неочікувана помилка сервера",
+    "networkError": "Мережева помилка"
   }
 }

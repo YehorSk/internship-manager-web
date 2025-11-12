@@ -20,23 +20,23 @@
 
 <script>
 import { useProfileStore } from '@/stores/profileStore.js'
-import { useI18n } from 'vue-i18n'
 
 export default {
-  setup() {
-    const store = useProfileStore()
-    const { locale } = useI18n()
-
-    const lang = store.lang
-    const languages = ['sk', 'en', 'ua', 'ru', 'be']
-
-    async function setLang(l) {
-      await store.setLanguage(l)
-      locale.value = l
-      window.location.reload()
+  data() {
+    return {
+      store: useProfileStore(),
+      languages: ['sk', 'en', 'ua', 'ru', 'be']
     }
-
-    return { lang, languages, setLang }
+  },
+  computed: {
+    lang() {
+      return this.store.lang
+    }
+  },
+  methods: {
+    async setLang(l) {
+      await this.store.setLanguage(l)
+    }
   }
 }
 </script>

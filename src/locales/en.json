@@ -561,5 +561,14 @@
   },
   "ReportsHistoryPage": {
     "title": "Reports history"
+  },
+  "httpError": {
+    "validationError": "Validation error",
+    "badRequest": "Invalid request",
+    "unauthorized": "Unauthorized access",
+    "forbidden": "Access denied",
+    "notFound": "Not found",
+    "serverError": "Unexpected server error",
+    "networkError": "Network error"
   }
 }

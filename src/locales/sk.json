@@ -561,5 +561,14 @@
   },
   "ReportsHistoryPage": {
     "title": "História správ"
+  },
+  "httpError": {
+    "validationError": "Chyba validácie",
+    "badRequest": "Neplatný požiadavok",
+    "unauthorized": "Neautorizovaný prístup",
+    "forbidden": "Prístup zamietnutý",
+    "notFound": "Nenájdené",
+    "serverError": "Neočakávaná chyba servera",
+    "networkError": "Sieťová chyba"
   }
 }

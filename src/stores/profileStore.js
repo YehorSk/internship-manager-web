@@ -4,6 +4,7 @@ import { useAuthStore } from '@/stores/authStore.js'
 import { useToastStore } from '@/stores/toastStore.js'
 import { handleError } from '@/utils/httpError.js'
 import { useStorage } from '@vueuse/core'
+import i18n from '@/i18n'
 
 export const useProfileStore = defineStore('profile', {
   state: () => ({
@@ -31,9 +32,8 @@ export const useProfileStore = defineStore('profile', {
     },
     async setLanguage(l) {
       const auth = useAuthStore()
-
       this.lang = l
-
+      i18n.global.locale.value = l
       if (auth.token) {
         await axios.put('/api/auth/update-language', { language: l }).catch(() => {})
       }

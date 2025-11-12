@@ -1,4 +1,7 @@
+import i18n from '@/i18n'
+
 export function handleError(error, store, toastStore) {
+  const { t } = i18n.global
   const d = error?.response?.data || {}
   const s = error?.response?.status
   if (s) {
@@ -6,26 +9,26 @@ export function handleError(error, store, toastStore) {
       case 422:
       case 409:
         store.fieldErrors = d.errors || {}
-        toastStore.showError(d.message || 'Chyba validácie')
+        toastStore.showError(d.message || t('httpError.validationError'))
         break
       case 400:
-        toastStore.showError(d.message || 'Neplatný požiadavok')
+        toastStore.showError(d.message || t('httpError.badRequest'))
         break
       case 401:
-        toastStore.showError(d.message || 'Neautorizovaný prístup')
+        toastStore.showError(d.message || t('httpError.unauthorized'))
         break
       case 403:
-        toastStore.showError(d.message || 'Prístup zamietnutý')
+        toastStore.showError(d.message || t('httpError.forbidden'))
         break
       case 404:
-        toastStore.showError(d.message || 'Nenájdené')
+        toastStore.showError(d.message || t('httpError.notFound'))
         break
       default:
-        toastStore.showError(d.message || 'Neočakávaná chyba servera')
+        toastStore.showError(d.message || t('httpError.serverError'))
         console.error('Server error', s, d)
     }
   } else {
-    toastStore.showError(d.message || 'Sieťová chyba')
+    toastStore.showError(d.message || t('httpError.networkError'))
     console.error('Network error', error)
   }
 }
