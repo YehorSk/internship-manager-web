@@ -570,5 +570,32 @@
     "notFound": "Not found",
     "serverError": "Unexpected server error",
     "networkError": "Network error"
+  },
+  "ReportStatus": {
+    "pending": "Pending",
+    "running": "Running",
+    "success": "Successful",
+    "failed": "Failed"
+  },
+  "ExportDialog": {
+    "title": "Export Reports",
+    "subtitle": "Select filters to export reports as a CSV file",
+    "type": "Report Type",
+    "year": "Year",
+    "semester": "Semester",
+    "employer": "Employer",
+    "studyProgram": "Study Program",
+    "fromDate": "From Date",
+    "toDate": "To Date",
+    "status": "Status",
+    "info": "After confirmation, a report will be generated with the selected filters in CSV format",
+    "cancel": "Cancel",
+    "export": "Export",
+    "reportTypes": {
+      "practices_list": "List of Practices",
+      "practices_status_summary": "Practices Status Summary",
+      "companies_without_activation": "Companies Without Activation",
+      "companies_without_practices": "Companies Without Practices"
+    }
   }
 }

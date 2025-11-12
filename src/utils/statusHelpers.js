@@ -60,6 +60,17 @@ export const STATUS_MAP = {
     text: 'Status.canceled',
   },
 }
+export const REPORT_STATUS_MAP = {
+  pending: { color: '#757575', text: 'ReportStatus.pending' },
+  running: { color: '#1976D2', text: 'ReportStatus.running' },
+  success: { color: '#2E7D32', text: 'ReportStatus.success' },
+  failed: { color: '#C62828', text: 'ReportStatus.failed' },
+}
+
+export const reportStatusOptions = Object.keys(REPORT_STATUS_MAP).map(key => ({
+  value: key,
+  label: REPORT_STATUS_MAP[key].text
+}))
 
 export function getStatusColor(status) {
   return STATUS_MAP[status]?.color || '#1976D2'

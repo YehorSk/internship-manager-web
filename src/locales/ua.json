@@ -570,5 +570,32 @@
     "notFound": "Не знайдено",
     "serverError": "Неочікувана помилка сервера",
     "networkError": "Мережева помилка"
+  },
+  "ReportStatus": {
+    "pending": "Очікує на обробку",
+    "running": "Виконується",
+    "success": "Успішно",
+    "failed": "Помилка"
+  },
+  "ExportDialog": {
+    "title": "Експорт звітів",
+    "subtitle": "Виберіть потрібні фільтри для експорту звітів у CSV файл",
+    "type": "Тип звіту",
+    "year": "Рік",
+    "semester": "Семестр",
+    "employer": "Роботодавець",
+    "studyProgram": "Освітня програма",
+    "fromDate": "З дати",
+    "toDate": "До дати",
+    "status": "Статус",
+    "info": "Після підтвердження буде згенеровано звіт із вказаними фільтрами у форматі CSV",
+    "cancel": "Скасувати",
+    "export": "Експортувати",
+    "reportTypes": {
+      "practices_list": "Список практик",
+      "practices_status_summary": "Зведення статусів практик",
+      "companies_without_activation": "Компанії без активації",
+      "companies_without_practices": "Компанії без практик"
+    }
   }
 }

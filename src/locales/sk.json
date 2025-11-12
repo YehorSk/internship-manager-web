@@ -570,5 +570,32 @@
     "notFound": "Nenájdené",
     "serverError": "Neočakávaná chyba servera",
     "networkError": "Sieťová chyba"
+  },
+  "ReportStatus": {
+    "pending": "Čaká sa na spracovanie",
+    "running": "Prebieha",
+    "success": "Úspešný",
+    "failed": "Zlyhal"
+  },
+  "ExportDialog": {
+    "title": "Export reportov",
+    "subtitle": "Vyberte požadované filtre pre export reportov do CSV súboru",
+    "type": "Typ reportu",
+    "year": "Rok",
+    "semester": "Semester",
+    "employer": "Zamestnávateľ",
+    "studyProgram": "Študijný odbor",
+    "fromDate": "Od dátumu",
+    "toDate": "Do dátumu",
+    "status": "Stav",
+    "info": "Po potvrdení sa vygeneruje report s uvedenými filtrami vo formáte CSV",
+    "cancel": "Zrušiť",
+    "export": "Exportovať",
+    "reportTypes": {
+      "practices_list": "Zoznam praxí",
+      "practices_status_summary": "Súhrn stavov praxí",
+      "companies_without_activation": "Firmy bez aktivácie",
+      "companies_without_practices": "Firmy bez praxí"
+    }
   }
 }
