@@ -339,12 +339,6 @@
       :practice-id="selectedPracticeId"
       @update="refreshData"
     />
-
-    <PracticeDialog
-      v-model="showPracticeDialog"
-      :practice-id="selectedPracticeId"
-      @update="refreshData"
-    />
   </v-main>
 </template>
 
