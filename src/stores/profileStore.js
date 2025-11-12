@@ -24,7 +24,6 @@ export const useProfileStore = defineStore('profile', {
         return response.data
       } catch (e) {
         handleError(e, this, toast)
-        throw e
       } finally {
         this.loading = false
       }
