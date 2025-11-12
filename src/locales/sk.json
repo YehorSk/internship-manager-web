@@ -91,7 +91,7 @@
     "company_registration": "Registrácia firmy",
     "login": "Prihlásenie",
     "contact": "Kontakt vedúceho fakulty",
-    "email": "fakulta@univerzita.sk",
+    "email": "{'fakulta@univerzita.sk'}",
     "phone": "+421 123 456 789",
     "address_line1": "Fakulta informatiky",
     "address_line2": "Univerzitná 1",
@@ -155,10 +155,10 @@
       "enter_job_title": "Napr. Junior Developer",
       "enter_company_name": "Zadajte názov spoločnosti",
       "enter_address": "Zadajte adresu spoločnosti",
-      "enter_email": "napr. info@firma.sk",
+      "enter_email": "{'napr. info@firma.sk'}",
       "enter_phone": "+421 900 000 000",
       "enter_contact_name": "Meno kontaktnej osoby",
-      "enter_contact_email": "napr. jan@firma.sk",
+      "enter_contact_email": "{'napr. jan@firma.sk'}",
       "enter_description": "Stručný popis vykonávaných činností"
     },
     "alerts": {
@@ -270,9 +270,9 @@
         "contactName": "Kontaktná osoba",
         "contactName2": "Zadajte meno kontaktnej osoby",
         "companyEmail": "Firemný email",
-        "companyEmail2": "napr. info@firma.sk",
+        "companyEmail2": "{'napr. info@firma.sk'}",
         "contactEmail": "Email kontaktnej osoby",
-        "contactEmail2": "napr. jan@firma.sk",
+        "contactEmail2": "{'napr. jan@firma.sk'}",
         "contactPhone": "Telefón kontaktnej osoby",
         "contactPhone2": "+421 900 000 000"
       },
@@ -415,6 +415,8 @@
       "address2": "Zadajte adresu spoločnosti",
       "contact_name": "Meno kontaktnej osoby",
       "contact_name2": "Zadajte meno kontaktnej osoby",
+      "contact_position": "Pozícia kontaktnej osoby",
+      "contact_position2": "Zadajte pozíciu kontaktnej osoby",
       "contact_email": "E-mail kontaktnej osoby",
       "contact_email2": "Zadajte e-mail kontaktnej osoby",
       "contact_phone": "Telefón kontaktnej osoby",
@@ -433,7 +435,7 @@
     "errors": {
       "required": "Povinné pole",
       "email": "Neplatný e-mail",
-      "student_email": "Musí byť univerzitný e-mail (@student.ukf.sk)",
+      "student_email": "{'Musí byť univerzitný e-mail (@student.ukf.sk)'}",
       "phone": "Neplatné číslo"
     }
   },

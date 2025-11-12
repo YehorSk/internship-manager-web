@@ -56,7 +56,7 @@ export default {
       return this.authStore?.user?.roles?.[0]?.name || ROLES.GUEST
     },
     filteredMenu() {
-      const allMenus = menuByRole[this.role] || menuByRole[ROLES.GUEST]
+      const allMenus = menuByRole[this.role] || []
       return allMenus.filter(item => !item.roles || hasAccess([this.role], item.roles))
     },
   },

@@ -52,6 +52,7 @@ export default {
         contact_name: '',
         contact_email: '',
         contact_phone: '',
+        contact_position: '',
         password: '',
         password_confirmation: ''
       }
@@ -264,7 +265,7 @@ export default {
                 <v-text-field
                   v-model="companyData.name"
                   :error-messages="fieldMsg('name')"
-                  :placeholder="$t('RegistrationPage.student.name2')"
+                  :placeholder="$t('RegistrationPage.company.name2')"
                   :rules="[rules.required]"
                   rounded="lg"
                   density="compact"
@@ -280,7 +281,7 @@ export default {
                 <v-text-field
                   v-model="companyData.company_email"
                   :error-messages="fieldMsg('company_email')"
-                  :placeholder="$t('RegistrationPage.student.email2')"
+                  :placeholder="$t('RegistrationPage.company.email2')"
                   type="email"
                   :rules="[rules.required, rules.email]"
                   rounded="lg"
@@ -297,7 +298,7 @@ export default {
                 <v-text-field
                   v-model="companyData.address"
                   :error-messages="fieldMsg('address')"
-                  :placeholder="$t('RegistrationPage.student.address2')"
+                  :placeholder="$t('RegistrationPage.company.address2')"
                   :rules="[rules.required]"
                   rounded="lg"
                   density="compact"
@@ -313,7 +314,7 @@ export default {
                 <v-text-field
                   v-model="companyData.contact_name"
                   :error-messages="fieldMsg('contact_name')"
-                  :placeholder="$t('RegistrationPage.student.contact_name2')"
+                  :placeholder="$t('RegistrationPage.company.contact_name2')"
                   :rules="[rules.required]"
                   rounded="lg"
                   density="compact"
@@ -323,13 +324,27 @@ export default {
                   @update:modelValue="clearFieldError('contact_name')"
                 />
                 <v-label class="opacity-100">
+                  <span class="font-weight-bold">{{ $t('RegistrationPage.company.contact_position') }}</span>
+                </v-label>
+                <v-text-field
+                  v-model="companyData.contact_position"
+                  :error-messages="fieldMsg('contact_position')"
+                  :placeholder="$t('RegistrationPage.company.contact_position2')"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  @update:modelValue="clearFieldError('contact_position')"
+                />
+                <v-label class="opacity-100">
                   <span class="font-weight-bold">{{ $t('RegistrationPage.company.contact_email') }}</span>
                   <span class="font-weight-bold text-red ml-2">*</span>
                 </v-label>
                 <v-text-field
                   v-model="companyData.contact_email"
                   :error-messages="fieldMsg('contact_email')"
-                  :placeholder="$t('RegistrationPage.student.contact_email2')"
+                  :placeholder="$t('RegistrationPage.company.contact_email2')"
                   type="email"
                   :rules="[rules.required, rules.email]"
                   rounded="lg"
@@ -346,7 +361,7 @@ export default {
                 <v-text-field
                   v-model="companyData.contact_phone"
                   :error-messages="fieldMsg('contact_phone')"
-                  :placeholder="$t('RegistrationPage.student.contact_phone2')"
+                  :placeholder="$t('RegistrationPage.company.contact_phone2')"
                   type="tel"
                   :rules="[rules.required, rules.phone]"
                   rounded="lg"
@@ -363,7 +378,7 @@ export default {
                 <v-text-field
                   v-model="companyData.password"
                   :error-messages="fieldMsg('password')"
-                  :placeholder="$t('RegistrationPage.student.password2')"
+                  :placeholder="$t('RegistrationPage.company.password2')"
                   type="password"
                   :rules="[rules.required, v => v.length >= 8 || 'Minimálne 8 znakov']"
                   rounded="lg"
@@ -379,7 +394,7 @@ export default {
                 </v-label>
                 <v-text-field
                   v-model="companyData.password_confirmation"
-                  :placeholder="$t('RegistrationPage.student.confirm_password2')"
+                  :placeholder="$t('RegistrationPage.company.confirm_password2')"
                   type="password"
                   :rules="[rules.required, v => v === companyData.password || 'Heslá sa nezhodujú']"
                   rounded="lg"

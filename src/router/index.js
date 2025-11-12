@@ -78,13 +78,8 @@ const router = createRouter({
       meta: { requiresAuth: true, roles: [ROLES.SUPERVISOR] }
     },
     {
-      path: '/:pathMatch(.*)*',
-      name: 'not-found',
-      component: NotFoundView,
-    },
-    {
       path: '/reset-password',
-      name: 'rest-password',
+      name: 'reset-password',
       component: () => import('../views/ResetPasswordPage.vue'),
       meta: { guestOnly: true },
     },
@@ -99,6 +94,11 @@ const router = createRouter({
       name: 'settings',
       component: () => import('../views/SettingsPage.vue'),
       meta: { requiresAuth: true, },
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: NotFoundView,
     },
   ],
   scrollBehavior(to, from, savedPosition) {
