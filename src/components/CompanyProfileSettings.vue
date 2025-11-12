@@ -68,6 +68,21 @@
             </v-col>
 
             <v-col cols="12" md="6">
+              <v-label class="opacity-100"><span class="font-weight-bold">Pozícia kontaktnej osoby</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-text-field
+                v-model="form.contact_position"
+                rounded="lg"
+                density="compact"
+                variant="solo-filled"
+                flat
+                single-line
+                prepend-inner-icon="mdi-badge-account"
+                :rules="[rules.required]"
+                placeholder="Zadajte pozíciu kontaktnej osoby"
+              />
+            </v-col>
+
+            <v-col cols="12" md="6">
               <v-label class="opacity-100"><span class="font-weight-bold">E-mail kontaktnej osoby</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
               <v-text-field
                 v-model="form.contact_email"
@@ -158,6 +173,7 @@ export default {
           company_email: user.company?.company_email || '',
           address: user.company?.address || '',
           contact_name: user.company?.contact_name || '',
+          contact_position: user.company?.contact_position || '',
           contact_email: user.company?.contact_email || '',
           contact_phone: user.company?.contact_phone || '',
         }
