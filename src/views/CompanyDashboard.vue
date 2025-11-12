@@ -2,16 +2,7 @@
   <v-main>
     <v-container fluid>
       <v-row>
-<<<<<<< HEAD
-        <Sidebar/>
-        <v-container fluid class="pa-4">
-          <v-row class="mb-4">
-            <v-col cols="12">
-              <h1 class="text-h5">{{ $t('CompanyDashboard.title') }}</h1>
-              <p class="text-subtitle-1">{{ $t('CompanyDashboard.subtitle') }}</p>
-=======
-        <Sidebar />
-
+        <SideBar />
         <v-container fluid class="pa-8">
           <v-row class="mb-6">
             <v-col cols="12" class="text-center">
@@ -19,7 +10,6 @@
               <p class="text-subtitle-1 text-grey-darken-1">
                 Prehľad odborných praxí a štatistiky vašej spoločnosti
               </p>
->>>>>>> 2d2c316 (Dashboard pre firmu)
             </v-col>
           </v-row>
 
@@ -137,7 +127,7 @@
                                   size="small"
                                   class="px-3"
                                 >
-                                  {{ getStatusText(practice.status) }}
+                                  {{ $t(getStatusText(practice.status)) }}
                                 </v-chip>
                               </div>
 
@@ -181,7 +171,7 @@
                     <div v-for="(count, status) in statistics.practicesByStatus" :key="status" class="mb-4">
                       <div class="d-flex justify-space-between align-center mb-2">
                         <span class="text-body-2 font-weight-medium text-grey-darken-2">
-                          {{ getStatusText(status) }}
+                          {{ $t(getStatusText(status)) }}
                         </span>
                         <span class="text-body-2 font-weight-bold text-grey-darken-4">{{ count }}</span>
                       </div>
@@ -310,7 +300,7 @@
                                   size="small"
                                   class="px-3"
                                 >
-                                  {{ getStatusText(practice.status) }}
+                                  {{ $t(getStatusText(practice.status)) }}
                                 </v-chip>
                               </div>
 
@@ -353,7 +343,7 @@
 </template>
 
 <script>
-import Sidebar from '@/components/Sidebar.vue'
+import SideBar from '@/components/SideBar.vue'
 import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
 import { getStatusColor, getStatusText } from '@/utils/statusHelpers.js'
@@ -361,12 +351,11 @@ import { useToastStore } from '@/stores/toastStore.js'
 import { handleError } from '@/utils/httpError.js'
 
 export default {
-  components: { Sidebar, PracticeDialog: DetailsPraxeDialog },
+  components: { SideBar, PracticeDialog: DetailsPraxeDialog },
   data() {
     return {
       showPracticeDialog: false,
       selectedPracticeId: null,
-      store: usePracticesStore(),
       loading: false,
       statistics: {
         totalPractices: 0,
@@ -379,7 +368,14 @@ export default {
     }
   },
   computed: {
+    store() {
+      return usePracticesStore()
+    },
     practicesAwaitingConfirmation() {
+      const apiStats = this.store.statistics
+      if (apiStats && apiStats.pending && Array.isArray(apiStats.pending)) {
+        return apiStats.pending
+      }
       return this.allPractices.filter(
         p => ['agreement_confirm_requested', 'report_confirm_requested'].includes(p.status)
       )
@@ -399,8 +395,9 @@ export default {
       const toast = useToastStore()
 
       try {
+        await this.store.fetchStatistics()
         await this.loadPracticesFromList()
-        this.calculateStatistics()
+        this.adaptStatisticsFromAPI()
       } catch (e) {
         handleError(e, this, toast)
       } finally {
@@ -439,42 +436,45 @@ export default {
       }
     },
 
-    calculateStatistics() {
-      const stats = {
-        totalPractices: this.allPractices.length,
-        activePractices: 0,
-        completedPractices: 0,
-        totalStudents: new Set(),
-        practicesByStatus: {},
+    adaptStatisticsFromAPI() {
+      const apiStats = this.store.statistics
+      if (!apiStats) {
+        return
       }
 
-      this.allPractices.forEach((practice) => {
-        if (!stats.practicesByStatus[practice.status]) {
-          stats.practicesByStatus[practice.status] = 0
+      const practicesByStatus = {}
+      if (apiStats.statistics) {
+        if (apiStats.statistics.created !== undefined && apiStats.statistics.created > 0) {
+          practicesByStatus.created = apiStats.statistics.created
         }
-        stats.practicesByStatus[practice.status]++
+        if (apiStats.statistics.agreement_confirm_requested !== undefined && apiStats.statistics.agreement_confirm_requested > 0) {
+          practicesByStatus.agreement_confirm_requested = apiStats.statistics.agreement_confirm_requested
+        }
+        if (apiStats.statistics.canceled !== undefined && apiStats.statistics.canceled > 0) {
+          practicesByStatus.canceled = apiStats.statistics.canceled
+        }
+      }
 
-        if (!['canceled', 'report_confirmed_by_supervisor', 'report_confirmed_by_company'].includes(practice.status)) {
-          stats.activePractices++
-        }
-
-        if (['report_confirmed_by_supervisor', 'report_confirmed_by_company'].includes(practice.status)) {
-          stats.completedPractices++
-        }
-
-        if (practice.student_id) {
-          stats.totalStudents.add(practice.student_id)
-        } else if (practice.student?.id) {
-          stats.totalStudents.add(practice.student.id)
-        }
-      })
+      const totalPractices = (apiStats.active || 0) + (apiStats.finished || 0) + (apiStats.cancelled || 0)
 
       this.statistics = {
-        totalPractices: stats.totalPractices,
-        activePractices: stats.activePractices,
-        completedPractices: stats.completedPractices,
-        totalStudents: stats.totalStudents.size,
-        practicesByStatus: stats.practicesByStatus,
+        totalPractices: totalPractices,
+        activePractices: apiStats.active || 0,
+        completedPractices: apiStats.finished || 0,
+        totalStudents: apiStats.students || 0,
+        practicesByStatus: practicesByStatus,
+      }
+
+      if (apiStats.pending && Array.isArray(apiStats.pending)) {
+        const pendingIds = new Set(apiStats.pending.map(p => p.id))
+        this.allPractices = this.allPractices.filter(p => !pendingIds.has(p.id))
+        this.allPractices.push(...apiStats.pending.map(p => {
+          const practice = { ...p }
+          if (p.student_id && !practice.student) {
+            practice.student = { id: p.student_id }
+          }
+          return practice
+        }))
       }
     },
 
