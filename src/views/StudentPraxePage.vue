@@ -186,6 +186,7 @@ import { getStatusColor, getStatusText, statusOptions } from '@/utils/statusHelp
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
 import { useAuthStore } from '@/stores/authStore.js'
+import { debounce } from 'lodash'
 
 export default {
   components: { Sidebar, StudentAddPraxeForm, StudentDetailsPraxeDialog: DetailsPraxeDialog },
@@ -239,7 +240,14 @@ export default {
   async mounted() {
     await this.programsStore.fetchPrograms()
     await this.store.fetchPractices()
-    await this.searchCompanies('')
+  },
+
+  created() {
+    this.debouncedSearchCompanies = debounce(async (query) => {
+      if (query?.trim().length >= 1) {
+        await this.companiesStore.searchCompanies(query.trim())
+      }
+    }, 500)
   },
 
   methods: {
@@ -266,9 +274,7 @@ export default {
       if (idx !== -1) this.store.list[idx] = { ...this.store.list[idx], ...updated }
     },
     async searchCompanies(query) {
-      if (query?.trim().length >= 1) {
-        await this.companiesStore.searchCompanies(query.trim())
-      }
+      this.debouncedSearchCompanies(query)
     },
     generateYearSuggestions(query) {
       this.yearSuggestions = generateAcademicYearSuggestions(query, this.role)

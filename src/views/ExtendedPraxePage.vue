@@ -196,6 +196,7 @@ import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { useCompaniesStore } from '@/stores/companiesStore.js'
 import { useStudentsStore } from '@/stores/studentsStore.js'
 import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
+import { debounce } from 'lodash'
 
 export default {
   components: { DetailsPraxeDialog, Sidebar },
@@ -254,8 +255,20 @@ export default {
   async mounted() {
     await this.programsStore.fetchPrograms()
     await this.loadPractices()
-    await this.searchCompanies('')
-    await this.studentsStore.searchStudents('')
+  },
+
+  created() {
+    this.debouncedSearchCompanies = debounce(async (query) => {
+      if (query?.trim().length >= 1) {
+        await this.companiesStore.searchCompanies(query.trim())
+      }
+    }, 500)
+
+    this.debouncedSearchStudents = debounce(async (query) => {
+      if (query?.trim().length >= 1) {
+        await this.studentsStore.searchStudents(query.trim())
+      }
+    }, 500)
   },
 
   methods: {
@@ -289,18 +302,14 @@ export default {
     },
     getStatusColor,
     getStatusText,
-    async searchCompanies(query) {
-      if (query?.trim().length >= 1) {
-        await this.companiesStore.searchCompanies(query.trim())
-      }
-    },
     generateYearSuggestions(query) {
       this.yearSuggestions = generateAcademicYearSuggestions(query, this.role)
     },
+    async searchCompanies(query) {
+      this.debouncedSearchCompanies(query)
+    },
     async searchStudents(query) {
-      if (query?.trim().length >= 1) {
-        await this.studentsStore.searchStudents(query.trim())
-      }
+      this.debouncedSearchStudents(query)
     },
   }
 }
