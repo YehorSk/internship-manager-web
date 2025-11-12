@@ -226,6 +226,7 @@
       "practices": "Practices",
       "students": "Students",
       "companies": "Companies",
+      "reports": "Report history",
       "settings": "Profile Settings",
       "logout": "Logout"
     }
@@ -516,7 +517,8 @@
     "reject": "Reject"
   },
   "SupervisorDashboard": {
-    "title": "Supervisor Dashboard"
+    "title": "Supervisor Dashboard",
+    "exportButton": "Export"
   },
   "Status": {
     "created": "Created",
@@ -556,5 +558,8 @@
   },
   "common": {
     "loading": "Loading..."
+  },
+  "ReportsHistoryPage": {
+    "title": "Reports history"
   }
 }

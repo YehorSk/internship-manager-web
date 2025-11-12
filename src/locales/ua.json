@@ -226,6 +226,7 @@
       "practices": "Список практик",
       "students": "Студенти",
       "companies": "Компанії",
+      "reports": "Історія звітів",
       "settings": "Налаштування профілю",
       "logout": "Вийти"
     }
@@ -516,7 +517,8 @@
     "reject": "Відхилити"
   },
   "SupervisorDashboard": {
-    "title": "Панель куратора"
+    "title": "Панель куратора",
+    "exportButton": "Експортувати"
   },
   "Status": {
     "created": "Створена",
@@ -556,5 +558,8 @@
   },
   "common": {
     "loading": "Завантаження..."
+  },
+  "ReportsHistoryPage": {
+    "title": "Історія звітів"
   }
 }

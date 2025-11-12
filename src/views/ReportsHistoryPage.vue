@@ -6,7 +6,7 @@
         <v-container fluid class="pa-4">
           <v-row class="align-center justify-space-between mb-4">
             <v-col cols="auto">
-              <h1 class="text-h5">{{ $t('SupervisorDashboard.title') }}</h1>
+              <h1 class="text-h5"> {{ $t('ReportsHistoryPage.title') }}</h1>
             </v-col>
             <v-col cols="auto">
               <v-btn color="#3A803D" prepend-icon="mdi-file-export" @click="dialog = true">

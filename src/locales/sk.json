@@ -226,6 +226,7 @@
       "practices": "Zoznam praxí",
       "students": "Študenti",
       "companies": "Firmy",
+      "reports": "História správ",
       "settings": "Nastavenia profilu",
       "logout": "Odhlásiť sa"
     }
@@ -516,7 +517,8 @@
     "reject": "Odmietnuť"
   },
   "SupervisorDashboard": {
-    "title": "Dashboard garanta"
+    "title": "Dashboard garanta",
+    "exportButton": "Exportovať"
   },
   "Status": {
     "created": "Vytvorená",
@@ -556,5 +558,8 @@
   },
   "common": {
     "loading": "Načítavam..."
+  },
+  "ReportsHistoryPage": {
+    "title": "História správ"
   }
 }
