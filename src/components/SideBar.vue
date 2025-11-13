@@ -38,7 +38,6 @@
 <script>
 import { useAuthStore } from '@/stores/authStore.js'
 import { menuByRole } from '@/data/menuConfig.js'
-import { ROLES } from '@/constants/roles.js'
 import { hasAccess } from '@/utils/access.js'
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 
@@ -53,7 +52,7 @@ export default {
   },
   computed: {
     role() {
-      return this.authStore?.user?.roles?.[0]?.name || ROLES.GUEST
+      return this.authStore?.user?.roles?.[0]?.name
     },
     filteredMenu() {
       const allMenus = menuByRole[this.role] || []

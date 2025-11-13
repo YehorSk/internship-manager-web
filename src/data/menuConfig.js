@@ -24,10 +24,4 @@ export const menuByRole = {
     { id: 'settings', label: 'SideBar.menu.settings', icon: 'mdi-cog-outline', route: '/settings' },
     { id: 'logout', label: 'SideBar.menu.logout', icon: 'mdi-logout', route: null },
   ],
-  [ROLES.GUEST]: [
-    { id: 'home', label: 'SideBar.menu.home', icon: 'mdi-home', route: '/' },
-    { id: 'student-register', label: 'SideBar.menu.studentRegister', icon: 'mdi-account-plus', route: '/register' },
-            { id: 'company-register', label: 'SideBar.menu.companyRegister', icon: 'mdi-office-building', route: { path: '/register', query: { role: 'company' } } },
-    { id: 'login', label: 'SideBar.menu.login', icon: 'mdi-login', route: '/login' },
-  ],
 }
