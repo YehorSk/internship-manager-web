@@ -23,7 +23,7 @@
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">E-mail spoločnosti</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">E-mail spoločnosti</span></v-label>
               <v-text-field
                 v-model="form.company_email"
                 rounded="lg"
@@ -32,6 +32,10 @@
                 flat
                 single-line
                 prepend-inner-icon="mdi-email"
+                readonly
+                disabled
+                color="grey"
+                hide-details
                 :rules="[rules.required, rules.email]"
                 placeholder="Zadajte e-mail spoločnosti"
               />
