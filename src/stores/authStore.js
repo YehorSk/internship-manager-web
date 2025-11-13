@@ -5,6 +5,7 @@ import {useStorage} from "@vueuse/core";
 import { useToastStore } from '@/stores/toastStore.js'
 import i18n from '@/i18n'
 import { useProfileStore } from '@/stores/profileStore.js'
+import router from '@/router/index.js'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -40,12 +41,18 @@ export const useAuthStore = defineStore('auth', {
     },
     async register(data) {
       const toast = useToastStore()
+      const profileStore = useProfileStore()
+      const lang = profileStore.lang || 'sk'
       this.loading = true
       this.fieldErrors = {}
       try {
-        const { data: response } = await axios.post('/api/auth/register', data)
+        data.language = lang
+        const { data: response } = await axios.post('/api/auth/register', data, {
+          headers: { lang }
+        })
         toast.showSuccess(response.message)
         console.log(response)
+        router.push('/login')
       } catch (e) {
         handleError(e, this, toast)
         throw e
@@ -78,16 +85,21 @@ export const useAuthStore = defineStore('auth', {
     },
     async login(email, password) {
       const toast = useToastStore()
+      const profileStore = useProfileStore()
+      const lang = profileStore.lang || 'sk'
       this.loading = true
       try {
-        const { data: response } = await axios.post('/api/auth/login', { email, password })
+        const { data: response } = await axios.post(
+          '/api/auth/login',
+          { email, password },
+          { headers: { lang } }
+        )
         this.user = response.data
         this.token = response.token
         toast.showSuccess(response.message)
         this.isLoggedIn = true
         console.log(response)
-        const profileStore = useProfileStore()
-        profileStore.lang = response.data.language || 'sk'
+        await profileStore.setLanguage(lang)
         i18n.global.locale.value = profileStore.lang
         window.location.reload();
       } catch (e) {

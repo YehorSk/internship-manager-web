@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-app-bar flat density="comfortable" class="bg-white">
-      <v-container class="full px-4 pr-6">
-        <div class="d-flex align-center justify-space-between w-100">
+      <v-container fluid class="px-4">
+        <div class="d-flex align-center justify-space-between w-100 flex-wrap">
           <div
             class="text-h6 pl-6"
             style="cursor: pointer; color: #3a803d; font-weight: 700; letter-spacing: 0.3px"
@@ -10,7 +10,7 @@
           >
             {{ $t('Header.title') }}
           </div>
-          <div class="d-none d-md-flex align-center ga-6">
+          <div class="d-none d-lg-flex align-center ga-6">
             <v-btn
               variant="text"
               class="font-weight-semibold text-body-1"
@@ -46,7 +46,7 @@
             </v-btn>
             <LanguageSwitcher />
           </div>
-          <v-btn class="d-md-none" icon @click="isMobileMenuOpen = !isMobileMenuOpen">
+          <v-btn class="d-lg-none" icon @click="isMobileMenuOpen = !isMobileMenuOpen">
             <v-icon>{{ isMobileMenuOpen ? 'mdi-close' : 'mdi-menu' }}</v-icon>
           </v-btn>
         </div>
@@ -54,7 +54,7 @@
     </v-app-bar>
 
     <v-expand-transition>
-      <div v-if="isMobileMenuOpen" class="d-md-none bg-white shadow-lg position-relative z-100">
+      <div v-if="isMobileMenuOpen" class="d-lg-none bg-white shadow-lg position-relative z-100">
         <v-divider />
         <v-container class="py-4">
           <v-btn block variant="text" class="mb-2 text-body-1" @click="scrollTo('hero')">{{
@@ -91,7 +91,9 @@
           >
             {{ $t('Header.login') }}
           </v-btn>
-          <LanguageSwitcher />
+          <div class="d-flex justify-center">
+            <LanguageSwitcher />
+          </div>
         </v-container>
       </div>
     </v-expand-transition>

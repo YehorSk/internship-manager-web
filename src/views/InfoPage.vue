@@ -18,6 +18,8 @@
                 <v-icon start>mdi-school</v-icon>
                 {{ $t('Hero.student_btn') }}
               </v-btn>
+            </div>
+            <div class="mt-4">
               <v-btn variant="outlined" size="large" @click="scrollTo('company-registration')">
                 <v-icon start>mdi-office-building</v-icon>
                 {{ $t('Hero.company_btn') }}
@@ -175,22 +177,41 @@
               {{ $t('Student.desc') }}
             </p>
 
-            <v-list lines="one" density="compact" class="mb-6">
-              <v-list-item class="pa-0">
-                <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>{{ $t('Student.points.desc') }}</v-list-item-title>
+            <v-list lines="false" density="comfortable" class="mb-8">
+              <v-list-item class="py-2 px-2 rounded-lg hover:bg-grey-lighten-4 transition-all">
+                <template #prepend>
+                  <v-icon color="primary" size="22" class="mr-3">mdi-check-circle</v-icon>
+                </template>
+                <v-list-item-title class="text-body-1 font-weight-medium text-high-emphasis">
+                  {{ $t('Student.points.desc') }}
+                </v-list-item-title>
               </v-list-item>
-              <v-list-item class="pa-0">
-                <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>{{ $t('Student.points.desc1') }}</v-list-item-title>
+
+              <v-list-item class="py-2 px-2 rounded-lg hover:bg-grey-lighten-4 transition-all">
+                <template #prepend>
+                  <v-icon color="primary" size="22" class="mr-3">mdi-check-circle</v-icon>
+                </template>
+                <v-list-item-title class="text-body-1 font-weight-medium text-high-emphasis">
+                  {{ $t('Student.points.desc1') }}
+                </v-list-item-title>
               </v-list-item>
-              <v-list-item class="pa-0">
-                <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>{{ $t('Student.points.desc2') }}</v-list-item-title>
+
+              <v-list-item class="py-2 px-2 rounded-lg hover:bg-grey-lighten-4 transition-all">
+                <template #prepend>
+                  <v-icon color="primary" size="22" class="mr-3">mdi-check-circle</v-icon>
+                </template>
+                <v-list-item-title class="text-body-1 font-weight-medium text-high-emphasis">
+                  {{ $t('Student.points.desc2') }}
+                </v-list-item-title>
               </v-list-item>
-              <v-list-item class="pa-0">
-                <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>{{ $t('Student.points.desc3') }}</v-list-item-title>
+
+              <v-list-item class="py-2 px-2 rounded-lg hover:bg-grey-lighten-4 transition-all">
+                <template #prepend>
+                  <v-icon color="primary" size="22" class="mr-3">mdi-check-circle</v-icon>
+                </template>
+                <v-list-item-title class="text-body-1 font-weight-medium text-high-emphasis">
+                  {{ $t('Student.points.desc3') }}
+                </v-list-item-title>
               </v-list-item>
             </v-list>
 
@@ -258,22 +279,41 @@
               {{ $t('Company.desc') }}
             </p>
 
-            <v-list lines="one" density="compact" class="mb-6">
-              <v-list-item class="pa-0">
-                <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>{{ $t('Company.points.desc') }}</v-list-item-title>
+            <v-list lines="false" density="comfortable" class="mb-8">
+              <v-list-item class="py-2 px-2 rounded-lg hover:bg-grey-lighten-4 transition-all">
+                <template #prepend>
+                  <v-icon color="primary" size="22" class="mr-3">mdi-check-circle</v-icon>
+                </template>
+                <v-list-item-title class="text-body-1 font-weight-medium text-high-emphasis">
+                  {{ $t('Company.points.desc') }}
+                </v-list-item-title>
               </v-list-item>
-              <v-list-item class="pa-0">
-                <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>{{ $t('Company.points.desc1') }}</v-list-item-title>
+
+              <v-list-item class="py-2 px-2 rounded-lg hover:bg-grey-lighten-4 transition-all">
+                <template #prepend>
+                  <v-icon color="primary" size="22" class="mr-3">mdi-check-circle</v-icon>
+                </template>
+                <v-list-item-title class="text-body-1 font-weight-medium text-high-emphasis">
+                  {{ $t('Company.points.desc1') }}
+                </v-list-item-title>
               </v-list-item>
-              <v-list-item class="pa-0">
-                <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>{{ $t('Company.points.desc2') }}</v-list-item-title>
+
+              <v-list-item class="py-2 px-2 rounded-lg hover:bg-grey-lighten-4 transition-all">
+                <template #prepend>
+                  <v-icon color="primary" size="22" class="mr-3">mdi-check-circle</v-icon>
+                </template>
+                <v-list-item-title class="text-body-1 font-weight-medium text-high-emphasis">
+                  {{ $t('Company.points.desc2') }}
+                </v-list-item-title>
               </v-list-item>
-              <v-list-item class="pa-0">
-                <template #prepend><v-icon color="primary" size="20">mdi-check-circle</v-icon></template>
-                <v-list-item-title>{{ $t('Company.points.desc3') }}</v-list-item-title>
+
+              <v-list-item class="py-2 px-2 rounded-lg hover:bg-grey-lighten-4 transition-all">
+                <template #prepend>
+                  <v-icon color="primary" size="22" class="mr-3">mdi-check-circle</v-icon>
+                </template>
+                <v-list-item-title class="text-body-1 font-weight-medium text-high-emphasis">
+                  {{ $t('Company.points.desc3') }}
+                </v-list-item-title>
               </v-list-item>
             </v-list>
 
