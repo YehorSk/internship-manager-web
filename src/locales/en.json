@@ -226,6 +226,7 @@
       "practices": "Practices",
       "students": "Students",
       "companies": "Companies",
+      "reports": "Report history",
       "settings": "Profile Settings",
       "logout": "Logout"
     }
@@ -516,7 +517,8 @@
     "reject": "Reject"
   },
   "SupervisorDashboard": {
-    "title": "Supervisor Dashboard"
+    "title": "Supervisor Dashboard",
+    "exportButton": "Export"
   },
   "Status": {
     "created": "Created",
@@ -557,6 +559,20 @@
   "common": {
     "loading": "Loading..."
   },
+  "ReportsHistoryPage": {
+    "title": "Reports History",
+    "subtitle": "List of all generated reports",
+    "listTitle": "Reports List",
+    "total": "Total:",
+    "empty": "You don't have any reports yet.",
+    "type": "Report Type",
+    "status": "Status",
+    "message": "Message",
+    "started": "Started At",
+    "ended": "Ended At",
+    "actions": "Actions",
+    "download": "Download"
+  },
   "httpError": {
     "validationError": "Validation error",
     "badRequest": "Invalid request",
@@ -585,6 +601,33 @@
     },
     "buttons": {
       "saveChanges": "Save Changes"
+    }
+  },
+  "ReportStatus": {
+    "pending": "Pending",
+    "running": "Running",
+    "success": "Successful",
+    "failed": "Failed"
+  },
+  "ExportDialog": {
+    "title": "Export Reports",
+    "subtitle": "Select filters to export reports as a CSV file",
+    "type": "Report Type",
+    "year": "Year",
+    "semester": "Semester",
+    "employer": "Employer",
+    "studyProgram": "Study Program",
+    "fromDate": "From Date",
+    "toDate": "To Date",
+    "status": "Status",
+    "info": "After confirmation, a report will be generated with the selected filters in CSV format",
+    "cancel": "Cancel",
+    "export": "Export",
+    "reportTypes": {
+      "practices_list": "List of Practices",
+      "practices_status_summary": "Practices Status Summary",
+      "companies_without_activation": "Companies Without Activation",
+      "companies_without_practices": "Companies Without Practices"
     }
   }
 }

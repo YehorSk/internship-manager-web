@@ -226,6 +226,7 @@
       "practices": "Список практик",
       "students": "Студенти",
       "companies": "Компанії",
+      "reports": "Історія звітів",
       "settings": "Налаштування профілю",
       "logout": "Вийти"
     }
@@ -516,7 +517,8 @@
     "reject": "Відхилити"
   },
   "SupervisorDashboard": {
-    "title": "Панель куратора"
+    "title": "Панель куратора",
+    "exportButton": "Експортувати"
   },
   "Status": {
     "created": "Створена",
@@ -557,6 +559,20 @@
   "common": {
     "loading": "Завантаження..."
   },
+  "ReportsHistoryPage": {
+    "title": "Історія звітів",
+    "subtitle": "Список усіх згенерованих звітів",
+    "listTitle": "Список звітів",
+    "total": "Всього:",
+    "empty": "Поки що немає жодного звіту.",
+    "type": "Тип звіту",
+    "status": "Статус",
+    "message": "Повідомлення",
+    "started": "Початок",
+    "ended": "Кінець",
+    "actions": "Дії",
+    "download": "Завантажити"
+  },
   "httpError": {
     "validationError": "Помилка валідації",
     "badRequest": "Неправильний запит",
@@ -585,6 +601,33 @@
     },
     "buttons": {
       "saveChanges": "Зберегти зміни"
+    }
+  },
+  "ReportStatus": {
+    "pending": "Очікує на обробку",
+    "running": "Виконується",
+    "success": "Успішно",
+    "failed": "Помилка"
+  },
+  "ExportDialog": {
+    "title": "Експорт звітів",
+    "subtitle": "Виберіть потрібні фільтри для експорту звітів у CSV файл",
+    "type": "Тип звіту",
+    "year": "Рік",
+    "semester": "Семестр",
+    "employer": "Роботодавець",
+    "studyProgram": "Освітня програма",
+    "fromDate": "З дати",
+    "toDate": "До дати",
+    "status": "Статус",
+    "info": "Після підтвердження буде згенеровано звіт із вказаними фільтрами у форматі CSV",
+    "cancel": "Скасувати",
+    "export": "Експортувати",
+    "reportTypes": {
+      "practices_list": "Список практик",
+      "practices_status_summary": "Зведення статусів практик",
+      "companies_without_activation": "Компанії без активації",
+      "companies_without_practices": "Компанії без практик"
     }
   }
 }

@@ -226,6 +226,7 @@
       "practices": "Zoznam praxí",
       "students": "Študenti",
       "companies": "Firmy",
+      "reports": "História správ",
       "settings": "Nastavenia profilu",
       "logout": "Odhlásiť sa"
     }
@@ -516,7 +517,8 @@
     "reject": "Odmietnuť"
   },
   "SupervisorDashboard": {
-    "title": "Dashboard garanta"
+    "title": "Dashboard garanta",
+    "exportButton": "Exportovať"
   },
   "Status": {
     "created": "Vytvorená",
@@ -557,6 +559,20 @@
   "common": {
     "loading": "Načítavam..."
   },
+  "ReportsHistoryPage": {
+    "title": "História reportov",
+    "subtitle": "Zoznam všetkých vygenerovaných reportov",
+    "listTitle": "Zoznam reportov",
+    "total": "Spolu:",
+    "empty": "Zatiaľ nemáte žiadne reporty.",
+    "type": "Typ reportu",
+    "status": "Stav",
+    "message": "Správa",
+    "started": "Začiatok",
+    "ended": "Koniec",
+    "actions": "Akcie",
+    "download": "Stiahnuť"
+  },
   "httpError": {
     "validationError": "Chyba validácie",
     "badRequest": "Neplatný požiadavok",
@@ -585,6 +601,33 @@
     },
     "buttons": {
       "saveChanges": "Uložiť zmeny"
+    }
+  },
+  "ReportStatus": {
+    "pending": "Čaká sa na spracovanie",
+    "running": "Prebieha",
+    "success": "Úspešný",
+    "failed": "Zlyhal"
+  },
+  "ExportDialog": {
+    "title": "Export reportov",
+    "subtitle": "Vyberte požadované filtre pre export reportov do CSV súboru",
+    "type": "Typ reportu",
+    "year": "Rok",
+    "semester": "Semester",
+    "employer": "Zamestnávateľ",
+    "studyProgram": "Študijný odbor",
+    "fromDate": "Od dátumu",
+    "toDate": "Do dátumu",
+    "status": "Stav",
+    "info": "Po potvrdení sa vygeneruje report s uvedenými filtrami vo formáte CSV",
+    "cancel": "Zrušiť",
+    "export": "Exportovať",
+    "reportTypes": {
+      "practices_list": "Zoznam praxí",
+      "practices_status_summary": "Súhrn stavov praxí",
+      "companies_without_activation": "Firmy bez aktivácie",
+      "companies_without_practices": "Firmy bez praxí"
     }
   }
 }

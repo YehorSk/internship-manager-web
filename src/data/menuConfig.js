@@ -20,6 +20,7 @@ export const menuByRole = {
     { id: 'students', label: 'SideBar.menu.students', icon: 'mdi-school', route: '/supervisor-all-students' },
     { id: 'companies', label: 'SideBar.menu.companies', icon: 'mdi-office-building', route: '/supervisor-company' },
     { id: 'practices', label: 'SideBar.menu.practices', icon: 'mdi-file-document-outline', route: '/extended-all-praxe' },
+    { id: 'reports', label: 'SideBar.menu.reports', icon: 'mdi-folder-multiple', route: '/supervisor-reports-history' },
     { divider: true },
     { id: 'settings', label: 'SideBar.menu.settings', icon: 'mdi-cog-outline', route: '/settings' },
     { id: 'logout', label: 'SideBar.menu.logout', icon: 'mdi-logout', route: null },

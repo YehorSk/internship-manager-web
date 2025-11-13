@@ -13,6 +13,7 @@ import { hasAccess } from '@/utils/access.js'
 import ExtendedPraxePage from '@/views/ExtendedPraxePage.vue'
 import SupervisorCompanyPage from '@/views/SupervisorCompanyPage.vue'
 import SupervisorStudentsPage from '@/views/SupervisorStudentsPage.vue'
+import ReportsHistoryPage from '@/views/ReportsHistoryPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -75,6 +76,12 @@ const router = createRouter({
       path: '/supervisor-all-students',
       name: 'SupervisorStudentsPage',
       component: SupervisorStudentsPage,
+      meta: { requiresAuth: true, roles: [ROLES.SUPERVISOR] }
+    },
+    {
+      path: '/supervisor-reports-history',
+      name: 'ReportsHistoryPage',
+      component: ReportsHistoryPage,
       meta: { requiresAuth: true, roles: [ROLES.SUPERVISOR] }
     },
     {
