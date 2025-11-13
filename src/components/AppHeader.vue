@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar flat density="comfortable" class="bg-white bleed">
+    <v-app-bar flat density="comfortable" class="bg-white">
       <v-container class="full px-4 pr-6">
         <div class="d-flex align-center justify-space-between w-100">
           <div
@@ -54,7 +54,7 @@
     </v-app-bar>
 
     <v-expand-transition>
-      <div v-if="isMobileMenuOpen" class="d-md-none">
+      <div v-if="isMobileMenuOpen" class="d-md-none bg-white shadow-lg position-relative z-100">
         <v-divider />
         <v-container class="py-4">
           <v-btn block variant="text" class="mb-2 text-body-1" @click="scrollTo('hero')">{{
@@ -138,3 +138,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.z-100 {
+  z-index: 100;
+}
+</style>

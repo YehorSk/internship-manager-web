@@ -3,6 +3,8 @@ import axios from 'axios'
 import { handleError } from '@/utils/httpError.js'
 import {useStorage} from "@vueuse/core";
 import { useToastStore } from '@/stores/toastStore.js'
+import i18n from '@/i18n'
+import { useProfileStore } from '@/stores/profileStore.js'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -22,6 +24,9 @@ export const useAuthStore = defineStore('auth', {
         const { data: response } = await axios.get('/api/auth/user', null);
         this.user = response.data
         this.isLoggedIn = true
+        const profileStore = useProfileStore()
+        profileStore.lang = response.data.language || 'sk'
+        i18n.global.locale.value = profileStore.lang
       } catch (e) {
         const status = e?.response?.status
         if (status === 401) {
@@ -81,6 +86,9 @@ export const useAuthStore = defineStore('auth', {
         toast.showSuccess(response.message)
         this.isLoggedIn = true
         console.log(response)
+        const profileStore = useProfileStore()
+        profileStore.lang = response.data.language || 'sk'
+        i18n.global.locale.value = profileStore.lang
         window.location.reload();
       } catch (e) {
         handleError(e, this, toast)

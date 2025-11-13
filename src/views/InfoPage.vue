@@ -198,7 +198,7 @@
               color="#3A803D"
               class="text-white text-body-1"
               size="large"
-              rounded="xl"
+              rounded="lg"
               style="font-weight:600; letter-spacing:0.3px;"
               :to="{ name: 'Register' }"
             >
@@ -281,7 +281,7 @@
               color="#3A803D"
               class="text-white text-body-1"
               size="large"
-              rounded="xl"
+              rounded="lg"
               style="font-weight:600; letter-spacing:0.3px;"
               :to="{ path: '/register', query: { role: 'company' } }"
             >
