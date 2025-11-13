@@ -226,6 +226,7 @@
       "practices": "Практыкі",
       "students": "Студэнты",
       "companies": "Кампаніі",
+      "reports": "Гісторыя справаздач",
       "settings": "Налады профілю",
       "logout": "Выйсці"
     }
@@ -557,6 +558,20 @@
   "common": {
     "loading": "Загрузка..."
   },
+  "ReportsHistoryPage": {
+    "title": "Гісторыя справаздач",
+    "subtitle": "Спіс усіх згенераваных справаздач",
+    "listTitle": "Спіс справаздач",
+    "total": "Усяго:",
+    "empty": "Вы пакуль не маеце ніводнай справаздачы.",
+    "type": "Тып справаздачы",
+    "status": "Статус",
+    "message": "Паведамленне",
+    "started": "Пачатак",
+    "ended": "Канец",
+    "actions": "Дзеянні",
+    "download": "Спампаваць"
+  },
   "httpError": {
     "validationError": "Памылка праверкі",
     "badRequest": "Няправільны запыт",
@@ -581,6 +596,61 @@
         "firstName": "Увядзіце імя",
         "lastName": "Увядзіце прозвішча",
         "email": "Увядзіце электронную пошту"
+      }
+    },
+    "buttons": {
+      "saveChanges": "Захаваць змены"
+    }
+  },
+  "ReportStatus": {
+    "pending": "Чакае апрацоўкі",
+    "running": "Выконваецца",
+    "success": "Паспяхова",
+    "failed": "Памылка"
+  },
+  "ExportDialog": {
+    "title": "Экспарт справаздач",
+    "subtitle": "Абярыце фільтры для экспарту справаздач у CSV",
+    "type": "Тып справаздачы",
+    "year": "Год",
+    "semester": "Семестр",
+    "employer": "Працадаўца",
+    "studyProgram": "Праграма навучання",
+    "fromDate": "Ад даты",
+    "toDate": "Да даты",
+    "status": "Статус",
+    "info": "Пасля пацвярджэння будзе згенераваны CSV-файл з выбранымі фільтрамі",
+    "cancel": "Адмена",
+    "export": "Экспартаваць",
+    "reportTypes": {
+      "practices_list": "Спіс практык",
+      "practices_status_summary": "Зводка станаў практык",
+      "companies_without_activation": "Кампаніі без актывацыі",
+      "companies_without_practices": "Кампаніі без практык"
+    }
+  },
+  "CompanyProfileSettings": {
+    "title": "Налады профілю кампаніі",
+    "subtitle": "Кіруйце інфармацыяй аб вашай кампаніі і кантактных асобах",
+    "form": {
+      "name": "Назва кампаніі",
+      "companyEmail": "Email кампаніі",
+      "address": "Адрас",
+      "contactName": "Кантактная асоба",
+      "contactPosition": "Пасада кантактнай асобы",
+      "contactEmail": "Email кантактнай асобы",
+      "contactPhone": "Тэлефон кантактнай асобы",
+      "requiredField": "Гэта абавязковае поле",
+      "invalidEmail": "Няправільны фармат email",
+      "invalidPhone": "Няправільны нумар тэлефона",
+      "placeholders": {
+        "name": "Увядзіце назву кампаніі",
+        "companyEmail": "Увядзіце email кампаніі",
+        "address": "Увядзіце адрас кампаніі",
+        "contactName": "Увядзіце імя кантактнай асобы",
+        "contactPosition": "Увядзіце пасаду кантактнай асобы",
+        "contactEmail": "Увядзіце email кантактнай асобы",
+        "contactPhone": "Увядзіце тэлефон кантактнай асобы"
       }
     },
     "buttons": {

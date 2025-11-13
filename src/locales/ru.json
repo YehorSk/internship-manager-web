@@ -226,6 +226,7 @@
       "practices": "Практики",
       "students": "Студенты",
       "companies": "Компании",
+      "reports": "История отчётов",
       "settings": "Настройки профиля",
       "logout": "Выйти"
     }
@@ -516,7 +517,8 @@
     "reject": "Отклонить"
   },
   "SupervisorDashboard": {
-    "title": "Панель руководителя"
+    "title": "Панель руководителя",
+    "exportButton": "Экспортировать"
   },
   "Status": {
     "created": "Создано",
@@ -557,6 +559,20 @@
   "common": {
     "loading": "Загрузка..."
   },
+  "ReportsHistoryPage": {
+    "title": "История отчётов",
+    "subtitle": "Список всех сгенерированных отчётов",
+    "listTitle": "Список отчётов",
+    "total": "Всего:",
+    "empty": "У вас пока нет отчётов.",
+    "type": "Тип отчёта",
+    "status": "Статус",
+    "message": "Сообщение",
+    "started": "Начало",
+    "ended": "Окончание",
+    "actions": "Действия",
+    "download": "Скачать"
+  },
   "httpError": {
     "validationError": "Ошибка проверки данных",
     "badRequest": "Неверный запрос",
@@ -581,6 +597,61 @@
         "firstName": "Введите имя",
         "lastName": "Введите фамилию",
         "email": "Введите электронную почту"
+      }
+    },
+    "buttons": {
+      "saveChanges": "Сохранить изменения"
+    }
+  },
+  "ReportStatus": {
+    "pending": "Ожидает обработки",
+    "running": "Выполняется",
+    "success": "Успешно",
+    "failed": "Ошибка"
+  },
+  "ExportDialog": {
+    "title": "Экспорт отчётов",
+    "subtitle": "Выберите фильтры для экспорта отчётов в CSV",
+    "type": "Тип отчёта",
+    "year": "Год",
+    "semester": "Семестр",
+    "employer": "Работодатель",
+    "studyProgram": "Программа обучения",
+    "fromDate": "С даты",
+    "toDate": "По дату",
+    "status": "Статус",
+    "info": "После подтверждения будет сгенерирован CSV-файл с выбранными фильтрами",
+    "cancel": "Отмена",
+    "export": "Экспортировать",
+    "reportTypes": {
+      "practices_list": "Список практик",
+      "practices_status_summary": "Сводка статусов практик",
+      "companies_without_activation": "Компании без активации",
+      "companies_without_practices": "Компании без практик"
+    }
+  },
+  "CompanyProfileSettings": {
+    "title": "Настройки профиля компании",
+    "subtitle": "Управляйте информацией о вашей компании и контактах",
+    "form": {
+      "name": "Название компании",
+      "companyEmail": "Email компании",
+      "address": "Адрес",
+      "contactName": "Контактное лицо",
+      "contactPosition": "Должность контактного лица",
+      "contactEmail": "Email контактного лица",
+      "contactPhone": "Телефон контактного лица",
+      "requiredField": "Это обязательное поле",
+      "invalidEmail": "Неверный формат email",
+      "invalidPhone": "Неверный номер телефона",
+      "placeholders": {
+        "name": "Введите название компании",
+        "companyEmail": "Введите email компании",
+        "address": "Введите адрес компании",
+        "contactName": "Введите имя контактного лица",
+        "contactPosition": "Введите должность контактного лица",
+        "contactEmail": "Введите email контактного лица",
+        "contactPhone": "Введите телефон контактного лица"
       }
     },
     "buttons": {

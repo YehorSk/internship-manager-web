@@ -60,7 +60,6 @@
             <v-col cols="12" md="5">
               <v-label class="opacity-100">
                 <span class="font-weight-bold">{{ $t('SupervisorProfileSettings.form.email') }}</span>
-                <span class="font-weight-bold text-red ml-2">*</span>
               </v-label>
               <v-text-field
                 v-model="form.email"
