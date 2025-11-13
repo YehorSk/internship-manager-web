@@ -560,7 +560,18 @@
     "loading": "Načítavam..."
   },
   "ReportsHistoryPage": {
-    "title": "História správ"
+    "title": "História reportov",
+    "subtitle": "Zoznam všetkých vygenerovaných reportov",
+    "listTitle": "Zoznam reportov",
+    "total": "Spolu:",
+    "empty": "Zatiaľ nemáte žiadne reporty.",
+    "type": "Typ reportu",
+    "status": "Stav",
+    "message": "Správa",
+    "started": "Začiatok",
+    "ended": "Koniec",
+    "actions": "Akcie",
+    "download": "Stiahnuť"
   },
   "httpError": {
     "validationError": "Chyba validácie",

@@ -560,7 +560,18 @@
     "loading": "Loading..."
   },
   "ReportsHistoryPage": {
-    "title": "Reports history"
+    "title": "Reports History",
+    "subtitle": "List of all generated reports",
+    "listTitle": "Reports List",
+    "total": "Total:",
+    "empty": "You don't have any reports yet.",
+    "type": "Report Type",
+    "status": "Status",
+    "message": "Message",
+    "started": "Started At",
+    "ended": "Ended At",
+    "actions": "Actions",
+    "download": "Download"
   },
   "httpError": {
     "validationError": "Validation error",

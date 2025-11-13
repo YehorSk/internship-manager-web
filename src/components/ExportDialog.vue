@@ -43,7 +43,6 @@
                 single-line
                 clearable
                 prepend-inner-icon="mdi-calendar"
-                @update:search="generateYearSuggestions"
               />
             </v-col>
 
@@ -174,7 +173,6 @@
 </template>
 
 <script>
-import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { useCompaniesStore } from '@/stores/companiesStore.js'
 import { useReportsStore } from '@/stores/reportsStore.js'
@@ -217,6 +215,7 @@ export default {
   },
   async mounted() {
     await this.programsStore.fetchPrograms()
+    this.yearSuggestions = await this.reportsStore.fetchAcademicYears()
   },
   created() {
     this.debouncedSearchCompanies = debounce(async (query) => {
@@ -231,9 +230,6 @@ export default {
     },
     async searchCompanies(query) {
       this.debouncedSearchCompanies(query)
-    },
-    generateYearSuggestions(query) {
-      this.yearSuggestions = generateAcademicYearSuggestions(query, this.role)
     },
     async exportReport() {
       if (this.filters.employer) {

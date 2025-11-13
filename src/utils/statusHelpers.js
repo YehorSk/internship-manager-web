@@ -67,6 +67,10 @@ export const REPORT_STATUS_MAP = {
   failed: { color: '#C62828', text: 'ReportStatus.failed' },
 }
 
+export function getReportStatusColor(status) {
+  return REPORT_STATUS_MAP[status]?.color || '#1976D2'
+}
+
 export const reportStatusOptions = Object.keys(REPORT_STATUS_MAP).map(key => ({
   value: key,
   label: REPORT_STATUS_MAP[key].text
