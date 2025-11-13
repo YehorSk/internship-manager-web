@@ -533,7 +533,7 @@
     "canceled": "Canceled",
     "unknown": "Unknown"
   },
-  "StudentsPage": {
+  "SupervisorStudentsPage": {
     "title": "Students",
     "subtitle": "Overview of all students",
     "filters": "Filters",
@@ -581,6 +581,34 @@
         "firstName": "Enter first name",
         "lastName": "Enter last name",
         "email": "Enter email"
+      }
+    },
+    "buttons": {
+      "saveChanges": "Save Changes"
+    }
+  },
+  "CompanyProfileSettings": {
+    "title": "Company Profile Settings",
+    "subtitle": "Manage your company information and contact details",
+    "form": {
+      "name": "Company Name",
+      "companyEmail": "Company Email",
+      "address": "Address",
+      "contactName": "Contact Person Name",
+      "contactPosition": "Contact Person Position",
+      "contactEmail": "Contact Person Email",
+      "contactPhone": "Contact Person Phone Number",
+      "requiredField": "This field is required",
+      "invalidEmail": "Invalid email format",
+      "invalidPhone": "Invalid phone number",
+      "placeholders": {
+        "name": "Enter company name",
+        "companyEmail": "Enter company email",
+        "address": "Enter address",
+        "contactName": "Enter contact person name",
+        "contactPosition": "Enter contact person position",
+        "contactEmail": "Enter contact person email",
+        "contactPhone": "Enter phone number"
       }
     },
     "buttons": {

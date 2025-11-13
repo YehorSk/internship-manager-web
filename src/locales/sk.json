@@ -586,5 +586,33 @@
     "buttons": {
       "saveChanges": "Uložiť zmeny"
     }
+  },
+  "CompanyProfileSettings": {
+    "title": "Nastavenia profilu spoločnosti",
+    "subtitle": "Spravujte informácie o vašej spoločnosti a kontaktných osobách",
+    "form": {
+      "name": "Názov spoločnosti",
+      "companyEmail": "E-mail spoločnosti",
+      "address": "Adresa",
+      "contactName": "Meno kontaktnej osoby",
+      "contactPosition": "Pozícia kontaktnej osoby",
+      "contactEmail": "E-mail kontaktnej osoby",
+      "contactPhone": "Telefónne číslo kontaktnej osoby",
+      "requiredField": "Toto pole je povinné",
+      "invalidEmail": "Neplatný formát e-mailu",
+      "invalidPhone": "Neplatné telefónne číslo",
+      "placeholders": {
+        "name": "Zadajte názov spoločnosti",
+        "companyEmail": "Zadajte e-mail spoločnosti",
+        "address": "Zadajte adresu",
+        "contactName": "Zadajte meno kontaktnej osoby",
+        "contactPosition": "Zadajte pozíciu kontaktnej osoby",
+        "contactEmail": "Zadajte e-mail kontaktnej osoby",
+        "contactPhone": "Zadajte telefónne číslo"
+      }
+    },
+    "buttons": {
+      "saveChanges": "Uložiť zmeny"
+    }
   }
 }

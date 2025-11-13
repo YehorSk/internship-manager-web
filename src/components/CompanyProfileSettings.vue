@@ -1,14 +1,14 @@
 <template>
   <v-card outlined>
-    <v-card-title>Nastavenia profilu</v-card-title>
-    <v-card-subtitle>Spravujte svoje osobné údaje podľa svojej roly</v-card-subtitle>
+    <v-card-title>{{ $t('CompanyProfileSettings.title') }}</v-card-title>
+    <v-card-subtitle>{{ $t('CompanyProfileSettings.subtitle') }}</v-card-subtitle>
     <v-card-text>
       <v-form ref="profileForm" v-model="valid" lazy-validation class="form-fix">
         <v-row>
 
           <template v-if="role === 'company'">
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">Názov spoločnosti</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.name') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
               <v-text-field
                 v-model="form.name"
                 rounded="lg"
@@ -18,12 +18,12 @@
                 single-line
                 prepend-inner-icon="mdi-office-building"
                 :rules="[rules.required]"
-                placeholder="Zadajte názov spoločnosti"
+                :placeholder="$t('CompanyProfileSettings.form.placeholders.name')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">E-mail spoločnosti</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.companyEmail') }}</span></v-label>
               <v-text-field
                 v-model="form.company_email"
                 rounded="lg"
@@ -37,12 +37,12 @@
                 color="grey"
                 hide-details
                 :rules="[rules.required, rules.email]"
-                placeholder="Zadajte e-mail spoločnosti"
+                :placeholder="$t('CompanyProfileSettings.form.placeholders.companyEmail')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">Adresa</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.address') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
               <v-text-field
                 v-model="form.address"
                 rounded="lg"
@@ -52,12 +52,12 @@
                 single-line
                 prepend-inner-icon="mdi-map-marker"
                 :rules="[rules.required]"
-                placeholder="Zadajte adresu"
+                :placeholder="$t('CompanyProfileSettings.form.placeholders.address')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">Meno kontaktnej osoby</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.contactName') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
               <v-text-field
                 v-model="form.contact_name"
                 rounded="lg"
@@ -67,12 +67,12 @@
                 single-line
                 prepend-inner-icon="mdi-account"
                 :rules="[rules.required]"
-                placeholder="Zadajte meno kontaktnej osoby"
+                :placeholder="$t('CompanyProfileSettings.form.placeholders.contactName')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">Pozícia kontaktnej osoby</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.contactPosition') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
               <v-text-field
                 v-model="form.contact_position"
                 rounded="lg"
@@ -82,12 +82,12 @@
                 single-line
                 prepend-inner-icon="mdi-badge-account"
                 :rules="[rules.required]"
-                placeholder="Zadajte pozíciu kontaktnej osoby"
+                :placeholder="$t('CompanyProfileSettings.form.placeholders.contactPosition')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">E-mail kontaktnej osoby</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.contactEmail') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
               <v-text-field
                 v-model="form.contact_email"
                 rounded="lg"
@@ -97,12 +97,12 @@
                 single-line
                 prepend-inner-icon="mdi-email"
                 :rules="[rules.required, rules.email]"
-                placeholder="Zadajte e-mail kontaktnej osoby"
+                :placeholder="$t('CompanyProfileSettings.form.placeholders.contactEmail')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">Telefónne číslo kontaktnej osoby</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.contactPhone') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
               <v-text-field
                 v-model="form.contact_phone"
                 rounded="lg"
@@ -112,7 +112,7 @@
                 single-line
                 prepend-inner-icon="mdi-phone"
                 :rules="[rules.required, rules.phone]"
-                placeholder="Zadajte telefónne číslo"
+                :placeholder="$t('CompanyProfileSettings.form.placeholders.contactPhone')"
               />
             </v-col>
           </template>
@@ -126,7 +126,7 @@
               class="confirm-btn text-none"
               @click="saveProfile"
             >
-              Uložiť zmeny
+              {{ $t('CompanyProfileSettings.buttons.saveChanges') }}
             </v-btn>
           </v-col>
 
@@ -150,9 +150,9 @@ export default {
       initialForm: {},
       role: '',
       rules: {
-        required: v => !!v || 'Povinné pole',
-        email: v => /^(?!.*\.\.)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v) || 'Neplatný e-mail',
-        phone: v => /^\+?\d{7,15}$/.test(v) || 'Neplatné číslo',
+        required: v => !!v || this.$t('CompanyProfileSettings.form.requiredField'),
+        email: v => /^(?!.*\.\.)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v) || this.$t('CompanyProfileSettings.form.invalidEmail'),
+        phone: v => /^\+?\d{7,15}$/.test(v) || this.$t('CompanyProfileSettings.form.invalidPhone'),
       },
     }
   },
