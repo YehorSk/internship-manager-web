@@ -90,15 +90,16 @@
             <v-icon start color="grey-darken-2">mdi-calendar-range</v-icon>
             <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.academic_year') }}</span>
           </v-label>
-          <v-select
+          <v-autocomplete
             v-if="isEditing && !isLocked"
             v-model="edited.academic_year"
-            :items="academicYears"
+            :items="yearSuggestions"
             rounded="lg"
             density="compact"
             variant="solo-filled"
             flat
             single-line
+            @update:search="generateYearSuggestions"
           />
           <v-text-field
             v-else
@@ -872,6 +873,7 @@ import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { usePracticesStore } from '@/stores/practicesStore.js'
 import { getStatusColor, getStatusIcon, getStatusText } from '@/utils/statusHelpers.js'
 import { useAuthStore } from '@/stores/authStore.js'
+import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
 
 
 export default {
@@ -896,6 +898,7 @@ export default {
       practicesStore: usePracticesStore(),
       toast: useToast(),
       statusHistory: [],
+      yearSuggestions: [],
       loadingPractice: false,
       report: { file: null},
       reportStatus: '',
@@ -938,10 +941,6 @@ export default {
       if (this.role === 'supervisor' || this.role === 'company') return false
       const allowedStatuses = ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor', 'agreement_confirmed_by_company', 'agreement_confirmed_by_supervisor', 'report_rejected_by_company', 'report_rejected_by_supervisor']
       return !allowedStatuses.includes(this.practice.status)
-    },
-    academicYears() {
-      const year = new Date().getFullYear()
-      return Array.from({ length: 5 }, (_, i) => `${year + i}/${year + i + 1}`)
     },
     isReportLocked() {
       if (!this.practice) return true
@@ -1199,7 +1198,10 @@ export default {
         .find(s => relevantStatuses.includes(s.status) && s.comment)
 
       return last ? last.comment : null
-    }
+    },
+    generateYearSuggestions(query) {
+      this.yearSuggestions = generateAcademicYearSuggestions(query, this.role)
+    },
   }
 }
 </script>
