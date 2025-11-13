@@ -196,6 +196,7 @@ export default {
       const data = { ...this.form, study_program: this.form.study_program_id }
       await this.profileStore.updateProfile(data)
       this.initialForm = { ...this.form }
+      this.valid = false
     }
   },
 }

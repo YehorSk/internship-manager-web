@@ -565,5 +565,26 @@
     "notFound": "Not found",
     "serverError": "Unexpected server error",
     "networkError": "Network error"
+  },
+  "SupervisorProfileSettings": {
+    "title": "Supervisor Profile Settings",
+    "subtitle": "Edit your personal and email information",
+    "form": {
+      "title": "Title",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "requiredField": "This field is required",
+      "invalidEmail": "Invalid email format",
+      "placeholders": {
+        "title": "Enter title",
+        "firstName": "Enter first name",
+        "lastName": "Enter last name",
+        "email": "Enter email"
+      }
+    },
+    "buttons": {
+      "saveChanges": "Save Changes"
+    }
   }
 }

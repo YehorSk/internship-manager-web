@@ -565,5 +565,26 @@
     "notFound": "Nenájdené",
     "serverError": "Neočakávaná chyba servera",
     "networkError": "Sieťová chyba"
+  },
+  "SupervisorProfileSettings": {
+    "title": "Nastavenia profilu supervízora",
+    "subtitle": "Upravte svoje osobné údaje a e-mailové informácie",
+    "form": {
+      "title": "Titul",
+      "firstName": "Krstné meno",
+      "lastName": "Priezvisko",
+      "email": "E-mail",
+      "requiredField": "Toto pole je povinné",
+      "invalidEmail": "Neplatný formát e-mailu",
+      "placeholders": {
+        "title": "Zadajte titul",
+        "firstName": "Zadajte krstné meno",
+        "lastName": "Zadajte priezvisko",
+        "email": "Zadajte e-mail"
+      }
+    },
+    "buttons": {
+      "saveChanges": "Uložiť zmeny"
+    }
   }
 }

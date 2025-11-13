@@ -11,6 +11,7 @@
             </v-col>
           </v-row>
           <StudentProfileSettings v-if="isStudent" />
+          <SupervisorProfileSettings v-if="isSupervisor" />
           <v-spacer class="my-6" />
           <ChangePasswordPage />
         </v-container>
@@ -24,14 +25,19 @@ import Sidebar from '@/components/Sidebar.vue'
 import ChangePassword from '@/components/ChangePassword.vue'
 import StudentProfileSettings from '@/components/StudentProfileSettings.vue'
 import { useAuthStore } from '@/stores/authStore.js'
+import SupervisorProfileSettings from '@/components/SupervisorProfileSettings.vue'
 
 export default {
   name: 'SettingsPage',
-  components: { ChangePasswordPage: ChangePassword, Sidebar, StudentProfileSettings: StudentProfileSettings, },
+  components: { ChangePasswordPage: ChangePassword, Sidebar, StudentProfileSettings: StudentProfileSettings, SupervisorProfileSettings: SupervisorProfileSettings, },
   computed: {
     isStudent() {
       const authStore = useAuthStore()
       return authStore.user?.roles?.[0]?.name === 'student'
+    },
+    isSupervisor() {
+      const authStore = useAuthStore()
+      return authStore.user?.roles?.[0]?.name === 'supervisor'
     },
   },
 }
