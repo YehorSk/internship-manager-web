@@ -1,1 +1,17 @@
-{}
+{
+  "stats": {
+    "student": "Студент",
+    "company": "Компания",
+    "jobTitle": "Должность",
+    "status": "Статус",
+    "totalPractice": "Всего практик",
+    "activePractice": "Активные практики",
+    "finishedPractice": "Завершённые практики",
+    "students": "Количество студентов",
+    "cancelledPractice": "Отменённые практики",
+    "toConfirmPractice": "Практик на подтверждение",
+    "practiceByStatus": "Практики по статусу",
+    "overview": "Обзор профессиональных практик и статистика вашей компании",
+    "statisticsDashboard": "Статистика Dashboard"
+  }
+}

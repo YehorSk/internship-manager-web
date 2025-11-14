@@ -13,7 +13,8 @@ export const usePracticesStore = defineStore('practices', {
     total_pages: 1,
     per_page: 10,
     total_items: 0,
-    statistics: null,
+    statistics: [],
+    pending: [],
     statisticsLoading: false,
   }),
 
@@ -275,15 +276,15 @@ export const usePracticesStore = defineStore('practices', {
     },
     async fetchStatistics() {
       const toast = useToastStore()
-      this.statisticsLoading = true
+      this.loading = true
       try {
         const { data } = await axios.get('/api/practices/statistics')
         this.statistics = data
-        return data
+        console.log(this.statistics);
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        this.statisticsLoading = false
+        this.loading = false
       }
     },
   },

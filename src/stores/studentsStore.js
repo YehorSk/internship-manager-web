@@ -50,7 +50,9 @@ export const useStudentsStore = defineStore('students', {
       const toast = useToastStore()
       this.loading = true
       try {
-        const res = await axios.get(`/api/students/search/${query || ' '}`)
+        const res = await axios.get(`/api/students/search`, {
+          params: { value: query }
+        });
         this.students = res.data.data.map(s => ({
           ...s,
           full_name: `${s.first_name} ${s.last_name}`.trim(),

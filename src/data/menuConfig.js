@@ -9,7 +9,7 @@ export const menuByRole = {
     { id: 'logout', label: 'SideBar.menu.logout', icon: 'mdi-logout', route: null },
   ],
   [ROLES.COMPANY]: [
-    { id: 'dashboard', label: 'SideBar.menu.dashboard', icon: 'mdi-view-dashboard', route: '/company-dashboard' },
+    { id: 'dashboard', label: 'SideBar.menu.dashboard', icon: 'mdi-view-dashboard', route: '/stats-dashboard' },
     { id: 'practices', label: 'SideBar.menu.practices', icon: 'mdi-file-document-outline', route: '/extended-all-praxe' },
     { divider: true },
     { id: 'settings', label: 'SideBar.menu.settings', icon: 'mdi-cog-outline', route: '/settings' },

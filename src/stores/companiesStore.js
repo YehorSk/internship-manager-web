@@ -50,7 +50,9 @@ export const useCompaniesStore = defineStore('companies', {
       const toast = useToastStore()
       this.loading = true
       try {
-        const res = await axios.get(`/api/company/search/${query || ' '}`)
+        const res = await axios.get('/api/company/search', {
+          params: { value: query }
+        });
         this.companies = res.data.data
       } catch (e) {
         handleError(e, this, toast)

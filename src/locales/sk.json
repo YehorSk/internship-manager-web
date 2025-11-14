@@ -556,5 +556,20 @@
   },
   "common": {
     "loading": "Načítavam..."
+  },
+  "stats": {
+    "student": "Študent",
+    "company": "Spoločnosť",
+    "jobTitle": "Pozícia",
+    "status": "Stav",
+    "totalPractice": "Celkom prax",
+    "activePractice": "Aktívne praxe",
+    "finishedPractice": "Ukončené praxe",
+    "students": "Počet študentov",
+    "cancelledPractice": "Zrušené praxe",
+    "toConfirmPractice": "Praxí na potvrdenie",
+    "practiceByStatus": "Praxí podľa stavu",
+    "overview": "Prehľad odborných praxí a štatistiky vašej spoločnosti",
+    "statisticsDashboard": "Štatistiky Dashboard"
   }
 }

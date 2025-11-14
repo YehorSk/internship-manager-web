@@ -4,7 +4,7 @@ import InfoPage from '../views/InfoPage.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import LoginPage from '../views/LoginPage.vue'
 import StudentDashboard from '@/views/StudentDashboard.vue'
-import CompanyDashboard from '@/views/CompanyDashboard.vue'
+import StatsDashboard from '@/views/StatsDashboard.vue'
 import SupervisorDashboard from '@/views/SupervisorDashboard.vue'
 import { useAuthStore } from '@/stores/authStore.js'
 import StudentPraxePage from '@/views/StudentPraxePage.vue'
@@ -48,9 +48,9 @@ const router = createRouter({
       meta: { requiresAuth: true, roles: [ROLES.STUDENT] }
     },
     {
-      path: '/company-dashboard',
-      name: 'CompanyDashboard',
-      component: CompanyDashboard,
+      path: '/stats-dashboard',
+      name: 'StatsDashboard',
+      component: StatsDashboard,
       meta: { requiresAuth: true, roles: [ROLES.COMPANY] }
     },
     {
@@ -133,7 +133,7 @@ router.beforeEach(async (to, from, next) => {
 
   if (to.meta.guestOnly && authStore.isLoggedIn) {
     if (userRoles.includes(ROLES.STUDENT)) return next({ name: 'StudentDashboard' })
-    if (userRoles.includes(ROLES.COMPANY)) return next({ name: 'CompanyDashboard' })
+    if (userRoles.includes(ROLES.COMPANY)) return next({ name: 'StatsDashboard' })
     if (userRoles.includes(ROLES.SUPERVISOR)) return next({ name: 'SupervisorDashboard' })
     return next({ name: 'Info' })
   }
