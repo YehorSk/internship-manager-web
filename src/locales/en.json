@@ -657,5 +657,20 @@
     "buttons": {
       "saveChanges": "Save Changes"
     }
+  },
+  "stats": {
+    "student": "Student",
+    "company": "Company",
+    "jobTitle": "Job Title",
+    "status": "Status",
+    "totalPractice": "Total Practice",
+    "activePractice": "Active Practice",
+    "finishedPractice": "Finished Practice",
+    "students": "Number of Students",
+    "cancelledPractice": "Cancelled Practice",
+    "toConfirmPractice": "Practice to Confirm",
+    "practiceByStatus": "Practice by Status",
+    "overview": "Overview of Professional Practices and Your Company's Statistics",
+    "statisticsDashboard": "Statistics Dashboard"
   }
 }

@@ -656,5 +656,20 @@
     "buttons": {
       "saveChanges": "Захаваць змены"
     }
+  },
+  "stats": {
+    "student": "Студэнт",
+    "company": "Кампанія",
+    "jobTitle": "Пасада",
+    "status": "Статус",
+    "totalPractice": "Уся практыка",
+    "activePractice": "Актыўная практыка",
+    "finishedPractice": "Завершаная практыка",
+    "students": "Колькасць студэнтаў",
+    "cancelledPractice": "Адмененая практыка",
+    "toConfirmPractice": "Практык на пацверджанне",
+    "practiceByStatus": "Практыкі па стане",
+    "overview": "Агляд прафесійных практык і статыстыка вашай кампаніі",
+    "statisticsDashboard": "Статыстыка Dashboard"
   }
-}
+} 

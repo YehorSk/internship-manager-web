@@ -657,5 +657,20 @@
     "buttons": {
       "saveChanges": "Зберегти зміни"
     }
+  },
+  "stats": {
+    "student": "Студент",
+    "company": "Компанія",
+    "jobTitle": "Посада",
+    "status": "Статус",
+    "totalPractice": "Всього практик",
+    "activePractice": "Активні практики",
+    "finishedPractice": "Завершені практики",
+    "students": "Кількість студентів",
+    "cancelledPractice": "Скасовані практики",
+    "toConfirmPractice": "Практик на підтвердження",
+    "practiceByStatus": "Практики за статусом",
+    "overview": "Огляд професійних практик та статистика вашої компанії",
+    "statisticsDashboard": "Статистика Dashboard"
   }
 }
