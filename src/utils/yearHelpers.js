@@ -1,6 +1,4 @@
 export function generateAcademicYearSuggestions(query, role) {
-  if (!query) return []
-
   const currentYear = new Date().getFullYear()
   let minYear, maxYear
 
@@ -16,7 +14,7 @@ export function generateAcademicYearSuggestions(query, role) {
 
   for (let y = minYear; y <= maxYear; y++) {
     const item = `${y}/${y + 1}`
-    if (item.includes(query)) {
+    if (!query || item.includes(query)) {
       result.push(item)
     }
   }

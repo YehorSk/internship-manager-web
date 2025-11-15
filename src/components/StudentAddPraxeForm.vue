@@ -171,6 +171,7 @@
                 variant="solo-filled"
                 flat
                 single-line
+                @focus="generateYearSuggestions('')"
                 @update:search="generateYearSuggestions"
               />
             </v-col>

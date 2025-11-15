@@ -38,6 +38,7 @@
                   variant="outlined"
                   density="comfortable"
                   clearable
+                  @focus="generateYearSuggestions('')"
                   @update:search="generateYearSuggestions"
                 />
               </v-col>
