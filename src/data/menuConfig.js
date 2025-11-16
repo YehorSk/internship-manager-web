@@ -16,7 +16,7 @@ export const menuByRole = {
     { id: 'logout', label: 'SideBar.menu.logout', icon: 'mdi-logout', route: null },
   ],
   [ROLES.SUPERVISOR]: [
-    { id: 'dashboard', label: 'SideBar.menu.dashboard', icon: 'mdi-view-dashboard', route: '/supervisor-dashboard' },
+    { id: 'dashboard', label: 'SideBar.menu.dashboard', icon: 'mdi-view-dashboard', route: '/stats-dashboard' },
     { id: 'students', label: 'SideBar.menu.students', icon: 'mdi-school', route: '/supervisor-all-students' },
     { id: 'companies', label: 'SideBar.menu.companies', icon: 'mdi-office-building', route: '/supervisor-company' },
     { id: 'practices', label: 'SideBar.menu.practices', icon: 'mdi-file-document-outline', route: '/extended-all-praxe' },

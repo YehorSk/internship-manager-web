@@ -52,13 +52,7 @@ const router = createRouter({
       path: '/stats-dashboard',
       name: 'StatsDashboard',
       component: StatsDashboard,
-      meta: { requiresAuth: true, roles: [ROLES.COMPANY] }
-    },
-    {
-      path: '/supervisor-dashboard',
-      name: 'SupervisorDashboard',
-      component: SupervisorDashboard,
-      meta: { requiresAuth: true, roles: [ROLES.SUPERVISOR] }
+      meta: { requiresAuth: true, roles: [ROLES.COMPANY, ROLES.SUPERVISOR] }
     },
     {
       path: '/supervisor-company',
@@ -141,7 +135,7 @@ router.beforeEach(async (to, from, next) => {
   if (to.meta.guestOnly && authStore.isLoggedIn) {
     if (userRoles.includes(ROLES.STUDENT)) return next({ name: 'StudentDashboard' })
     if (userRoles.includes(ROLES.COMPANY)) return next({ name: 'StatsDashboard' })
-    if (userRoles.includes(ROLES.SUPERVISOR)) return next({ name: 'SupervisorDashboard' })
+    if (userRoles.includes(ROLES.SUPERVISOR)) return next({ name: 'StatsDashboard' })
     return next({ name: 'Info' })
   }
 
