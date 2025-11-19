@@ -264,6 +264,8 @@
       "titleEdit": "Upraviť zamestnávateľa",
       "subtitle": "Vyplňte všetky informácie o spoločnosti",
       "fields": {
+        "ico": "IČO",
+        "ico2": "Zadajte IČO",
         "name": "Názov spoločnosti",
         "name2": "Zadajte názov spoločnosti",
         "address": "Adresa",
@@ -408,6 +410,8 @@
       "button": "Registrovať sa ako študent"
     },
     "company": {
+      "ico": "IČO",
+      "ico2": "Zadajte IČO",
       "name": "Názov spoločnosti",
       "name2": "Zadajte názov spoločnosti",
       "email": "E-mail spoločnosti",
@@ -437,7 +441,8 @@
       "required": "Povinné pole",
       "email": "Neplatný e-mail",
       "student_email": "{'Musí byť univerzitný e-mail (@student.ukf.sk)'}",
-      "phone": "Neplatné číslo"
+      "phone": "Neplatné číslo",
+      "ico": "Zadajte platné IČO"
     }
   },
   "ResetPasswordPage": {
@@ -641,9 +646,11 @@
       "contactPosition": "Pozícia kontaktnej osoby",
       "contactEmail": "E-mail kontaktnej osoby",
       "contactPhone": "Telefónne číslo kontaktnej osoby",
+      "ico": "IČO",
       "requiredField": "Toto pole je povinné",
       "invalidEmail": "Neplatný formát e-mailu",
       "invalidPhone": "Neplatné telefónne číslo",
+      "invalidIco": "Neplatné IČO",
       "placeholders": {
         "name": "Zadajte názov spoločnosti",
         "companyEmail": "Zadajte e-mail spoločnosti",
@@ -651,7 +658,8 @@
         "contactName": "Zadajte meno kontaktnej osoby",
         "contactPosition": "Zadajte pozíciu kontaktnej osoby",
         "contactEmail": "Zadajte e-mail kontaktnej osoby",
-        "contactPhone": "Zadajte telefónne číslo"
+        "contactPhone": "Zadajte telefónne číslo",
+        "ico": "Zadajte IČO"
       }
     },
     "buttons": {

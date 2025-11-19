@@ -205,6 +205,11 @@
         <v-form ref="companyForm">
           <v-row>
             <v-col cols="12" md="6">
+              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.ico') }}</span><span class="text-red ml-2">*</span></v-label>
+              <v-text-field v-model="company.ico" :rules="[rules.required, rules.ico]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.ico2')" />
+            </v-col>
+
+            <v-col cols="12" md="6">
               <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.name') }}</span><span class="text-red ml-2">*</span></v-label>
               <v-text-field v-model="company.company_name" :rules="[rules.required]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.name2')" />
             </v-col>
@@ -294,10 +299,12 @@ export default {
         company_email: '',
         contact_email: '',
         contact_phone: '',
+        ico: ''
       },
       rules: {
         required: v => !!v || this.$t('StudentAddPraxeForm.form.requiredField'),
         email: v => /.+@.+\..+/.test(v) || this.$t('StudentAddPraxeForm.form.invalidEmail'),
+        ico: v => /^\d{8}$/.test(v) || this.$t('CompanyProfileSettings.form.ico'),
         phone: v => /^\+?\d{7,15}$/.test(v) || this.$t('StudentAddPraxeForm.form.invalidPhone')
       }
     }

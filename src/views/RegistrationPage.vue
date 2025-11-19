@@ -18,6 +18,7 @@ export default {
         required: v => !!v || this.$t('RegistrationPage.errors.required'),
         email: v => /.+@.+\..+/.test(v) || this.$t('RegistrationPage.errors.email'),
         phone: v => /^\+?\d{7,15}$/.test(v) || this.$t('RegistrationPage.errors.phone'),
+        ico: v => /^\d{8}$/.test(v) || this.$t('RegistrationPage.errors.ico'),
         studentEmail: v =>
           /@student\.ukf\.sk$/i.test(v) || this.$t('RegistrationPage.errors.student_email')
       },
@@ -54,7 +55,8 @@ export default {
         contact_phone: '',
         contact_position: '',
         password: '',
-        password_confirmation: ''
+        password_confirmation: '',
+        ico: ''
       }
     },
     clearFieldError(field) {
@@ -258,6 +260,22 @@ export default {
 
             <v-window-item value="company">
               <v-form ref="companyForm" v-model="valid" class="form-fix" @submit.prevent="submit">
+                <v-label class="opacity-100">
+                  <span class="font-weight-bold">{{ $t('RegistrationPage.company.ico') }}</span>
+                  <span class="font-weight-bold text-red ml-2">*</span>
+                </v-label>
+                <v-text-field
+                  v-model="companyData.ico"
+                  :error-messages="fieldMsg('ico')"
+                  :placeholder="$t('RegistrationPage.company.ico2')"
+                  :rules="[rules.required, rules.ico]"
+                  rounded="lg"
+                  density="compact"
+                  variant="solo-filled"
+                  flat
+                  single-line
+                  @update:modelValue="clearFieldError('ico')"
+                />
                 <v-label class="opacity-100">
                   <span class="font-weight-bold">{{ $t('RegistrationPage.company.name') }}</span>
                   <span class="font-weight-bold text-red ml-2">*</span>

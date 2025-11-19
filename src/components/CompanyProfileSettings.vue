@@ -8,6 +8,20 @@
 
           <template v-if="role === 'company'">
             <v-col cols="12" md="6">
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.ico') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-text-field
+                v-model="form.ico"
+                rounded="lg"
+                density="compact"
+                variant="solo-filled"
+                flat
+                single-line
+                prepend-inner-icon="mdi-domain"
+                :rules="[rules.required, rules.ico]"
+                :placeholder="$t('CompanyProfileSettings.form.placeholders.ico')"
+              />
+            </v-col>
+            <v-col cols="12" md="6">
               <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.name') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
               <v-text-field
                 v-model="form.name"
@@ -152,6 +166,7 @@ export default {
       rules: {
         required: v => !!v || this.$t('CompanyProfileSettings.form.requiredField'),
         email: v => /^(?!.*\.\.)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v) || this.$t('CompanyProfileSettings.form.invalidEmail'),
+        ico: v => /^\d{8}$/.test(v) || this.$t('CompanyProfileSettings.form.ico'),
         phone: v => /^\+?\d{7,15}$/.test(v) || this.$t('CompanyProfileSettings.form.invalidPhone'),
       },
     }
@@ -180,6 +195,7 @@ export default {
           contact_position: user.company?.contact_position || '',
           contact_email: user.company?.contact_email || '',
           contact_phone: user.company?.contact_phone || '',
+          ico: user.company?.ico || '',
         }
         this.form = { ...formData }
         this.initialForm = { ...formData }

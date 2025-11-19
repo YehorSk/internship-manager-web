@@ -408,6 +408,8 @@
       "button": "Register as Student"
     },
     "company": {
+      "ico": "Company ID",
+      "ico2": "Enter Company ID",
       "name": "Company Name",
       "name2": "Enter company name",
       "email": "Company Email",
@@ -466,7 +468,8 @@
       "required": "Required field",
       "email": "Invalid email",
       "password": "Min. 8 characters, at least 1 letter and 1 number",
-      "password_match": "Passwords do not match"
+      "password_match": "Passwords do not match",
+      "ico": "Enter a valid Company ID"
     }
   },
   "SettingsPage": {
@@ -641,9 +644,11 @@
       "contactPosition": "Contact Person Position",
       "contactEmail": "Contact Person Email",
       "contactPhone": "Contact Person Phone Number",
+      "ico": "Company ID",
       "requiredField": "This field is required",
       "invalidEmail": "Invalid email format",
       "invalidPhone": "Invalid phone number",
+      "invalidIco": "Invalid Company ID",
       "placeholders": {
         "name": "Enter company name",
         "companyEmail": "Enter company email",
@@ -651,7 +656,8 @@
         "contactName": "Enter contact person name",
         "contactPosition": "Enter contact person position",
         "contactEmail": "Enter contact person email",
-        "contactPhone": "Enter phone number"
+        "contactPhone": "Enter phone number",
+        "ico": "Enter Company ID"
       }
     },
     "buttons": {
