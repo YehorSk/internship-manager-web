@@ -860,7 +860,6 @@
 
     <template v-if="loadingPractice">
       <v-card class="pa-8 text-center">
-        <v-progress-circular indeterminate color="#3A803D" size="48" />
         <p class="mt-4">{{ $t('common.loading') }}</p>
       </v-card>
     </template>
