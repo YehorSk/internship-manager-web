@@ -510,6 +510,7 @@
     "total": "Celkovo",
     "total2": "firiem",
     "empty": "Žiadne firmy",
+    "ico": "IČO",
     "name": "Názov",
     "contact": "Kontakt",
     "email": "Email",
@@ -517,9 +518,7 @@
     "status": "Stav",
     "active": "Aktívna",
     "inactive": "Neaktívna",
-    "actions": "Akcie",
-    "confirm": "Potvrdiť",
-    "reject": "Odmietnuť"
+    "actions": "Akcie"
   },
   "SupervisorDashboard": {
     "title": "Dashboard garanta",

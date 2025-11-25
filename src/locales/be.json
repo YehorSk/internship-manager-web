@@ -508,6 +508,7 @@
     "total": "Усяго",
     "total2": "кампаній",
     "empty": "Няма кампаній",
+    "ico": "УНП",
     "name": "Назва",
     "contact": "Кантакт",
     "email": "Email",
@@ -515,9 +516,7 @@
     "status": "Статус",
     "active": "Актыўная",
     "inactive": "Неактыўная",
-    "actions": "Дзеянні",
-    "confirm": "Зацвердзіць",
-    "reject": "Адхіліць"
+    "actions": "Дзеянні"
   },
   "SupervisorDashboard": {
     "title": "Панэль кіраўніка"

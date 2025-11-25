@@ -508,6 +508,7 @@
     "total": "Всього",
     "total2": "компаній",
     "empty": "Немає компаній",
+    "ico": "ЄДРПОУ",
     "name": "Назва",
     "contact": "Контакт",
     "email": "Email",
@@ -515,9 +516,7 @@
     "status": "Статус",
     "active": "Активна",
     "inactive": "Неактивна",
-    "actions": "Дії",
-    "confirm": "Підтвердити",
-    "reject": "Відхилити"
+    "actions": "Дії"
   },
   "SupervisorDashboard": {
     "title": "Панель куратора",

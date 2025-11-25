@@ -508,6 +508,7 @@
     "total": "Всего",
     "total2": "компаний",
     "empty": "Нет компаний",
+    "ico": "ИНН/ОГРН",
     "name": "Название",
     "contact": "Контакт",
     "email": "Email",
@@ -515,9 +516,7 @@
     "status": "Статус",
     "active": "Активна",
     "inactive": "Неактивна",
-    "actions": "Действия",
-    "confirm": "Одобрить",
-    "reject": "Отклонить"
+    "actions": "Действия"
   },
   "SupervisorDashboard": {
     "title": "Панель руководителя",

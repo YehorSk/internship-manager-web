@@ -508,6 +508,7 @@
     "total": "Total",
     "total2": "companies",
     "empty": "No companies",
+    "ico": "Company ID",
     "name": "Name",
     "contact": "Contact",
     "email": "Email",
@@ -515,9 +516,7 @@
     "status": "Status",
     "active": "Active",
     "inactive": "Inactive",
-    "actions": "Actions",
-    "confirm": "Approve",
-    "reject": "Reject"
+    "actions": "Actions"
   },
   "SupervisorDashboard": {
     "title": "Supervisor Dashboard",

@@ -33,6 +33,7 @@
                 <v-table>
                   <thead>
                   <tr>
+                    <th>{{ $t('SupervisorCompanyPage.ico') }}</th>
                     <th>{{ $t('SupervisorCompanyPage.name') }}</th>
                     <th>{{ $t('SupervisorCompanyPage.contact') }}</th>
                     <th>{{ $t('SupervisorCompanyPage.email') }}</th>
@@ -43,6 +44,7 @@
                   </thead>
                   <tbody>
                   <tr v-for="c in store.companies" :key="c.user_id">
+                    <td>{{ c.ico }}</td>
                     <td>{{ c.name }}</td>
                     <td>{{ c.contact_name }}</td>
                     <td>{{ c.contact_email }}</td>
@@ -62,21 +64,20 @@
                     <td class="text-right">
                       <div class="d-flex justify-end align-center ga-2">
                         <v-btn
+                          icon
                           size="small"
                           color="#3A803D"
-                          class="text-white"
-                          prepend-icon="mdi-check-circle"
                           @click="confirmCompany(c.user_id)"
                         >
-                          {{ $t('SupervisorCompanyPage.confirm') }}
+                          <v-icon>mdi-check-circle</v-icon>
                         </v-btn>
                         <v-btn
+                          icon
                           size="small"
                           color="error"
-                          prepend-icon="mdi-close-circle"
                           @click="rejectCompany(c.user_id)"
                         >
-                          {{ $t('SupervisorCompanyPage.reject') }}
+                          <v-icon>mdi-close-circle</v-icon>
                         </v-btn>
                       </div>
                     </td>
