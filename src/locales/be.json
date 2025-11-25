@@ -534,6 +534,9 @@
     "report_confirmed_by_supervisor": "Даклад пацверджаны кіраўніком",
     "report_rejected_by_company": "Даклад адхілены кампаніяй",
     "report_rejected_by_supervisor": "Даклад адхілены кіраўніком",
+    "defense": "Абарона",
+    "defense_rejected": "Абарона адхілена",
+    "defended": "Абараніна",
     "canceled": "Адменена",
     "unknown": "Невядома"
   },

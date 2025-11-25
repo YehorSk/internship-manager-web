@@ -535,6 +535,9 @@
     "report_confirmed_by_supervisor": "Отчёт подтверждён руководителем",
     "report_rejected_by_company": "Отчёт отклонён компанией",
     "report_rejected_by_supervisor": "Отчёт отклонён руководителем",
+    "defense": "Защита",
+    "defense_rejected": "Защита отклонена",
+    "defended": "Защищено",
     "canceled": "Отменено",
     "unknown": "Неизвестно"
   },

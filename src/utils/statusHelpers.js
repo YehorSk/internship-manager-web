@@ -54,6 +54,21 @@ export const STATUS_MAP = {
     icon: 'mdi-close-circle',
     text: 'Status.report_rejected_by_supervisor',
   },
+  defense: {
+    color: '#1976D2',
+    icon: 'mdi-shield-check',
+    text: 'Status.defense',
+  },
+  defense_rejected: {
+    color: '#C62828',
+    icon: 'mdi-shield-alert',
+    text: 'Status.defense_rejected',
+  },
+  defended: {
+    color: '#2E7D32',
+    icon: 'mdi-shield-check-outline',
+    text: 'Status.defended',
+  },
   canceled: {
     color: '#000000',
     icon: 'mdi-cancel',

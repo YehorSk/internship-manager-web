@@ -535,6 +535,9 @@
     "report_confirmed_by_supervisor": "Звіт підтверджено куратором",
     "report_rejected_by_company": "Звіт відхилено компанією",
     "report_rejected_by_supervisor": "Звіт відхилено куратором",
+    "defense": "Захист",
+    "defense_rejected": "Захист відхилено",
+    "defended": "Захищено",
     "canceled": "Скасована",
     "unknown": "Невідомий"
   },

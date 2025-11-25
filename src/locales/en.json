@@ -535,6 +535,9 @@
     "report_confirmed_by_supervisor": "Report confirmed by supervisor",
     "report_rejected_by_company": "Report rejected by company",
     "report_rejected_by_supervisor": "Report rejected by supervisor",
+    "defense": "Defense",
+    "defense_rejected": "Defense rejected",
+    "defended": "Defended",
     "canceled": "Canceled",
     "unknown": "Unknown"
   },

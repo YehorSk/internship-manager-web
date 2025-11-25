@@ -537,6 +537,9 @@
     "report_confirmed_by_supervisor": "Správa potvrdená garantom",
     "report_rejected_by_company": "Správa zamietnutá firmou",
     "report_rejected_by_supervisor": "Správa zamietnutá garantom",
+    "defense": "Obrana",
+    "defense_rejected": "Obrana zamietnutá",
+    "defended": "Obhánené",
     "canceled": "Zrušená",
     "unknown": "Neznámy"
   },
