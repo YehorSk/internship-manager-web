@@ -89,6 +89,20 @@ export const usePracticesStore = defineStore('practices', {
       }
     },
 
+    async updatePracticeStatus(id, status) {
+      const toast = useToastStore()
+      this.loading = true
+      try {
+        const { data: response } = await axios.patch(`/api/practices/${id}/update-practice-status`, { status })
+        toast.showSuccess(response.message)
+        return response
+      } catch (e) {
+        handleError(e, this, toast)
+      } finally {
+        this.loading = false
+      }
+    },
+
     async getPractice(id) {
       const toast = useToastStore()
       this.loading = true
@@ -279,7 +293,6 @@ export const usePracticesStore = defineStore('practices', {
       try {
         const { data } = await axios.get('/api/practices/statistics')
         this.statistics = data
-        console.log(this.statistics);
       } catch (e) {
         handleError(e, this, toast)
       } finally {

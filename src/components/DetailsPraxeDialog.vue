@@ -9,7 +9,35 @@
           </v-btn>
           <span class="ml-3 text-h6">{{ practice.practice_company?.name || practice.company?.name || practice.student?.first_name + " " + practice.student?.first_name || '—' }}</span>
         </div>
-        <v-chip  :style="{ backgroundColor: getStatusColor(practice.status) }" class="text-white" >
+        <div v-if="isSupervisor && practice" class="d-flex align-center ga-2">
+          <v-select
+            v-model="selectedStatus"
+            :items="statusOptions"
+            :item-title="(item) => $t(item.label)"
+            item-value="value"
+            :bg-color="getStatusColor(selectedStatus)"
+            class="status-select-chip"
+            density="compact"
+            variant="solo-filled"
+            rounded="lg"
+            hide-details
+          >
+            <template #selection="{ item }">
+              <span class="text-white font-weight-medium">{{ $t(item.raw.label) }}</span>
+            </template>
+          </v-select>
+          <v-btn
+            v-if="selectedStatus && selectedStatus !== practice.status"
+            icon
+            size="small"
+            color="success"
+            variant="flat"
+            @click="saveStatus"
+          >
+            <v-icon>mdi-check</v-icon>
+          </v-btn>
+        </div>
+        <v-chip v-else-if="practice && practice.status" :style="{ backgroundColor: getStatusColor(practice.status) }" class="text-white" >
           {{  $t(getStatusText(practice.status)) }}
         </v-chip>
       </v-card-title>
@@ -808,7 +836,7 @@ import { useToast } from 'vue-toastification'
 
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { usePracticesStore } from '@/stores/practicesStore.js'
-import { getStatusColor, getStatusIcon, getStatusText } from '@/utils/statusHelpers.js'
+import { getStatusColor, getStatusIcon, getStatusText, statusOptions } from '@/utils/statusHelpers.js'
 import { useAuthStore } from '@/stores/authStore.js'
 import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
 
@@ -848,7 +876,8 @@ export default {
         email: v => /.+@.+\..+/.test(v) || this.$t('StudentAddPraxeForm.form.invalidEmail'),
         ico: v => /^\d{8}$/.test(v) || this.$t('CompanyProfileSettings.form.ico'),
         phone: v => /^\+?\d{7,15}$/.test(v) || this.$t('StudentAddPraxeForm.form.invalidPhone')
-      }
+      },
+      selectedStatus: null,
     }
   },
   watch: {
@@ -861,6 +890,9 @@ export default {
       if (!v) {
         this.isEditing = false
         this.edited = { ...this.practice }
+        if (this.practice) {
+          this.selectedStatus = this.practice.status
+        }
       } else {
         this.tab = 'info'
       }
@@ -914,6 +946,9 @@ export default {
     uploadedReport() {
       return this.practice?.documents?.find(d => d.type === 'report') || null
     },
+    statusOptions() {
+      return statusOptions
+    },
   },
   mounted() {
     if (!this.programsStore.list.length) this.programsStore.fetchPrograms()
@@ -926,8 +961,15 @@ export default {
     async fetchPractice() {
       this.loadingPractice = true
       this.practice = null
+      try {
         const data = await this.practicesStore.getPractice(this.practiceId)
+        if (!data) {
+          this.loadingPractice = false
+          return
+        }
+
         this.practice = data
+        this.selectedStatus = data.status
 
         this.edited = {
           academic_year: data.academic_year,
@@ -952,8 +994,12 @@ export default {
             ico: data.practice_company.ico,
           })
         }
-      this.loadingPractice = false
-      this.statusHistory = data.practice_status_history || []
+        this.statusHistory = data.practice_status_history || []
+      } catch (e) {
+        console.error('Error fetching practice:', e)
+      } finally {
+        this.loadingPractice = false
+      }
     },
 
     close() {
@@ -989,27 +1035,36 @@ export default {
     async save() {
         await this.practicesStore.updatePractice(this.practice.id, this.edited)
 
-        const newProgram = this.programsStore.list.find(
-          p => p.id === this.edited.study_program_id
-        )
+        const updatedPractice = await this.practicesStore.getPractice(this.practice.id)
+        if (updatedPractice) {
+          this.practice = updatedPractice
+          this.selectedStatus = updatedPractice.status
+          this.statusHistory = updatedPractice.practice_status_history || []
+        } else {
+          const newProgram = this.programsStore.list.find(
+            p => p.id === this.edited.study_program_id
+          )
 
-        this.practice = {
-          ...this.practice,
-          ...this.edited,
-          semester: this.edited.semester,
-          study_program: newProgram || this.practice.study_program,
-        }
-        if (this.practice.company_id === null) {
-          this.practice.practice_company = {
-            ...this.practice.practice_company,
-            name: this.edited.company_name,
-            address: this.edited.company_address,
-            company_email: this.edited.company_email,
-            contact_phone: this.edited.contact_phone,
-            contact_email: this.edited.contact_email,
-            contact_name: this.edited.contact_name,
-            contact_position: this.edited.contact_position,
-            ico: this.edited.ico
+          this.practice = {
+            ...this.practice,
+            ...this.edited,
+            semester: this.edited.semester,
+            study_program: newProgram || this.practice.study_program,
+            status: this.selectedStatus || this.practice.status,
+          }
+          this.selectedStatus = this.practice.status
+          if (this.practice.company_id === null) {
+            this.practice.practice_company = {
+              ...this.practice.practice_company,
+              name: this.edited.company_name,
+              address: this.edited.company_address,
+              company_email: this.edited.company_email,
+              contact_phone: this.edited.contact_phone,
+              contact_email: this.edited.contact_email,
+              contact_name: this.edited.contact_name,
+              contact_position: this.edited.contact_position,
+              ico: this.edited.ico
+            }
           }
         }
 
@@ -1038,7 +1093,9 @@ export default {
         await this.practicesStore.deletePractice(this.practice.id)
 
         this.$emit('update', { id: this.practice.id, status: 'canceled' })
-        if (this.practice) this.practice.status = 'canceled'
+        if (this.practice) {
+          this.practice.status = 'canceled'
+        }
 
       this.open = false
     },
@@ -1142,7 +1199,59 @@ export default {
     generateYearSuggestions(query) {
       this.yearSuggestions = generateAcademicYearSuggestions(query, this.role)
     },
+    async saveStatus() {
+      if (!this.selectedStatus || !this.practice) return
+      await this.practicesStore.updatePracticeStatus(this.practice.id, this.selectedStatus)
+      const updatedPractice = await this.practicesStore.getPractice(this.practice.id)
+      if (updatedPractice) {
+        this.practice = updatedPractice
+        this.selectedStatus = updatedPractice.status
+        this.statusHistory = updatedPractice.practice_status_history || []
+        this.$emit('update', this.practice)
+      }
+    },
   }
 }
 </script>
+
+<style scoped>
+.status-select-chip {
+  max-width: fit-content;
+  width: auto;
+}
+
+.status-select-chip :deep(.v-field) {
+  min-height: 28px !important;
+  height: 28px !important;
+  padding: 0 8px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.status-select-chip :deep(.v-field__input) {
+  color: white !important;
+  padding: 0 !important;
+  min-height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.status-select-chip :deep(.v-select__selection) {
+  color: white !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.status-select-chip :deep(.v-field__append-inner) {
+  color: white !important;
+  padding: 0 0 0 4px !important;
+  width: 20px !important;
+}
+
+.status-select-chip :deep(.v-field__append-inner .v-icon) {
+  font-size: 16px !important;
+}
+</style>
 
