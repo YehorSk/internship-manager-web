@@ -50,7 +50,7 @@
                     { title: $t('semesters.winter'), value: 'winter' },
                     { title: $t('semesters.summer'), value: 'summer' }
                   ]"
-                  label="Semester"
+                  :label="$t('ExtendedPraxePage.filters.semester')"
                   variant="outlined"
                   density="comfortable"
                   clearable

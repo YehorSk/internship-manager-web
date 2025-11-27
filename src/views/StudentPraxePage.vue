@@ -60,7 +60,7 @@
                     { title: $t('semesters.winter'), value: 'winter' },
                     { title: $t('semesters.summer'), value: 'summer' }
                   ]"
-                  label="Semester"
+                  :label="$t('StudentPraxePage.semester')"
                   variant="outlined"
                   density="comfortable"
                   clearable
