@@ -148,7 +148,9 @@
       "contact_email": "E-mail kontaktnej osoby",
       "job_description": "Popis činností",
       "start_date": "Dátum začiatku",
-      "end_date": "Dátum konca"
+      "end_date": "Dátum konca",
+      "ico": "IČO",
+      "contact_position": "Pozícia kontaktnej osoby"
     },
     "labels": {
       "choose_program": "Vyberte študijný program",
@@ -159,7 +161,9 @@
       "enter_phone": "+421 900 000 000",
       "enter_contact_name": "Meno kontaktnej osoby",
       "enter_contact_email": "{'napr. jan@firma.sk'}",
-      "enter_description": "Stručný popis vykonávaných činností"
+      "enter_description": "Stručný popis vykonávaných činností",
+      "enter_ico": "Zadajte IČO",
+      "enter_contact_position": "CEO"
     },
     "alerts": {
       "locked": "Úpravy tejto praxe už nie sú povolené.",
@@ -277,7 +281,9 @@
         "contactEmail": "Email kontaktnej osoby",
         "contactEmail2": "{'napr. jan@firma.sk'}",
         "contactPhone": "Telefón kontaktnej osoby",
-        "contactPhone2": "+421 900 000 000"
+        "contactPhone2": "+421 900 000 000",
+        "contactPosition": "Pozícia kontaktnej osoby",
+        "contactPosition2": "CEO"
       },
       "buttons": {
         "save": "Uložiť",

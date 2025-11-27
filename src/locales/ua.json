@@ -148,7 +148,9 @@
       "contact_email": "Email контактної особи",
       "job_description": "Опис діяльності",
       "start_date": "Дата початку",
-      "end_date": "Дата завершення"
+      "end_date": "Дата завершення",
+      "ico": "Ідентифікаційний номер організації",
+      "contact_position": "Позиція контактної особи"
     },
     "labels": {
       "choose_program": "Оберіть освітню програму",
@@ -159,7 +161,9 @@
       "enter_phone": "+421 900 000 000",
       "enter_contact_name": "Введіть ім’я контактної особи",
       "enter_contact_email": "{'Напр. jan@firma.sk'}",
-      "enter_description": "Короткий опис виконуваних завдань"
+      "enter_description": "Короткий опис виконуваних завдань",
+      "enter_ico": "Введіть ідентифікаційний номер організації",
+      "enter_contact_position": "CEO"
     },
     "alerts": {
       "locked": "Редагування цієї практики більше недоступне.",
@@ -275,7 +279,9 @@
         "contactEmail": "Email контактної особи",
         "contactEmail2": "{'Напр. jan@firma.sk'}",
         "contactPhone": "Телефон",
-        "contactPhone2": "+421 900 000 000"
+        "contactPhone2": "+421 900 000 000",
+        "contactPosition": "Позиція контактної особи",
+        "contactPosition2": "CEO"
       },
       "buttons": {
         "save": "Зберегти",

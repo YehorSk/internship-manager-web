@@ -148,7 +148,9 @@
       "contact_email": "Email контакта",
       "job_description": "Описание работы",
       "start_date": "Дата начала",
-      "end_date": "Дата окончания"
+      "end_date": "Дата окончания",
+      "ico": "Идентификационный номер организации",
+      "contact_position": "Позиция контакта"
     },
     "labels": {
       "choose_program": "Выберите программу обучения",
@@ -159,7 +161,9 @@
       "enter_phone": "+421 900 000 000",
       "enter_contact_name": "Введите имя контактного лица",
       "enter_contact_email": "{'например john@company.com'}",
-      "enter_description": "Краткое описание задач"
+      "enter_description": "Краткое описание задач",
+      "enter_ico": "Введите идентификационный номер организации",
+      "enter_contact_position": "CEO"
     },
     "alerts": {
       "locked": "Редактирование этой практики больше недоступно.",
@@ -275,7 +279,9 @@
         "contactEmail": "Email контакта",
         "contactEmail2": "{'например john@company.com'}",
         "contactPhone": "Телефон контакта",
-        "contactPhone2": "+421 900 000 000"
+        "contactPhone2": "+421 900 000 000",
+        "contactPosition": "Позиция контакта",
+        "contactPosition2": "CEO"
       },
       "buttons": {
         "save": "Сохранить",

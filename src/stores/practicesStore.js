@@ -82,7 +82,6 @@ export const usePracticesStore = defineStore('practices', {
       try {
         const { data: response } = await axios.put(`/api/practices/${id}`, data)
         toast.showSuccess(response.message)
-        await this.fetchPractices()
       } catch (e) {
         handleError(e, this, toast)
       } finally {

@@ -239,6 +239,11 @@
               <v-text-field v-model="company.contact_phone" :rules="[rules.required, rules.phone]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.contactPhone2')" />
             </v-col>
 
+            <v-col cols="12" md="6">
+              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.contactPosition') }}</span><span class="text-red ml-2">*</span></v-label>
+              <v-text-field v-model="company.contact_position" :rules="[rules.required]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.contactPosition2')" />
+            </v-col>
+
             <v-col cols="12" class="text-right mt-4">
               <v-btn color="#3A803D" class="text-white" rounded="lg" @click="saveCompany">
                 <v-icon start>mdi-check</v-icon>{{ editMode ? $t('StudentAddPraxeForm.companyDialog.buttons.saveChanges') : $t('StudentAddPraxeForm.companyDialog.buttons.save') }}
@@ -299,6 +304,7 @@ export default {
         company_email: '',
         contact_email: '',
         contact_phone: '',
+        contact_position: '',
         ico: ''
       },
       rules: {

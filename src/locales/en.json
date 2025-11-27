@@ -148,7 +148,9 @@
       "contact_email": "Contact Email",
       "job_description": "Job Description",
       "start_date": "Start Date",
-      "end_date": "End Date"
+      "end_date": "End Date",
+      "ico": "Company ID",
+      "contact_position": "Contact position"
     },
     "labels": {
       "choose_program": "Select study program",
@@ -159,7 +161,9 @@
       "enter_phone": "+421 900 000 000",
       "enter_contact_name": "Enter contact person name",
       "enter_contact_email": "{'e.g. john@company.com'}",
-      "enter_description": "Short description of tasks"
+      "enter_description": "Short description of tasks",
+      "enter_ico": "Enter Company ID",
+      "enter_contact_position": "CEO"
     },
     "alerts": {
       "locked": "Editing this practice is no longer allowed.",
@@ -275,7 +279,9 @@
         "contactEmail": "Contact Email",
         "contactEmail2": "{'e.g. john@company.com'}",
         "contactPhone": "Contact Phone",
-        "contactPhone2": "+421 900 000 000"
+        "contactPhone2": "+421 900 000 000",
+        "contactPosition": "Contact position",
+        "contactPosition2": "CEO"
       },
       "buttons": {
         "save": "Save",

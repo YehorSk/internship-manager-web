@@ -162,10 +162,24 @@
               <h3 class="text-h6 ml-2 mb-0 font-weight-medium">{{ $t('DetailsPraxeDialog.fields.company_section') }}</h3>
             </div>
           </v-col>
+          <v-col cols="12" md="6">
+            <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.ico') }}</span></v-label>
+            <v-text-field
+              :disabled="!isEditing || isLocked"
+              v-model="edited.ico"
+              :rules="[rules.required, rules.ico]"
+              rounded="lg"
+              density="compact"
+              variant="solo-filled"
+              flat
+              single-line
+              :placeholder="$t('DetailsPraxeDialog.labels.enter_ico')"
+            />
+          </v-col>
         <v-col cols="12" md="6">
           <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.company_name') }}</span></v-label>
           <v-text-field
-            v-if="isEditing && !isLocked"
+            :disabled="!isEditing || isLocked"
             v-model="edited.company_name"
             rounded="lg"
             density="compact"
@@ -174,21 +188,11 @@
             single-line
             :placeholder="$t('DetailsPraxeDialog.labels.enter_company_name')"
           />
-          <v-text-field
-            v-else
-            :value="practice.practice_company?.name || '—'"
-            :disabled="true"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-          />
         </v-col>
         <v-col cols="12" md="6">
           <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.company_address') }}</span></v-label>
           <v-text-field
-            v-if="isEditing && !isLocked"
+            :disabled="!isEditing || isLocked"
             v-model="edited.company_address"
             rounded="lg"
             density="compact"
@@ -197,21 +201,11 @@
             single-line
             :placeholder="$t('DetailsPraxeDialog.labels.enter_address')"
           />
-          <v-text-field
-            v-else
-            :value="practice.practice_company?.address || '—'"
-            :disabled="true"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-          />
         </v-col>
         <v-col cols="12" md="6">
           <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.company_email') }}</span></v-label>
           <v-text-field
-            v-if="isEditing && !isLocked"
+            :disabled="!isEditing || isLocked"
             v-model="edited.company_email"
             type="email"
             rounded="lg"
@@ -221,21 +215,11 @@
             single-line
             :placeholder="$t('DetailsPraxeDialog.labels.enter_email')"
           />
-          <v-text-field
-            v-else
-            :value="practice.practice_company?.company_email || '—'"
-            :disabled="true"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-          />
         </v-col>
         <v-col cols="12" md="6">
           <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.contact_phone') }}</span></v-label>
           <v-text-field
-            v-if="isEditing && !isLocked"
+            :disabled="!isEditing || isLocked"
             v-model="edited.contact_phone"
             rounded="lg"
             density="compact"
@@ -244,21 +228,11 @@
             single-line
             :placeholder="$t('DetailsPraxeDialog.labels.enter_phone')"
           />
-          <v-text-field
-            v-else
-            :value="practice.practice_company?.contact_phone || '—'"
-            :disabled="true"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-          />
         </v-col>
         <v-col cols="12" md="6">
           <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.contact_name') }}</span></v-label>
           <v-text-field
-            v-if="isEditing && !isLocked"
+            :disabled="!isEditing || isLocked"
             v-model="edited.contact_name"
             rounded="lg"
             density="compact"
@@ -267,21 +241,25 @@
             single-line
             :placeholder="$t('DetailsPraxeDialog.labels.enter_contact_name')"
           />
-          <v-text-field
-            v-else
-            :value="practice.practice_company?.contact_name || '—'"
-            :disabled="true"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-          />
         </v-col>
+          <v-col cols="12" md="6">
+            <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.contact_position') }}</span></v-label>
+            <v-text-field
+              :disabled="!isEditing || isLocked"
+              v-model="edited.contact_position"
+              type="email"
+              rounded="lg"
+              density="compact"
+              variant="solo-filled"
+              flat
+              single-line
+              :placeholder="$t('DetailsPraxeDialog.labels.enter_contact_position')"
+            />
+          </v-col>
         <v-col cols="12" md="6">
           <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.contact_email') }}</span></v-label>
           <v-text-field
-            v-if="isEditing && !isLocked"
+            :disabled="!isEditing || isLocked"
             v-model="edited.contact_email"
             type="email"
             rounded="lg"
@@ -291,16 +269,6 @@
             single-line
             :placeholder="$t('DetailsPraxeDialog.labels.enter_contact_email')"
           />
-          <v-text-field
-            v-else
-            :value="practice.practice_company?.contact_email || '—'"
-            :disabled="true"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-          />
         </v-col>
     </template>
         <v-col cols="12">
@@ -309,7 +277,7 @@
             <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.job_description') }}</span>
           </v-label>
           <v-textarea
-            v-if="isEditing && !isLocked"
+            :disabled="!isEditing || isLocked"
             v-model="edited.job_description"
             rounded="lg"
             density="compact"
@@ -319,17 +287,6 @@
             rows="3"
             :placeholder="$t('DetailsPraxeDialog.labels.enter_description')"
           />
-          <v-textarea
-            v-else
-            :value="practice.job_description || '—'"
-            :disabled="true"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-            rows="3"
-          />
         </v-col>
 
         <v-col cols="12" md="6">
@@ -338,19 +295,9 @@
             <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.start_date') }}</span>
           </v-label>
           <v-text-field
-            v-if="isEditing && !isLocked"
+            :disabled="!isEditing || isLocked"
             v-model="edited.start_date"
             type="date"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-          />
-          <v-text-field
-            v-else
-            :value="formatDate(practice.start_date)"
-            :disabled="true"
             rounded="lg"
             density="compact"
             variant="solo-filled"
@@ -364,19 +311,9 @@
             <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.end_date') }}</span>
           </v-label>
           <v-text-field
-            v-if="isEditing && !isLocked"
+            :disabled="!isEditing || isLocked"
             v-model="edited.end_date"
             type="date"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-          />
-          <v-text-field
-            v-else
-            :value="formatDate(practice.end_date)"
-            :disabled="true"
             rounded="lg"
             density="compact"
             variant="solo-filled"
@@ -906,6 +843,12 @@ export default {
       agreement: { file: null },
       isEditingAgreement: false,
       commentText: '',
+      rules: {
+        required: v => !!v || this.$t('StudentAddPraxeForm.form.requiredField'),
+        email: v => /.+@.+\..+/.test(v) || this.$t('StudentAddPraxeForm.form.invalidEmail'),
+        ico: v => /^\d{8}$/.test(v) || this.$t('CompanyProfileSettings.form.ico'),
+        phone: v => /^\+?\d{7,15}$/.test(v) || this.$t('StudentAddPraxeForm.form.invalidPhone')
+      }
     }
   },
   watch: {
@@ -992,6 +935,7 @@ export default {
           semester: data.semester,
           start_date: this.formatDate(data.start_date),
           end_date: this.formatDate(data.end_date),
+          company_id: this.practice.company_id,
           job_title: data.job_title,
           job_description: data.job_description,
         }
@@ -1004,6 +948,8 @@ export default {
             contact_phone: data.practice_company.contact_phone,
             contact_email: data.practice_company.contact_email,
             contact_name: data.practice_company.contact_name,
+            contact_position: data.practice_company.contact_position,
+            ico: data.practice_company.ico,
           })
         }
       this.loadingPractice = false
@@ -1022,54 +968,48 @@ export default {
         start_date: this.formatDate(this.practice.start_date),
         end_date: this.formatDate(this.practice.end_date),
         job_title: this.practice.job_title,
+        company_id: this.practice.company_id,
         job_description: this.practice.job_description,
         supervisor: this.practice.supervisor || this.practice.practice_company?.contact_name || '',
+      }
+      if (this.practice.company_id === null && this.practice.practice_company) {
+        Object.assign(this.edited, {
+          company_name: this.practice.practice_company.name,
+          company_address: this.practice.practice_company.address,
+          company_email: this.practice.practice_company.company_email,
+          contact_phone: this.practice.practice_company.contact_phone,
+          contact_email: this.practice.practice_company.contact_email,
+          contact_name: this.practice.practice_company.contact_name,
+          contact_position: this.practice.practice_company.contact_position,
+          ico: this.practice.practice_company.ico,
+        })
       }
       this.isEditing = false
     },
     async save() {
-        const updated = {
-          academic_year: this.edited.academic_year,
-          semester: this.edited.semester,
-          study_program_id: this.edited.study_program_id || this.practice.study_program?.id,
-          start_date: this.edited.start_date,
-          end_date: this.edited.end_date,
-          company_id: this.practice.company_id,
-          job_title: this.edited.job_title,
-          job_description: this.edited.job_description,
-        }
-        if (this.practice.company_id === null) {
-          Object.assign(updated, {
-            company_name: this.edited.company_name,
-            company_address: this.edited.company_address,
-            company_email: this.edited.company_email,
-            contact_phone: this.edited.contact_phone,
-            contact_email: this.edited.contact_email,
-            contact_name: this.edited.contact_name,
-          })
-        }
-
-        await this.practicesStore.updatePractice(this.practice.id, updated)
+        await this.practicesStore.updatePractice(this.practice.id, this.edited)
 
         const newProgram = this.programsStore.list.find(
-          p => p.id === updated.study_program_id
+          p => p.id === this.edited.study_program_id
         )
 
         this.practice = {
           ...this.practice,
-          ...updated,
-          semester: updated.semester,
+          ...this.edited,
+          semester: this.edited.semester,
           study_program: newProgram || this.practice.study_program,
         }
         if (this.practice.company_id === null) {
           this.practice.practice_company = {
             ...this.practice.practice_company,
-            name: updated.company_name,
-            address: updated.company_address,
-            company_email: updated.company_email,
-            contact_phone: updated.contact_phone,
-            contact_email: updated.contact_email,
-            contact_name: updated.contact_name,
+            name: this.edited.company_name,
+            address: this.edited.company_address,
+            company_email: this.edited.company_email,
+            contact_phone: this.edited.contact_phone,
+            contact_email: this.edited.contact_email,
+            contact_name: this.edited.contact_name,
+            contact_position: this.edited.contact_position,
+            ico: this.edited.ico
           }
         }
 

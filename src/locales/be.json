@@ -148,7 +148,9 @@
       "contact_email": "Email кантакту",
       "job_description": "Апісанне працы",
       "start_date": "Дата пачатку",
-      "end_date": "Дата заканчэння"
+      "end_date": "Дата заканчэння",
+      "ico": "Ідэнтыфікацыйны нумар арганізацыі",
+      "contact_position": "Пазіцыя кантактнай асобы"
     },
     "labels": {
       "choose_program": "Выберыце праграму навучання",
@@ -159,7 +161,9 @@
       "enter_phone": "+421 900 000 000",
       "enter_contact_name": "Увядзіце імя кантактнай асобы",
       "enter_contact_email": "{'напрыклад john@company.com'}",
-      "enter_description": "Кароткае апісанне задач"
+      "enter_description": "Кароткае апісанне задач",
+      "enter_ico": "Увядзіце ідэнтыфікацыйны нумар арганізацыі",
+      "enter_contact_position": "CEO"
     },
     "alerts": {
       "locked": "Рэдагаванне гэтай практыкі больш недаступнае.",
@@ -275,7 +279,9 @@
         "contactEmail": "Email кантакту",
         "contactEmail2": "{'напрыклад john@company.com'}",
         "contactPhone": "Тэлефон кантакту",
-        "contactPhone2": "+421 900 000 000"
+        "contactPhone2": "+421 900 000 000",
+        "contactPosition": "Пазіцыя кантактнай асобы",
+        "contactPosition2": "CEO"
       },
       "buttons": {
         "save": "Захаваць",
