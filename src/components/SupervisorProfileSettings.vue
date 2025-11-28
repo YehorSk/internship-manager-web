@@ -87,7 +87,7 @@
               class="confirm-btn text-none"
               @click="saveProfile"
             >
-              {{ $t('SupervisorProfileSettings.buttons.saveChanges') }}
+              {{ $t('common.saveChanges') }}
             </v-btn>
           </v-col>
 

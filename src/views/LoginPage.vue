@@ -107,8 +107,8 @@ export default {
         password: '',
       },
       rules: {
-        required: v => !!v || this.$t('LoginPage.form.required'),
-        email: v => /.+@.+\..+/.test(v) || this.$t('LoginPage.form.invalidEmail'),
+        required: v => !!v || this.$t('common.required'),
+        email: v => /.+@.+\..+/.test(v) || this.$t('common.email'),
       },
     }
   },

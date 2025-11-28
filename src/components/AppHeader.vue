@@ -8,7 +8,7 @@
             style="cursor: pointer; color: #3a803d; font-weight: 700; letter-spacing: 0.3px"
             @click="scrollTo('hero')"
           >
-            {{ $t('Header.title') }}
+            {{ $t('common.title') }}
           </div>
           <div class="d-none d-lg-flex align-center ga-6">
             <v-btn

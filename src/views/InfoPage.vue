@@ -9,7 +9,7 @@
             <div class="d-inline-flex px-4 py-2 rounded-lg" style="background: rgba(58,128,61,.1)">
               <span class="text-primary">{{ $t('Hero.badge') }}</span>
             </div>
-            <div class="text-h2 mt-4">{{ $t('Hero.title') }}</div>
+            <div class="text-h2 mt-4">{{ $t('common.title') }}</div>
             <div class="text-body-1 text-medium-emphasis mt-3">
               {{ $t('Hero.subtitle') }}
             </div>

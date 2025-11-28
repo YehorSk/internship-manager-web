@@ -160,8 +160,8 @@ export default {
         confirmPassword: '',
       },
       rules: {
-        required: v => !!v || this.$t('ResetPasswordPage.rules.required'),
-        email: v => /.+@.+\..+/.test(v) || this.$t('ResetPasswordPage.rules.email'),
+        required: v => !!v || this.$t('common.required'),
+        email: v => /.+@.+\..+/.test(v) || this.$t('common.email'),
         password: v =>
           /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(v) ||
           this.$t('ResetPasswordPage.rules.password'),

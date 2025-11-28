@@ -160,7 +160,7 @@
             </v-col>
 
             <v-col cols="12" class="text-right">
-              <v-btn rounded="lg" variant="text" class="mr-2" @click="localDialog = false">{{ $t('ExportDialog.cancel') }}</v-btn>
+              <v-btn rounded="lg" variant="text" class="mr-2" @click="localDialog = false">{{ $t('common.cancel') }}</v-btn>
               <v-btn rounded="lg" prepend-icon="mdi-file-export" class="confirm-btn text-none" @click="exportReport">
                 {{ $t('ExportDialog.export') }}
               </v-btn>

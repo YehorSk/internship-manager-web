@@ -128,7 +128,7 @@
               class="confirm-btn text-none"
               @click="saveProfile"
             >
-              {{ $t('StudentProfileSettings.buttons.saveChanges') }}
+              {{ $t('common.saveChanges') }}
             </v-btn>
           </v-col>
 
@@ -153,10 +153,10 @@ export default {
       form: {},
       role: '',
       rules: {
-        required: v => !!v || this.$t('StudentProfileSettings.form.requiredField'),
+        required: v => !!v || this.$t('common.required'),
         email: v =>
           /^(?!.*\.\.)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v) ||
-          this.$t('StudentProfileSettings.form.invalidEmail'),
+          this.$t('common.email'),
         phone: v =>
           /^\+?\d{7,15}$/.test(v) ||
           this.$t('StudentProfileSettings.form.invalidPhone')

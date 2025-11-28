@@ -1,7 +1,6 @@
 {
   "Hero": {
     "badge": "Spojte študentov s firmami",
-    "title": "Practice CRM",
     "subtitle": "Váš komplexný portál pre vyhľadávanie a správu stáží. Prepojujeme študentov s firmami pre vzájomnú spoluprácu a rast.",
     "student_btn": "Registrácia študenta",
     "company_btn": "Registrácia firmy",
@@ -81,7 +80,6 @@
     "btn": "Prihlásenie"
   },
   "Footer": {
-    "title": "Practice CRM",
     "desc": "Váš portál pre vyhľadávanie a správu stáží. Prepojujeme študentov s firmami a vytvárame príležitosti pre rast a spoluprácu.",
     "status": "Aktívny portál",
     "quick_links": "Rýchle odkazy",
@@ -96,13 +94,11 @@
     "address_line1": "Fakulta informatiky",
     "address_line2": "Univerzitná 1",
     "address_line3": "811 06 Bratislava",
-    "copyright": "Practice CRM",
     "copyright2": ". Všetky práva vyhradené.",
     "made_with": "Vytvorené s ❤️ pre študentov",
     "version": "Verzia 1.0"
   },
   "Header": {
-    "title": "Practice CRM",
     "home": "Domov",
     "about": "O odbornej praxi",
     "student_registration": "Registrácia študenta",
@@ -121,7 +117,6 @@
     "alert": "Heslo musí mať aspoň 8 znakov a obsahovať kombináciu písmen, číslic a špeciálnych znakov",
     "button": "Zmeniť heslo",
     "rules": {
-      "required": "Povinné pole",
       "password": "Min. 8 znakov, aspoň 1 písmeno a 1 číslo",
       "match": "Heslá sa nezhodujú"
     }
@@ -149,7 +144,6 @@
       "job_description": "Popis činností",
       "start_date": "Dátum začiatku",
       "end_date": "Dátum konca",
-      "ico": "IČO",
       "contact_position": "Pozícia kontaktnej osoby"
     },
     "labels": {
@@ -162,7 +156,6 @@
       "enter_contact_name": "Meno kontaktnej osoby",
       "enter_contact_email": "{'napr. jan@firma.sk'}",
       "enter_description": "Stručný popis vykonávaných činností",
-      "enter_ico": "Zadajte IČO",
       "enter_contact_position": "CEO"
     },
     "alerts": {
@@ -203,9 +196,7 @@
       "not_uploaded": "Správa nebola zatial nahratá"
     },
     "buttons": {
-      "save": "Uložiť zmeny",
-      "download": "Uložiť zmeny",
-      "cancel": "Zrušiť",
+      "download": "Stiahnuť",
       "edit": "Upraviť",
       "approve": "Schváliť",
       "reject": "Odmietnuť",
@@ -223,7 +214,6 @@
     }
   },
   "SideBar": {
-    "title": "Practice CRM",
     "subtitle": "Systém pre správu odbornej praxe",
     "menu": {
       "dashboard": "Prehľad",
@@ -253,13 +243,10 @@
       "end": "Koniec",
       "semester": "Semester",
       "academicYear": "Akademický rok",
-      "requiredField": "Povinné pole",
-      "invalidEmail": "Neplatný e-mail",
       "invalidPhone": "Neplatné číslo"
     },
     "buttons": {
       "save": "Uložiť prax",
-      "cancel": "Zrušiť",
       "addEmployer": "+ Pridať nového zamestnávateľa",
       "change": "Zmeniť"
     },
@@ -268,8 +255,6 @@
       "titleEdit": "Upraviť zamestnávateľa",
       "subtitle": "Vyplňte všetky informácie o spoločnosti",
       "fields": {
-        "ico": "IČO",
-        "ico2": "Zadajte IČO",
         "name": "Názov spoločnosti",
         "name2": "Zadajte názov spoločnosti",
         "address": "Adresa",
@@ -286,9 +271,7 @@
         "contactPosition2": "CEO"
       },
       "buttons": {
-        "save": "Uložiť",
-        "saveChanges": "Uložiť zmeny",
-        "cancel": "Zrušiť"
+        "save": "Uložiť"
       },
       "messages": {
         "added": "Zamestnávateľ pridaný!",
@@ -307,8 +290,6 @@
       "primaryEmail": "Primárny/Alternatívny e-mail",
       "phone": "Telefónne číslo",
       "studyProgram": "Študijný odbor",
-      "requiredField": "Povinné pole",
-      "invalidEmail": "Neplatný e-mail",
       "invalidPhone": "Neplatné číslo",
       "placeholders": {
         "firstName": "Zadajte krstné meno",
@@ -318,9 +299,6 @@
         "phone": "Zadajte telefónne číslo",
         "studyProgram": "Vyberte študijný odbor"
       }
-    },
-    "buttons": {
-      "saveChanges": "Uložiť zmeny"
     }
   },
   "CompanyActivationView": {
@@ -369,9 +347,7 @@
     "subtitle": "Zadajte svoj e-mail a heslo pre prihlásenie",
     "form": {
       "email": "E-mail *",
-      "password": "Heslo *",
-      "required": "Pole je povinné",
-      "invalidEmail": "Neplatný e-mail"
+      "password": "Heslo *"
     },
     "buttons": {
       "login": "Prihlásiť sa",
@@ -416,8 +392,6 @@
       "button": "Registrovať sa ako študent"
     },
     "company": {
-      "ico": "IČO",
-      "ico2": "Zadajte IČO",
       "name": "Názov spoločnosti",
       "name2": "Zadajte názov spoločnosti",
       "email": "E-mail spoločnosti",
@@ -444,8 +418,6 @@
     "have_account": "Už máte účet?",
     "login_here": "Prihlásiť sa tu",
     "errors": {
-      "required": "Povinné pole",
-      "email": "Neplatný e-mail",
       "student_email": "{'Musí byť univerzitný e-mail (@student.ukf.sk)'}",
       "phone": "Neplatné číslo",
       "ico": "Zadajte platné IČO"
@@ -474,8 +446,6 @@
       "invalid_token": "Neplatný alebo chýbajúci token. Skúste znova požiadať o odkaz na obnovenie."
     },
     "rules": {
-      "required": "Povinné pole",
-      "email": "Neplatný e-mail",
       "password": "Min. 8 znakov, aspoň 1 písmeno a 1 číslo",
       "password_match": "Heslá sa nezhodujú"
     }
@@ -516,7 +486,6 @@
     "total": "Celkovo",
     "total2": "firiem",
     "empty": "Žiadne firmy",
-    "ico": "IČO",
     "name": "Názov",
     "contact": "Kontakt",
     "email": "Email",
@@ -570,7 +539,14 @@
     "summer": "Letný"
   },
   "common": {
-    "loading": "Načítavam..."
+    "loading": "Načítavam...",
+    "title": "Practice CRM",
+    "cancel": "Zrušiť",
+    "saveChanges": "Uložiť zmeny",
+    "ico": "IČO",
+    "enter_ico": "Zadajte IČO",
+    "email": "Neplatný e-mail",
+    "required": "Povinné pole"
   },
   "ReportsHistoryPage": {
     "title": "História reportov",
@@ -611,9 +587,6 @@
         "lastName": "Zadajte priezvisko",
         "email": "Zadajte e-mail"
       }
-    },
-    "buttons": {
-      "saveChanges": "Uložiť zmeny"
     }
   },
   "ReportStatus": {
@@ -634,7 +607,6 @@
     "toDate": "Do dátumu",
     "status": "Stav",
     "info": "Po potvrdení sa vygeneruje report s uvedenými filtrami vo formáte CSV",
-    "cancel": "Zrušiť",
     "export": "Exportovať",
     "reportTypes": {
       "practices_list": "Zoznam praxí",
@@ -654,7 +626,6 @@
       "contactPosition": "Pozícia kontaktnej osoby",
       "contactEmail": "E-mail kontaktnej osoby",
       "contactPhone": "Telefónne číslo kontaktnej osoby",
-      "ico": "IČO",
       "requiredField": "Toto pole je povinné",
       "invalidEmail": "Neplatný formát e-mailu",
       "invalidPhone": "Neplatné telefónne číslo",
@@ -666,12 +637,8 @@
         "contactName": "Zadajte meno kontaktnej osoby",
         "contactPosition": "Zadajte pozíciu kontaktnej osoby",
         "contactEmail": "Zadajte e-mail kontaktnej osoby",
-        "contactPhone": "Zadajte telefónne číslo",
-        "ico": "Zadajte IČO"
+        "contactPhone": "Zadajte telefónne číslo"
       }
-    },
-    "buttons": {
-      "saveChanges": "Uložiť zmeny"
     }
   },
   "stats": {

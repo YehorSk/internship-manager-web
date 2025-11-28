@@ -8,7 +8,7 @@
             <v-sheet class="pa-2 rounded-lg" style="background: rgba(255,255,255,.15)">
               <v-icon>mdi-school</v-icon>
             </v-sheet>
-            <div class="text-h6 font-weight-bold" style="letter-spacing:0.4px;">{{ $t('Footer.title') }}</div>
+            <div class="text-h6 font-weight-bold" style="letter-spacing:0.4px;">{{ $t('common.title') }}</div>
           </div>
           <div class="text-body-2" style="opacity:.9; line-height:1.6;">
             {{ $t('Footer.desc') }}
@@ -61,7 +61,7 @@
       <v-divider class="mb-6" style="opacity:.15" />
 
       <div class="d-flex flex-column flex-md-row align-center justify-space-between ga-4 text-body-2" style="opacity:.85;">
-        <div>© {{ new Date().getFullYear() }} <strong>{{ $t('Footer.copyright') }}</strong>{{ $t('Footer.copyright2') }}</div>
+        <div>© {{ new Date().getFullYear() }} <strong>{{ $t('common.title') }}</strong>{{ $t('Footer.copyright2') }}</div>
         <div class="d-flex align-center ga-3 text-caption">
           <span>{{ $t('Footer.made_with') }}</span>
           <span class="d-none d-sm-inline">•</span>

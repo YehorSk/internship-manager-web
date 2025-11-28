@@ -15,8 +15,8 @@ export default {
       companyData: this.getEmptyCompany(),
       studyPrograms: useStudyProgramsStore(),
       rules: {
-        required: v => !!v || this.$t('RegistrationPage.errors.required'),
-        email: v => /.+@.+\..+/.test(v) || this.$t('RegistrationPage.errors.email'),
+        required: v => !!v || this.$t('common.required'),
+        email: v => /.+@.+\..+/.test(v) || this.$t('common.email'),
         phone: v => /^\+?\d{7,15}$/.test(v) || this.$t('RegistrationPage.errors.phone'),
         ico: v => /^\d{8}$/.test(v) || this.$t('RegistrationPage.errors.ico'),
         studentEmail: v =>
@@ -261,13 +261,13 @@ export default {
             <v-window-item value="company">
               <v-form ref="companyForm" v-model="valid" class="form-fix" @submit.prevent="submit">
                 <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.company.ico') }}</span>
+                  <span class="font-weight-bold">{{ $t('common.ico') }}</span>
                   <span class="font-weight-bold text-red ml-2">*</span>
                 </v-label>
                 <v-text-field
                   v-model="companyData.ico"
                   :error-messages="fieldMsg('ico')"
-                  :placeholder="$t('RegistrationPage.company.ico2')"
+                  :placeholder="$t('common.enter_ico')"
                   :rules="[rules.required, rules.ico]"
                   rounded="lg"
                   density="compact"

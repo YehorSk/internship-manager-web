@@ -33,7 +33,7 @@
                 <v-table>
                   <thead>
                   <tr>
-                    <th>{{ $t('SupervisorCompanyPage.ico') }}</th>
+                    <th>{{ $t('common.ico') }}</th>
                     <th>{{ $t('SupervisorCompanyPage.name') }}</th>
                     <th>{{ $t('SupervisorCompanyPage.contact') }}</th>
                     <th>{{ $t('SupervisorCompanyPage.email') }}</th>

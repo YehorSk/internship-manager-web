@@ -8,7 +8,7 @@
 
           <template v-if="role === 'company'">
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.ico') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
+              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('common.enter_ico') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
               <v-text-field
                 v-model="form.ico"
                 rounded="lg"
@@ -18,7 +18,7 @@
                 single-line
                 prepend-inner-icon="mdi-domain"
                 :rules="[rules.required, rules.ico]"
-                :placeholder="$t('CompanyProfileSettings.form.placeholders.ico')"
+                :placeholder="$t('common.ico')"
               />
             </v-col>
             <v-col cols="12" md="6">
@@ -140,7 +140,7 @@
               class="confirm-btn text-none"
               @click="saveProfile"
             >
-              {{ $t('CompanyProfileSettings.buttons.saveChanges') }}
+              {{ $t('common.saveChanges') }}
             </v-btn>
           </v-col>
 

@@ -191,7 +191,7 @@
             </div>
           </v-col>
           <v-col cols="12" md="6">
-            <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.ico') }}</span></v-label>
+            <v-label><span class="font-weight-bold">{{ $t('common.ico') }}</span></v-label>
             <v-text-field
               :disabled="!isEditing || isLocked"
               v-model="edited.ico"
@@ -201,7 +201,7 @@
               variant="solo-filled"
               flat
               single-line
-              :placeholder="$t('DetailsPraxeDialog.labels.enter_ico')"
+              :placeholder="$t('common.enter_ico')"
             />
           </v-col>
         <v-col cols="12" md="6">
@@ -748,11 +748,11 @@
         <v-card-actions class="d-flex justify-end pa-4">
           <template v-if="isEditing">
             <v-btn color="#3A803D" class="text-white" rounded="lg" @click="save" style="background-color: #3A803D;">
-              <v-icon start>mdi-content-save</v-icon> {{ $t('DetailsPraxeDialog.buttons.save') }}
+              <v-icon start>mdi-content-save</v-icon> {{ $t('common.saveChanges') }}
             </v-btn>
 
             <v-btn variant="tonal" color="grey" rounded="lg" class="ml-2" @click="cancel">
-              {{ $t('DetailsPraxeDialog.buttons.cancel') }}
+              {{ $t('common.cancel') }}
             </v-btn>
           </template>
 

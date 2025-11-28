@@ -105,7 +105,7 @@ export default {
         confirmPassword: '',
       },
       rules: {
-        required: v => !!v || this.$t('ChangePassword.rules.required'),
+        required: v => !!v || this.$t('common.required'),
         password: v =>
           /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(v) ||
           this.$t('ChangePassword.rules.password'),

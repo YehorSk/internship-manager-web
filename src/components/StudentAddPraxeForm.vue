@@ -187,7 +187,7 @@
                 class="ml-2"
                 @click="closeDialog"
               >
-                {{ $t('StudentAddPraxeForm.buttons.cancel') }}
+                {{ $t('common.cancel') }}
               </v-btn>
             </v-col>
           </v-row>
@@ -205,8 +205,8 @@
         <v-form ref="companyForm">
           <v-row>
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.ico') }}</span><span class="text-red ml-2">*</span></v-label>
-              <v-text-field v-model="company.ico" :rules="[rules.required, rules.ico]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.ico2')" />
+              <v-label><span class="font-weight-bold">{{ $t('common.ico') }}</span><span class="text-red ml-2">*</span></v-label>
+              <v-text-field v-model="company.ico" :rules="[rules.required, rules.ico]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('common.enter_ico')" />
             </v-col>
 
             <v-col cols="12" md="6">
@@ -246,10 +246,10 @@
 
             <v-col cols="12" class="text-right mt-4">
               <v-btn color="#3A803D" class="text-white" rounded="lg" @click="saveCompany">
-                <v-icon start>mdi-check</v-icon>{{ editMode ? $t('StudentAddPraxeForm.companyDialog.buttons.saveChanges') : $t('StudentAddPraxeForm.companyDialog.buttons.save') }}
+                <v-icon start>mdi-check</v-icon>{{ editMode ? $t('common.saveChanges') : $t('StudentAddPraxeForm.companyDialog.buttons.save') }}
               </v-btn>
               <v-btn variant="tonal" color="grey" rounded="lg" class="ml-2" @click="companyDialog = false">
-                {{ $t('StudentAddPraxeForm.companyDialog.buttons.cancel') }}
+                {{ $t('common.cancel') }}
               </v-btn>
             </v-col>
           </v-row>
@@ -308,8 +308,8 @@ export default {
         ico: ''
       },
       rules: {
-        required: v => !!v || this.$t('StudentAddPraxeForm.form.requiredField'),
-        email: v => /.+@.+\..+/.test(v) || this.$t('StudentAddPraxeForm.form.invalidEmail'),
+        required: v => !!v || this.$t('common.required'),
+        email: v => /.+@.+\..+/.test(v) || this.$t('common.email'),
         ico: v => /^\d{8}$/.test(v) || this.$t('CompanyProfileSettings.form.ico'),
         phone: v => /^\+?\d{7,15}$/.test(v) || this.$t('StudentAddPraxeForm.form.invalidPhone')
       }

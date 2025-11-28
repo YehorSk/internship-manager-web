@@ -7,7 +7,7 @@
     <v-sheet class="pa-6 border-b">
       <div class="d-flex align-center">
         <v-icon color="#3A803D" size="28">mdi-account-group</v-icon>
-        <h2 class="text-h6 font-weight-medium ms-2">{{ $t('SideBar.title') }}</h2>
+        <h2 class="text-h6 font-weight-medium ms-2">{{ $t('common.title') }}</h2>
       </div>
       <p class="text-body-2 text-grey-darken-1 mt-1">{{ $t('SideBar.subtitle') }}</p>
     </v-sheet>
