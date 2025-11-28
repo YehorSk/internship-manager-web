@@ -61,7 +61,10 @@ axios.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      // store.logout()
+      store.token = null
+      store.user = null
+      store.isLoggedIn = false
+      router.push({ name: 'Login' })
       console.log("Unauthorized response");
     }
     return Promise.reject(error);
