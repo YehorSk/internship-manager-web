@@ -70,6 +70,7 @@ export const usePracticesStore = defineStore('practices', {
         await this.fetchPractices()
       } catch (e) {
         handleError(e, this, toast)
+        throw e
       } finally {
         this.loading = false
       }

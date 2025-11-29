@@ -874,7 +874,7 @@ export default {
       rules: {
         required: v => !!v || this.$t('StudentAddPraxeForm.form.requiredField'),
         email: v => /.+@.+\..+/.test(v) || this.$t('StudentAddPraxeForm.form.invalidEmail'),
-        ico: v => /^\d{8}$/.test(v) || this.$t('CompanyProfileSettings.form.ico'),
+        ico: v => /^\d{8}$/.test(v) || this.$t('CompanyProfileSettings.form.invalidIco'),
         phone: v => /^\+?\d{7,15}$/.test(v) || this.$t('StudentAddPraxeForm.form.invalidPhone')
       },
       selectedStatus: null,

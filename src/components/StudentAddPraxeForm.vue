@@ -310,7 +310,7 @@ export default {
       rules: {
         required: v => !!v || this.$t('common.required'),
         email: v => /.+@.+\..+/.test(v) || this.$t('common.email'),
-        ico: v => /^\d{8}$/.test(v) || this.$t('CompanyProfileSettings.form.ico'),
+        ico: v => /^\d{8}$/.test(v) || this.$t('CompanyProfileSettings.form.invalidIco'),
         phone: v => /^\+?\d{7,15}$/.test(v) || this.$t('StudentAddPraxeForm.form.invalidPhone')
       }
     }
@@ -380,7 +380,6 @@ export default {
       const valid = await this.$refs.internForm.validate()
       if (!valid) return
 
-      const t = this.toast
       const store = usePracticesStore()
 
       const selectedCompany = this.companiesStore.companies.find(
@@ -404,11 +403,7 @@ export default {
         this.$emit('update')
         this.resetForm()
         this.closeDialog()
-      } catch {
-        Object.values(store.fieldErrors || { general: [store.error] })
-          .flat()
-          .forEach(msg => t.error(msg))
-      }
+      } catch { /* empty */ }
     },
     generateYearSuggestions(query) {
       this.yearSuggestions = generateAcademicYearSuggestions(query, this.role)
