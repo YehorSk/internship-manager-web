@@ -26,7 +26,7 @@
             <v-divider />
 
             <v-card-text>
-              <template v-if="store.loading">
+              <template v-if="loadingStore.is('fetchReports')">
                 <div class="text-center py-10">{{ $t('common.loading') }}</div>
               </template>
 
@@ -102,10 +102,11 @@
 </template>
 
 <script>
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from '@/components/SideBar.vue'
 import { useReportsStore } from '@/stores/reportsStore.js'
 import { REPORT_STATUS_MAP, getReportStatusColor } from '@/utils/statusHelpers.js'
 import ExportDialog from '@/components/ExportDialog.vue'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 
 export default {
@@ -113,6 +114,7 @@ export default {
   data() {
     return {
       store: useReportsStore(),
+      loadingStore: useLoadingStore(),
       currentPage: 1,
       REPORT_STATUS_MAP,
       dialog: false,

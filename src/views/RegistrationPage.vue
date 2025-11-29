@@ -3,12 +3,14 @@ import { useAuthStore } from '@/stores/authStore.js'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export default {
   components: { AppFooter, AppHeader },
   data() {
     return {
       authStore: useAuthStore(),
+      loadingStore: useLoadingStore(),
       selectedRole: 'student',
       valid: false,
       studentData: this.getEmptyStudent(),
@@ -227,6 +229,7 @@ export default {
                   v-model="studentData.study_program"
                   :error-messages="fieldMsg('study_program')"
                   :items="studyPrograms.list"
+                  :loading="loadingStore.is('fetchPrograms')"
                   item-title="name"
                   item-value="id"
                   :placeholder="$t('RegistrationPage.student.study_program2')"
@@ -249,8 +252,8 @@ export default {
                   rounded="lg"
                   class="mt-4 text-white"
                   block
-                  :loading="authStore.loading"
-                  :disabled="!valid || authStore.loading"
+                  :loading="loadingStore.is('register')"
+                  :disabled="!valid || loadingStore.is('register')"
                   type="submit"
                 >
                   {{ $t('RegistrationPage.student.button') }}
@@ -430,8 +433,8 @@ export default {
                   rounded="lg"
                   class="mt-4 text-white"
                   block
-                  :loading="authStore.loading"
-                  :disabled="!valid || authStore.loading"
+                  :loading="loadingStore.is('register')"
+                  :disabled="!valid || loadingStore.is('register')"
                   type="submit"
                 >
                   {{ $t('RegistrationPage.company.button') }}

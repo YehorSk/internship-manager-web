@@ -20,7 +20,7 @@
             </v-card-title>
             <v-divider />
             <v-card-text>
-              <template v-if="store.loading">
+              <template v-if="loadingStore.is('fetchCompanies')">
                 <div class="text-center py-10">{{ $t('common.loading') }}</div>
               </template>
               <template v-else-if="!store.companies.length">
@@ -67,6 +67,7 @@
                           icon
                           size="small"
                           color="#3A803D"
+                          :loading="loadingStore.is(`changeStatus_true_${c.user_id}`)"
                           @click="confirmCompany(c.user_id)"
                         >
                           <v-icon>mdi-check-circle</v-icon>
@@ -75,6 +76,7 @@
                           icon
                           size="small"
                           color="error"
+                          :loading="loadingStore.is(`changeStatus_false_${c.user_id}`)"
                           @click="rejectCompany(c.user_id)"
                         >
                           <v-icon>mdi-close-circle</v-icon>
@@ -100,8 +102,9 @@
 </template>
 
 <script>
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from '@/components/SideBar.vue'
 import { useCompaniesStore } from '@/stores/companiesStore.js'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export default {
   name: 'CompaniesView',
@@ -110,6 +113,7 @@ export default {
   data() {
     return {
       store: useCompaniesStore(),
+      loadingStore: useLoadingStore(),
     }
   },
 

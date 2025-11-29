@@ -32,6 +32,7 @@
             size="small"
             color="success"
             variant="flat"
+            :loading="loadingStore.is('updatePracticeStatus')"
             @click="saveStatus"
           >
             <v-icon>mdi-check</v-icon>
@@ -64,6 +65,7 @@
                       v-if="isEditing && !isLocked"
                       v-model="edited.study_program_id"
                       :items="programsStore.list.map(p => ({ title: p.name, value: p.id }))"
+                      :loading="loadingStore.is('fetchPrograms')"
                       item-title="title"
                       item-value="value"
                       rounded="lg"
@@ -462,6 +464,7 @@
                     class="text-white"
                     rounded="lg"
                     elevation="0"
+                    :loading="loadingStore.is('uploadAgreement')"
                     @click="submitAgreement"
                   >
                     <v-icon start>mdi-upload</v-icon> {{ $t('DetailsPraxeDialog.agreement.upload_btn') }}
@@ -644,6 +647,7 @@
                     class="text-white"
                     rounded="lg"
                     elevation="0"
+                    :loading="loadingStore.is('uploadReport')"
                     @click="submitReport"
                   >
                     <v-icon start>mdi-upload</v-icon> {{ $t('DetailsPraxeDialog.report.upload_btn') }}
@@ -747,7 +751,7 @@
 
         <v-card-actions class="d-flex justify-end pa-4">
           <template v-if="isEditing">
-            <v-btn color="#3A803D" class="text-white" rounded="lg" @click="save" style="background-color: #3A803D;">
+            <v-btn color="#3A803D" class="text-white" rounded="lg" @click="save" :loading="loadingStore.is('updatePractice')" style="background-color: #3A803D;">
               <v-icon start>mdi-content-save</v-icon> {{ $t('common.saveChanges') }}
             </v-btn>
 
@@ -814,6 +818,7 @@
               color="red"
               class="text-white ml-2"
               rounded="lg"
+              :loading="loadingStore.is('deletePractice')"
               @click="cancelPractice"
             >
               <v-icon start>mdi-cancel</v-icon> {{ $t('DetailsPraxeDialog.buttons.cancel_practice') }}
@@ -823,7 +828,7 @@
       </v-card>
     </template>
 
-    <template v-if="loadingPractice">
+    <template v-if="loadingStore.is(`getPractice_${practiceId}`)">
       <v-card class="pa-8 text-center">
         <p class="mt-4">{{ $t('common.loading') }}</p>
       </v-card>
@@ -839,6 +844,7 @@ import { usePracticesStore } from '@/stores/practicesStore.js'
 import { getStatusColor, getStatusIcon, getStatusText, statusOptions } from '@/utils/statusHelpers.js'
 import { useAuthStore } from '@/stores/authStore.js'
 import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 
 export default {
@@ -861,10 +867,10 @@ export default {
       authStore: useAuthStore(),
       programsStore: useStudyProgramsStore(),
       practicesStore: usePracticesStore(),
+      loadingStore: useLoadingStore(),
       toast: useToast(),
       statusHistory: [],
       yearSuggestions: [],
-      loadingPractice: false,
       report: { file: null},
       reportStatus: '',
       isEditingReport: false,
@@ -959,47 +965,36 @@ export default {
     getStatusIcon,
     getStatusText,
     async fetchPractice() {
-      this.loadingPractice = true
       this.practice = null
-      try {
-        const data = await this.practicesStore.getPractice(this.practiceId)
-        if (!data) {
-          this.loadingPractice = false
-          return
-        }
+      const data = await this.practicesStore.getPractice(this.practiceId)
 
-        this.practice = data
-        this.selectedStatus = data.status
+      this.practice = data
+      this.selectedStatus = data.status
 
-        this.edited = {
-          academic_year: data.academic_year,
-          study_program_id: data.study_program?.id || null,
-          semester: data.semester,
-          start_date: this.formatDate(data.start_date),
-          end_date: this.formatDate(data.end_date),
-          company_id: this.practice.company_id,
-          job_title: data.job_title,
-          job_description: data.job_description,
-        }
-
-        if (data.company_id === null && data.practice_company) {
-          Object.assign(this.edited, {
-            company_name: data.practice_company.name,
-            company_address: data.practice_company.address,
-            company_email: data.practice_company.company_email,
-            contact_phone: data.practice_company.contact_phone,
-            contact_email: data.practice_company.contact_email,
-            contact_name: data.practice_company.contact_name,
-            contact_position: data.practice_company.contact_position,
-            ico: data.practice_company.ico,
-          })
-        }
-        this.statusHistory = data.practice_status_history || []
-      } catch (e) {
-        console.error('Error fetching practice:', e)
-      } finally {
-        this.loadingPractice = false
+      this.edited = {
+        academic_year: data.academic_year,
+        study_program_id: data.study_program?.id || null,
+        semester: data.semester,
+        start_date: this.formatDate(data.start_date),
+        end_date: this.formatDate(data.end_date),
+        company_id: this.practice.company_id,
+        job_title: data.job_title,
+        job_description: data.job_description,
       }
+
+      if (data.company_id === null && data.practice_company) {
+        Object.assign(this.edited, {
+          company_name: data.practice_company.name,
+          company_address: data.practice_company.address,
+          company_email: data.practice_company.company_email,
+          contact_phone: data.practice_company.contact_phone,
+          contact_email: data.practice_company.contact_email,
+          contact_name: data.practice_company.contact_name,
+          contact_position: data.practice_company.contact_position,
+          ico: data.practice_company.ico,
+        })
+      }
+      this.statusHistory = data.practice_status_history || []
     },
 
     close() {

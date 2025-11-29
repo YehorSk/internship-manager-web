@@ -37,7 +37,7 @@
               size="large"
               class="login-btn mt-2 text-white"
               block
-              :loading="authStore.loading"
+              :loading="loadingStore.is('login')"
               :disabled="!valid"
               @click="submit"
             >
@@ -91,12 +91,14 @@
 import { useAuthStore } from '@/stores/authStore.js'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export default {
   components: { AppFooter, AppHeader },
   data() {
     return {
       authStore: useAuthStore(),
+      loadingStore: useLoadingStore(),
       valid: false,
       snackbar: {
         show: false,

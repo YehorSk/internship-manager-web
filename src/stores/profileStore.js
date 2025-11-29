@@ -5,6 +5,7 @@ import { useToastStore } from '@/stores/toastStore.js'
 import { handleError } from '@/utils/httpError.js'
 import { useStorage } from '@vueuse/core'
 import i18n from '@/i18n'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export const useProfileStore = defineStore('profile', {
   state: () => ({
@@ -16,8 +17,8 @@ export const useProfileStore = defineStore('profile', {
     async updateProfile(data) {
       const toast = useToastStore()
       const authStore = useAuthStore()
-      this.loading = true
-
+      const loading = useLoadingStore()
+      loading.start(`updateProfile`)
       try {
         const response = await axios.post('/api/auth/update-profile', data)
         authStore.user = response.data.data
@@ -26,7 +27,7 @@ export const useProfileStore = defineStore('profile', {
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        this.loading = false
+        loading.stop(`updateProfile`)
       }
     },
     async setLanguage(l) {

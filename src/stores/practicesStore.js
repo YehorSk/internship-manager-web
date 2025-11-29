@@ -2,12 +2,12 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { handleError } from '@/utils/httpError.js'
 import { useToastStore } from '@/stores/toastStore.js'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export const usePracticesStore = defineStore('practices', {
   state: () => ({
     list: [],
     students: [],
-    loading: false,
     fieldErrors: {},
     current_page: 1,
     total_pages: 1,
@@ -21,7 +21,8 @@ export const usePracticesStore = defineStore('practices', {
   actions: {
     async fetchPractices(filters = {}) {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start("fetchPractices")
       try {
         const search = {}
         if (filters.status) search.status = filters.status
@@ -56,13 +57,14 @@ export const usePracticesStore = defineStore('practices', {
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        this.loading = false
+        loading.stop("fetchPractices")
       }
     },
 
     async createPractice(data) {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start("createPractice")
       this.fieldErrors = {}
       try {
         const { data: response } = await axios.post('/api/practices/', data)
@@ -72,7 +74,7 @@ export const usePracticesStore = defineStore('practices', {
         handleError(e, this, toast)
         throw e
       } finally {
-        this.loading = false
+        loading.stop("createPractice")
       }
     },
 
@@ -86,13 +88,14 @@ export const usePracticesStore = defineStore('practices', {
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        this.loading = false
+        loading.stop("updatePractice")
       }
     },
 
     async updatePracticeStatus(id, status) {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start("updatePracticeStatus")
       try {
         const { data: response } = await axios.patch(`/api/practices/${id}/update-practice-status`, { status })
         toast.showSuccess(response.message)
@@ -100,31 +103,36 @@ export const usePracticesStore = defineStore('practices', {
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        this.loading = false
+        loading.stop("updatePracticeStatus")
       }
     },
 
     async getPractice(id) {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start(`getPractice_${id}`)
       try {
         const { data } = await axios.get(`/api/practices/${id}`)
         return data.data
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        this.loading = false
+        loading.stop(`getPractice_${id}`)
       }
     },
 
     async deletePractice(id) {
       const toast = useToastStore()
+      const loading = useLoadingStore()
+      loading.start("deletePractice")
       try {
         const { data: response } = await axios.delete(`/api/practices/${id}`)
         toast.showSuccess(response.message)
         return response.data
       } catch (e) {
         handleError(e, this, toast)
+      } finally {
+        loading.stop("deletePractice")
       }
     },
 
@@ -135,7 +143,8 @@ export const usePracticesStore = defineStore('practices', {
 
     async uploadAgreement(practiceId, file) {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start("uploadAgreement")
       try {
         const formData = new FormData()
         formData.append('practice_id', practiceId)
@@ -151,7 +160,7 @@ export const usePracticesStore = defineStore('practices', {
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        this.loading = false
+        loading.stop("uploadAgreement")
       }
     },
     async downloadAgreementTemplate(practiceId) {
@@ -198,7 +207,8 @@ export const usePracticesStore = defineStore('practices', {
 
     async uploadReport(practiceId, file) {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start("uploadReport")
       try {
         const formData = new FormData()
         formData.append('practice_id', practiceId)
@@ -214,7 +224,7 @@ export const usePracticesStore = defineStore('practices', {
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        this.loading = false
+        loading.stop("uploadReport")
       }
     },
 
@@ -290,14 +300,15 @@ export const usePracticesStore = defineStore('practices', {
     },
     async fetchStatistics() {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start("fetchStatistics")
       try {
         const { data } = await axios.get('/api/practices/statistics')
         this.statistics = data
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        this.loading = false
+        loading.stop("fetchStatistics")
       }
     },
   },

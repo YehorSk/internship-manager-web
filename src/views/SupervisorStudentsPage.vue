@@ -40,7 +40,7 @@
                   variant="outlined"
                   density="comfortable"
                   clearable
-                  :loading="store.loading"
+                  :loading="loadingStore.is('searchStudents')"
                   @update:search="searchStudents"
                 />
               </v-col>
@@ -58,7 +58,7 @@
             <v-divider />
 
             <v-card-text>
-              <template v-if="store.loading">
+              <template v-if="loadingStore.is('fetchStudents')">
                 <div class="text-center py-10">{{ $t('common.loading') }}</div>
               </template>
 
@@ -111,17 +111,18 @@
 </template>
 
 <script>
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from '@/components/SideBar.vue'
 import { useStudentsStore } from '@/stores/studentsStore.js'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { debounce } from 'lodash'
-
+import { useLoadingStore } from '@/stores/loadingStore.js'
 export default {
   components: { Sidebar },
 
   data() {
     return {
       store: useStudentsStore(),
+      loadingStore: useLoadingStore(),
       programsStore: useStudyProgramsStore(),
 
       filters: {
@@ -166,9 +167,8 @@ export default {
   },
 
   async mounted() {
-    await this.programsStore.fetchPrograms()
     await this.loadStudents()
-    await this.searchStudents('')
+    await this.programsStore.fetchPrograms()
   },
 
   created() {

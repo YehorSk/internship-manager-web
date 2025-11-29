@@ -14,7 +14,7 @@
             </v-col>
           </v-row>
 
-          <v-row v-if="store.loading" class="justify-center py-12">
+          <v-row v-if="loadingStore.is('fetchPractices')" class="justify-center py-12">
             <v-progress-circular indeterminate color="#3A803D" size="48" />
           </v-row>
 
@@ -79,7 +79,7 @@
             </v-col>
           </v-row>
 
-          <v-row v-if="!store.loading && !activePractices.length">
+          <v-row v-if="!loadingStore.is('fetchPractices') && !activePractices.length">
             <v-col cols="12" class="text-center py-14">
               <v-icon size="72" color="#3A803D" class="mb-4">mdi-domain-off</v-icon>
               <h2 class="text-h5 font-weight-medium mb-2 text-grey-darken-4">{{ $t('StudentDashboard.noActiveTitle') }}</h2>
@@ -113,11 +113,12 @@
 </template>
 
 <script>
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from '@/components/SideBar.vue'
 import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
 import StudentAddPraxeForm from '@/components/StudentAddPraxeForm.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
 import { getStatusColor, getStatusText } from '@/utils/statusHelpers.js'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export default {
   components: { Sidebar, PracticeDialog: DetailsPraxeDialog, StudentAddPraxeForm },
@@ -126,6 +127,7 @@ export default {
       showPracticeDialog: false,
       selectedPracticeId: null,
       store: usePracticesStore(),
+      loadingStore: useLoadingStore(),
       allPractices: [],
     }
   },

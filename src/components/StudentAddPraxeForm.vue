@@ -24,7 +24,7 @@
                 :items="companiesStore.companies"
                 item-title="name"
                 item-value="id"
-                :loading="companiesStore.loading"
+                :loading="loadingStore.is('searchCompanies')"
                 :rules="[rules.required]"
                 rounded="lg"
                 density="compact"
@@ -73,7 +73,7 @@
                 :items="programsStore.list.map(p => ({ title: p.name, value: p.id }))"
                 item-title="title"
                 item-value="value"
-                :loading="programsStore.loading"
+                :loading="loadingStore.is('fetchPrograms')"
                 :rules="[rules.required]"
                 rounded="lg"
                 density="compact"
@@ -177,7 +177,12 @@
             </v-col>
 
             <v-col cols="12" class="text-right mt-4">
-              <v-btn color="#3A803D" class="text-white" rounded="lg" @click="submitForm">
+              <v-btn color="#3A803D"
+                     class="text-white"
+                     rounded="lg"
+                     :loading="loadingStore.is('createPractice')"
+                     @click="submitForm"
+              >
                 <v-icon start>mdi-check</v-icon> {{ $t('StudentAddPraxeForm.buttons.save') }}
               </v-btn>
               <v-btn
@@ -266,6 +271,7 @@ import { usePracticesStore } from '@/stores/practicesStore.js'
 import { useCompaniesStore } from '@/stores/companiesStore.js'
 import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
 import { useAuthStore } from '@/stores/authStore.js'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export default {
   props: {
@@ -285,6 +291,7 @@ export default {
       companyAdded: false,
       programsStore: useStudyProgramsStore(),
       companiesStore: useCompaniesStore(),
+      loadingStore: useLoadingStore(),
       yearSuggestions: [],
       authStore: useAuthStore(),
       form: {

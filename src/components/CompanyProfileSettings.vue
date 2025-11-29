@@ -134,8 +134,8 @@
           <v-col cols="12" class="text-right">
             <v-btn
               rounded="lg"
-              :disabled="!valid || !isChanged || profileStore.loading"
-              :loading="profileStore.loading"
+              :disabled="!valid || !isChanged || loadingStore.is('updateProfile')"
+              :loading="loadingStore.is('updateProfile')"
               prepend-icon="mdi-content-save"
               class="confirm-btn text-none"
               @click="saveProfile"
@@ -153,12 +153,14 @@
 <script>
 import { useAuthStore } from '@/stores/authStore.js'
 import { useProfileStore } from '@/stores/profileStore.js'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export default {
   data() {
     return {
       authStore: useAuthStore(),
       profileStore: useProfileStore(),
+      loadingStore: useLoadingStore(),
       valid: false,
       form: {},
       initialForm: {},

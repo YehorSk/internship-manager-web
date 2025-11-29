@@ -41,7 +41,7 @@
                   size="large"
                   class="mt-4 text-white"
                   block
-                  :loading="authStore.loading"
+                  :loading="loadingStore.is('forgotPassword')"
                   @click="sendResetLink"
                 >
                   {{ $t('ResetPasswordPage.buttons.send_reset') }}
@@ -113,7 +113,7 @@
                   size="large"
                   class="mt-4 text-white"
                   block
-                  :loading="authStore.loading"
+                  :loading="loadingStore.is('updatePassword')"
                   :disabled="!token"
                   @click="updatePassword"
                 >
@@ -141,12 +141,14 @@
 import { useAuthStore } from '@/stores/authStore.js'
 import AppFooter from '@/components/AppFooter.vue'
 import AppHeader from '@/components/AppHeader.vue'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export default {
   components: { AppHeader, AppFooter },
   data() {
     return {
       authStore: useAuthStore(),
+      loadingStore: useLoadingStore(),
       step: 'request', // 'request' | 'reset'
       token: null,
       validRequest: false,

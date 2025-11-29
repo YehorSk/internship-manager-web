@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { handleError } from '@/utils/httpError.js'
 import { useToastStore } from '@/stores/toastStore.js'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export const useCompaniesStore = defineStore('companies', {
   state: () => ({
@@ -18,7 +19,8 @@ export const useCompaniesStore = defineStore('companies', {
   actions: {
     async fetchCompanies(search = '') {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start("fetchCompanies")
       try {
         const res = await axios.post('/api/companies/list?page=' + this.current_page,{
           params: {
@@ -31,24 +33,29 @@ export const useCompaniesStore = defineStore('companies', {
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        this.loading = false
+        loading.stop("fetchCompanies")
       }
     },
 
     async changeStatus(user_id, status) {
       const toast = useToastStore()
+      const loading = useLoadingStore()
+      loading.start(`changeStatus_${status}_${user_id}`)
       try {
         const { data: response } = await axios.patch(`/api/companies/${user_id}`, { status })
         toast.showSuccess(response.message)
         return response
       } catch (e) {
         handleError(e, this, toast)
+      } finally {
+        loading.stop(`changeStatus_${status}_${user_id}`)
       }
     },
 
     async searchCompanies(query = '') {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start(`searchCompanies`)
       try {
         const res = await axios.get('/api/company/search', {
           params: { value: query }
@@ -57,13 +64,14 @@ export const useCompaniesStore = defineStore('companies', {
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        this.loading = false
+        loading.stop(`searchCompanies`)
       }
     },
     async activateCompany(token) {
       if (!token) return
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start(`activateCompany`)
       let message = ''
       try {
         const baseUrl = import.meta.env.VITE_API_BASE_URL || ''
@@ -81,7 +89,7 @@ export const useCompaniesStore = defineStore('companies', {
         message = e?.response?.data?.message || e.message
         toast.showError(message)
       } finally {
-        this.loading = false
+        loading.stop(`activateCompany`)
       }
     }
   }

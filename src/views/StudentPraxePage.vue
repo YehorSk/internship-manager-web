@@ -33,6 +33,7 @@
                 <v-autocomplete
                   v-model="filters.study_program"
                   :items="studyPrograms"
+                  :loading="loadingStore.is('fetchPrograms')"
                   :label="$t('StudentPraxePage.studyProgram')"
                   variant="outlined"
                   density="comfortable"
@@ -108,11 +109,11 @@
             <v-divider />
 
             <v-card-text>
-              <template v-if="store.loading">
+              <template v-if="loadingStore.is('fetchPractices')">
                 <div class="text-center py-10">{{ $t('common.loading') }}</div>
               </template>
 
-              <template v-else-if="!store.list.length">
+              <template v-else-if="!store.list.length && !loadingStore.is('fetchPractices')">
                 <div class="text-center py-12 text-grey-darken-1">
                   <v-icon size="64" color="#3A803D" class="mb-3">mdi-check-circle-outline</v-icon>
                   <p>{{ $t('StudentPraxePage.noPractices') }}</p>
@@ -178,7 +179,7 @@
 </template>
 
 <script>
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from '@/components/SideBar.vue'
 import StudentAddPraxeForm from '@/components/StudentAddPraxeForm.vue'
 import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
@@ -188,6 +189,7 @@ import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
 import { useAuthStore } from '@/stores/authStore.js'
 import { debounce } from 'lodash'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export default {
   components: { Sidebar, StudentAddPraxeForm, StudentDetailsPraxeDialog: DetailsPraxeDialog },
@@ -199,6 +201,7 @@ export default {
       store: usePracticesStore(),
       programsStore: useStudyProgramsStore(),
       companiesStore: useCompaniesStore(),
+      loadingStore: useLoadingStore(),
       yearSuggestions: [],
       authStore: useAuthStore(),
       filters: {

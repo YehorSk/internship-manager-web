@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useToastStore } from '@/stores/toastStore.js'
 import { handleError } from '@/utils/httpError.js'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export const useReportsStore = defineStore('reports', {
   state: () => ({
@@ -14,7 +15,8 @@ export const useReportsStore = defineStore('reports', {
   actions: {
     async fetchReports(filters = {}) {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start(`fetchReports`)
       try {
         const payload = {
           page: filters.page || 1,
@@ -27,13 +29,14 @@ export const useReportsStore = defineStore('reports', {
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        this.loading = false
+        loading.stop(`fetchReports`)
       }
     },
 
     async generateReport(filters) {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start(`generateReport`)
       try {
         const payload = {
           report_type: filters.report_type || 'practices_list',
@@ -60,7 +63,7 @@ export const useReportsStore = defineStore('reports', {
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        this.loading = false
+        loading.stop(`generateReport`)
       }
     },
     async downloadReport(id) {

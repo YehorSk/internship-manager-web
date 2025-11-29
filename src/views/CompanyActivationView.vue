@@ -20,14 +20,14 @@
           <v-row class="mt-4" align="center" justify="space-between">
             <v-col cols="12" sm="6">
               <v-btn
-                :disabled="!token || loading || activated"
+                :disabled="!token || loadingStore.is('activateCompany') || activated"
                 color="primary"
                 rounded="lg"
                 class="activate-btn text-none"
                 block
                 @click="activateCompany"
               >
-                <span v-if="!loading">{{ $t('CompanyActivationView.buttons.activate') }}</span>
+                <span v-if="!loadingStore.is('activateCompany')">{{ $t('CompanyActivationView.buttons.activate') }}</span>
                 <span v-else>{{ $t('CompanyActivationView.buttons.activating') }}</span>
               </v-btn>
             </v-col>
@@ -55,6 +55,7 @@
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import { useCompaniesStore } from '@/stores/companiesStore.js'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export default {
   name: 'CompanyActivationView',
@@ -62,7 +63,8 @@ export default {
   data() {
     return {
       token: null,
-      companiesStore: useCompaniesStore()
+      companiesStore: useCompaniesStore(),
+      loadingStore: useLoadingStore()
     }
   },
   created() {
@@ -72,9 +74,6 @@ export default {
     }
   },
   computed: {
-    loading() {
-      return this.companiesStore.loading
-    },
     activated() {
       return this.companiesStore.activated
     }

@@ -78,7 +78,7 @@
                 flat
                 single-line
                 clearable
-                :loading="companiesStore.loading"
+                :loading="loadingStore.is('searchCompanies')"
                 @update:search="searchCompanies"
                 prepend-inner-icon="mdi-domain"
               />
@@ -161,7 +161,7 @@
 
             <v-col cols="12" class="text-right">
               <v-btn rounded="lg" variant="text" class="mr-2" @click="localDialog = false">{{ $t('common.cancel') }}</v-btn>
-              <v-btn rounded="lg" prepend-icon="mdi-file-export" class="confirm-btn text-none" @click="exportReport">
+              <v-btn rounded="lg" prepend-icon="mdi-file-export" class="confirm-btn text-none" :loading="loadingStore.is('generateReport')" @click="exportReport">
                 {{ $t('ExportDialog.export') }}
               </v-btn>
             </v-col>
@@ -178,6 +178,7 @@ import { useCompaniesStore } from '@/stores/companiesStore.js'
 import { useReportsStore } from '@/stores/reportsStore.js'
 import { reportStatusOptions } from '@/utils/statusHelpers.js'
 import { debounce } from 'lodash'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export default {
   props: { dialog: Boolean },
@@ -188,6 +189,7 @@ export default {
       programsStore: useStudyProgramsStore(),
       companiesStore: useCompaniesStore(),
       reportsStore: useReportsStore(),
+      loadingStore: useLoadingStore(),
       filters: {
         report_type: 'practices_list',
         year: null,

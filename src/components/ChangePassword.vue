@@ -75,7 +75,7 @@
 
         <v-col cols="12" class="text-right">
           <v-btn
-            :loading="authStore.loading"
+            :loading="loadingStore.is('changePassword')"
             rounded="lg"
             @click="changePassword"
             prepend-icon="mdi-lock"
@@ -93,11 +93,13 @@
 
 <script>
 import { useAuthStore } from '@/stores/authStore.js'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export default {
   data() {
     return {
       authStore: useAuthStore(),
+      loadingStore: useLoadingStore(),
       validReset: false,
       form: {
         currentPassword: '',

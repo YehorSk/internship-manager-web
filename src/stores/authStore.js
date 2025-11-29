@@ -6,6 +6,7 @@ import { useToastStore } from '@/stores/toastStore.js'
 import i18n from '@/i18n'
 import { useProfileStore } from '@/stores/profileStore.js'
 import router from '@/router/index.js'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -43,7 +44,8 @@ export const useAuthStore = defineStore('auth', {
       const toast = useToastStore()
       const profileStore = useProfileStore()
       const lang = profileStore.lang || 'sk'
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start("register")
       this.fieldErrors = {}
       try {
         data.language = lang
@@ -57,12 +59,13 @@ export const useAuthStore = defineStore('auth', {
         handleError(e, this, toast)
         throw e
       } finally {
-        this.loading = false
+        loading.stop("register")
       }
     },
-    async sendAuthPostRequest(endpoint, data) {
+    async sendAuthPostRequest(endpoint, data, key) {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start(key)
       this.fieldErrors = {}
       try {
         const { data: response } = await axios.post(endpoint, data)
@@ -71,23 +74,24 @@ export const useAuthStore = defineStore('auth', {
         handleError(e, this, toast)
         throw e
       } finally {
-        this.loading = false
+        loading.stop(key)
       }
     },
     async forgotPassword(data) {
-      return this.sendAuthPostRequest('/api/auth/forgot-password', data)
+      return this.sendAuthPostRequest('/api/auth/forgot-password', data, 'forgotPassword')
     },
     async updatePassword(data) {
-      return this.sendAuthPostRequest('/api/auth/update-password', data)
+      return this.sendAuthPostRequest('/api/auth/update-password', data, 'updatePassword')
     },
     async changePassword(data) {
-      return this.sendAuthPostRequest('/api/auth/change-password', data)
+      return this.sendAuthPostRequest('/api/auth/change-password', data, 'changePassword')
     },
     async login(email, password) {
       const toast = useToastStore()
       const profileStore = useProfileStore()
       const lang = profileStore.lang || 'sk'
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start("login")
       try {
         const { data: response } = await axios.post(
           '/api/auth/login',
@@ -107,12 +111,13 @@ export const useAuthStore = defineStore('auth', {
         this.isLoggedIn = false
         throw e
       } finally {
-        this.loading = false
+        loading.stop("login")
       }
     },
     async logout() {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start("logout")
       try {
         const { data: response } = await axios.post('/api/auth/logout', null);
         toast.showSuccess(response.message)
@@ -125,7 +130,7 @@ export const useAuthStore = defineStore('auth', {
         this.user = null;
         this.token = null;
         this.isLoggedIn = false;
-        this.loading = false;
+        loading.stop("logout")
         window.location.reload();
       }
     },

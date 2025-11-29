@@ -17,7 +17,7 @@
           </v-row>
 
           <!-- Loading -->
-          <v-row v-if="store.loading" class="justify-center py-12">
+          <v-row v-if="loadingStore.is('fetchStatistics')" class="justify-center py-12">
             <v-progress-circular indeterminate color="#3A803D" size="48" />
           </v-row>
 
@@ -148,6 +148,7 @@ import { getStatusColor, getStatusText } from '@/utils/statusHelpers.js'
 import { usePracticesStore } from '@/stores/practicesStore.js'
 import { useAuthStore } from '@/stores/authStore.js'
 import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export default {
   components: { DetailsPraxeDialog, SideBar },
@@ -155,6 +156,7 @@ export default {
     return {
       store: usePracticesStore(),
       authStore: useAuthStore(),
+      loadingStore: useLoadingStore(),
       detailsDialog: false,
       selectedPracticeId: null,
     }
@@ -205,10 +207,10 @@ export default {
     },
     pendingHeaders() {
       const headers = [
-        { title: this.$t('stats.student'), key: 'student' },
-        { title: this.$t('stats.company'), key: 'company' },
-        { title: this.$t('stats.jobTitle'), key: 'jobTitle' },
-        { title: this.$t('stats.status'), key: 'status' },
+        { title: this.$t('stats.student'), key: 'student', sortable: false },
+        { title: this.$t('stats.company'), key: 'company', sortable: false },
+        { title: this.$t('stats.jobTitle'), key: 'jobTitle', sortable: false },
+        { title: this.$t('stats.status'), key: 'status', sortable: false },
       ]
       return headers.filter((h) => !(!this.isSupervisor && h.key === 'company'))
     },

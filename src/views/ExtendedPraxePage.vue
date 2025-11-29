@@ -23,6 +23,7 @@
                 <v-autocomplete
                   v-model="filters.study_program"
                   :items="studyPrograms"
+                  :loading="loadingStore.is('fetchPrograms')"
                   :label="$t('ExtendedPraxePage.filters.studyProgram')"
                   variant="outlined"
                   density="comfortable"
@@ -67,7 +68,7 @@
                   variant="outlined"
                   density="comfortable"
                   clearable
-                  :loading="companiesStore.loading"
+                  :loading="loadingStore.is('searchCompanies')"
                   @update:search="searchCompanies"
                 />
               </v-col>
@@ -95,7 +96,7 @@
                   variant="outlined"
                   density="comfortable"
                   clearable
-                  :loading="studentsStore.loading"
+                  :loading="loadingStore.is('searchStudents')"
                   @update:search="searchStudents"
                 />
               </v-col>
@@ -113,11 +114,11 @@
             <v-divider />
 
             <v-card-text>
-              <template v-if="store.loading">
+              <template v-if="loadingStore.is('fetchPractices')">
                 <div class="text-center py-10">{{ $t('common.loading') }}</div>
               </template>
 
-              <template v-else-if="!store.list.length">
+              <template v-else-if="!store.list.length && !loadingStore.is('fetchPractices')">
                 <div class="text-center py-12 text-grey-darken-1">
                   <v-icon size="64" color="#3A803D" class="mb-3">mdi-check-circle-outline</v-icon>
                   <p>{{ $t('ExtendedPraxePage.table.noData') }}</p>
@@ -188,7 +189,7 @@
 </template>
 
 <script>
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from '@/components/SideBar.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
 import { getStatusColor, getStatusText, statusOptions } from '@/utils/statusHelpers.js'
 import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
@@ -198,6 +199,7 @@ import { useCompaniesStore } from '@/stores/companiesStore.js'
 import { useStudentsStore } from '@/stores/studentsStore.js'
 import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
 import { debounce } from 'lodash'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export default {
   components: { DetailsPraxeDialog, Sidebar },
@@ -207,6 +209,7 @@ export default {
       detailsDialog: false,
       selectedPracticeId: null,
       store: usePracticesStore(),
+      loadingStore: useLoadingStore(),
       authStore: useAuthStore(),
       programsStore: useStudyProgramsStore(),
       companiesStore: useCompaniesStore(),

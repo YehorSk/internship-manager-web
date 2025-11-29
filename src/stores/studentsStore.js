@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { handleError } from '@/utils/httpError.js'
 import { useToastStore } from '@/stores/toastStore.js'
+import { useLoadingStore } from '@/stores/loadingStore.js'
 
 export const useStudentsStore = defineStore('students', {
   state: () => ({
@@ -17,7 +18,8 @@ export const useStudentsStore = defineStore('students', {
   actions: {
     async fetchStudents(filters = {}) {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start("fetchStudents")
       try {
         const search = {}
         if (filters.first_name) search.first_name = filters.first_name
@@ -43,13 +45,14 @@ export const useStudentsStore = defineStore('students', {
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        this.loading = false
+        loading.stop("fetchStudents")
       }
     },
 
     async searchStudents(query = '') {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
+      loading.start("searchStudents")
       try {
         const res = await axios.get(`/api/students/search`, {
           params: { value: query }
@@ -61,7 +64,7 @@ export const useStudentsStore = defineStore('students', {
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        this.loading = false
+        loading.stop("searchStudents")
       }
     },
 
