@@ -114,6 +114,7 @@
 import Sidebar from '@/components/Sidebar.vue'
 import { useStudentsStore } from '@/stores/studentsStore.js'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
+import { debounce } from 'lodash'
 
 export default {
   components: { Sidebar },
@@ -146,22 +147,36 @@ export default {
     filters: {
       deep: true,
       handler() {
-        const payload = { ...this.filters }
-        if (payload.student) payload.student_name = payload.student
-        if (payload.study_program) payload.study_program_name = payload.study_program
-        delete payload.student
-        delete payload.study_program
+        const payload = {}
+
+        if (this.filters.student) {
+          const [first, ...rest] = this.filters.student.split(' ')
+          payload.first_name = first || null
+          payload.last_name = rest.join(' ') || null
+        }
+
+        if (this.filters.study_program) {
+          payload.study_program_name = this.filters.study_program
+        }
 
         this.store.current_page = 1
         this.store.fetchStudents(payload)
-      },
-    },
+      }
+    }
   },
 
   async mounted() {
     await this.programsStore.fetchPrograms()
     await this.loadStudents()
     await this.searchStudents('')
+  },
+
+  created() {
+    this.debouncedSearchStudents = debounce(async (query) => {
+      if (query?.trim().length >= 1) {
+        await this.store.searchStudents(query.trim())
+      }
+    }, 500)
   },
 
   methods: {
@@ -177,10 +192,11 @@ export default {
     },
 
     async searchStudents(query) {
-      if (query?.trim().length >= 1) {
-        await this.store.searchStudents(query.trim())
+      if (!query || query === this.filters.student) {
+        return
       }
-    },
+      this.debouncedSearchStudents(query)
+    }
   },
 }
 </script>

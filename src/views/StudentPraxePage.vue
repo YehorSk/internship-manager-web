@@ -253,7 +253,10 @@ export default {
 
   methods: {
     statusOptions() {
-      return statusOptions
+      return statusOptions.map(s => ({
+        value: s.value,
+        label: this.$t(s.label)
+      }))
     },
     openForm() {
       this.$refs.formDialog.openDialog()

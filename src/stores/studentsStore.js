@@ -20,7 +20,8 @@ export const useStudentsStore = defineStore('students', {
       this.loading = true
       try {
         const search = {}
-        if (filters.student_name) search.student_name = filters.student
+        if (filters.first_name) search.first_name = filters.first_name
+        if (filters.last_name) search.last_name = filters.last_name
         if (filters.study_program_name) search.study_program_name = filters.study_program_name
 
         const payload = {

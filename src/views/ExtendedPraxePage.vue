@@ -274,7 +274,10 @@ export default {
 
   methods: {
     statusOptions() {
-      return statusOptions
+      return statusOptions.map(s => ({
+        value: s.value,
+        label: this.$t(s.label)
+      }))
     },
     loadPractices(page = 1) {
       const payload = { ...this.filters }
@@ -310,6 +313,9 @@ export default {
       this.debouncedSearchCompanies(query)
     },
     async searchStudents(query) {
+      if (!query || query === this.filters.student) {
+        return
+      }
       this.debouncedSearchStudents(query)
     },
   }
