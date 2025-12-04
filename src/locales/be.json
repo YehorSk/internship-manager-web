@@ -243,7 +243,9 @@
       "end": "Канец",
       "semester": "Семестр",
       "academicYear": "Акадэмічны год",
-      "invalidPhone": "Няправільны нумар тэлефона"
+      "invalidPhone": "Няправільны нумар тэлефона",
+      "is_paid_type_upper": "Умовы практыкі",
+      "is_paid_label": "Платная практыка"
     },
     "buttons": {
       "save": "Захаваць практыку",

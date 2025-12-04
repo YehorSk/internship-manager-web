@@ -243,7 +243,9 @@
       "end": "End",
       "semester": "Semester",
       "academicYear": "Academic Year",
-      "invalidPhone": "Invalid phone number"
+      "invalidPhone": "Invalid phone number",
+      "is_paid_type_upper": "Internship conditions",
+      "is_paid_label": "Paid internship"
     },
     "buttons": {
       "save": "Save practice",

@@ -176,6 +176,14 @@
               />
             </v-col>
 
+            <v-col cols="12" md="6">
+              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.form.is_paid_type_upper') }}</span></v-label>
+              <v-checkbox
+                :label="$t('StudentAddPraxeForm.form.is_paid_label')"
+                v-model="form.is_paid"
+              />
+            </v-col>
+
             <v-col cols="12" class="text-right mt-4">
               <v-btn color="#3A803D"
                      class="text-white"
@@ -303,6 +311,7 @@ export default {
         study_program_id: '',
         position: '',
         description: '',
+        is_paid: false
       },
       company: {
         company_name: '',
@@ -402,6 +411,7 @@ export default {
         end_date: this.formatDate(this.form.end_date),
         job_title: this.form.position,
         job_description: this.form.description,
+        is_paid: this.form.is_paid,
         ...(this.employerMode === 'new' && this.company),
       }
 

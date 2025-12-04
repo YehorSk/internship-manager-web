@@ -301,7 +301,7 @@
           />
         </v-col>
     </template>
-        <v-col cols="12">
+        <v-col cols="12" md="6">
           <v-label>
             <v-icon start color="grey-darken-2">mdi-text</v-icon>
             <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.job_description') }}</span>
@@ -319,6 +319,14 @@
           />
         </v-col>
 
+        <v-col cols="12" md="6">
+          <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.form.is_paid_type_upper') }}</span></v-label>
+          <v-checkbox
+            :disabled="!isEditing || isLocked"
+            :label="$t('StudentAddPraxeForm.form.is_paid_label')"
+            v-model="edited.is_paid"
+          />
+        </v-col>
         <v-col cols="12" md="6">
           <v-label>
             <v-icon start color="grey-darken-2">mdi-calendar-start</v-icon>
@@ -980,6 +988,7 @@ export default {
         company_id: this.practice.company_id,
         job_title: data.job_title,
         job_description: data.job_description,
+        is_paid: data.is_paid === 1,
       }
 
       if (data.company_id === null && data.practice_company) {
@@ -1011,6 +1020,7 @@ export default {
         job_title: this.practice.job_title,
         company_id: this.practice.company_id,
         job_description: this.practice.job_description,
+        is_paid: this.practice.is_paid === 1,
         supervisor: this.practice.supervisor || this.practice.practice_company?.contact_name || '',
       }
       if (this.practice.company_id === null && this.practice.practice_company) {
@@ -1058,7 +1068,8 @@ export default {
               contact_email: this.edited.contact_email,
               contact_name: this.edited.contact_name,
               contact_position: this.edited.contact_position,
-              ico: this.edited.ico
+              ico: this.edited.ico,
+              is_paid: this.edited.is_paid ? 1 : 0,
             }
           }
         }

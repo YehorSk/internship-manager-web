@@ -243,7 +243,10 @@
       "end": "Koniec",
       "semester": "Semester",
       "academicYear": "Akademický rok",
-      "invalidPhone": "Neplatné číslo"
+      "invalidPhone": "Neplatné číslo",
+      "is_paid_type_upper": "Podmienky praxe",
+      "is_paid_label": "Platená prax"
+
     },
     "buttons": {
       "save": "Uložiť prax",

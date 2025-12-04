@@ -243,7 +243,9 @@
       "end": "Кінець",
       "semester": "Семестр",
       "academicYear": "Академічний рік",
-      "invalidPhone": "Некоректний номер"
+      "invalidPhone": "Некоректний номер",
+      "is_paid_type_upper": "Умови практики",
+      "is_paid_label": "Платна практика"
     },
     "buttons": {
       "save": "Зберегти",
