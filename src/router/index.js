@@ -90,6 +90,12 @@ const router = createRouter({
       meta: { guestOnly: true },
     },
     {
+      path: '/company-activation-student',
+      name: 'company-activation-student',
+      component: () => import('../views/CompanyRegisteredByStudentActivationView.vue'),
+      meta: { guestOnly: true },
+    },
+    {
       path: '/settings',
       name: 'settings',
       component: () => import('../views/SettingsPage.vue'),

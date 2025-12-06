@@ -3,6 +3,7 @@ import axios from 'axios'
 import { handleError } from '@/utils/httpError.js'
 import { useToastStore } from '@/stores/toastStore.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import { useProfileStore } from '@/stores/profileStore.js'
 
 export const useCompaniesStore = defineStore('companies', {
   state: () => ({
@@ -72,22 +73,39 @@ export const useCompaniesStore = defineStore('companies', {
       const toast = useToastStore()
       const loading = useLoadingStore()
       loading.start(`activateCompany`)
-      let message = ''
       try {
-        const baseUrl = import.meta.env.VITE_API_BASE_URL || ''
-        const url = `${baseUrl.replace(/\/$/, '')}/api/company/activate/${token}`
-        const { data } = await axios.get(url)
-        if (data?.success) {
-          message = data.message
-          toast.showSuccess(message)
+        const { data: response } = await axios.get('/api/company/activate/'+token)
+        if (response?.success) {
+          toast.showSuccess(response.message)
           this.activated = true
         } else {
-          message = data?.message
-          toast.showError(message)
+          toast.showSuccess(response.message)
         }
       } catch (e) {
-        message = e?.response?.data?.message || e.message
-        toast.showError(message)
+        handleError(e, this, toast)
+      } finally {
+        loading.stop(`activateCompany`)
+      }
+    },
+    async activateCompanyData(token, data) {
+      if (!token) return
+      const toast = useToastStore()
+      const loading = useLoadingStore()
+      const profileStore = useProfileStore()
+      const lang = profileStore.lang || 'sk'
+      loading.start(`activateCompany`)
+      try {
+        const { data: response } = await axios.post('/api/company/activate-data/'+token, data, {
+          headers: { lang }
+        })
+        if (response?.success) {
+          toast.showSuccess(response.message)
+          this.activated = true
+        } else {
+          toast.showSuccess(response.message)
+        }
+      } catch (e) {
+        handleError(e, this, toast)
       } finally {
         loading.stop(`activateCompany`)
       }
