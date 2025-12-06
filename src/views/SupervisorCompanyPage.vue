@@ -90,6 +90,7 @@
                   v-model="store.current_page"
                   :length="store.total_pages"
                   rounded="circle"
+                  @update:modelValue="page => store.changePage(page)"
                 ></v-pagination>
               </template>
             </v-card-text>

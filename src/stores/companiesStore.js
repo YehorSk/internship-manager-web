@@ -38,6 +38,11 @@ export const useCompaniesStore = defineStore('companies', {
       }
     },
 
+    async changePage(page, search = '') {
+      this.current_page = page
+      await this.fetchCompanies(search)
+    },
+
     async changeStatus(user_id, status) {
       const toast = useToastStore()
       const loading = useLoadingStore()
