@@ -82,6 +82,14 @@
                 single-line
                 :placeholder="$t('StudentAddPraxeForm.form.selectStudyProgram')"
               />
+
+              <br>
+
+              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.form.is_paid_type_upper') }}</span></v-label>
+              <v-checkbox
+                :label="$t('StudentAddPraxeForm.form.is_paid_label')"
+                v-model="form.is_paid"
+              />
             </v-col>
 
             <v-col cols="12" md="6">
@@ -173,14 +181,6 @@
                 single-line
                 @focus="generateYearSuggestions('')"
                 @update:search="generateYearSuggestions"
-              />
-            </v-col>
-
-            <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.form.is_paid_type_upper') }}</span></v-label>
-              <v-checkbox
-                :label="$t('StudentAddPraxeForm.form.is_paid_label')"
-                v-model="form.is_paid"
               />
             </v-col>
 
