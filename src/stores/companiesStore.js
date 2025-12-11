@@ -23,14 +23,12 @@ export const useCompaniesStore = defineStore('companies', {
       const loading = useLoadingStore()
       loading.start("fetchCompanies")
       try {
-        const res = await axios.post('/api/companies/list?page=' + this.current_page,{
-          params: {
-            search: search
-          }
+        const res = await axios.post('/api/companies/list?page=' + this.current_page, {
+          search: search
         });
         this.companies = res.data.data || []      // array of companies
-        this.current_page = res.data.current_page || 1
-        this.total_pages = res.data.last_page || 1
+        this.current_page = res.data.meta?.current_page || res.data.current_page || this.current_page
+        this.total_pages = res.data.meta?.last_page || res.data.last_page || 1
       } catch (e) {
         handleError(e, this, toast)
       } finally {

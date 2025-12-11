@@ -87,10 +87,10 @@
                   </tbody>
                 </v-table>
                 <v-pagination
-                  v-model="store.current_page"
+                  :model-value="store.current_page"
                   :length="store.total_pages"
                   rounded="circle"
-                  @update:modelValue="page => store.changePage(page)"
+                  @update:modelValue="(page) => loadCompanies(page)"
                 ></v-pagination>
               </template>
             </v-card-text>
@@ -119,6 +119,10 @@ export default {
   },
 
   methods: {
+    async loadCompanies(page = 1) {
+      this.store.current_page = page
+      await this.store.fetchCompanies()
+    },
     async confirmCompany(user_id) {
       await this.store.changeStatus(user_id, true)
 
