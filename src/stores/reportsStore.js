@@ -8,6 +8,7 @@ export const useReportsStore = defineStore('reports', {
   state: () => ({
     loading: false,
     reports: [],
+    last_added_reports: [],
     total_items: 0,
     fieldErrors: {},
   }),
@@ -24,6 +25,7 @@ export const useReportsStore = defineStore('reports', {
           search: filters.search || {},
         }
         const { data } = await axios.post('/api/reports/list', payload)
+        this.last_added_reports = []
         this.reports = data.data || []
         this.total_items = data.meta?.total || this.reports.length
       } catch (e) {
@@ -53,13 +55,11 @@ export const useReportsStore = defineStore('reports', {
             delete payload[key]
           }
         })
-        const { data } = await axios.post('/api/reports/generate', payload)
-        toast.showSuccess(data.message)
-        if (data?.data) {
-          this.reports.push(data.data)
-          this.total_items++
+        const { data: response } = await axios.post('/api/reports/generate', payload)
+        toast.showSuccess(response.message)
+        if (response?.data) {
+          this.last_added_reports.push(response.data)
         }
-        return data
       } catch (e) {
         handleError(e, this, toast)
       } finally {

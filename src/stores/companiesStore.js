@@ -14,25 +14,29 @@ export const useCompaniesStore = defineStore('companies', {
     current_page_items: 1,
     total_pages: 1,
     total_pages_items: 1,
-    activated: false
+    activated: false,
   }),
 
   actions: {
+    setPage(page) {
+      this.current_page = page
+    },
     async fetchCompanies(search = '') {
       const toast = useToastStore()
       const loading = useLoadingStore()
-      loading.start("fetchCompanies")
+      loading.start('fetchCompanies')
       try {
         const res = await axios.post('/api/companies/list?page=' + this.current_page, {
-          search: search
-        });
-        this.companies = res.data.data || []      // array of companies
-        this.current_page = res.data.meta?.current_page || res.data.current_page || this.current_page
+          search: search,
+        })
+        this.companies = res.data.data || []
+        this.current_page =
+          res.data.meta?.current_page || res.data.current_page || this.current_page
         this.total_pages = res.data.meta?.last_page || res.data.last_page || 1
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        loading.stop("fetchCompanies")
+        loading.stop('fetchCompanies')
       }
     },
 
@@ -48,7 +52,8 @@ export const useCompaniesStore = defineStore('companies', {
       try {
         const { data: response } = await axios.patch(`/api/companies/${user_id}`, { status })
         toast.showSuccess(response.message)
-        return response
+        const company = this.companies.find((c) => c.user_id === user_id)
+        if (company) company.status = status
       } catch (e) {
         handleError(e, this, toast)
       } finally {
@@ -62,8 +67,8 @@ export const useCompaniesStore = defineStore('companies', {
       loading.start(`searchCompanies`)
       try {
         const res = await axios.get('/api/company/search', {
-          params: { value: query }
-        });
+          params: { value: query },
+        })
         this.companies = res.data.data
       } catch (e) {
         handleError(e, this, toast)
@@ -77,7 +82,7 @@ export const useCompaniesStore = defineStore('companies', {
       const loading = useLoadingStore()
       loading.start(`activateCompany`)
       try {
-        const { data: response } = await axios.get('/api/company/activate/'+token)
+        const { data: response } = await axios.get('/api/company/activate/' + token)
         if (response?.success) {
           toast.showSuccess(response.message)
           this.activated = true
@@ -98,8 +103,8 @@ export const useCompaniesStore = defineStore('companies', {
       const lang = profileStore.lang || 'sk'
       loading.start(`activateCompany`)
       try {
-        const { data: response } = await axios.post('/api/company/activate-data/'+token, data, {
-          headers: { lang }
+        const { data: response } = await axios.post('/api/company/activate-data/' + token, data, {
+          headers: { lang },
         })
         if (response?.success) {
           toast.showSuccess(response.message)
@@ -112,7 +117,7 @@ export const useCompaniesStore = defineStore('companies', {
       } finally {
         loading.stop(`activateCompany`)
       }
-    }
-  }
+    },
+  },
 })
 

@@ -2,7 +2,7 @@
   <v-main>
     <v-container fluid>
       <v-row>
-        <Sidebar/>
+        <Sidebar />
 
         <v-container fluid class="pa-4">
           <v-row class="align-center mb-4">
@@ -11,13 +11,11 @@
               <p class="text-subtitle-1">{{ $t('StudentPraxePage.subtitle') }}</p>
             </v-col>
             <v-col cols="4" class="d-flex justify-end">
-              <v-btn
-                color="#3A803D"
-                class="text-white"
-                @click="openForm"
-              >
+              <v-btn color="#3A803D" class="text-white" @click="openForm">
                 <v-icon start>mdi-plus</v-icon>
-                <span v-if="!$vuetify.display.smAndDown">{{ $t('StudentPraxePage.addPractice') }}</span>
+                <span v-if="!$vuetify.display.smAndDown">{{
+                  $t('StudentPraxePage.addPractice')
+                }}</span>
               </v-btn>
             </v-col>
           </v-row>
@@ -25,7 +23,9 @@
           <v-card class="pa-6 mb-6">
             <v-row class="align-center mb-3">
               <v-icon color="grey-darken-1" start>mdi-filter-outline</v-icon>
-              <span class="font-weight-medium text-grey-darken-2 text-subtitle-1">{{ $t('StudentPraxePage.filters') }}</span>
+              <span class="font-weight-medium text-grey-darken-2 text-subtitle-1">{{
+                $t('StudentPraxePage.filters')
+              }}</span>
             </v-row>
 
             <v-row class="mt-2" dense>
@@ -59,7 +59,7 @@
                   v-model="filters.semester"
                   :items="[
                     { title: $t('semesters.winter'), value: 'winter' },
-                    { title: $t('semesters.summer'), value: 'summer' }
+                    { title: $t('semesters.summer'), value: 'summer' },
                   ]"
                   :label="$t('StudentPraxePage.semester')"
                   variant="outlined"
@@ -102,7 +102,8 @@
             <v-card-title class="text-h6 d-flex justify-space-between">
               <div>{{ $t('StudentPraxePage.listTitle') }}</div>
               <span class="text-body-2 text-grey-darken-1">
-                 {{ $t('StudentPraxePage.total') }} {{ store.total_items }} {{ $t('StudentPraxePage.total2') }}
+                {{ $t('StudentPraxePage.total') }} {{ store.total_items }}
+                {{ $t('StudentPraxePage.total2') }}
               </span>
             </v-card-title>
 
@@ -123,35 +124,68 @@
               <template v-else>
                 <v-table>
                   <thead>
-                  <tr>
-                    <th>{{ $t('StudentPraxePage.employer') }}</th>
-                    <th>{{ $t('StudentPraxePage.pozicia') }}</th>
-                    <th>{{ $t('StudentPraxePage.studyProgram') }}</th>
-                    <th>{{ $t('StudentPraxePage.semester') }}</th>
-                    <th>{{ $t('StudentPraxePage.year') }}</th>
-                    <th>{{ $t('StudentPraxePage.obdobie') }}</th>
-                    <th>{{ $t('StudentPraxePage.status') }}</th>
-                  </tr>
+                    <tr>
+                      <th>{{ $t('StudentPraxePage.employer') }}</th>
+                      <th>{{ $t('StudentPraxePage.pozicia') }}</th>
+                      <th>{{ $t('StudentPraxePage.studyProgram') }}</th>
+                      <th>{{ $t('StudentPraxePage.semester') }}</th>
+                      <th>{{ $t('StudentPraxePage.year') }}</th>
+                      <th>{{ $t('StudentPraxePage.obdobie') }}</th>
+                      <th>{{ $t('StudentPraxePage.status') }}</th>
+                    </tr>
                   </thead>
+                  <tbody v-if="store.last_added_list.length > 0">
+                    <tr class="bg-green-lighten-5 text-green-darken-3">
+                      <td colspan="7" class="text-caption font-weight-medium">
+                        {{ $t('common.last_added') }}
+                      </td>
+                    </tr>
+                    <tr
+                      v-for="p in store.last_added_list"
+                      :key="p.id"
+                      class="bg-green-lighten-5 cursor-pointer"
+                      @click="openDetails(p)"
+                    >
+                      <td>{{ p.practice_company?.name || p.company?.name || '—' }}</td>
+                      <td>{{ p.job_title || '—' }}</td>
+                      <td>{{ p.study_program?.name || '—' }}</td>
+                      <td>{{ $t('semesters.' + p.semester) }}</td>
+                      <td>{{ p.academic_year }}</td>
+                      <td>{{ formatDate(p.start_date) }} – {{ formatDate(p.end_date) }}</td>
+                      <td>
+                        <v-chip
+                          :style="{ backgroundColor: getStatusColor(p.status) }"
+                          class="text-white"
+                          size="small"
+                        >
+                          {{ $t(getStatusText(p.status)) }}
+                        </v-chip>
+                      </td>
+                    </tr>
+                  </tbody>
                   <tbody>
-                  <tr
-                    v-for="p in store.list"
-                    :key="p.id"
-                    class="hover:bg-grey-lighten-5 cursor-pointer"
-                    @click="openDetails(p)"
-                  >
-                  <td>{{ p.practice_company?.name || p.company?.name || '—' }}</td>
-                    <td>{{ p.job_title || '—' }}</td>
-                    <td>{{ p.study_program?.name || '—' }}</td>
-                    <td>{{ $t('semesters.' + p.semester) }}</td>
-                    <td>{{ p.academic_year }}</td>
-                    <td>{{ formatDate(p.start_date) }} – {{ formatDate(p.end_date) }}</td>
-                    <td>
-                      <v-chip :style="{ backgroundColor: getStatusColor(p.status) }" class="text-white" size="small">
-                        {{ $t(getStatusText(p.status)) }}
-                      </v-chip>
-                    </td>
-                  </tr>
+                    <tr
+                      v-for="p in store.list"
+                      :key="p.id"
+                      class="hover:bg-grey-lighten-5 cursor-pointer"
+                      @click="openDetails(p)"
+                    >
+                      <td>{{ p.practice_company?.name || p.company?.name || '—' }}</td>
+                      <td>{{ p.job_title || '—' }}</td>
+                      <td>{{ p.study_program?.name || '—' }}</td>
+                      <td>{{ $t('semesters.' + p.semester) }}</td>
+                      <td>{{ p.academic_year }}</td>
+                      <td>{{ formatDate(p.start_date) }} – {{ formatDate(p.end_date) }}</td>
+                      <td>
+                        <v-chip
+                          :style="{ backgroundColor: getStatusColor(p.status) }"
+                          class="text-white"
+                          size="small"
+                        >
+                          {{ $t(getStatusText(p.status)) }}
+                        </v-chip>
+                      </td>
+                    </tr>
                   </tbody>
                 </v-table>
 
@@ -160,7 +194,7 @@
                   v-model="store.current_page"
                   :length="store.total_pages"
                   rounded="circle"
-                  @update:modelValue="page => store.changePage(page, filters)"
+                  @update:modelValue="(page) => store.changePage(page, filters)"
                 />
               </template>
             </v-card-text>
@@ -169,7 +203,6 @@
             v-model="detailsDialog"
             v-if="selectedPracticeId"
             :practice-id="selectedPracticeId"
-            @update="updatePractice"
           />
           <StudentAddPraxeForm ref="formDialog" />
         </v-container>
@@ -216,7 +249,7 @@ export default {
 
   computed: {
     studyPrograms() {
-      return this.programsStore.list.map(p => p.name)
+      return this.programsStore.list.map((p) => p.name)
     },
     role() {
       return this.authStore?.user?.roles?.[0]?.name
@@ -229,16 +262,16 @@ export default {
       handler() {
         const filters = { ...this.filters }
         if (filters.employer) {
-          const company = this.companiesStore.companies.find(c => c.id === filters.employer)
+          const company = this.companiesStore.companies.find((c) => c.id === filters.employer)
           if (company) {
             filters.company_name = company.name
           }
         }
         delete filters.employer
-        this.store.current_page = 1
+        this.store.setPage(1)
         this.store.fetchPractices(filters)
-      }
-    }
+      },
+    },
   },
 
   async mounted() {
@@ -256,9 +289,9 @@ export default {
 
   methods: {
     statusOptions() {
-      return statusOptions.map(s => ({
+      return statusOptions.map((s) => ({
         value: s.value,
-        label: this.$t(s.label)
+        label: this.$t(s.label),
       }))
     },
     openForm() {
@@ -274,11 +307,6 @@ export default {
     openDetails(practice) {
       this.selectedPracticeId = practice.id
       this.detailsDialog = true
-    },
-    updatePractice(updated) {
-      if (!updated) return
-      const idx = this.store.list.findIndex(p => p.id === updated.id)
-      if (idx !== -1) this.store.list[idx] = { ...this.store.list[idx], ...updated }
     },
     async searchCompanies(query) {
       this.debouncedSearchCompanies(query)

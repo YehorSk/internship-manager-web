@@ -20,6 +20,10 @@ export const useAuthStore = defineStore('auth', {
     roles: (state) => state.user?.roles?.map(r => r.name) || [],
   },
   actions: {
+    clearErrors(){
+      this.fieldErrors = {}
+      this.error = ''
+    },
     async authenticate(){
       const toast = useToastStore()
       try{
@@ -46,7 +50,7 @@ export const useAuthStore = defineStore('auth', {
       const lang = profileStore.lang || 'sk'
       const loading = useLoadingStore()
       loading.start("register")
-      this.fieldErrors = {}
+      this.clearErrors()
       try {
         data.language = lang
         const { data: response } = await axios.post('/api/auth/register', data, {

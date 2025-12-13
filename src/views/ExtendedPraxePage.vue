@@ -15,7 +15,9 @@
           <v-card class="pa-6 mb-6">
             <v-row class="align-center mb-3">
               <v-icon color="grey-darken-1" start>mdi-filter-outline</v-icon>
-              <span class="font-weight-medium text-grey-darken-2 text-subtitle-1">{{ $t('ExtendedPraxePage.filters.title') }}</span>
+              <span class="font-weight-medium text-grey-darken-2 text-subtitle-1">{{
+                $t('ExtendedPraxePage.filters.title')
+              }}</span>
             </v-row>
 
             <v-row class="mt-2" dense>
@@ -49,7 +51,7 @@
                   v-model="filters.semester"
                   :items="[
                     { title: $t('semesters.winter'), value: 'winter' },
-                    { title: $t('semesters.summer'), value: 'summer' }
+                    { title: $t('semesters.summer'), value: 'summer' },
                   ]"
                   :label="$t('ExtendedPraxePage.filters.semester')"
                   variant="outlined"
@@ -107,7 +109,8 @@
             <v-card-title class="text-h6 d-flex justify-space-between">
               <div>{{ $t('ExtendedPraxePage.table.title') }}</div>
               <span class="text-body-2 text-grey-darken-1">
-                {{ $t('ExtendedPraxePage.table.total') }} {{ store.total_items }} {{ $t('ExtendedPraxePage.table.total2') }}
+                {{ $t('ExtendedPraxePage.table.total') }} {{ store.total_items }}
+                {{ $t('ExtendedPraxePage.table.total2') }}
               </span>
             </v-card-title>
 
@@ -146,8 +149,10 @@
                       class="hover:bg-grey-lighten-5 cursor-pointer"
                       @click="openDetails(p)"
                     >
-                      <td>{{ p.student?.full_name || '—' }}</td>
-                      <td v-if="isSupervisor">{{ p.practice_company?.name || p.company?.name || '—' }}</td>
+                      <td>{{ p.student?.first_name + ' ' + p.student?.last_name || '—' }}</td>
+                      <td v-if="isSupervisor">
+                        {{ p.practice_company?.name || p.company?.name || '—' }}
+                      </td>
                       <td>{{ p.job_title || '—' }}</td>
                       <td>{{ p.study_program?.name || '—' }}</td>
                       <td>{{ $t('semesters.' + p.semester) }}</td>
@@ -231,7 +236,7 @@ export default {
       return this.authStore?.user?.roles?.[0]?.name
     },
     studyPrograms() {
-      return this.programsStore.list.map(p => p.name)
+      return this.programsStore.list.map((p) => p.name)
     },
     isSupervisor() {
       return this.role === 'supervisor'
@@ -244,13 +249,13 @@ export default {
       handler() {
         const filters = { ...this.filters }
         if (filters.employer) {
-          const company = this.companiesStore.companies.find(c => c.id === filters.employer)
+          const company = this.companiesStore.companies.find((c) => c.id === filters.employer)
           if (company) {
             filters.company_name = company.name
           }
         }
         delete filters.employer
-        this.store.current_page = 1
+        this.store.setPage(1)
         this.store.fetchPractices(filters)
       },
     },
@@ -277,9 +282,9 @@ export default {
 
   methods: {
     statusOptions() {
-      return statusOptions.map(s => ({
+      return statusOptions.map((s) => ({
         value: s.value,
-        label: this.$t(s.label)
+        label: this.$t(s.label),
       }))
     },
     loadPractices(page = 1) {
@@ -290,7 +295,7 @@ export default {
       }
       delete payload.student
 
-      this.store.current_page = page
+      this.store.setPage(page)
       this.store.fetchPractices(payload)
     },
     formatDate(date) {
@@ -304,7 +309,7 @@ export default {
     },
     updatePractice(updated) {
       if (!updated) return
-      const idx = this.store.list.findIndex(p => p.id === updated.id)
+      const idx = this.store.list.findIndex((p) => p.id === updated.id)
       if (idx !== -1) this.store.list[idx] = { ...this.store.list[idx], ...updated }
     },
     getStatusColor,
@@ -321,6 +326,6 @@ export default {
       }
       this.debouncedSearchStudents(query)
     },
-  }
+  },
 }
 </script>

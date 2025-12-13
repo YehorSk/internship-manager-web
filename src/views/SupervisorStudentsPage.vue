@@ -15,7 +15,9 @@
           <v-card class="pa-6 mb-6">
             <v-row class="align-center mb-3">
               <v-icon color="grey-darken-1" start>mdi-filter-outline</v-icon>
-              <span class="font-weight-medium text-grey-darken-2 text-subtitle-1">{{ $t('SupervisorStudentsPage.filters') }}</span>
+              <span class="font-weight-medium text-grey-darken-2 text-subtitle-1">{{
+                $t('SupervisorStudentsPage.filters')
+              }}</span>
             </v-row>
 
             <v-row class="mt-2" dense>
@@ -51,7 +53,8 @@
             <v-card-title class="text-h6 d-flex justify-space-between">
               <div>{{ $t('SupervisorStudentsPage.listTitle') }}</div>
               <span class="text-body-2 text-grey-darken-1">
-                {{ $t('SupervisorStudentsPage.total') }} {{ store.total_items }} {{ $t('SupervisorStudentsPage.students') }}
+                {{ $t('SupervisorStudentsPage.total') }} {{ store.total_items }}
+                {{ $t('SupervisorStudentsPage.students') }}
               </span>
             </v-card-title>
 
@@ -72,25 +75,27 @@
               <template v-else>
                 <v-table>
                   <thead>
-                  <tr>
-                    <th>{{ $t('SupervisorStudentsPage.columns.firstName') }}</th>
-                    <th>{{ $t('SupervisorStudentsPage.columns.lastName') }}</th>
-                    <th>{{ $t('SupervisorStudentsPage.columns.email') }}</th>
-                    <th>{{ $t('SupervisorStudentsPage.columns.studyProgram') }}</th>
-                  </tr>
+                    <tr>
+                      <th>{{ $t('SupervisorStudentsPage.columns.firstName') }}</th>
+                      <th>{{ $t('SupervisorStudentsPage.columns.lastName') }}</th>
+                      <th>{{ $t('SupervisorStudentsPage.columns.email') }}</th>
+                      <th>{{ $t('SupervisorStudentsPage.columns.studyProgram') }}</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  <tr v-for="s in store.students" :key="s.id" class="hover:bg-grey-lighten-5">
-                    <td>{{ s.first_name }}</td>
-                    <td>{{ s.last_name }}</td>
-                    <td>{{ s.student_email }}</td>
-                    <td>
+                    <tr v-for="s in store.students" :key="s.id" class="hover:bg-grey-lighten-5">
+                      <td>{{ s.first_name }}</td>
+                      <td>{{ s.last_name }}</td>
+                      <td>{{ s.student_email }}</td>
+                      <td>
                         <span v-if="s.study_program?.length">
-                          {{ s.study_program.map(sp => studyProgramsMap[sp.id] || '—').join(', ') }}
+                          {{
+                            s.study_program.map((sp) => studyProgramsMap[sp.id] || '—').join(', ')
+                          }}
                         </span>
-                      <span v-else>—</span>
-                    </td>
-                  </tr>
+                        <span v-else>—</span>
+                      </td>
+                    </tr>
                   </tbody>
                 </v-table>
 
@@ -134,7 +139,7 @@ export default {
 
   computed: {
     studyPrograms() {
-      return this.programsStore.list.map(p => p.name)
+      return this.programsStore.list.map((p) => p.name)
     },
     studyProgramsMap() {
       return this.programsStore.list.reduce((acc, program) => {
@@ -160,10 +165,10 @@ export default {
           payload.study_program_name = this.filters.study_program
         }
 
-        this.store.current_page = 1
+        this.store.setPage(1)
         this.store.fetchStudents(payload)
-      }
-    }
+      },
+    },
   },
 
   async mounted() {
@@ -187,7 +192,7 @@ export default {
       delete payload.student
       delete payload.study_program
 
-      this.store.current_page = page
+      this.store.setPage(page)
       await this.store.fetchStudents(payload)
     },
 
@@ -196,7 +201,7 @@ export default {
         return
       }
       this.debouncedSearchStudents(query)
-    }
+    },
   },
 }
 </script>

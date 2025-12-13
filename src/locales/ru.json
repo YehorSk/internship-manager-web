@@ -462,7 +462,8 @@
     "unknownCompany": "Неизвестная компания",
     "noActiveTitle": "Нет активной практики",
     "noActiveText": "У вас сейчас нет активной практики. Создайте новую.",
-    "addPractice": "Добавить новую практику"
+    "addPractice": "Добавить новую практику",
+    "go_to_all_practices": "Перейти ко всем практикам"
   },
   "StudentPraxePage": {
     "title": "Мои практики",
@@ -548,7 +549,8 @@
     "ico": "ИНН/ОГРН",
     "enter_ico": "Введите ИНН/ОГРН",
     "email": "Неверный email",
-    "required": "Обязательное поле"
+    "required": "Обязательное поле",
+    "last_added": "Последнее добавление"
   },
   "ReportsHistoryPage": {
     "title": "История отчётов",

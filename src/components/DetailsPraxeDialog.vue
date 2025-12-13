@@ -770,7 +770,7 @@
 
           <template v-else>
             <v-btn
-              v-if="(isStudent && tab === 'info' && ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(practice.status)) || (isSupervisor && tab === 'info')"
+              v-if="(isStudent && tab === 'info' && ['created'].includes(practice.status)) || (isSupervisor && tab === 'info')"
               variant="outlined"
               color="#3A803D"
               rounded="lg"
@@ -1038,9 +1038,8 @@ export default {
       this.isEditing = false
     },
     async save() {
-        await this.practicesStore.updatePractice(this.practice.id, this.edited)
+        const updatedPractice = await this.practicesStore.updatePractice(this.practice.id, this.edited)
 
-        const updatedPractice = await this.practicesStore.getPractice(this.practice.id)
         if (updatedPractice) {
           this.practice = updatedPractice
           this.selectedStatus = updatedPractice.status
@@ -1207,8 +1206,7 @@ export default {
     },
     async saveStatus() {
       if (!this.selectedStatus || !this.practice) return
-      await this.practicesStore.updatePracticeStatus(this.practice.id, this.selectedStatus)
-      const updatedPractice = await this.practicesStore.getPractice(this.practice.id)
+      const updatedPractice = await this.practicesStore.updatePracticeStatus(this.practice.id, this.selectedStatus)
       if (updatedPractice) {
         this.practice = updatedPractice
         this.selectedStatus = updatedPractice.status

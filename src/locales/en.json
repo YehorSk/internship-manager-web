@@ -462,7 +462,8 @@
     "unknownCompany": "Unknown company",
     "noActiveTitle": "No active practice",
     "noActiveText": "You currently have no active practice. Create a new one.",
-    "addPractice": "Add new practice"
+    "addPractice": "Add new practice",
+    "go_to_all_practices": "Go to all practices"
   },
   "StudentPraxePage": {
     "title": "My Practices",
@@ -548,7 +549,8 @@
     "ico": "Company ID",
     "enter_ico": "Enter Company ID",
     "email": "Invalid email",
-    "required": "Required field"
+    "required": "Required field",
+    "last_added": "Last added"
   },
   "ReportsHistoryPage": {
     "title": "Reports History",

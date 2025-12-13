@@ -136,7 +136,6 @@
         v-model="detailsDialog"
         v-if="selectedPracticeId"
         :practice-id="selectedPracticeId"
-        @update="updatePractice"
       />
     </v-container>
   </v-main>
@@ -239,11 +238,6 @@ export default {
     openDetails(e, { item }) {
       this.selectedPracticeId = item.id
       this.detailsDialog = true
-    },
-    updatePractice(updated) {
-      if (!updated) return
-      const idx = this.store.list.findIndex(p => p.id === updated.id)
-      if (idx !== -1) this.store.list[idx] = { ...this.store.list[idx], ...updated }
     },
     getStatusColor,
     getStatusText,

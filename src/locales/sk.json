@@ -463,7 +463,8 @@
     "unknownCompany": "Neznáma firma",
     "noActiveTitle": "Žiadna aktívna prax",
     "noActiveText": "Momentálne nemáš žiadnu prebiehajúcu odbornú prax. Vytvor si novú.",
-    "addPractice": "Pridať novú prax"
+    "addPractice": "Pridať novú prax",
+    "go_to_all_practices": "Prejsť ku všetkým praxiam"
   },
   "StudentPraxePage": {
     "title": "Moje praxe",
@@ -549,7 +550,8 @@
     "ico": "IČO",
     "enter_ico": "Zadajte IČO",
     "email": "Neplatný e-mail",
-    "required": "Povinné pole"
+    "required": "Povinné pole",
+    "last_added": "Naposledy pridané"
   },
   "ReportsHistoryPage": {
     "title": "História reportov",

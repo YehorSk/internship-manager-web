@@ -7,6 +7,7 @@ import { useLoadingStore } from '@/stores/loadingStore.js'
 export const usePracticesStore = defineStore('practices', {
   state: () => ({
     list: [],
+    last_added_list: [],
     students: [],
     fieldErrors: {},
     current_page: 1,
@@ -19,6 +20,9 @@ export const usePracticesStore = defineStore('practices', {
   }),
 
   actions: {
+    setPage(page) {
+      this.current_page = page
+    },
     async fetchPractices(filters = {}) {
       const toast = useToastStore()
       const loading = useLoadingStore()
@@ -39,17 +43,8 @@ export const usePracticesStore = defineStore('practices', {
         }
 
         const { data } = await axios.post('/api/practices/list', payload)
-
-        this.list = (data.data || []).map((p) => {
-          const updated = { ...p }
-          if (p.student) {
-            updated.student = {
-              ...p.student,
-              full_name: `${p.student.first_name} ${p.student.last_name}`,
-            }
-          }
-          return updated
-        })
+        this.last_added_list = []
+        this.list = data.data
 
         this.current_page = data.meta?.current_page || data.current_page || 1
         this.total_pages = data.meta?.last_page || data.last_page || 1
@@ -69,7 +64,7 @@ export const usePracticesStore = defineStore('practices', {
       try {
         const { data: response } = await axios.post('/api/practices/', data)
         toast.showSuccess(response.message)
-        await this.fetchPractices()
+        this.last_added_list.push(response.data)
       } catch (e) {
         handleError(e, this, toast)
         throw e
@@ -80,15 +75,28 @@ export const usePracticesStore = defineStore('practices', {
 
     async updatePractice(id, data) {
       const toast = useToastStore()
-      this.loading = true
+      const loading = useLoadingStore()
       this.fieldErrors = {}
       try {
         const { data: response } = await axios.put(`/api/practices/${id}`, data)
         toast.showSuccess(response.message)
+        this.updateItem(this.list, id, response.data)
+        this.updateItem(this.last_added_list, id, response.data)
+        if (this.statistics.pending?.length > 0) {
+          this.updateItem(this.statistics.pending, id, response.data)
+        }
+        return response.data;
       } catch (e) {
         handleError(e, this, toast)
       } finally {
         loading.stop("updatePractice")
+      }
+    },
+
+    updateItem(list, id, data) {
+      const index = list.findIndex(p => p.id === id)
+      if (index !== -1) {
+        list[index] = { ...list[index], ...data }
       }
     },
 
@@ -99,7 +107,11 @@ export const usePracticesStore = defineStore('practices', {
       try {
         const { data: response } = await axios.patch(`/api/practices/${id}/update-practice-status`, { status })
         toast.showSuccess(response.message)
-        return response
+        this.updateItem(this.list, id, response.data)
+        if (this.statistics.pending?.length > 0) {
+          this.updateItem(this.statistics.pending, id, response.data)
+        }
+        return response.data
       } catch (e) {
         handleError(e, this, toast)
       } finally {
@@ -128,6 +140,10 @@ export const usePracticesStore = defineStore('practices', {
       try {
         const { data: response } = await axios.delete(`/api/practices/${id}`)
         toast.showSuccess(response.message)
+        this.updateItem(this.list, id, response.data)
+        if (this.statistics.pending?.length > 0) {
+          this.updateItem(this.statistics.pending, id, response.data)
+        }
         return response.data
       } catch (e) {
         handleError(e, this, toast)

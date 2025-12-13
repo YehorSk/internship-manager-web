@@ -462,7 +462,8 @@
     "unknownCompany": "Невідома компанія",
     "noActiveTitle": "Немає активної практики",
     "noActiveText": "Поки що у вас немає активної практики. Створіть нову.",
-    "addPractice": "Додати практику"
+    "addPractice": "Додати практику",
+    "go_to_all_practices": "Перейти до всіх практик"
   },
   "StudentPraxePage": {
     "title": "Мої практики",
@@ -548,7 +549,8 @@
     "ico": "ЄДРПОУ",
     "enter_ico": "Введіть ЄДРПОУ",
     "email": "Некоректний email",
-    "required": "Обов’язкове поле"
+    "required": "Обов’язкове поле",
+    "last_added": "Останнє додано"
   },
   "ReportsHistoryPage": {
     "title": "Історія звітів",

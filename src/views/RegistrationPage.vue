@@ -69,8 +69,6 @@ export default {
     },
     async submit() {
       this.showSuccess = this.showError = false
-      this.authStore.error = ''
-      this.authStore.fieldErrors = {}
 
       const isStudent = this.selectedRole === 'student'
       const form = this.$refs[isStudent ? 'studentForm' : 'companyForm']
@@ -93,8 +91,7 @@ export default {
   },
   watch: {
     selectedRole() {
-      this.authStore.fieldErrors = {}
-      this.authStore.error = ''
+      this.authStore.clearErrors()
       this.valid = false
       this.$refs.studentForm?.resetValidation()
       this.$refs.companyForm?.resetValidation()

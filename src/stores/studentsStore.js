@@ -16,10 +16,13 @@ export const useStudentsStore = defineStore('students', {
   }),
 
   actions: {
+    setPage(page) {
+      this.current_page = page
+    },
     async fetchStudents(filters = {}) {
       const toast = useToastStore()
       const loading = useLoadingStore()
-      loading.start("fetchStudents")
+      loading.start('fetchStudents')
       try {
         const search = {}
         if (filters.first_name) search.first_name = filters.first_name
@@ -34,7 +37,7 @@ export const useStudentsStore = defineStore('students', {
 
         const { data } = await axios.post('/api/students/list', payload)
 
-        this.students = (data.data || []).map(s => ({
+        this.students = (data.data || []).map((s) => ({
           ...s,
           full_name: `${s.first_name} ${s.last_name}`.trim(),
         }))
@@ -45,26 +48,26 @@ export const useStudentsStore = defineStore('students', {
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        loading.stop("fetchStudents")
+        loading.stop('fetchStudents')
       }
     },
 
     async searchStudents(query = '') {
       const toast = useToastStore()
       const loading = useLoadingStore()
-      loading.start("searchStudents")
+      loading.start('searchStudents')
       try {
         const res = await axios.get(`/api/students/search`, {
-          params: { value: query }
-        });
-        this.students = res.data.data.map(s => ({
+          params: { value: query },
+        })
+        this.students = res.data.data.map((s) => ({
           ...s,
           full_name: `${s.first_name} ${s.last_name}`.trim(),
         }))
       } catch (e) {
         handleError(e, this, toast)
       } finally {
-        loading.stop("searchStudents")
+        loading.stop('searchStudents')
       }
     },
 

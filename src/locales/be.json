@@ -462,7 +462,8 @@
     "unknownCompany": "Невядомая кампанія",
     "noActiveTitle": "Няма актыўнай практыкі",
     "noActiveText": "У вас зараз няма актыўнай практыкі. Стварыце новую.",
-    "addPractice": "Дадаць новую практыку"
+    "addPractice": "Дадаць новую практыку",
+    "go_to_all_practices": "Перайсці да ўсіх практык"
   },
   "StudentPraxePage": {
     "title": "Мае практыкі",
@@ -547,7 +548,8 @@
     "ico": "УНП",
     "enter_ico": "Увядзіце УНП",
     "email": "Няправільны email",
-    "required": "Абавязковае поле"
+    "required": "Абавязковае поле",
+    "last_added": "Апошняе дададзена"
   },
   "ReportsHistoryPage": {
     "title": "Гісторыя справаздач",
