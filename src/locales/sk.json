@@ -117,7 +117,7 @@
     "alert": "Heslo musí mať aspoň 8 znakov a obsahovať kombináciu písmen, číslic a špeciálnych znakov",
     "button": "Zmeniť heslo",
     "rules": {
-      "password": "Min. 8 znakov, aspoň 1 písmeno a 1 číslo",
+      "password": "Min. 8 znakov (písmená a čísla)",
       "match": "Heslá sa nezhodujú"
     }
   },
@@ -449,7 +449,7 @@
       "invalid_token": "Neplatný alebo chýbajúci token. Skúste znova požiadať o odkaz na obnovenie."
     },
     "rules": {
-      "password": "Min. 8 znakov, aspoň 1 písmeno a 1 číslo",
+      "password": "Min. 8 znakov (písmená a čísla)",
       "password_match": "Heslá sa nezhodujú"
     }
   },

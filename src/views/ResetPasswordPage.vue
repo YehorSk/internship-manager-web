@@ -4,7 +4,9 @@
     <section class="py-16">
       <v-container class="form-container fill-height d-flex align-center justify-center">
         <v-card elevation="12" class="pa-6 rounded-2xl" max-width="600">
-          <v-card-title class="text-h5 text-center font-weight-bold"> {{ $t('ResetPasswordPage.title') }} </v-card-title>
+          <v-card-title class="text-h5 text-center font-weight-bold">
+            {{ $t('ResetPasswordPage.title') }}
+          </v-card-title>
 
           <v-card-subtitle class="text-center mb-6" v-if="step === 'request'">
             {{ $t('ResetPasswordPage.subtitle_request') }}
@@ -69,7 +71,9 @@
                 />
 
                 <v-label class="opacity-100 mt-4">
-                  <span class="font-weight-bold">{{ $t('ResetPasswordPage.form.new_password') }}</span>
+                  <span class="font-weight-bold">{{
+                    $t('ResetPasswordPage.form.new_password')
+                  }}</span>
                   <span class="font-weight-bold text-red ml-2">*</span>
                 </v-label>
                 <v-text-field
@@ -85,7 +89,9 @@
                 />
 
                 <v-label class="opacity-100 mt-4">
-                  <span class="font-weight-bold">{{ $t('ResetPasswordPage.form.confirm_password') }}</span>
+                  <span class="font-weight-bold">{{
+                    $t('ResetPasswordPage.form.confirm_password')
+                  }}</span>
                   <span class="font-weight-bold text-red ml-2">*</span>
                 </v-label>
                 <v-text-field
@@ -99,7 +105,8 @@
                   :placeholder="$t('ResetPasswordPage.form.confirm_password_placeholder')"
                   :rules="[
                     rules.required,
-                    v => v === resetData.newPassword || $t('ResetPasswordPage.rules.password_match')
+                    (v) =>
+                      v === resetData.newPassword || $t('ResetPasswordPage.rules.password_match'),
                   ]"
                 />
 
@@ -125,7 +132,9 @@
 
           <div class="my-6 text-center">
             <v-divider />
-            <div class="text-caption mt-n3 bg-white px-3 d-inline-block">{{ $t('ResetPasswordPage.or') }}</div>
+            <div class="text-caption mt-n3 bg-white px-3 d-inline-block">
+              {{ $t('ResetPasswordPage.or') }}
+            </div>
           </div>
 
           <v-btn variant="outlined" rounded="lg" block class="mb-4" :to="{ name: 'Login' }">
@@ -162,12 +171,12 @@ export default {
         confirmPassword: '',
       },
       rules: {
-        required: v => !!v || this.$t('common.required'),
-        email: v => /.+@.+\..+/.test(v) || this.$t('common.email'),
-        password: v =>
-          /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(v) ||
-          this.$t('ResetPasswordPage.rules.password'),
-      }
+        required: (v) => !!v || this.$t('common.required'),
+        email: (v) => /.+@.+\..+/.test(v) || this.$t('common.email'),
+        password: (v) =>
+          /^(?=.*\d)[A-Za-z\d]{8}$/.test(v)
+          || this.$t('ResetPasswordPage.rules.password'),
+      },
     }
   },
   created() {
@@ -181,11 +190,10 @@ export default {
   },
   methods: {
     async sendResetLink() {
-
       const { valid } = await this.$refs.requestForm.validate()
       if (!valid) return
 
-      await this.authStore.forgotPassword({email: this.requestData?.email})
+      await this.authStore.forgotPassword({ email: this.requestData?.email })
     },
     async updatePassword() {
       const { valid } = await this.$refs.resetForm.validate()
@@ -202,9 +210,7 @@ export default {
         password_confirmation: this.resetData?.confirmPassword,
       })
     },
-  }
+  },
 }
 </script>
-<style>
-
-</style>
+<style></style>

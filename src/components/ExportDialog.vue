@@ -60,6 +60,7 @@
                 ]"
                 :label="$t('ExportDialog.semester')"
                 v-model="filters.semester"
+                clearable
                 prepend-inner-icon="mdi-school"
               />
             </v-col>

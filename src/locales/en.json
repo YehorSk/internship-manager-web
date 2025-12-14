@@ -117,7 +117,7 @@
     "alert": "Password must have at least 8 characters and contain a combination of letters, numbers, and special characters",
     "button": "Change password",
     "rules": {
-      "password": "Min. 8 characters, at least 1 letter and 1 number",
+      "password": "Min. 8 characters (letters and numbers)",
       "match": "Passwords do not match"
     }
   },
@@ -447,7 +447,7 @@
       "invalid_token": "Invalid or missing token. Please request a new reset link."
     },
     "rules": {
-      "password": "Min. 8 characters, at least 1 letter and 1 number",
+      "password": "Min. 8 characters (letters and numbers)",
       "password_match": "Passwords do not match",
       "ico": "Enter a valid Company ID"
     }
