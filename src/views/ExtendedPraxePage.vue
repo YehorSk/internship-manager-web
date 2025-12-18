@@ -12,98 +12,7 @@
             </v-col>
           </v-row>
 
-          <v-card class="pa-6 mb-6">
-            <v-row class="align-center mb-3">
-              <v-icon color="grey-darken-1" start>mdi-filter-outline</v-icon>
-              <span class="font-weight-medium text-grey-darken-2 text-subtitle-1">{{
-                $t('ExtendedPraxePage.filters.title')
-              }}</span>
-            </v-row>
-
-            <v-row class="mt-2" dense>
-              <v-col cols="12" md="3">
-                <v-autocomplete
-                  v-model="filters.study_program"
-                  :items="studyPrograms"
-                  :loading="loadingStore.is('fetchPrograms')"
-                  :label="$t('ExtendedPraxePage.filters.studyProgram')"
-                  variant="outlined"
-                  density="comfortable"
-                  clearable
-                />
-              </v-col>
-
-              <v-col cols="12" md="2">
-                <v-autocomplete
-                  v-model="filters.year"
-                  :items="yearSuggestions"
-                  :label="$t('ExtendedPraxePage.filters.year')"
-                  variant="outlined"
-                  density="comfortable"
-                  clearable
-                  @focus="generateYearSuggestions('')"
-                  @update:search="generateYearSuggestions"
-                />
-              </v-col>
-
-              <v-col cols="12" md="2">
-                <v-select
-                  v-model="filters.semester"
-                  :items="[
-                    { title: $t('semesters.winter'), value: 'winter' },
-                    { title: $t('semesters.summer'), value: 'summer' },
-                  ]"
-                  :label="$t('ExtendedPraxePage.filters.semester')"
-                  variant="outlined"
-                  density="comfortable"
-                  clearable
-                />
-              </v-col>
-
-              <v-col v-if="isSupervisor" cols="12" md="3">
-                <v-autocomplete
-                  v-model="filters.employer"
-                  :items="companiesStore.companies"
-                  item-title="name"
-                  item-value="id"
-                  :label="$t('ExtendedPraxePage.filters.employer')"
-                  variant="outlined"
-                  density="comfortable"
-                  clearable
-                  :loading="loadingStore.is('searchCompanies')"
-                  @update:search="searchCompanies"
-                />
-              </v-col>
-
-              <v-col cols="12" md="2">
-                <v-select
-                  v-model="filters.status"
-                  :items="statusOptions()"
-                  item-title="label"
-                  item-value="value"
-                  :label="$t('ExtendedPraxePage.filters.status')"
-                  variant="outlined"
-                  density="comfortable"
-                  clearable
-                />
-              </v-col>
-
-              <v-col cols="12" md="3">
-                <v-autocomplete
-                  v-model="filters.student"
-                  :items="studentsStore.students"
-                  item-title="full_name"
-                  item-value="full_name"
-                  :label="$t('ExtendedPraxePage.filters.student')"
-                  variant="outlined"
-                  density="comfortable"
-                  clearable
-                  :loading="loadingStore.is('searchStudents')"
-                  @update:search="searchStudents"
-                />
-              </v-col>
-            </v-row>
-          </v-card>
+          <Filters v-model="filters" @change="onFiltersChange" />
 
           <v-card class="mb-6">
             <v-card-title class="text-h6 d-flex justify-space-between">
@@ -196,18 +105,15 @@
 <script>
 import Sidebar from '@/components/SideBar.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
-import { getStatusColor, getStatusText, statusOptions } from '@/utils/statusHelpers.js'
+import { getStatusColor, getStatusText } from '@/utils/statusHelpers.js'
 import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
 import { useAuthStore } from '@/stores/authStore.js'
-import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
-import { useCompaniesStore } from '@/stores/companiesStore.js'
-import { useStudentsStore } from '@/stores/studentsStore.js'
-import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
-import { debounce } from 'lodash'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import Filters from '@/components/Filters.vue'
+import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 
 export default {
-  components: { DetailsPraxeDialog, Sidebar },
+  components: { Filters, DetailsPraxeDialog, Sidebar },
 
   data() {
     return {
@@ -217,9 +123,6 @@ export default {
       loadingStore: useLoadingStore(),
       authStore: useAuthStore(),
       programsStore: useStudyProgramsStore(),
-      companiesStore: useCompaniesStore(),
-      studentsStore: useStudentsStore(),
-      yearSuggestions: [],
       filters: {
         year: null,
         semester: null,
@@ -243,60 +146,15 @@ export default {
     },
   },
 
-  watch: {
-    filters: {
-      deep: true,
-      handler() {
-        const filters = { ...this.filters }
-        if (filters.employer) {
-          const company = this.companiesStore.companies.find((c) => c.id === filters.employer)
-          if (company) {
-            filters.company_name = company.name
-          }
-        }
-        delete filters.employer
-        this.store.setPage(1)
-        this.store.fetchPractices(filters)
-      },
-    },
-  },
-
   async mounted() {
     await this.programsStore.fetchPrograms()
-    await this.loadPractices()
-  },
-
-  created() {
-    this.debouncedSearchCompanies = debounce(async (query) => {
-      if (query?.trim().length >= 1) {
-        await this.companiesStore.searchCompanies(query.trim())
-      }
-    }, 500)
-
-    this.debouncedSearchStudents = debounce(async (query) => {
-      if (query?.trim().length >= 1) {
-        await this.studentsStore.searchStudents(query.trim())
-      }
-    }, 500)
+    this.onFiltersChange({ ...this.filters })
   },
 
   methods: {
-    statusOptions() {
-      return statusOptions.map((s) => ({
-        value: s.value,
-        label: this.$t(s.label),
-      }))
-    },
     loadPractices(page = 1) {
-      const payload = { ...this.filters }
-
-      if (payload.student) {
-        payload.student_name = payload.student
-      }
-      delete payload.student
-
       this.store.setPage(page)
-      this.store.fetchPractices(payload)
+      this.store.fetchPractices({ ...this.filters })
     },
     formatDate(date) {
       if (!date) return '—'
@@ -314,17 +172,9 @@ export default {
     },
     getStatusColor,
     getStatusText,
-    generateYearSuggestions(query) {
-      this.yearSuggestions = generateAcademicYearSuggestions(query, this.role)
-    },
-    async searchCompanies(query) {
-      this.debouncedSearchCompanies(query)
-    },
-    async searchStudents(query) {
-      if (!query || query === this.filters.student) {
-        return
-      }
-      this.debouncedSearchStudents(query)
+    onFiltersChange(payload) {
+      this.store.setPage(1)
+      this.store.fetchPractices(payload)
     },
   },
 }

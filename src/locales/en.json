@@ -320,15 +320,6 @@
   "ExtendedPraxePage": {
     "title": "Student Practices",
     "subtitle": "Overview of all student practices",
-    "filters": {
-      "title": "Filters",
-      "studyProgram": "Study Program",
-      "year": "Year",
-      "semester": "Semester",
-      "employer": "Employer",
-      "status": "Status",
-      "student": "Student"
-    },
     "table": {
       "title": "Practice List",
       "total": "Total ",
@@ -469,14 +460,8 @@
     "title": "My Practices",
     "subtitle": "Overview of all your practices",
     "addPractice": "Add practice",
-    "filters": "Filters",
-    "studyProgram": "Study Program",
-    "year": "Year",
     "pozicia": "Position",
     "obdobie": "Period",
-    "semester": "Semester",
-    "employer": "Employer",
-    "status": "Status",
     "listTitle": "My Practice List",
     "total": "Total",
     "total2": "practices",
@@ -659,5 +644,14 @@
     "practiceByStatus": "Practice by Status",
     "overview": "Overview of Professional Practices and Statistics",
     "statisticsDashboard": "Statistics Dashboard"
+  },
+  "Filters": {
+    "title": "Filters",
+    "studyProgram": "Study program",
+    "year": "Year",
+    "semester": "Semester",
+    "employer": "Employer",
+    "status": "Status",
+    "student": "Student"
   }
 }

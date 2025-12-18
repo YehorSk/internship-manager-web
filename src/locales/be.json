@@ -320,15 +320,6 @@
   "ExtendedPraxePage": {
     "title": "Практыкі студэнтаў",
     "subtitle": "Агляд усіх студэнцкіх практык",
-    "filters": {
-      "title": "Фільтры",
-      "studyProgram": "Праграма навучання",
-      "year": "Год",
-      "semester": "Семестр",
-      "employer": "Работадаўца",
-      "status": "Статус",
-      "student": "Студэнт"
-    },
     "table": {
       "title": "Спіс практык",
       "total": "Усяго ",
@@ -469,14 +460,8 @@
     "title": "Мае практыкі",
     "subtitle": "Агляд усіх вашых практык",
     "addPractice": "Дадаць практыку",
-    "filters": "Фільтры",
-    "studyProgram": "Праграма навучання",
-    "year": "Год",
     "pozicia": "Пасада",
     "obdobie": "Перыяд",
-    "semester": "Семестр",
-    "employer": "Работадаўца",
-    "status": "Статус",
     "listTitle": "Спіс маіх практык",
     "total": "Усяго",
     "total2": "практык",
@@ -658,5 +643,14 @@
     "practiceByStatus": "Практыкі па стане",
     "overview": "Агляд прафесійных практык і статыстыка",
     "statisticsDashboard": "Статыстыка Dashboard"
+  },
+  "Filters": {
+    "title": "Фільтры",
+    "studyProgram": "Вучэбная праграма",
+    "year": "Год",
+    "semester": "Семестр",
+    "employer": "Работадавец",
+    "status": "Статус",
+    "student": "Студэнт"
   }
 } 

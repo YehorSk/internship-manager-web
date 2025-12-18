@@ -320,15 +320,6 @@
   "ExtendedPraxePage": {
     "title": "Практики студентів",
     "subtitle": "Огляд усіх практик",
-    "filters": {
-      "title": "Фільтри",
-      "studyProgram": "Освітня програма",
-      "year": "Рік",
-      "semester": "Семестр",
-      "employer": "Роботодавець",
-      "status": "Статус",
-      "student": "Студент"
-    },
     "table": {
       "title": "Список практик",
       "total": "Всього ",
@@ -469,14 +460,8 @@
     "title": "Мої практики",
     "subtitle": "Огляд ваших практик",
     "addPractice": "Додати",
-    "filters": "Фільтри",
-    "studyProgram": "Освітня програма",
-    "year": "Рік",
     "pozicia": "Позиція",
     "obdobie": "Період",
-    "semester": "Семестр",
-    "employer": "Роботодавець",
-    "status": "Статус",
     "listTitle": "Список моїх практик",
     "total": "Всього",
     "total2": "практик",
@@ -659,5 +644,14 @@
     "practiceByStatus": "Практики за статусом",
     "overview": "Огляд професійних практик та статистика",
     "statisticsDashboard": "Статистика Dashboard"
+  },
+  "Filters": {
+    "title": "Фільтри",
+    "studyProgram": "Навчальна програма",
+    "year": "Рік",
+    "semester": "Семестр",
+    "employer": "Роботодавець",
+    "status": "Статус",
+    "student": "Студент"
   }
 }

@@ -320,15 +320,6 @@
   "ExtendedPraxePage": {
     "title": "Практики студентов",
     "subtitle": "Обзор всех студенческих практик",
-    "filters": {
-      "title": "Фильтры",
-      "studyProgram": "Программа обучения",
-      "year": "Год",
-      "semester": "Семестр",
-      "employer": "Работодатель",
-      "status": "Статус",
-      "student": "Студент"
-    },
     "table": {
       "title": "Список практик",
       "total": "Всего ",
@@ -469,14 +460,8 @@
     "title": "Мои практики",
     "subtitle": "Обзор всех ваших практик",
     "addPractice": "Добавить практику",
-    "filters": "Фильтры",
-    "studyProgram": "Программа обучения",
-    "year": "Год",
     "pozicia": "Должность",
     "obdobie": "Период",
-    "semester": "Семестр",
-    "employer": "Работодатель",
-    "status": "Статус",
     "listTitle": "Список моих практик",
     "total": "Всего",
     "total2": "практик",
@@ -659,5 +644,14 @@
     "practiceByStatus": "Практики по статусу",
     "overview": "Обзор профессиональных практик и статистика",
     "statisticsDashboard": "Статистика Dashboard"
+  },
+  "Filters": {
+    "title": "Фильтры",
+    "studyProgram": "Учебная программа",
+    "year": "Год",
+    "semester": "Семестр",
+    "employer": "Работодатель",
+    "status": "Статус",
+    "student": "Студент"
   }
 }

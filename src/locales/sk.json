@@ -321,15 +321,6 @@
   "ExtendedPraxePage": {
     "title": "Prax študentov",
     "subtitle": "Prehľad všetkých praxí študentov",
-    "filters": {
-      "title": "Filtre",
-      "studyProgram": "Študijný program",
-      "year": "Rok",
-      "semester": "Semester",
-      "employer": "Zamestnávateľ",
-      "status": "Stav",
-      "student": "Študent"
-    },
     "table": {
       "title": "Zoznam praxí",
       "total": "Celkovo ",
@@ -470,14 +461,8 @@
     "title": "Moje praxe",
     "subtitle": "Prehľad všetkých vašich praxí",
     "addPractice": "Pridať prax",
-    "filters": "Filtre",
-    "studyProgram": "Študijný program",
-    "year": "Rok",
     "pozicia": "Pozícia",
     "obdobie": "Obdobie",
-    "semester": "Semester",
-    "employer": "Zamestnávateľ",
-    "status": "Stav",
     "listTitle": "Zoznam mojich praxí",
     "total": "Celkovo",
     "total2": "praxí",
@@ -660,5 +645,14 @@
     "practiceByStatus": "Praxí podľa stavu",
     "overview": "Prehľad odborných praxí a štatistiky",
     "statisticsDashboard": "Štatistiky Dashboard"
+  },
+  "Filters": {
+    "title": "Filtre",
+    "studyProgram": "Študijný program",
+    "year": "Rok",
+    "semester": "Semester",
+    "employer": "Zamestnávateľ",
+    "status": "Stav",
+    "student": "Študent"
   }
 }
