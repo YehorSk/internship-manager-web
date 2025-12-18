@@ -47,7 +47,7 @@
         />
       </v-col>
 
-      <v-col v-if="showEmployer" cols="12" md="3">
+      <v-col v-if="showEmployer && role !== 'company'" cols="12" md="3">
         <v-autocomplete
           :model-value="modelValue.employer"
           @update:modelValue="(v) => updateField('employer', v)"

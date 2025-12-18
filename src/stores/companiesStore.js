@@ -61,13 +61,13 @@ export const useCompaniesStore = defineStore('companies', {
       }
     },
 
-    async searchCompanies(query = '') {
+    async searchCompanies(query = '', statuses = []) {
       const toast = useToastStore()
       const loading = useLoadingStore()
       loading.start(`searchCompanies`)
       try {
         const res = await axios.get('/api/company/search', {
-          params: { value: query },
+          params: { value: query, statuses },
         })
         this.companies = res.data.data
       } catch (e) {

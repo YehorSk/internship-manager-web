@@ -345,7 +345,7 @@ export default {
   methods: {
     async searchCompanies(query) {
       if (query?.trim().length >= 1) {
-        await this.companiesStore.searchCompanies(query.trim())
+        await this.companiesStore.searchCompanies(query.trim(), [1, 1])
       }
     },
 
