@@ -180,8 +180,10 @@ import { useReportsStore } from '@/stores/reportsStore.js'
 import { reportStatusOptions } from '@/utils/statusHelpers.js'
 import { debounce } from 'lodash'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import TextField from '@/components/common/TextField.vue'
 
 export default {
+  components: { TextField },
   props: { dialog: Boolean },
   data() {
     return {

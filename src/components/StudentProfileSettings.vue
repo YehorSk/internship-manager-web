@@ -8,93 +8,65 @@
 
           <template v-if="role === 'student'">
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('StudentProfileSettings.form.firstName') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
-              <v-text-field
-                v-model="form.first_name"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                prepend-inner-icon="mdi-account"
+              <TextField
+                icon="mdi-account"
+                :label="$t('StudentProfileSettings.form.firstName')"
                 :rules="[rules.required]"
+                :important="true"
+                v-model="form.first_name"
                 :placeholder="$t('StudentProfileSettings.form.placeholders.firstName')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('StudentProfileSettings.form.lastName') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
-              <v-text-field
-                v-model="form.last_name"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                prepend-inner-icon="mdi-account"
+              <TextField
+                icon="mdi-account"
+                :label="$t('StudentProfileSettings.form.lastName')"
                 :rules="[rules.required]"
+                :important="true"
+                v-model="form.last_name"
                 :placeholder="$t('StudentProfileSettings.form.placeholders.lastName')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('StudentProfileSettings.form.address') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
-              <v-text-field
-                v-model="form.address"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                prepend-inner-icon="mdi-map-marker"
+              <TextField
+                icon="mdi-map-marker"
+                :label="$t('StudentProfileSettings.form.address')"
                 :rules="[rules.required]"
+                :important="true"
+                v-model="form.address"
                 :placeholder="$t('StudentProfileSettings.form.placeholders.address')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('StudentProfileSettings.form.studentEmail') }}</span></v-label>
-              <v-text-field
-                v-model="form.student_email"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                prepend-inner-icon="mdi-email"
-                readonly
-                disabled
-                color="grey"
-                hide-details
+              <TextField
+                icon="mdi-email"
+                :label="$t('StudentProfileSettings.form.studentEmail')"
+                :isDisabled="true"
+                :model-value="form.student_email"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('StudentProfileSettings.form.primaryEmail') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
-              <v-text-field
-                v-model="form.primary_email"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                prepend-inner-icon="mdi-email"
+              <TextField
+                icon="mdi-map-marker"
+                :label="$t('StudentProfileSettings.form.primaryEmail')"
                 :rules="[rules.required, rules.email]"
+                :important="true"
+                v-model="form.primary_email"
                 :placeholder="$t('StudentProfileSettings.form.placeholders.primaryEmail')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('StudentProfileSettings.form.phone') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
-              <v-text-field
-                v-model="form.phone"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                prepend-inner-icon="mdi-phone"
+              <TextField
+                icon="mdi-phone"
+                :label="$t('StudentProfileSettings.form.phone')"
                 :rules="[rules.required, rules.phone]"
+                :important="true"
+                v-model="form.phone"
                 :placeholder="$t('StudentProfileSettings.form.placeholders.phone')"
               />
             </v-col>
@@ -143,8 +115,10 @@ import { useAuthStore } from '@/stores/authStore.js'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { useProfileStore } from '@/stores/profileStore.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import TextField from '@/components/common/TextField.vue'
 
 export default {
+  components: { TextField },
   data() {
     return {
       authStore: useAuthStore(),

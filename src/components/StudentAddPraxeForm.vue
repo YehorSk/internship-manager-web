@@ -93,14 +93,9 @@
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.form.position') }}</span></v-label>
-              <v-text-field
+              <TextField
+                :label="$t('StudentAddPraxeForm.form.position')"
                 v-model="form.position"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
                 :placeholder="$t('StudentAddPraxeForm.form.positionPlaceholder')"
               />
             </v-col>
@@ -120,28 +115,20 @@
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.form.start') }}</span></v-label>
-              <v-text-field
+              <TextField
+                icon="mdi-calendar-start"
+                :label="$t('StudentAddPraxeForm.form.start')"
                 v-model="form.start_date"
                 type="date"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.form.end') }}</span></v-label>
-              <v-text-field
+              <TextField
+                icon="mdi-calendar-end"
+                :label="$t('StudentAddPraxeForm.form.end')"
                 v-model="form.end_date"
                 type="date"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
               />
             </v-col>
 
@@ -188,6 +175,7 @@
               <v-btn color="#3A803D"
                      class="text-white"
                      rounded="lg"
+                     :disabled="!valid"
                      :loading="loadingStore.is('createPractice')"
                      @click="submitForm"
               >
@@ -218,48 +206,90 @@
         <v-form ref="companyForm">
           <v-row>
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">{{ $t('common.ico') }}</span><span class="text-red ml-2">*</span></v-label>
-              <v-text-field v-model="company.ico" :rules="[rules.required, rules.ico]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('common.enter_ico')" />
+              <TextField
+                :label="$t('common.ico')"
+                :rules="[rules.required, rules.ico]"
+                :important="true"
+                v-model="company.ico"
+                :placeholder="$t('common.enter_ico')"
+              />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.name') }}</span><span class="text-red ml-2">*</span></v-label>
-              <v-text-field v-model="company.company_name" :rules="[rules.required]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.name2')" />
+              <TextField
+                :label="$t('StudentAddPraxeForm.companyDialog.fields.name')"
+                :rules="[rules.required]"
+                :important="true"
+                v-model="company.company_name"
+                :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.name2')"
+              />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.address') }}</span><span class="text-red ml-2">*</span></v-label>
-              <v-text-field v-model="company.company_address" :rules="[rules.required]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.address2')" />
+              <TextField
+                :label="$t('StudentAddPraxeForm.companyDialog.fields.address')"
+                :rules="[rules.required]"
+                :important="true"
+                v-model="company.company_address"
+                :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.address2')"
+              />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.contactName') }}</span><span class="text-red ml-2">*</span></v-label>
-              <v-text-field v-model="company.contact_name" :rules="[rules.required]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.contactName2')" />
+              <TextField
+                :label="$t('StudentAddPraxeForm.companyDialog.fields.contactName')"
+                :rules="[rules.required]"
+                :important="true"
+                v-model="company.contact_name"
+                :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.contactName2')"
+              />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.companyEmail') }}</span><span class="text-red ml-2">*</span></v-label>
-              <v-text-field v-model="company.company_email" :rules="[rules.required, rules.email]" type="email" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.companyEmail2')" />
+              <TextField
+                :label="$t('StudentAddPraxeForm.companyDialog.fields.companyEmail')"
+                :rules="[rules.required, rules.email]"
+                :important="true"
+                v-model="company.company_email"
+                type="email"
+                :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.companyEmail2')"
+              />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.contactEmail') }}</span><span class="text-red ml-2">*</span></v-label>
-              <v-text-field v-model="company.contact_email" :rules="[rules.required, rules.email]" type="email" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.contactEmail2')" />
+              <TextField
+                :label="$t('StudentAddPraxeForm.companyDialog.fields.contactEmail')"
+                :rules="[rules.required, rules.email]"
+                :important="true"
+                v-model="company.contact_email"
+                type="email"
+                :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.contactEmail2')"
+              />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.contactPhone') }}</span><span class="text-red ml-2">*</span></v-label>
-              <v-text-field v-model="company.contact_phone" :rules="[rules.required, rules.phone]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.contactPhone2')" />
+              <TextField
+                :label="$t('StudentAddPraxeForm.companyDialog.fields.contactPhone')"
+                :rules="[rules.required, rules.phone]"
+                :important="true"
+                v-model="company.contact_phone"
+                :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.contactPhone2')"
+              />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label><span class="font-weight-bold">{{ $t('StudentAddPraxeForm.companyDialog.fields.contactPosition') }}</span><span class="text-red ml-2">*</span></v-label>
-              <v-text-field v-model="company.contact_position" :rules="[rules.required]" rounded="lg" density="compact" variant="solo-filled" flat single-line :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.contactPosition2')" />
+              <TextField
+                :label="$t('StudentAddPraxeForm.companyDialog.fields.contactPosition')"
+                :rules="[rules.required]"
+                :important="true"
+                v-model="company.contact_position"
+                :placeholder="$t('StudentAddPraxeForm.companyDialog.fields.contactPosition2')"
+              />
             </v-col>
 
             <v-col cols="12" class="text-right mt-4">
               <v-btn color="#3A803D" class="text-white" rounded="lg" @click="saveCompany">
-                <v-icon start>mdi-check</v-icon>{{ editMode ? $t('common.saveChanges') : $t('StudentAddPraxeForm.companyDialog.buttons.save') }}
+                <v-icon start>mdi-check</v-icon>{{ $t('common.saveChanges') }}
               </v-btn>
               <v-btn variant="tonal" color="grey" rounded="lg" class="ml-2" @click="companyDialog = false">
                 {{ $t('common.cancel') }}
@@ -280,8 +310,10 @@ import { useCompaniesStore } from '@/stores/companiesStore.js'
 import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
 import { useAuthStore } from '@/stores/authStore.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import TextField from '@/components/common/TextField.vue'
 
 export default {
+  components: { TextField },
   props: {
     modelValue: {
       type: Boolean,

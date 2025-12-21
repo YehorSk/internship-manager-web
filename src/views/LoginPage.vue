@@ -92,9 +92,10 @@ import { useAuthStore } from '@/stores/authStore.js'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import TextField from '@/components/common/TextField.vue'
 
 export default {
-  components: { AppFooter, AppHeader },
+  components: { TextField, AppFooter, AppHeader },
   data() {
     return {
       authStore: useAuthStore(),

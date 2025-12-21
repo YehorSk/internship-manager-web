@@ -17,17 +17,10 @@
           <v-window v-model="step">
             <v-window-item value="request">
               <v-form ref="requestForm" v-model="validRequest" class="form-fix">
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('ResetPasswordPage.form.email') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                <TextField
                   v-model="requestData.email"
+                  :label="$t('ResetPasswordPage.form.email')"
+                  :important="true"
                   :placeholder="$t('ResetPasswordPage.form.email_placeholder')"
                   type="email"
                   :rules="[rules.required, rules.email]"
@@ -52,62 +45,35 @@
             </v-window-item>
             <v-window-item value="reset">
               <v-form ref="resetForm" v-model="validReset" class="form-fix">
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('ResetPasswordPage.form.email') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                <TextField
                   v-if="resetData.email"
                   v-model="resetData.email"
+                  :label="$t('ResetPasswordPage.form.email')"
+                  :important="true"
                   :placeholder="$t('ResetPasswordPage.form.email_placeholder')"
                   type="email"
                   :rules="[rules.required, rules.email]"
-                  readonly
+                  :isDisabled="true"
                 />
 
-                <v-label class="opacity-100 mt-4">
-                  <span class="font-weight-bold">{{
-                    $t('ResetPasswordPage.form.new_password')
-                  }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                <TextField
+                  class="mt-4"
                   v-model="resetData.newPassword"
+                  :label="$t('ResetPasswordPage.form.new_password')"
+                  :important="true"
                   type="password"
                   :placeholder="$t('ResetPasswordPage.form.new_password_placeholder')"
                   :rules="[rules.required, rules.password]"
                 />
 
-                <v-label class="opacity-100 mt-4">
-                  <span class="font-weight-bold">{{
-                    $t('ResetPasswordPage.form.confirm_password')
-                  }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                <TextField
+                  class="mt-4"
                   v-model="resetData.confirmPassword"
+                  :label="$t('ResetPasswordPage.form.confirm_password')"
+                  :important="true"
                   type="password"
                   :placeholder="$t('ResetPasswordPage.form.confirm_password_placeholder')"
-                  :rules="[
-                    rules.required,
-                    (v) =>
-                      v === resetData.newPassword || $t('ResetPasswordPage.rules.password_match'),
-                  ]"
+                  :rules="[rules.required, rules.match]"
                 />
 
                 <v-alert type="warning" variant="tonal" class="mt-2 rounded-lg" v-if="!token">
@@ -151,9 +117,10 @@ import { useAuthStore } from '@/stores/authStore.js'
 import AppFooter from '@/components/AppFooter.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import TextField from '@/components/common/TextField.vue'
 
 export default {
-  components: { AppHeader, AppFooter },
+  components: { TextField, AppHeader, AppFooter },
   data() {
     return {
       authStore: useAuthStore(),
@@ -174,8 +141,11 @@ export default {
         required: (v) => !!v || this.$t('common.required'),
         email: (v) => /.+@.+\..+/.test(v) || this.$t('common.email'),
         password: (v) =>
-          /^(?=.*\d)[A-Za-z\d]{8}$/.test(v)
+          /^(?=.*\d)[A-Za-z\d]{8,}$/.test(v)
           || this.$t('ResetPasswordPage.rules.password'),
+        match: (v) =>
+          v === this.resetData.newPassword ||
+            this.$t('ResetPasswordPage.rules.password_match'),
       },
     }
   },

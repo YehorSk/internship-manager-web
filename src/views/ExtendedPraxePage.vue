@@ -109,7 +109,7 @@ import { getStatusColor, getStatusText } from '@/utils/statusHelpers.js'
 import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
 import { useAuthStore } from '@/stores/authStore.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
-import Filters from '@/components/Filters.vue'
+import Filters from '@/components/common/Filters.vue'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 
 export default {

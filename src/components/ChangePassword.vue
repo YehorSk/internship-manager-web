@@ -8,61 +8,34 @@
       <v-form ref="resetForm" v-model="validReset" class="form-fix">
       <v-row>
         <v-col cols="12" md="4">
-          <v-label class="opacity-100">
-            <span class="font-weight-bold">{{ $t('ChangePassword.current') }}</span>
-            <span class="font-weight-bold text-red ml-2">*</span>
-          </v-label>
-          <v-text-field
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-            type="password"
+          <TextField
+            icon="mdi-lock"
+            :label="$t('ChangePassword.current')"
+            :important="true"
             v-model="form.currentPassword"
             :rules="[rules.required, rules.password]"
-            prepend-inner-icon="mdi-lock"
-            required
             :placeholder="$t('ChangePassword.placeholder_current')"
           />
         </v-col>
 
         <v-col cols="12" md="4">
-          <v-label class="opacity-100">
-            <span class="font-weight-bold">{{ $t('ChangePassword.new') }}</span>
-            <span class="font-weight-bold text-red ml-2">*</span>
-          </v-label>
-          <v-text-field
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-            type="password"
+          <TextField
+            icon="mdi-lock"
+            :label="$t('ChangePassword.new')"
+            :important="true"
             v-model="form.newPassword"
-            :rules="[rules.required, rules.password, rules.match]"
-            prepend-inner-icon="mdi-lock"
-            required
+            :rules="[rules.required, rules.password]"
             :placeholder="$t('ChangePassword.placeholder_new')"
           />
         </v-col>
 
         <v-col cols="12" md="4">
-          <v-label class="opacity-100">
-            <span class="font-weight-bold">{{ $t('ChangePassword.confirm') }}</span>
-            <span class="font-weight-bold text-red ml-2">*</span>
-          </v-label>
-          <v-text-field
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-            type="password"
+          <TextField
+            icon="mdi-lock"
+            :label="$t('ChangePassword.confirm')"
+            :important="true"
             v-model="form.confirmPassword"
             :rules="[rules.required, rules.password, rules.match]"
-            prepend-inner-icon="mdi-lock"
-            required
             :placeholder="$t('ChangePassword.placeholder_confirm')"
           />
         </v-col>
@@ -94,8 +67,10 @@
 <script>
 import { useAuthStore } from '@/stores/authStore.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import TextField from '@/components/common/TextField.vue'
 
 export default {
+  components: { TextField },
   data() {
     return {
       authStore: useAuthStore(),
@@ -109,8 +84,8 @@ export default {
       rules: {
         required: v => !!v || this.$t('common.required'),
         password: v =>
-          /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(v) ||
-          this.$t('ChangePassword.rules.password'),
+          /^(?=.*\d)[A-Za-z\d]{8,}$/.test(v)
+          || this.$t('ResetPasswordPage.rules.password'),
         match: v =>
           v === this.form.newPassword || this.$t('ChangePassword.rules.match'),
       }

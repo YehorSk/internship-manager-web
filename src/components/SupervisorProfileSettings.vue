@@ -9,70 +9,44 @@
 
           <template v-if="role === 'supervisor'">
             <v-col cols="12" md="3">
-              <v-label class="opacity-100">
-                <span class="font-weight-bold">{{ $t('SupervisorProfileSettings.form.title') }}</span>
-              </v-label>
-              <v-text-field
+              <TextField
+                icon="mdi-school"
+                :label="$t('SupervisorProfileSettings.form.title')"
+                :rules="[rules.required]"
+                :important="true"
                 v-model="form.title"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                prepend-inner-icon="mdi-school"
                 :placeholder="$t('SupervisorProfileSettings.form.placeholders.title')"
               />
             </v-col>
 
             <v-col cols="12" md="4">
-              <v-label class="opacity-100">
-                <span class="font-weight-bold">{{ $t('SupervisorProfileSettings.form.firstName') }}</span>
-                <span class="font-weight-bold text-red ml-2">*</span>
-              </v-label>
-              <v-text-field
-                v-model="form.first_name"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                prepend-inner-icon="mdi-account"
+              <TextField
+                icon="mdi-account"
+                :label="$t('SupervisorProfileSettings.form.firstName')"
                 :rules="[rules.required]"
+                :important="true"
+                v-model="form.first_name"
                 :placeholder="$t('SupervisorProfileSettings.form.placeholders.firstName')"
               />
             </v-col>
 
             <v-col cols="12" md="4">
-              <v-label class="opacity-100">
-                <span class="font-weight-bold">{{ $t('SupervisorProfileSettings.form.lastName') }}</span>
-                <span class="font-weight-bold text-red ml-2">*</span>
-              </v-label>
-              <v-text-field
-                v-model="form.last_name"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                prepend-inner-icon="mdi-account"
+              <TextField
+                icon="mdi-account"
+                :label="$t('SupervisorProfileSettings.form.lastName')"
                 :rules="[rules.required]"
+                :important="true"
+                v-model="form.last_name"
                 :placeholder="$t('SupervisorProfileSettings.form.placeholders.lastName')"
               />
             </v-col>
 
             <v-col cols="12" md="5">
-              <v-label class="opacity-100">
-                <span class="font-weight-bold">{{ $t('SupervisorProfileSettings.form.email') }}</span>
-              </v-label>
-              <v-text-field
+              <TextField
+                icon="mdi-email"
+                :label="$t('SupervisorProfileSettings.form.email')"
+                :isDisabled="true"
                 v-model="form.email"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                readonly
-                disabled
-                color="grey"
-                hide-details
-                prepend-inner-icon="mdi-email"
-                :rules="[rules.required, rules.email]"
                 :placeholder="$t('SupervisorProfileSettings.form.placeholders.email')"
               />
             </v-col>
@@ -101,8 +75,10 @@
 import { useAuthStore } from '@/stores/authStore.js'
 import { useProfileStore } from '@/stores/profileStore.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import TextField from '@/components/common/TextField.vue'
 
 export default {
+  components: { TextField },
   data() {
     return {
       authStore: useAuthStore(),

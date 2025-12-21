@@ -54,7 +54,7 @@
 
           <v-window v-model="tab">
             <v-window-item value="info">
-              <v-form>
+              <v-form ref="internDetailsForm" v-model="valid">
                 <v-row>
                   <v-col cols="12" md="6">
                     <v-label>
@@ -92,22 +92,12 @@
             <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.semester') }}</span>
           </v-label>
           <v-select
-            v-if="isEditing && !isLocked"
             v-model="edited.semester"
+            :disabled="!isEditing || isLocked"
             :items="[
               { title: $t('semesters.winter'), value: 'winter' },
               { title: $t('semesters.summer'), value: 'summer' }
             ]"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-          />
-          <v-text-field
-            v-else
-            :value="$t('semesters.' + practice.semester)"
-            :disabled="true"
             rounded="lg"
             density="compact"
             variant="solo-filled"
@@ -121,8 +111,8 @@
             <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.academic_year') }}</span>
           </v-label>
           <v-autocomplete
-            v-if="isEditing && !isLocked"
             v-model="edited.academic_year"
+            :disabled="!isEditing || isLocked"
             :items="yearSuggestions"
             rounded="lg"
             density="compact"
@@ -132,56 +122,22 @@
             @focus="generateYearSuggestions('')"
             @update:search="generateYearSuggestions"
           />
-          <v-text-field
-            v-else
-            :value="practice.academic_year"
-            :disabled="true"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-          />
         </v-col>
         <v-col cols="12" md="6">
-          <v-label>
-            <v-icon start color="grey-darken-2">mdi-briefcase-outline</v-icon>
-            <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.job_title') }}</span>
-          </v-label>
-          <v-text-field
-            v-if="isEditing && !isLocked"
+          <TextField
+            icon="mdi-briefcase-outline"
+            :label="$t('DetailsPraxeDialog.fields.job_title')"
+            :is-disabled="!isEditing || isLocked"
             v-model="edited.job_title"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
             :placeholder="$t('DetailsPraxeDialog.labels.enter_job_title')"
           />
-          <v-text-field
-            v-else
-            :value="practice.job_title || '—'"
-            :disabled="true"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-          />
         </v-col>
         <v-col cols="12" md="6">
-          <v-label>
-            <v-icon start color="grey-darken-2">mdi-account-tie</v-icon>
-            <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.supervisor') }}</span>
-          </v-label>
-          <v-text-field
-            :value="practice.supervisor || practice.practice_company?.contact_name || '—'"
-            :disabled="true"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
+          <TextField
+            icon="mdi-account-tie"
+            :label="$t('DetailsPraxeDialog.fields.supervisor')"
+            :is-disabled="true"
+            :model-value="practice.supervisor || practice.practice_company?.contact_name || '—'"
           />
         </v-col>
         <template v-if="practice.company_id === null">
@@ -193,110 +149,71 @@
             </div>
           </v-col>
           <v-col cols="12" md="6">
-            <v-label><span class="font-weight-bold">{{ $t('common.ico') }}</span></v-label>
-            <v-text-field
-              :disabled="!isEditing || isLocked"
-              v-model="edited.ico"
+            <TextField
+              :label="$t('common.ico')"
+              :is-disabled="!isEditing || isLocked"
               :rules="[rules.required, rules.ico]"
-              rounded="lg"
-              density="compact"
-              variant="solo-filled"
-              flat
-              single-line
+              v-model="edited.ico"
               :placeholder="$t('common.enter_ico')"
             />
           </v-col>
         <v-col cols="12" md="6">
-          <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.company_name') }}</span></v-label>
-          <v-text-field
-            :disabled="!isEditing || isLocked"
+          <TextField
+            :label="$t('DetailsPraxeDialog.fields.company_name')"
+            :is-disabled="!isEditing || isLocked"
             v-model="edited.company_name"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
-            :placeholder="$t('DetailsPraxeDialog.labels.enter_company_name')"
+            :placeholder="$t('DetailsPraxeDialog.labels.company_name')"
           />
         </v-col>
         <v-col cols="12" md="6">
-          <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.company_address') }}</span></v-label>
-          <v-text-field
-            :disabled="!isEditing || isLocked"
+          <TextField
+            :label="$t('DetailsPraxeDialog.fields.company_address')"
+            :is-disabled="!isEditing || isLocked"
             v-model="edited.company_address"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
             :placeholder="$t('DetailsPraxeDialog.labels.enter_address')"
           />
         </v-col>
         <v-col cols="12" md="6">
-          <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.company_email') }}</span></v-label>
-          <v-text-field
-            :disabled="!isEditing || isLocked"
+          <TextField
+            :label="$t('DetailsPraxeDialog.fields.company_email')"
+            :is-disabled="!isEditing || isLocked"
             v-model="edited.company_email"
             type="email"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
+            :rules="[rules.required, rules.email]"
             :placeholder="$t('DetailsPraxeDialog.labels.enter_email')"
           />
         </v-col>
         <v-col cols="12" md="6">
-          <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.contact_phone') }}</span></v-label>
-          <v-text-field
-            :disabled="!isEditing || isLocked"
+          <TextField
+            :label="$t('DetailsPraxeDialog.fields.contact_phone')"
+            :is-disabled="!isEditing || isLocked"
             v-model="edited.contact_phone"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
             :placeholder="$t('DetailsPraxeDialog.labels.enter_phone')"
           />
         </v-col>
         <v-col cols="12" md="6">
-          <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.contact_name') }}</span></v-label>
-          <v-text-field
-            :disabled="!isEditing || isLocked"
+          <TextField
+            :label="$t('DetailsPraxeDialog.fields.contact_name')"
+            :is-disabled="!isEditing || isLocked"
             v-model="edited.contact_name"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
             :placeholder="$t('DetailsPraxeDialog.labels.enter_contact_name')"
           />
         </v-col>
           <v-col cols="12" md="6">
-            <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.contact_position') }}</span></v-label>
-            <v-text-field
-              :disabled="!isEditing || isLocked"
+            <TextField
+              :label="$t('DetailsPraxeDialog.fields.contact_position')"
+              :is-disabled="!isEditing || isLocked"
               v-model="edited.contact_position"
-              type="email"
-              rounded="lg"
-              density="compact"
-              variant="solo-filled"
-              flat
-              single-line
               :placeholder="$t('DetailsPraxeDialog.labels.enter_contact_position')"
             />
           </v-col>
         <v-col cols="12" md="6">
-          <v-label><span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.contact_email') }}</span></v-label>
-          <v-text-field
-            :disabled="!isEditing || isLocked"
+          <TextField
+            :label="$t('DetailsPraxeDialog.fields.contact_email')"
+            :is-disabled="!isEditing || isLocked"
             v-model="edited.contact_email"
             type="email"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
+            :rules="[rules.required, rules.email]"
             :placeholder="$t('DetailsPraxeDialog.labels.enter_contact_email')"
           />
         </v-col>
@@ -328,35 +245,21 @@
           />
         </v-col>
         <v-col cols="12" md="6">
-          <v-label>
-            <v-icon start color="grey-darken-2">mdi-calendar-start</v-icon>
-            <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.start_date') }}</span>
-          </v-label>
-          <v-text-field
-            :disabled="!isEditing || isLocked"
+          <TextField
+            icon="mdi-calendar-start"
+            :label="$t('DetailsPraxeDialog.fields.start_date')"
+            :is-disabled="!isEditing || isLocked"
             v-model="edited.start_date"
             type="date"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
           />
         </v-col>
         <v-col cols="12" md="6">
-          <v-label>
-            <v-icon start color="grey-darken-2">mdi-calendar-end</v-icon>
-            <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.end_date') }}</span>
-          </v-label>
-          <v-text-field
-            :disabled="!isEditing || isLocked"
+          <TextField
+            icon="mdi-calendar-end"
+            :label="$t('DetailsPraxeDialog.fields.end_date')"
+            :is-disabled="!isEditing || isLocked"
             v-model="edited.end_date"
             type="date"
-            rounded="lg"
-            density="compact"
-            variant="solo-filled"
-            flat
-            single-line
           />
         </v-col>
         </v-row>
@@ -759,7 +662,7 @@
 
         <v-card-actions class="d-flex justify-end pa-4">
           <template v-if="isEditing">
-            <v-btn color="#3A803D" class="text-white" rounded="lg" @click="save" :loading="loadingStore.is('updatePractice')" style="background-color: #3A803D;">
+            <v-btn color="#3A803D" :disabled="!valid" class="text-white" rounded="lg" @click="save" :loading="loadingStore.is('updatePractice')" style="background-color: #3A803D;">
               <v-icon start>mdi-content-save</v-icon> {{ $t('common.saveChanges') }}
             </v-btn>
 
@@ -853,9 +756,11 @@ import { getStatusColor, getStatusIcon, getStatusText, statusOptions } from '@/u
 import { useAuthStore } from '@/stores/authStore.js'
 import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import TextField from '@/components/common/TextField.vue'
 
 
 export default {
+  components: { TextField },
   props: {
     modelValue: { type: Boolean, default: false },
     practiceId: {
@@ -885,9 +790,10 @@ export default {
       agreement: { file: null },
       isEditingAgreement: false,
       commentText: '',
+      valid: false,
       rules: {
-        required: v => !!v || this.$t('StudentAddPraxeForm.form.requiredField'),
-        email: v => /.+@.+\..+/.test(v) || this.$t('StudentAddPraxeForm.form.invalidEmail'),
+        required: v => !!v || this.$t('common.required'),
+        email: v => /.+@.+\..+/.test(v) || this.$t('common.email'),
         ico: v => /^\d{8}$/.test(v) || this.$t('CompanyProfileSettings.form.invalidIco'),
         phone: v => /^\+?\d{7,15}$/.test(v) || this.$t('StudentAddPraxeForm.form.invalidPhone')
       },
@@ -1038,6 +944,9 @@ export default {
       this.isEditing = false
     },
     async save() {
+        const valid = await this.$refs.internDetailsForm.validate()
+        if (!valid) return
+
         const updatedPractice = await this.practicesStore.updatePractice(this.practice.id, this.edited)
 
         if (updatedPractice) {

@@ -8,124 +8,88 @@
 
           <template v-if="role === 'company'">
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('common.enter_ico') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
-              <v-text-field
-                v-model="form.ico"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                prepend-inner-icon="mdi-domain"
+              <TextField
+                icon="mdi-domain"
+                :label="$t('common.enter_ico')"
                 :rules="[rules.required, rules.ico]"
+                :important="true"
+                v-model="form.ico"
                 :placeholder="$t('common.ico')"
               />
             </v-col>
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.name') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
-              <v-text-field
-                v-model="form.name"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                prepend-inner-icon="mdi-office-building"
+              <TextField
+                icon="mdi-office-building"
+                :label="$t('CompanyProfileSettings.form.name')"
                 :rules="[rules.required]"
+                :important="true"
+                v-model="form.name"
                 :placeholder="$t('CompanyProfileSettings.form.placeholders.name')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.companyEmail') }}</span></v-label>
-              <v-text-field
+              <TextField
+                icon="mdi-email"
+                :label="$t('CompanyProfileSettings.form.companyEmail')"
+                :rules="[rules.required]"
+                :isDisabled="true"
                 v-model="form.company_email"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                prepend-inner-icon="mdi-email"
-                readonly
-                disabled
-                color="grey"
-                hide-details
-                :rules="[rules.required, rules.email]"
                 :placeholder="$t('CompanyProfileSettings.form.placeholders.companyEmail')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.address') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
-              <v-text-field
-                v-model="form.address"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                prepend-inner-icon="mdi-map-marker"
+              <TextField
+                icon="mdi-map-marker"
+                :label="$t('CompanyProfileSettings.form.address')"
                 :rules="[rules.required]"
+                :important="true"
+                v-model="form.address"
                 :placeholder="$t('CompanyProfileSettings.form.placeholders.address')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.contactName') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
-              <v-text-field
-                v-model="form.contact_name"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                prepend-inner-icon="mdi-account"
+              <TextField
+                icon="mdi-account"
+                :label="$t('CompanyProfileSettings.form.contactName')"
                 :rules="[rules.required]"
+                :important="true"
+                v-model="form.contact_name"
                 :placeholder="$t('CompanyProfileSettings.form.placeholders.contactName')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.contactPosition') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
-              <v-text-field
-                v-model="form.contact_position"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                prepend-inner-icon="mdi-badge-account"
+              <TextField
+                icon="mdi-badge-account"
+                :label="$t('CompanyProfileSettings.form.contactPosition')"
                 :rules="[rules.required]"
+                :important="true"
+                v-model="form.contact_position"
                 :placeholder="$t('CompanyProfileSettings.form.placeholders.contactPosition')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.contactEmail') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
-              <v-text-field
-                v-model="form.contact_email"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                prepend-inner-icon="mdi-email"
+              <TextField
+                icon="mdi-email"
+                :label="$t('CompanyProfileSettings.form.contactEmail')"
                 :rules="[rules.required, rules.email]"
+                :important="true"
+                v-model="form.contact_email"
                 :placeholder="$t('CompanyProfileSettings.form.placeholders.contactEmail')"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100"><span class="font-weight-bold">{{ $t('CompanyProfileSettings.form.contactPhone') }}</span><span class="font-weight-bold text-red ml-2">*</span></v-label>
-              <v-text-field
-                v-model="form.contact_phone"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                prepend-inner-icon="mdi-phone"
+              <TextField
+                icon="mdi-phone"
+                :label="$t('CompanyProfileSettings.form.contactPhone')"
                 :rules="[rules.required, rules.phone]"
+                :important="true"
+                v-model="form.contact_phone"
                 :placeholder="$t('CompanyProfileSettings.form.placeholders.contactPhone')"
               />
             </v-col>
@@ -154,8 +118,10 @@
 import { useAuthStore } from '@/stores/authStore.js'
 import { useProfileStore } from '@/stores/profileStore.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import TextField from '@/components/common/TextField.vue'
 
 export default {
+  components: { TextField },
   data() {
     return {
       authStore: useAuthStore(),
@@ -168,7 +134,7 @@ export default {
       rules: {
         required: v => !!v || this.$t('CompanyProfileSettings.form.requiredField'),
         email: v => /^(?!.*\.\.)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v) || this.$t('CompanyProfileSettings.form.invalidEmail'),
-        ico: v => /^\d{8}$/.test(v) || this.$t('CompanyProfileSettings.form.ico'),
+        ico: v => /^\d{8}$/.test(v) || this.$t('CompanyProfileSettings.form.invalidIco'),
         phone: v => /^\+?\d{7,15}$/.test(v) || this.$t('CompanyProfileSettings.form.invalidPhone'),
       },
     }
