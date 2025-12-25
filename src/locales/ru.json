@@ -339,8 +339,8 @@
     "title": "Вход",
     "subtitle": "Введите email и пароль",
     "form": {
-      "email": "Email *",
-      "password": "Пароль *"
+      "email": "Email",
+      "password": "Пароль"
     },
     "buttons": {
       "login": "Войти",

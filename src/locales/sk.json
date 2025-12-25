@@ -340,8 +340,8 @@
     "title": "Prihlásenie",
     "subtitle": "Zadajte svoj e-mail a heslo pre prihlásenie",
     "form": {
-      "email": "E-mail *",
-      "password": "Heslo *"
+      "email": "E-mail",
+      "password": "Heslo"
     },
     "buttons": {
       "login": "Prihlásiť sa",

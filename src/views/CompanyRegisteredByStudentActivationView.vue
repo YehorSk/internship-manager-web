@@ -18,50 +18,35 @@
           </v-card-text>
 
           <v-form ref="activateForm" v-model="valid" class="form-fix" @submit.prevent="submit">
-            <v-label class="opacity-100">
-              <span class="font-weight-bold">{{ $t('RegistrationPage.company.email') }}</span>
-              <span class="font-weight-bold text-red ml-2">*</span>
-            </v-label>
-            <v-text-field
+            <TextField
               v-model="form.email"
+              :label="$t('RegistrationPage.company.email')"
               :placeholder="$t('RegistrationPage.company.email2')"
-              type="email"
               :rules="[rules.required, rules.email]"
-              rounded="lg"
-              density="compact"
-              variant="solo-filled"
-              flat
-              single-line
+              :important="true"
+              :outlined="true"
+              type="email"
+              textColor="opacity-100"
             />
-            <v-label class="opacity-100">
-              <span class="font-weight-bold">{{ $t('RegistrationPage.company.password') }}</span>
-              <span class="font-weight-bold text-red ml-2">*</span>
-            </v-label>
-            <v-text-field
+            <TextField
               v-model="form.password"
+              :label="$t('RegistrationPage.company.password')"
               :placeholder="$t('RegistrationPage.company.password2')"
+              :rules="[rules.required, rules.password]"
+              :important="true"
+              :outlined="true"
               type="password"
-              :rules="[rules.required, v => v.length >= 8 || 'Minimálne 8 znakov']"
-              rounded="lg"
-              density="compact"
-              variant="solo-filled"
-              flat
-              single-line
+              textColor="opacity-100"
             />
-            <v-label class="opacity-100">
-              <span class="font-weight-bold">{{ $t('RegistrationPage.company.confirm_password') }}</span>
-              <span class="font-weight-bold text-red ml-2">*</span>
-            </v-label>
-            <v-text-field
+            <TextField
               v-model="form.password_confirmation"
+              :label="$t('RegistrationPage.company.confirm_password')"
               :placeholder="$t('RegistrationPage.company.confirm_password2')"
+              :rules="[rules.required, rules.password, rules.match]"
+              :important="true"
+              :outlined="true"
               type="password"
-              :rules="[rules.required, v => v === form.password || 'Heslá sa nezhodujú']"
-              rounded="lg"
-              density="compact"
-              variant="solo-filled"
-              flat
-              single-line
+              textColor="opacity-100"
             />
             <v-btn
               color="#3A803D"
@@ -99,10 +84,11 @@ import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import { useCompaniesStore } from '@/stores/companiesStore.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import TextField from '@/components/common/TextField.vue'
 
 export default {
   name: 'CompanyActivationView',
-  components: { AppFooter, AppHeader },
+  components: { TextField, AppFooter, AppHeader },
   data() {
     return {
       token: null,
@@ -117,6 +103,11 @@ export default {
       rules: {
         required: v => !!v || this.$t('common.required'),
         email: v => /.+@.+\..+/.test(v) || this.$t('common.email'),
+        password: v =>
+          /^(?=.*\d)[A-Za-z\d]{8,}$/.test(v)
+          || this.$t('ResetPasswordPage.rules.password'),
+        match: v =>
+          v === this.form.password || this.$t('ChangePassword.rules.match'),
       },
     }
   },

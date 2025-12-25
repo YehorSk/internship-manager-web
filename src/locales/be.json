@@ -339,8 +339,8 @@
     "title": "Увайсці",
     "subtitle": "Увядзіце свой email і пароль",
     "form": {
-      "email": "Email *",
-      "password": "Пароль *"
+      "email": "Email",
+      "password": "Пароль"
     },
     "buttons": {
       "login": "Увайсці",

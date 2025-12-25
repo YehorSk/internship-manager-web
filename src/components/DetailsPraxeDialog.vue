@@ -62,7 +62,7 @@
                       <span class="font-weight-bold">{{ $t('DetailsPraxeDialog.fields.study_program') }}</span>
                     </v-label>
                     <v-autocomplete
-                      v-if="isEditing && !isLocked"
+                      :disabled="!isEditing || isLocked"
                       v-model="edited.study_program_id"
                       :items="programsStore.list.map(p => ({ title: p.name, value: p.id }))"
                       :loading="loadingStore.is('fetchPrograms')"
@@ -74,16 +74,6 @@
                       flat
                       single-line
                       :placeholder="$t('DetailsPraxeDialog.labels.choose_program')"
-                    />
-                    <v-text-field
-                      v-else
-                      :value="practice.study_program?.name || '—'"
-                      :disabled="true"
-                      rounded="lg"
-                      density="compact"
-                      variant="solo-filled"
-                      flat
-                      single-line
                     />
                   </v-col>
         <v-col cols="12" md="3">

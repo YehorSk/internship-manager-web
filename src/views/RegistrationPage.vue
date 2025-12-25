@@ -4,9 +4,10 @@ import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import TextField from '@/components/common/TextField.vue'
 
 export default {
-  components: { AppFooter, AppHeader },
+  components: { TextField, AppFooter, AppHeader },
   data() {
     return {
       authStore: useAuthStore(),
@@ -22,7 +23,12 @@ export default {
         phone: v => /^\+?\d{7,15}$/.test(v) || this.$t('RegistrationPage.errors.phone'),
         ico: v => /^\d{8}$/.test(v) || this.$t('RegistrationPage.errors.ico'),
         studentEmail: v =>
-          /@student\.ukf\.sk$/i.test(v) || this.$t('RegistrationPage.errors.student_email')
+          /@student\.ukf\.sk$/i.test(v) || this.$t('RegistrationPage.errors.student_email'),
+        password: v =>
+          /^(?=.*\d)[A-Za-z\d]{8,}$/.test(v)
+          || this.$t('ResetPasswordPage.rules.password'),
+        match: v =>
+          v === this.companyData.password || this.$t('ChangePassword.rules.match'),
       },
     }
   },
@@ -118,106 +124,69 @@ export default {
           <v-window v-model="selectedRole">
             <v-window-item value="student">
               <v-form ref="studentForm" v-model="valid" class="form-fix" @submit.prevent="submit">
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.student.first_name') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
+                <TextField
                   v-model="studentData.first_name"
-                  :error-messages="fieldMsg('first_name')"
+                  :label="$t('RegistrationPage.student.first_name')"
                   :placeholder="$t('RegistrationPage.student.first_name2')"
                   :rules="[rules.required]"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                  :error-messages="fieldMsg('first_name')"
                   @update:modelValue="clearFieldError('first_name')"
+                  :important="true"
+                  textColor="opacity-100"
                 />
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.student.last_name') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
+                <TextField
                   v-model="studentData.last_name"
-                  :error-messages="fieldMsg('last_name')"
+                  :label="$t('RegistrationPage.student.last_name')"
                   :placeholder="$t('RegistrationPage.student.last_name2')"
                   :rules="[rules.required]"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                  :error-messages="fieldMsg('last_name')"
                   @update:modelValue="clearFieldError('last_name')"
+                  :important="true"
+                  textColor="opacity-100"
                 />
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.student.address') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
+                <TextField
                   v-model="studentData.address"
-                  :error-messages="fieldMsg('address')"
+                  :label="$t('RegistrationPage.student.address')"
                   :placeholder="$t('RegistrationPage.student.address2')"
                   :rules="[rules.required]"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                  :error-messages="fieldMsg('address')"
                   @update:modelValue="clearFieldError('address')"
+                  :important="true"
+                  textColor="opacity-100"
                 />
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.student.student_email') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
+                <TextField
                   v-model="studentData.student_email"
-                  :error-messages="fieldMsg('student_email')"
+                  :label="$t('RegistrationPage.student.student_email')"
                   :placeholder="$t('RegistrationPage.student.student_email2')"
-                  type="email"
                   :rules="[rules.required, rules.email, rules.studentEmail]"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                  :error-messages="fieldMsg('student_email')"
                   @update:modelValue="clearFieldError('student_email')"
-                />
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.student.primary_email') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
-                  v-model="studentData.primary_email"
-                  :error-messages="[...fieldMsg('primary_email'), ...fieldMsg('primary_email')]"
-                  :placeholder="$t('RegistrationPage.student.primary_email2')"
+                  :important="true"
                   type="email"
+                  textColor="opacity-100"
+                />
+                <TextField
+                  v-model="studentData.primary_email"
+                  :label="$t('RegistrationPage.student.primary_email')"
+                  :placeholder="$t('RegistrationPage.student.primary_email2')"
                   :rules="[rules.required, rules.email]"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
-                  @update:modelValue="clearFieldError('primary_email'); clearFieldError('primary_email')"
+                  :error-messages="fieldMsg('student_email')"
+                  @update:modelValue="clearFieldError('primary_email')"
+                  :important="true"
+                  type="email"
+                  textColor="opacity-100"
                 />
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.student.phone') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
+                <TextField
                   v-model="studentData.phone"
-                  :error-messages="[...fieldMsg('phone'), ...fieldMsg('phone')]"
+                  :label="$t('RegistrationPage.student.phone')"
                   :placeholder="$t('RegistrationPage.student.phone2')"
-                  type="tel"
                   :rules="[rules.required, rules.phone]"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
-                  @update:modelValue="clearFieldError('phone'); clearFieldError('phone')"
+                  :error-messages="fieldMsg('phone')"
+                  @update:modelValue="clearFieldError('phone')"
+                  :important="true"
+                  type="tel"
+                  textColor="opacity-100"
                 />
-
                 <v-label class="opacity-100">
                   <span class="font-weight-bold">{{ $t('RegistrationPage.student.study_program') }}</span>
                   <span class="font-weight-bold text-red ml-2">*</span>
@@ -260,166 +229,106 @@ export default {
 
             <v-window-item value="company">
               <v-form ref="companyForm" v-model="valid" class="form-fix" @submit.prevent="submit">
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('common.ico') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
+                <TextField
                   v-model="companyData.ico"
-                  :error-messages="fieldMsg('ico')"
+                  :label="$t('common.ico')"
                   :placeholder="$t('common.enter_ico')"
                   :rules="[rules.required, rules.ico]"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                  :error-messages="fieldMsg('ico')"
                   @update:modelValue="clearFieldError('ico')"
+                  :important="true"
+                  textColor="opacity-100"
                 />
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.company.name') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
+                <TextField
                   v-model="companyData.name"
-                  :error-messages="fieldMsg('name')"
+                  :label="$t('RegistrationPage.company.name')"
                   :placeholder="$t('RegistrationPage.company.name2')"
                   :rules="[rules.required]"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                  :error-messages="fieldMsg('name')"
                   @update:modelValue="clearFieldError('name')"
+                  :important="true"
+                  textColor="opacity-100"
                 />
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.company.email') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
+                <TextField
                   v-model="companyData.company_email"
-                  :error-messages="fieldMsg('company_email')"
+                  :label="$t('RegistrationPage.company.email')"
                   :placeholder="$t('RegistrationPage.company.email2')"
-                  type="email"
                   :rules="[rules.required, rules.email]"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                  :error-messages="fieldMsg('company_email')"
                   @update:modelValue="clearFieldError('company_email')"
+                  type="email"
+                  :important="true"
+                  textColor="opacity-100"
                 />
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.company.address') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
+                <TextField
                   v-model="companyData.address"
-                  :error-messages="fieldMsg('address')"
+                  :label="$t('RegistrationPage.company.address')"
                   :placeholder="$t('RegistrationPage.company.address2')"
                   :rules="[rules.required]"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                  :error-messages="fieldMsg('address')"
                   @update:modelValue="clearFieldError('address')"
+                  :important="true"
+                  textColor="opacity-100"
                 />
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.company.contact_name') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
+                <TextField
                   v-model="companyData.contact_name"
-                  :error-messages="fieldMsg('contact_name')"
+                  :label="$t('RegistrationPage.company.contact_name')"
                   :placeholder="$t('RegistrationPage.company.contact_name2')"
                   :rules="[rules.required]"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                  :error-messages="fieldMsg('contact_name')"
                   @update:modelValue="clearFieldError('contact_name')"
+                  :important="true"
+                  textColor="opacity-100"
                 />
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.company.contact_position') }}</span>
-                </v-label>
-                <v-text-field
+                <TextField
                   v-model="companyData.contact_position"
-                  :error-messages="fieldMsg('contact_position')"
+                  :label="$t('RegistrationPage.company.contact_position')"
                   :placeholder="$t('RegistrationPage.company.contact_position2')"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                  :error-messages="fieldMsg('contact_position')"
                   @update:modelValue="clearFieldError('contact_position')"
+                  textColor="opacity-100"
                 />
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.company.contact_email') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
+                <TextField
                   v-model="companyData.contact_email"
-                  :error-messages="fieldMsg('contact_email')"
+                  :label="$t('RegistrationPage.company.contact_email')"
                   :placeholder="$t('RegistrationPage.company.contact_email2')"
-                  type="email"
                   :rules="[rules.required, rules.email]"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                  :error-messages="fieldMsg('contact_email')"
                   @update:modelValue="clearFieldError('contact_email')"
+                  :important="true"
+                  type="email"
+                  textColor="opacity-100"
                 />
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.company.contact_phone') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
+                <TextField
                   v-model="companyData.contact_phone"
-                  :error-messages="fieldMsg('contact_phone')"
+                  :label="$t('RegistrationPage.company.contact_phone')"
                   :placeholder="$t('RegistrationPage.company.contact_phone2')"
-                  type="tel"
                   :rules="[rules.required, rules.phone]"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                  :error-messages="fieldMsg('contact_phone')"
                   @update:modelValue="clearFieldError('contact_phone')"
+                  :important="true"
+                  type="tel"
+                  textColor="opacity-100"
                 />
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.company.password') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
+                <TextField
                   v-model="companyData.password"
-                  :error-messages="fieldMsg('password')"
+                  :label="$t('RegistrationPage.company.password')"
                   :placeholder="$t('RegistrationPage.company.password2')"
-                  type="password"
-                  :rules="[rules.required, v => v.length >= 8 || 'Minimálne 8 znakov']"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                  :rules="[rules.required, rules.password]"
+                  :error-messages="fieldMsg('password')"
                   @update:modelValue="clearFieldError('password')"
-                />
-                <v-label class="opacity-100">
-                  <span class="font-weight-bold">{{ $t('RegistrationPage.company.confirm_password') }}</span>
-                  <span class="font-weight-bold text-red ml-2">*</span>
-                </v-label>
-                <v-text-field
-                  v-model="companyData.password_confirmation"
-                  :placeholder="$t('RegistrationPage.company.confirm_password2')"
+                  :important="true"
                   type="password"
-                  :rules="[rules.required, v => v === companyData.password || 'Heslá sa nezhodujú']"
-                  rounded="lg"
-                  density="compact"
-                  variant="solo-filled"
-                  flat
-                  single-line
+                  textColor="opacity-100"
+                />
+                <TextField
+                  v-model="companyData.password_confirmation"
+                  :label="$t('RegistrationPage.company.confirm_password')"
+                  :placeholder="$t('RegistrationPage.company.confirm_password2')"
+                  :rules="[rules.required, rules.password, rules.match]"
+                  :important="true"
+                  type="password"
+                  textColor="opacity-100"
                 />
 
                 <v-alert type="warning" variant="tonal" class="mt-2 rounded-lg">{{ $t('RegistrationPage.company.company_warning') }}</v-alert>

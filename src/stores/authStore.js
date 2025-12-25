@@ -57,7 +57,7 @@ export const useAuthStore = defineStore('auth', {
           headers: { lang }
         })
         toast.showSuccess(response.message)
-        console.log(response)
+        this.fieldErrors = {}
         router.push('/login')
       } catch (e) {
         handleError(e, this, toast)
@@ -106,7 +106,7 @@ export const useAuthStore = defineStore('auth', {
         this.token = response.token
         toast.showSuccess(response.message)
         this.isLoggedIn = true
-        console.log(response)
+        this.fieldErrors = {}
         await profileStore.setLanguage(lang)
         i18n.global.locale.value = profileStore.lang
         window.location.reload();

@@ -11,24 +11,26 @@
           </v-card-subtitle>
 
           <v-form ref="loginForm" v-model="valid" class="d-flex flex-column gap-4">
-            <v-text-field
+            <TextField
               v-model="loginData.email"
               :label="$t('LoginPage.form.email')"
-              type="email"
+              :placeholder="$t('LoginPage.form.email')"
               :rules="[rules.required, rules.email]"
-              variant="outlined"
-              density="comfortable"
-              rounded="lg"
+              :important="true"
+              :outlined="true"
+              type="email"
+              textColor="opacity-100"
             />
 
-            <v-text-field
+            <TextField
               v-model="loginData.password"
               :label="$t('LoginPage.form.password')"
-              type="password"
+              :placeholder="$t('LoginPage.form.password')"
               :rules="[rules.required]"
-              variant="outlined"
-              density="comfortable"
-              rounded="lg"
+              :important="true"
+              :outlined="true"
+              type="password"
+              textColor="opacity-100"
             />
 
             <v-btn

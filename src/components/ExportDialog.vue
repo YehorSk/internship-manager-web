@@ -101,38 +101,26 @@
               />
             </v-col>
             <v-col cols="12" md="6">
-              <v-label class="opacity-100">
-                <span class="font-weight-bold">{{ $t('ExportDialog.fromDate') }}</span>
-              </v-label>
-              <v-text-field
+              <TextField
                 v-model="filters.start_date"
-                type="date"
                 :label="$t('ExportDialog.fromDate')"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                clearable
-                prepend-inner-icon="mdi-calendar-start"
+                :placeholder="$t('ExportDialog.fromDate')"
+                :iconPositionInside="true"
+                type="date"
+                icon="mdi-calendar-start"
+                textColor="opacity-100"
               />
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-label class="opacity-100">
-                <span class="font-weight-bold">{{ $t('ExportDialog.toDate') }}</span>
-              </v-label>
-              <v-text-field
+              <TextField
                 v-model="filters.end_date"
-                type="date"
                 :label="$t('ExportDialog.toDate')"
-                rounded="lg"
-                density="compact"
-                variant="solo-filled"
-                flat
-                single-line
-                clearable
-                prepend-inner-icon="mdi-calendar-end"
+                :placeholder="$t('ExportDialog.toDate')"
+                :iconPositionInside="true"
+                type="date"
+                icon="mdi-calendar-end"
+                textColor="opacity-100"
               />
             </v-col>
 

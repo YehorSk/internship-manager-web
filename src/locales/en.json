@@ -339,8 +339,8 @@
     "title": "Login",
     "subtitle": "Enter your email and password",
     "form": {
-      "email": "Email *",
-      "password": "Password *"
+      "email": "Email",
+      "password": "Password"
     },
     "buttons": {
       "login": "Login",

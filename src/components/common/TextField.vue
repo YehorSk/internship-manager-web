@@ -1,7 +1,8 @@
 <template>
-  <v-label v-if="label.length > 0">
-    <v-icon v-if="icon" start color="grey-darken-2">{{ icon }}</v-icon>
-    <span class="font-weight-bold">{{ label }}</span><span v-if="important" class="text-red ml-2">*</span>
+  <v-label v-if="label" :class="textColor">
+    <v-icon v-if="icon && !iconPositionInside" start color="grey-darken-2">{{ icon }}</v-icon>
+    <span class="font-weight-bold">{{ label }}</span>
+    <span v-if="important" class="text-red ml-2">*</span>
   </v-label>
 
   <v-text-field
@@ -11,6 +12,8 @@
     :rules="rules"
     :type="type"
     :placeholder="placeholder"
+    :error-messages="errorMessages"
+    :prepend-inner-icon="iconPositionInside ? icon : ''"
     rounded="lg"
     density="compact"
     :variant="outlined ? 'outlined' : 'solo-filled'"
@@ -25,6 +28,14 @@
 export default {
   props: {
     icon: {
+      type: String,
+      default: '',
+    },
+    iconPositionInside:{
+      type: Boolean,
+      default: false
+    },
+    textColor: {
       type: String,
       default: '',
     },
@@ -54,6 +65,10 @@ export default {
     },
     rules: {
       type: Array,
+      default: () => [],
+    },
+    errorMessages: {
+      type: [Array, String],
       default: () => [],
     },
     outlined: {
