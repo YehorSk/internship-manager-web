@@ -67,12 +67,12 @@
                     >
                       <template v-slot:[`item.student`]="{ item }">
                         <div class="d-flex align-center">
-                          <span>{{ item.student.first_name + ' ' + item.student.last_name }}</span>
+                          <span>{{ item.student?.first_name && item.student?.last_name ? item.student.first_name + ' ' + item.student.last_name : '—' }}</span>
                         </div>
                       </template>
                       <template v-slot:[`item.company`]="{ item }">
                         <div class="d-flex align-center">
-                          <span>{{ item.company.name }}</span>
+                          <span>{{ item.company?.name || '—' }}</span>
                         </div>
                       </template>
                       <template v-slot:[`item.jobTitle`]="{ item }">

@@ -58,9 +58,15 @@
                       class="hover:bg-grey-lighten-5 cursor-pointer"
                       @click="openDetails(p)"
                     >
-                      <td>{{ p.student?.first_name + ' ' + p.student?.last_name || '—' }}</td>
+                      <td>
+                        <div class="d-flex align-center">
+                          <span>{{ p.student?.first_name && p.student?.last_name ? p.student.first_name + ' ' + p.student.last_name : (p.student?.full_name || '—') }}</span>
+                        </div>
+                      </td>
                       <td v-if="isSupervisor">
-                        {{ p.practice_company?.name || p.company?.name || '—' }}
+                        <div class="d-flex align-center">
+                          <span>{{ p.practice_company?.name || p.company?.name || '—' }}</span>
+                        </div>
                       </td>
                       <td>{{ p.job_title || '—' }}</td>
                       <td>{{ p.study_program?.name || '—' }}</td>
