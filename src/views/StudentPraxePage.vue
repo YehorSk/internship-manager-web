@@ -80,13 +80,9 @@
                       <td>{{ p.academic_year }}</td>
                       <td>{{ formatDate(p.start_date) }} – {{ formatDate(p.end_date) }}</td>
                       <td>
-                        <v-chip
-                          :style="{ backgroundColor: getStatusColor(p.status) }"
-                          class="text-white"
-                          size="small"
-                        >
+                        <StatusChip :backgroundColor="getStatusColor(p.status)">
                           {{ $t(getStatusText(p.status)) }}
-                        </v-chip>
+                        </StatusChip>
                       </td>
                     </tr>
                   </tbody>
@@ -104,13 +100,9 @@
                       <td>{{ p.academic_year }}</td>
                       <td>{{ formatDate(p.start_date) }} – {{ formatDate(p.end_date) }}</td>
                       <td>
-                        <v-chip
-                          :style="{ backgroundColor: getStatusColor(p.status) }"
-                          class="text-white"
-                          size="small"
-                        >
+                        <StatusChip :backgroundColor="getStatusColor(p.status)">
                           {{ $t(getStatusText(p.status)) }}
-                        </v-chip>
+                        </StatusChip>
                       </td>
                     </tr>
                   </tbody>
@@ -150,6 +142,7 @@ import { useAuthStore } from '@/stores/authStore.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
 import Filters from '@/components/common/Filters.vue'
 import PrimaryButton from '@/components/common/PrimaryButton.vue'
+import StatusChip from '@/components/common/StatusChip.vue'
 
 export default {
   components: {
@@ -158,6 +151,7 @@ export default {
     StudentAddPraxeForm,
     StudentDetailsPraxeDialog: DetailsPraxeDialog,
     PrimaryButton,
+    StatusChip,
   },
 
   data() {

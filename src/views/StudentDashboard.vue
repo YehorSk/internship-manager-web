@@ -47,17 +47,13 @@
                         $t('StudentDashboard.unknownCompany')
                       }}
                     </h3>
-                    <v-chip
-                      :style="{
-                        backgroundColor: getStatusColor(practice.status),
-                        color: 'white',
-                        fontWeight: '500',
-                      }"
-                      size="small"
+                    <StatusChip
+                      :backgroundColor="getStatusColor(practice.status)"
+                      :style="{ fontWeight: '500' }"
                       class="px-3"
                     >
                       {{ $t(getStatusText(practice.status)) }}
-                    </v-chip>
+                    </StatusChip>
                   </div>
 
                   <v-divider class="my-3"></v-divider>
@@ -148,9 +144,10 @@ import StudentAddPraxeForm from '@/components/StudentAddPraxeForm.vue'
 import { usePracticesStore } from '@/stores/practicesStore.js'
 import { getStatusColor, getStatusText } from '@/utils/statusHelpers.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import StatusChip from '@/components/common/StatusChip.vue'
 
 export default {
-  components: { Sidebar, PracticeDialog: DetailsPraxeDialog, StudentAddPraxeForm },
+  components: { Sidebar, PracticeDialog: DetailsPraxeDialog, StudentAddPraxeForm, StatusChip },
   data() {
     return {
       showPracticeDialog: false,

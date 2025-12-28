@@ -82,13 +82,9 @@
                       </template>
 
                       <template v-slot:[`item.status`]="{ item }">
-                        <v-chip
-                          :style="{ backgroundColor: getStatusColor(item.status) }"
-                          class="text-white"
-                          size="small"
-                        >
+                        <StatusChip :backgroundColor="getStatusColor(item.status)">
                           {{ $t(getStatusText(item.status)) }}
-                        </v-chip>
+                        </StatusChip>
                       </template>
                     </v-data-table>
                   </v-card-text>
@@ -149,8 +145,10 @@ import { useAuthStore } from '@/stores/authStore.js'
 import DetailsPraxeDialog from '@/components/DetailsPraxeDialog.vue'
 import { useLoadingStore } from '@/stores/loadingStore.js'
 
+import StatusChip from '@/components/common/StatusChip.vue'
+
 export default {
-  components: { DetailsPraxeDialog, SideBar },
+  components: { DetailsPraxeDialog, SideBar, StatusChip },
   data() {
     return {
       store: usePracticesStore(),

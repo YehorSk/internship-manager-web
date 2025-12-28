@@ -38,9 +38,9 @@
             <v-icon>mdi-check</v-icon>
           </v-btn>
         </div>
-        <v-chip v-else-if="practice && practice.status" :style="{ backgroundColor: getStatusColor(practice.status) }" class="text-white" >
+        <StatusChip v-else-if="practice && practice.status" :backgroundColor="getStatusColor(practice.status)">
           {{  $t(getStatusText(practice.status)) }}
-        </v-chip>
+        </StatusChip>
       </v-card-title>
 
       <v-card-subtitle>{{ $t('DetailsPraxeDialog.subtitle') }}</v-card-subtitle>
@@ -736,10 +736,11 @@ import { useLoadingStore } from '@/stores/loadingStore.js'
 import TextField from '@/components/common/TextField.vue'
 import PrimaryButton from '@/components/common/PrimaryButton.vue'
 import SecondaryButton from '@/components/common/SecondaryButton.vue'
+import StatusChip from '@/components/common/StatusChip.vue'
 
 
 export default {
-  components: { TextField, PrimaryButton, SecondaryButton },
+  components: { TextField, PrimaryButton, SecondaryButton, StatusChip },
   props: {
     modelValue: { type: Boolean, default: false },
     practiceId: {

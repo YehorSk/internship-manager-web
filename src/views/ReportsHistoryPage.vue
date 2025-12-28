@@ -64,13 +64,9 @@
                       <td>{{ r.id }}</td>
                       <td>{{ $t(`ExportDialog.reportTypes.${r.report_type}`) }}</td>
                       <td>
-                        <v-chip
-                          :style="{ backgroundColor: getReportStatusColor(r.status) }"
-                          class="text-white"
-                          size="small"
-                        >
+                        <StatusChip :backgroundColor="getReportStatusColor(r.status)">
                           {{ $t(REPORT_STATUS_MAP[r.status]?.text || 'ReportStatus.unknown') }}
-                        </v-chip>
+                        </StatusChip>
                       </td>
                       <td class="truncate" style="max-width: 250px">
                         {{ r.message || '-' }}
@@ -96,13 +92,9 @@
                       <td>{{ r.id }}</td>
                       <td>{{ $t(`ExportDialog.reportTypes.${r.report_type}`) }}</td>
                       <td>
-                        <v-chip
-                          :style="{ backgroundColor: getReportStatusColor(r.status) }"
-                          class="text-white"
-                          size="small"
-                        >
+                        <StatusChip :backgroundColor="getReportStatusColor(r.status)">
                           {{ $t(REPORT_STATUS_MAP[r.status]?.text || 'ReportStatus.unknown') }}
-                        </v-chip>
+                        </StatusChip>
                       </td>
                       <td class="truncate" style="max-width: 250px">
                         {{ r.message || '-' }}
@@ -147,9 +139,10 @@ import { useReportsStore } from '@/stores/reportsStore.js'
 import { REPORT_STATUS_MAP, getReportStatusColor } from '@/utils/statusHelpers.js'
 import ExportDialog from '@/components/ExportDialog.vue'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import StatusChip from '@/components/common/StatusChip.vue'
 
 export default {
-  components: { Sidebar, ExportDialog },
+  components: { Sidebar, ExportDialog, StatusChip },
   data() {
     return {
       store: useReportsStore(),
