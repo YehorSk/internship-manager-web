@@ -1,12 +1,12 @@
 <template>
   <v-btn
     v-bind="$attrs"
-    color="#3A803D"
-    class="text-white"
+    variant="tonal"
+    color="grey"
     rounded="lg"
+    class="ml-2"
     @click="$emit('click', $event)"
   >
-    <v-icon v-if="icon" start>{{ icon }}</v-icon>
     <slot>{{ text }}</slot>
   </v-btn>
 </template>
@@ -14,10 +14,6 @@
 <script>
 export default {
   props: {
-    icon: {
-      type: String,
-      default: '',
-    },
     text: {
       type: String,
       default: '',

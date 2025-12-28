@@ -180,15 +180,9 @@
               >
                 {{ $t('StudentAddPraxeForm.buttons.save') }}
               </PrimaryButton>
-              <v-btn
-                variant="tonal"
-                color="grey"
-                rounded="lg"
-                class="ml-2"
-                @click="closeDialog"
-              >
+              <SecondaryButton @click="closeDialog">
                 {{ $t('common.cancel') }}
-              </v-btn>
+              </SecondaryButton>
             </v-col>
           </v-row>
         </v-form>
@@ -290,9 +284,9 @@
               <PrimaryButton icon="mdi-check" @click="saveCompany">
                 {{ $t('common.saveChanges') }}
               </PrimaryButton>
-              <v-btn variant="tonal" color="grey" rounded="lg" class="ml-2" @click="companyDialog = false">
+              <SecondaryButton @click="companyDialog = false">
                 {{ $t('common.cancel') }}
-              </v-btn>
+              </SecondaryButton>
             </v-col>
           </v-row>
         </v-form>
@@ -311,9 +305,10 @@ import { useAuthStore } from '@/stores/authStore.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
 import TextField from '@/components/common/TextField.vue'
 import PrimaryButton from '@/components/common/PrimaryButton.vue'
+import SecondaryButton from '@/components/common/SecondaryButton.vue'
 
 export default {
-  components: { TextField, PrimaryButton },
+  components: { TextField, PrimaryButton, SecondaryButton },
   props: {
     modelValue: {
       type: Boolean,

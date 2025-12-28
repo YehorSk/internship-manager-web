@@ -643,9 +643,9 @@
               {{ $t('common.saveChanges') }}
             </PrimaryButton>
 
-            <v-btn variant="tonal" color="grey" rounded="lg" class="ml-2" @click="cancel">
+            <SecondaryButton @click="cancel">
               {{ $t('common.cancel') }}
-            </v-btn>
+            </SecondaryButton>
           </template>
 
           <template v-else>
@@ -735,10 +735,11 @@ import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
 import TextField from '@/components/common/TextField.vue'
 import PrimaryButton from '@/components/common/PrimaryButton.vue'
+import SecondaryButton from '@/components/common/SecondaryButton.vue'
 
 
 export default {
-  components: { TextField, PrimaryButton },
+  components: { TextField, PrimaryButton, SecondaryButton },
   props: {
     modelValue: { type: Boolean, default: false },
     practiceId: {
