@@ -48,18 +48,16 @@
               type="password"
               textColor="opacity-100"
             />
-            <v-btn
-              color="#3A803D"
-              rounded="lg"
+            <PrimaryButton
               size="large"
-              class="login-btn mt-2 text-white"
+              class="login-btn mt-2"
               block
               :loading="loadingStore.is('activateCompany')"
               :disabled="!valid"
               @click="submit"
             >
               {{ $t('CompanyActivationView.buttons.activate') }}
-            </v-btn>
+            </PrimaryButton>
           </v-form>
           <div class="text-center mt-6">
             <v-btn
@@ -85,10 +83,11 @@ import AppFooter from '@/components/AppFooter.vue'
 import { useCompaniesStore } from '@/stores/companiesStore.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
 import TextField from '@/components/common/TextField.vue'
+import PrimaryButton from '@/components/common/PrimaryButton.vue'
 
 export default {
   name: 'CompanyActivationView',
-  components: { TextField, AppFooter, AppHeader },
+  components: { TextField, AppFooter, AppHeader, PrimaryButton },
   data() {
     return {
       token: null,

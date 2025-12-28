@@ -17,15 +17,13 @@
               {{ $t('Hero.subtitle') }}
             </div>
             <div class="d-flex flex-column flex-sm-row ga-3 mt-6">
-              <v-btn
-                color="#3A803D"
-                class="text-white"
+              <PrimaryButton
+                icon="mdi-school"
                 size="large"
                 @click="scrollTo('student-registration')"
               >
-                <v-icon start>mdi-school</v-icon>
                 {{ $t('Hero.student_btn') }}
-              </v-btn>
+              </PrimaryButton>
             </div>
             <div class="mt-4">
               <v-btn variant="outlined" size="large" @click="scrollTo('company-registration')">
@@ -274,16 +272,14 @@
               </v-list-item>
             </v-list>
 
-            <v-btn
-              color="#3A803D"
-              class="text-white text-body-1"
+            <PrimaryButton
+              class="text-body-1"
               size="large"
-              rounded="lg"
               style="font-weight: 600; letter-spacing: 0.3px"
               :to="{ name: 'Register' }"
             >
               {{ $t('Student.btn') }}
-            </v-btn>
+            </PrimaryButton>
           </v-col>
 
           <v-col cols="12" md="6" class="mt-8 mt-md-0">
@@ -391,16 +387,14 @@
               </v-list-item>
             </v-list>
 
-            <v-btn
-              color="#3A803D"
-              class="text-white text-body-1"
+            <PrimaryButton
+              class="text-body-1"
               size="large"
-              rounded="lg"
               style="font-weight: 600; letter-spacing: 0.3px"
               :to="{ path: '/register', query: { role: 'company' } }"
             >
               {{ $t('Company.btn') }}
-            </v-btn>
+            </PrimaryButton>
           </v-col>
         </v-row>
       </v-container>
@@ -453,9 +447,10 @@
 <script>
 import AppHeader from '../components/AppHeader.vue'
 import AppFooter from '../components/AppFooter.vue'
+import PrimaryButton from '@/components/common/PrimaryButton.vue'
 
 export default {
-  components: { AppHeader, AppFooter },
+  components: { AppHeader, AppFooter, PrimaryButton },
   mounted() {
     this.scrollToHash(this.$route.hash)
   },

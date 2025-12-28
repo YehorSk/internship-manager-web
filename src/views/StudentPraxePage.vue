@@ -11,12 +11,11 @@
               <p class="text-subtitle-1">{{ $t('StudentPraxePage.subtitle') }}</p>
             </v-col>
             <v-col cols="4" class="d-flex justify-end">
-              <v-btn color="#3A803D" class="text-white" @click="openForm">
-                <v-icon start>mdi-plus</v-icon>
+              <PrimaryButton icon="mdi-plus" @click="openForm">
                 <span v-if="!$vuetify.display.smAndDown">{{
                   $t('StudentPraxePage.addPractice')
                 }}</span>
-              </v-btn>
+              </PrimaryButton>
             </v-col>
           </v-row>
 
@@ -150,6 +149,7 @@ import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { useAuthStore } from '@/stores/authStore.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
 import Filters from '@/components/common/Filters.vue'
+import PrimaryButton from '@/components/common/PrimaryButton.vue'
 
 export default {
   components: {
@@ -157,6 +157,7 @@ export default {
     Sidebar,
     StudentAddPraxeForm,
     StudentDetailsPraxeDialog: DetailsPraxeDialog,
+    PrimaryButton,
   },
 
   data() {

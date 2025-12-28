@@ -311,16 +311,13 @@
                   </div>
                 </div>
 
-                <v-btn
-                  color="#3A803D"
-                  class="text-white"
-                  rounded="lg"
+                <PrimaryButton
+                  icon="mdi-download"
                   elevation="0"
-                  prepend-icon="mdi-download"
                   @click="downloadAgreementTemplate"
                 >
                   {{ $t('DetailsPraxeDialog.agreement.download_btn') }}
-                </v-btn>
+                </PrimaryButton>
               </div>
             </v-card>
 
@@ -359,17 +356,15 @@
                 />
 
                 <div class="d-flex justify-end flex-wrap ga-2">
-                  <v-btn
+                  <PrimaryButton
                     v-if="canDeleteAgreementOrUploadAgreement"
-                    color="#3A803D"
-                    class="text-white"
-                    rounded="lg"
+                    icon="mdi-upload"
                     elevation="0"
                     :loading="loadingStore.is('uploadAgreement')"
                     @click="submitAgreement"
                   >
-                    <v-icon start>mdi-upload</v-icon> {{ $t('DetailsPraxeDialog.agreement.upload_btn') }}
-                  </v-btn>
+                    {{ $t('DetailsPraxeDialog.agreement.upload_btn') }}
+                  </PrimaryButton>
 
                   <v-btn
                     v-if="hasUploadedAgreement"
@@ -438,17 +433,14 @@
                   </div>
 
                 </div>
-                <v-btn
+                <PrimaryButton
                   v-if="hasUploadedAgreement"
-                  color="#3A803D"
-                  class="text-white"
-                  rounded="lg"
+                  icon="mdi-download"
                   elevation="0"
-                  prepend-icon="mdi-download"
                   @click="downloadUploadedAgreement"
                 >
                   Stiahnuť
-                </v-btn>
+                </PrimaryButton>
               </div>
               <div class="mt-4 mb-6">
                 <v-textarea
@@ -494,16 +486,13 @@
                   </div>
                 </div>
 
-                <v-btn
-                  color="#3A803D"
-                  class="text-white"
-                  rounded="lg"
+                <PrimaryButton
+                  icon="mdi-download"
                   elevation="0"
-                  prepend-icon="mdi-download"
                   @click="downloadReportTemplate"
                 >
                   {{ $t('DetailsPraxeDialog.report.download_btn') }}
-                </v-btn>
+                </PrimaryButton>
               </div>
             </v-card>
 
@@ -542,17 +531,15 @@
                 />
 
                 <div class="d-flex justify-end flex-wrap ga-2">
-                  <v-btn
+                  <PrimaryButton
                     v-if="canDeleteReportOrUploadReport"
-                    color="#3A803D"
-                    class="text-white"
-                    rounded="lg"
+                    icon="mdi-upload"
                     elevation="0"
                     :loading="loadingStore.is('uploadReport')"
                     @click="submitReport"
                   >
-                    <v-icon start>mdi-upload</v-icon> {{ $t('DetailsPraxeDialog.report.upload_btn') }}
-                  </v-btn>
+                    {{ $t('DetailsPraxeDialog.report.upload_btn') }}
+                  </PrimaryButton>
 
                   <v-btn
                     v-if="uploadedReport"
@@ -652,9 +639,9 @@
 
         <v-card-actions class="d-flex justify-end pa-4">
           <template v-if="isEditing">
-            <v-btn color="#3A803D" :disabled="!valid" class="text-white" rounded="lg" @click="save" :loading="loadingStore.is('updatePractice')" style="background-color: #3A803D;">
-              <v-icon start>mdi-content-save</v-icon> {{ $t('common.saveChanges') }}
-            </v-btn>
+            <PrimaryButton :disabled="!valid" @click="save" :loading="loadingStore.is('updatePractice')" icon="mdi-content-save">
+              {{ $t('common.saveChanges') }}
+            </PrimaryButton>
 
             <v-btn variant="tonal" color="grey" rounded="lg" class="ml-2" @click="cancel">
               {{ $t('common.cancel') }}
@@ -747,10 +734,11 @@ import { useAuthStore } from '@/stores/authStore.js'
 import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
 import TextField from '@/components/common/TextField.vue'
+import PrimaryButton from '@/components/common/PrimaryButton.vue'
 
 
 export default {
-  components: { TextField },
+  components: { TextField, PrimaryButton },
   props: {
     modelValue: { type: Boolean, default: false },
     practiceId: {

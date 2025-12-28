@@ -172,15 +172,14 @@
             </v-col>
 
             <v-col cols="12" class="text-right mt-4">
-              <v-btn color="#3A803D"
-                     class="text-white"
-                     rounded="lg"
+              <PrimaryButton
+                     icon="mdi-check"
                      :disabled="!valid"
                      :loading="loadingStore.is('createPractice')"
                      @click="submitForm"
               >
-                <v-icon start>mdi-check</v-icon> {{ $t('StudentAddPraxeForm.buttons.save') }}
-              </v-btn>
+                {{ $t('StudentAddPraxeForm.buttons.save') }}
+              </PrimaryButton>
               <v-btn
                 variant="tonal"
                 color="grey"
@@ -288,9 +287,9 @@
             </v-col>
 
             <v-col cols="12" class="text-right mt-4">
-              <v-btn color="#3A803D" class="text-white" rounded="lg" @click="saveCompany">
-                <v-icon start>mdi-check</v-icon>{{ $t('common.saveChanges') }}
-              </v-btn>
+              <PrimaryButton icon="mdi-check" @click="saveCompany">
+                {{ $t('common.saveChanges') }}
+              </PrimaryButton>
               <v-btn variant="tonal" color="grey" rounded="lg" class="ml-2" @click="companyDialog = false">
                 {{ $t('common.cancel') }}
               </v-btn>
@@ -311,9 +310,10 @@ import { generateAcademicYearSuggestions } from '@/utils/yearHelpers.js'
 import { useAuthStore } from '@/stores/authStore.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
 import TextField from '@/components/common/TextField.vue'
+import PrimaryButton from '@/components/common/PrimaryButton.vue'
 
 export default {
-  components: { TextField },
+  components: { TextField, PrimaryButton },
   props: {
     modelValue: {
       type: Boolean,

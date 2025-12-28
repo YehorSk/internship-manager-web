@@ -5,9 +5,10 @@ import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import { useLoadingStore } from '@/stores/loadingStore.js'
 import TextField from '@/components/common/TextField.vue'
+import PrimaryButton from '@/components/common/PrimaryButton.vue'
 
 export default {
-  components: { TextField, AppFooter, AppHeader },
+  components: { TextField, AppFooter, AppHeader, PrimaryButton },
   data() {
     return {
       authStore: useAuthStore(),
@@ -212,18 +213,16 @@ export default {
 
                 <v-alert type="info" variant="tonal" class="mt-2 rounded-lg">{{ $t('RegistrationPage.student.student_info') }}</v-alert>
 
-                <v-btn
-                  color="#3A803D"
+                <PrimaryButton
                   size="large"
-                  rounded="lg"
-                  class="mt-4 text-white"
+                  class="mt-4"
                   block
                   :loading="loadingStore.is('register')"
                   :disabled="!valid || loadingStore.is('register')"
                   type="submit"
                 >
                   {{ $t('RegistrationPage.student.button') }}
-                </v-btn>
+                </PrimaryButton>
               </v-form>
             </v-window-item>
 
@@ -333,18 +332,16 @@ export default {
 
                 <v-alert type="warning" variant="tonal" class="mt-2 rounded-lg">{{ $t('RegistrationPage.company.company_warning') }}</v-alert>
 
-                <v-btn
-                  color="#3A803D"
+                <PrimaryButton
                   size="large"
-                  rounded="lg"
-                  class="mt-4 text-white"
+                  class="mt-4"
                   block
                   :loading="loadingStore.is('register')"
                   :disabled="!valid || loadingStore.is('register')"
                   type="submit"
                 >
                   {{ $t('RegistrationPage.company.button') }}
-                </v-btn>
+                </PrimaryButton>
               </v-form>
             </v-window-item>
           </v-window>

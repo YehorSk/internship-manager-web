@@ -30,17 +30,15 @@
                   {{ $t('ResetPasswordPage.form.info_reset') }}
                 </v-alert>
 
-                <v-btn
-                  color="#3A803D"
-                  rounded="lg"
+                <PrimaryButton
                   size="large"
-                  class="mt-4 text-white"
+                  class="mt-4"
                   block
                   :loading="loadingStore.is('forgotPassword')"
                   @click="sendResetLink"
                 >
                   {{ $t('ResetPasswordPage.buttons.send_reset') }}
-                </v-btn>
+                </PrimaryButton>
               </v-form>
             </v-window-item>
             <v-window-item value="reset">
@@ -80,18 +78,16 @@
                   {{ $t('ResetPasswordPage.alerts.invalid_token') }}
                 </v-alert>
 
-                <v-btn
-                  color="#3A803D"
-                  rounded="lg"
+                <PrimaryButton
                   size="large"
-                  class="mt-4 text-white"
+                  class="mt-4"
                   block
                   :loading="loadingStore.is('updatePassword')"
                   :disabled="!token"
                   @click="updatePassword"
                 >
                   {{ $t('ResetPasswordPage.buttons.update_password') }}
-                </v-btn>
+                </PrimaryButton>
               </v-form>
             </v-window-item>
           </v-window>
@@ -118,9 +114,10 @@ import AppFooter from '@/components/AppFooter.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import { useLoadingStore } from '@/stores/loadingStore.js'
 import TextField from '@/components/common/TextField.vue'
+import PrimaryButton from '@/components/common/PrimaryButton.vue'
 
 export default {
-  components: { TextField, AppHeader, AppFooter },
+  components: { TextField, AppHeader, AppFooter, PrimaryButton },
   data() {
     return {
       authStore: useAuthStore(),
