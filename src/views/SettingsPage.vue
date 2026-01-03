@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from '@/components/SideBar.vue'
 import ChangePassword from '@/components/ChangePassword.vue'
 import StudentProfileSettings from '@/components/StudentProfileSettings.vue'
 import CompanyProfileSettings from '@/components/CompanyProfileSettings.vue'

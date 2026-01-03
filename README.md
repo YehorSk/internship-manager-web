@@ -5,17 +5,13 @@ This is the frontend application for the Internship Manager project. It is built
 ## Related Backend API
 The related backend API application can be found here: [https://github.com/YehorSk/internship-manager-api](https://github.com/YehorSk/internship-manager-api)
 
----
-
 ## Setup Instructions
 
 ### Requirements
 - **Node.js** 22+
 - **npm**
-- **Git**
-- **Server API**: Before starting the frontend, you must run the server API (Laravel, see the backend repository). Important: your web server (e.g., Apache/XAMPP) must be configured so that the DocumentRoot points to the `public` folder of your Laravel application, not the project root. By default, the frontend expects the API to be available at `http://localhost/api/`.
 
-### Local Installation
+### Local installation on the host OS
 
 1. **Clone the repository:**
    ```sh
@@ -45,9 +41,6 @@ The related backend API application can be found here: [https://github.com/Yehor
    ```
    The app will be available at [http://localhost:3000/](http://localhost:3000/).
 
----
+### Local installation with Docker
 
-## How to Run the App
-1. Start the backend API (see backend repository for instructions).
-2. Start the frontend as described above.
-3. Open [http://localhost:3000/](http://localhost:3000/) in your browser.
+See the README.md of the backend repository for Docker-based local installation instructions, as both frontend and backend need to be set up together.
