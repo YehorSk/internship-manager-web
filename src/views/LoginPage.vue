@@ -10,7 +10,7 @@
             {{ $t('LoginPage.subtitle') }}
           </v-card-subtitle>
 
-          <v-form ref="loginForm" v-model="valid" class="d-flex flex-column gap-4">
+          <v-form ref="loginForm" v-model="valid" class="d-flex flex-column gap-4" @submit.prevent="submit">
             <TextField
               v-model="loginData.email"
               :label="$t('LoginPage.form.email')"
@@ -37,9 +37,9 @@
               size="large"
               class="login-btn mt-2"
               block
+              type="submit"
               :loading="loadingStore.is('login')"
               :disabled="!valid"
-              @click="submit"
             >
               {{ $t('LoginPage.buttons.login') }}
             </PrimaryButton>

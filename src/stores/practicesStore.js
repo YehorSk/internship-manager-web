@@ -200,11 +200,11 @@ export const usePracticesStore = defineStore('practices', {
     async requestAgreementApproval(practiceId) {
       const toast = useToastStore()
       try {
-        const { data } = await axios.get(
-          `/api/practices/${practiceId}/agreement-confirmation-request`
+        const { data: response } = await axios.get(
+          `/api/practices/${practiceId}/agreement-confirmation-request`,
         )
-        toast.showSuccess(data.message)
-        return data
+        toast.showSuccess(response.message)
+        this.updateItem(this.list, practiceId, response.data)
       } catch (e) {
         handleError(e, this, toast)
       }
@@ -292,14 +292,13 @@ export const usePracticesStore = defineStore('practices', {
     async requestReportApproval(practiceId) {
       const toast = useToastStore()
       try {
-        const { data } = await axios.get(`/api/practices/${practiceId}/report-confirmation-request`)
-        this.success = data.message
-        return data
+        const { data: response } = await axios.get(`/api/practices/${practiceId}/report-confirmation-request`)
+        toast.showSuccess(response.message)
+        this.updateItem(this.list, practiceId, response.data)
       } catch (e) {
         handleError(e, this, toast)
       }
     },
-
     async updateDocumentStatus(practiceId, documentType, status, comment = '') {
       const toast = useToastStore()
       try {

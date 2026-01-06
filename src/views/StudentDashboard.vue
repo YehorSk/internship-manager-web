@@ -78,7 +78,12 @@
                 </v-card>
               </v-hover>
             </v-col>
-            <v-col cols="12" md="6" lg="4">
+            <v-col
+              cols="12"
+              md="6"
+              lg="4"
+              v-if="!loadingStore.is('fetchPractices') && activePractices.length !== 0"
+            >
               <v-hover v-slot="{ isHovering, props }">
                 <v-card
                   v-bind="props"

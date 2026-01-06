@@ -995,7 +995,7 @@ export default {
     },
     async submitReport() {
       if (!this.report.file) {
-        this.toast.error(this.$t('DetailsPraxeDialog.delete_report.missing_file'))
+        this.toast.error(this.$t('DetailsPraxeDialog.toast.missing_file'))
         return
       }
       await this.practicesStore.uploadReport(this.practice.id, this.report.file)
@@ -1010,7 +1010,7 @@ export default {
     },
     async submitAgreement() {
       if (!this.agreement.file) {
-        this.toast.error(this.$t('DetailsPraxeDialog.delete_report.missing_file'))
+        this.toast.error(this.$t('DetailsPraxeDialog.toast.missing_file'))
         return
       }
       await this.practicesStore.uploadAgreement(this.practice.id, this.agreement.file)
@@ -1048,7 +1048,7 @@ export default {
     },
 
     async submitR() {
-        await this.practicesStore.requestReportApproval(this.practice.id)
+      await this.practicesStore.requestReportApproval(this.practice.id)
       await this.fetchPractice()
       this.$emit('update', this.practice)
     },
