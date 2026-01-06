@@ -34,7 +34,7 @@ export const usePracticesStore = defineStore('practices', {
         if (filters.year) search.academic_year = filters.year
         if (filters.company_name) search.company_name = filters.company_name
         if (filters.study_program) search.study_program_name = filters.study_program
-        if (filters.student) search.student_name = filters.student
+        if (filters.student_name) search.student_name = filters.student_name
 
         const payload = {
           page: this.current_page,

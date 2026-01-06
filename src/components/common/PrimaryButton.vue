@@ -4,6 +4,7 @@
     color="#3A803D"
     class="text-white"
     rounded="lg"
+    style="background-color: #3a803d"
     @click="$emit('click', $event)"
   >
     <v-icon v-if="icon" start>{{ icon }}</v-icon>
