@@ -642,7 +642,8 @@
     "toConfirmPractice": "Практык на пацверджанне",
     "practiceByStatus": "Практыкі па стане",
     "overview": "Агляд прафесійных практык і статыстыка",
-    "statisticsDashboard": "Статыстыка Dashboard"
+    "statisticsDashboard": "Статыстыка Dashboard",
+    "no_data_available": "Дадзеныя адсутнічаюць"
   },
   "Filters": {
     "title": "Фільтры",

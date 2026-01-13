@@ -644,7 +644,8 @@
     "toConfirmPractice": "Praxí na potvrdenie",
     "practiceByStatus": "Praxí podľa stavu",
     "overview": "Prehľad odborných praxí a štatistiky",
-    "statisticsDashboard": "Štatistiky Dashboard"
+    "statisticsDashboard": "Štatistiky Dashboard",
+    "no_data_available": "Žiadne údaje nie sú k dispozícii"
   },
   "Filters": {
     "title": "Filtre",

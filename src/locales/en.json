@@ -643,7 +643,8 @@
     "toConfirmPractice": "Practice to Confirm",
     "practiceByStatus": "Practice by Status",
     "overview": "Overview of Professional Practices and Statistics",
-    "statisticsDashboard": "Statistics Dashboard"
+    "statisticsDashboard": "Statistics Dashboard",
+    "no_data_available": "No data available"
   },
   "Filters": {
     "title": "Filters",

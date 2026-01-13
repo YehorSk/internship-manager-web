@@ -643,7 +643,8 @@
     "toConfirmPractice": "Практики на подтверждение",
     "practiceByStatus": "Практики по статусу",
     "overview": "Обзор профессиональных практик и статистика",
-    "statisticsDashboard": "Статистика Dashboard"
+    "statisticsDashboard": "Статистика Dashboard",
+    "no_data_available": "Данные отсутствуют"
   },
   "Filters": {
     "title": "Фильтры",

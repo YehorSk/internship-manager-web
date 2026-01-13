@@ -643,7 +643,8 @@
     "toConfirmPractice": "Практик на підтвердження",
     "practiceByStatus": "Практики за статусом",
     "overview": "Огляд професійних практик та статистика",
-    "statisticsDashboard": "Статистика Dashboard"
+    "statisticsDashboard": "Статистика Dashboard",
+    "no_data_available": "Дані відсутні"
   },
   "Filters": {
     "title": "Фільтри",
