@@ -1027,19 +1027,17 @@ export default {
     },
     async downloadUploadedAgreement() {
       if (!this.uploadedAgreement) return
-        const { url } = await this.practicesStore.downloadUploadedDocument(
+        await this.practicesStore.downloadUploadedDocument(
           this.practice.id,
           this.uploadedAgreement.file_path
         )
-        window.open(url, '_blank')
     },
     async downloadUploadedReport() {
       if (!this.uploadedReport) return
-        const { url } = await this.practicesStore.downloadUploadedDocument(
+        await this.practicesStore.downloadUploadedDocument(
           this.practice.id,
           this.uploadedReport.file_path
         )
-      window.open(url, '_blank')
     },
 
     getFileName(path) {

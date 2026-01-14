@@ -212,10 +212,18 @@ export const usePracticesStore = defineStore('practices', {
     async downloadUploadedDocument(practiceId, filePath) {
       const toast = useToastStore()
       try {
-        const { data } = await axios.get(`/api/practices/${practiceId}/download-document`, {
+        const response = await axios.get(`/api/practices/${practiceId}/download-document`, {
           params: { file_path: filePath },
+          responseType: 'blob',
         })
-        return data
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', `${filePath}.pdf`)
+        document.body.appendChild(link)
+        link.click()
+        link.remove()
+
       } catch (e) {
         handleError(e, this, toast)
       }
