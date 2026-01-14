@@ -189,7 +189,7 @@ export const usePracticesStore = defineStore('practices', {
         const url = window.URL.createObjectURL(new Blob([response.data]))
         const link = document.createElement('a')
         link.href = url
-        link.setAttribute('download', `dohoda_${practiceId}.pdf`)
+        link.setAttribute('download', `dohoda_${practiceId}.docx`)
         document.body.appendChild(link)
         link.click()
         link.remove()
