@@ -653,5 +653,20 @@
     "employer": "Работадавец",
     "status": "Статус",
     "student": "Студэнт"
+  },
+  "CompanyDetailsDialog": {
+    "ico": "УНП",
+    "address": "Адрас",
+    "contactPosition": "Пасада кантактнай асобы",
+    "contactName": "Кантактная асоба",
+    "companyEmail": "Email кампаніі",
+    "contactEmail": "Email кантакту",
+    "contactPhone": "Тэлефон кантакту",
+    "status": "Статус",
+    "statusActive": "Актыўная",
+    "statusInactive": "Неактыўная",
+    "registeredBy": "Зарэгістравана",
+    "student": "Студэнт",
+    "email": "Email"
   }
 } 

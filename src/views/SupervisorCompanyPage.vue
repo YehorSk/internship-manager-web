@@ -44,7 +44,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(c, index) in store.companies" :key="index">
+                    <tr
+                      v-for="(c, index) in store.companies"
+                      :key="index"
+                      class="cursor-pointer"
+                      @click="openCompany(c.user_id)
+                      ">
                       <td>{{ c.ico }}</td>
                       <td>{{ c.name }}</td>
                       <td>{{ c.contact_name }}</td>
@@ -102,6 +107,11 @@
         </v-container>
       </v-row>
     </v-container>
+
+    <CompanyDetailsDialog
+      v-model="showCompanyDialog"
+      :company-id="selectedCompanyId"
+    />
   </v-main>
 </template>
 
@@ -109,13 +119,16 @@
 import Sidebar from '@/components/SideBar.vue'
 import { useCompaniesStore } from '@/stores/companiesStore.js'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import CompanyDetailsDialog from "@/components/CompanyDetailsDialog.vue";
 
 export default {
   name: 'CompaniesView',
-  components: { Sidebar },
+  components: {CompanyDetailsDialog, Sidebar },
 
   data() {
     return {
+      showCompanyDialog: false,
+      selectedCompanyId: null,
       store: useCompaniesStore(),
       loadingStore: useLoadingStore(),
     }
@@ -133,6 +146,11 @@ export default {
     async rejectCompany(user_id) {
       await this.store.changeStatus(user_id, false)
     },
+    openCompany(id) {
+      console.log(`This ${id}`)
+      this.selectedCompanyId = id
+      this.showCompanyDialog = true
+    }
   },
 
   mounted() {

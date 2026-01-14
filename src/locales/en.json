@@ -654,5 +654,20 @@
     "employer": "Employer",
     "status": "Status",
     "student": "Student"
+  },
+  "CompanyDetailsDialog": {
+    "ico": "ICO",
+    "address": "Address",
+    "contactPosition": "Contact position",
+    "contactName": "Contact name",
+    "companyEmail": "Company email",
+    "contactEmail": "Contact email",
+    "contactPhone": "Contact phone",
+    "status": "Status",
+    "statusActive": "Active",
+    "statusInactive": "Inactive",
+    "registeredBy": "Registered by",
+    "student": "Student",
+    "email": "Email"
   }
 }

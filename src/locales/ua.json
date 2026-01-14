@@ -654,5 +654,20 @@
     "employer": "Роботодавець",
     "status": "Статус",
     "student": "Студент"
+  },
+  "CompanyDetailsDialog": {
+    "ico": "ІПН",
+    "address": "Адреса",
+    "contactPosition": "Посада контактної особи",
+    "contactName": "Контактна особа",
+    "companyEmail": "Email компанії",
+    "contactEmail": "Email контакту",
+    "contactPhone": "Телефон контакту",
+    "status": "Статус",
+    "statusActive": "Активна",
+    "statusInactive": "Неактивна",
+    "registeredBy": "Зареєстрована",
+    "student": "Студент",
+    "email": "Email"
   }
 }

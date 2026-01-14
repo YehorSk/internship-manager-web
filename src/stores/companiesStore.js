@@ -21,6 +21,20 @@ export const useCompaniesStore = defineStore('companies', {
     setPage(page) {
       this.current_page = page
     },
+    async getCompany(id) {
+      const toast = useToastStore()
+      const loading = useLoadingStore()
+      loading.start(`getCompany_${id}`)
+      try{
+        const { data: response } = await axios.get(`/api/companies/${id}`)
+        console.log("Data "+ response)
+        return response.data
+      } catch (e) {
+        handleError(e, this, toast)
+      } finally {
+        loading.stop(`getCompany_${id}`)
+      }
+    },
     async fetchCompanies(search = '') {
       const toast = useToastStore()
       const loading = useLoadingStore()

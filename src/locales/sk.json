@@ -655,5 +655,20 @@
     "employer": "Zamestnávateľ",
     "status": "Stav",
     "student": "Študent"
+  },
+  "CompanyDetailsDialog": {
+    "ico": "IČO",
+    "address": "Adresa",
+    "contactPosition": "Pozícia kontaktnej osoby",
+    "contactName": "Kontaktná osoba",
+    "companyEmail": "Email spoločnosti",
+    "contactEmail": "Email kontaktu",
+    "contactPhone": "Telefón kontaktu",
+    "status": "Stav",
+    "statusActive": "Aktívna",
+    "statusInactive": "Neaktívna",
+    "registeredBy": "Zaregistrovaná",
+    "student": "Študent",
+    "email": "Email"
   }
 }
