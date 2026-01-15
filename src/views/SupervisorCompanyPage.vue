@@ -76,7 +76,7 @@
                             color="#3A803D"
                             :disabled="c.status === true"
                             :loading="loadingStore.is(`changeStatus_true_${c.user_id}`)"
-                            @click="confirmCompany(c.user_id)"
+                            @click.stop="confirmCompany(c.user_id)"
                           >
                             <v-icon>mdi-check-circle</v-icon>
                           </v-btn>
@@ -86,7 +86,7 @@
                             color="error"
                             :disabled="c.status === false"
                             :loading="loadingStore.is(`changeStatus_false_${c.user_id}`)"
-                            @click="rejectCompany(c.user_id)"
+                            @click.stop="rejectCompany(c.user_id)"
                           >
                             <v-icon>mdi-close-circle</v-icon>
                           </v-btn>
