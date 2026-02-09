@@ -2,14 +2,22 @@
   <v-dialog v-model="open" max-width="900" scrollable>
     <template v-if="practice">
       <v-card outlined>
-      <v-card-title class="d-flex align-center justify-space-between">
+      <v-card-title class="d-flex flex-wrap align-center justify-space-between">
         <div class="d-flex align-center">
           <v-btn icon variant="text" @click="close">
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
           <span class="ml-3 text-h6">{{ practice.practice_company?.name || practice.company?.name || practice.student?.first_name + " " + practice.student?.first_name || '—' }}</span>
         </div>
-        <div v-if="isSupervisor && practice" class="d-flex align-center ga-2">
+        <div
+          v-if="isSupervisor && practice"
+          class="
+                  d-flex align-center ga-2
+                  mt-2 mt-sm-0
+                  w-100 w-sm-auto
+                  justify-center justify-sm-end
+                "
+        >
           <v-select
             v-model="selectedStatus"
             :items="statusOptions"
@@ -38,14 +46,22 @@
             <v-icon>mdi-check</v-icon>
           </v-btn>
         </div>
-        <StatusChip v-else-if="practice && practice.status" :backgroundColor="getStatusColor(practice.status)">
+        <StatusChip
+          v-else-if="practice && practice.status"
+          :backgroundColor="getStatusColor(practice.status)"
+          class="
+                  mt-2 mt-sm-0
+                  w-100 w-sm-auto
+                  d-flex justify-center justify-sm-end
+                "
+        >
           {{  $t(getStatusText(practice.status)) }}
         </StatusChip>
       </v-card-title>
 
       <v-card-subtitle>{{ $t('DetailsPraxeDialog.subtitle') }}</v-card-subtitle>
 
-        <v-card-text>
+        <v-card-text class="pa-2 pa-sm-4">
           <v-tabs v-model="tab" align-tabs="center" rounded="xl" class="mb-6">
             <v-tab value="info">{{ $t('DetailsPraxeDialog.tabs.info') }}</v-tab>
             <v-tab value="agreement">{{ $t('DetailsPraxeDialog.tabs.agreement') }}</v-tab>
@@ -359,6 +375,7 @@
                   <PrimaryButton
                     v-if="canDeleteAgreementOrUploadAgreement"
                     icon="mdi-upload"
+                    class="text-white w-100 w-sm-auto"
                     elevation="0"
                     :loading="loadingStore.is('uploadAgreement')"
                     @click="submitAgreement"
@@ -366,27 +383,28 @@
                     {{ $t('DetailsPraxeDialog.agreement.upload_btn') }}
                   </PrimaryButton>
 
-                  <v-btn
+                  <PrimaryButton
                     v-if="hasUploadedAgreement"
-                    variant="outlined"
+                    :isOutlined="true"
+                    class="text-white w-100 w-sm-auto"
                     color="#3A803D"
                     rounded="lg"
                     elevation="0"
                     @click="downloadUploadedAgreement"
                   >
                     <v-icon start>mdi-file-pdf-box</v-icon> {{ $t('DetailsPraxeDialog.agreement.uploaded_btn') }}
-                  </v-btn>
+                  </PrimaryButton>
 
-                  <v-btn
+                  <SecondaryButton
                     v-if="canDeleteAgreementOrUploadAgreement && hasUploadedAgreement"
                     color="red"
-                    class="text-white"
+                    class="text-white w-100 w-sm-auto"
                     rounded="lg"
                     elevation="0"
                     @click="deleteAgreement"
                   >
                     <v-icon start>mdi-delete</v-icon> {{ $t('DetailsPraxeDialog.agreement.delete_btn') }}
-                  </v-btn>
+                  </SecondaryButton>
                 </div>
               </v-form>
 
@@ -637,81 +655,95 @@
         </v-window>
         </v-card-text>
 
-        <v-card-actions class="d-flex justify-end pa-4">
-          <template v-if="isEditing">
-            <PrimaryButton :disabled="!valid" @click="save" :loading="loadingStore.is('updatePractice')" icon="mdi-content-save">
-              {{ $t('common.saveChanges') }}
-            </PrimaryButton>
+        <v-card-actions class="pa-4 d-flex flex-row flex-wrap justify-end">
+          <div
+            class="
+                    d-flex flex-wrap gap-2
+                    justify-end
+                    w-100
+                  "
+          >
+            <template v-if="isEditing">
+              <PrimaryButton
+                :disabled="!valid"
+                @click="save"
+                :loading="loadingStore.is('updatePractice')" icon="mdi-content-save"
+              >
+                {{ $t('common.saveChanges') }}
+              </PrimaryButton>
 
-            <SecondaryButton @click="cancel">
-              {{ $t('common.cancel') }}
-            </SecondaryButton>
-          </template>
+              <SecondaryButton
+                @click="cancel"
+              >
+                {{ $t('common.cancel') }}
+              </SecondaryButton>
+            </template>
 
-          <template v-else>
-            <v-btn
-              v-if="(isStudent && tab === 'info' && ['created'].includes(practice.status)) || (isSupervisor && tab === 'info')"
-              variant="outlined"
-              color="#3A803D"
-              rounded="lg"
-              @click="isEditing = true"
-            >
-              <v-icon start>mdi-pencil</v-icon> {{ $t('DetailsPraxeDialog.buttons.edit') }}
-            </v-btn>
+            <template v-else>
+              <v-btn
+                v-if="(isStudent && tab === 'info' && ['created'].includes(practice.status)) || (isSupervisor && tab === 'info')"
+                variant="outlined"
+                color="#3A803D"
+                rounded="lg"
+                @click="isEditing = true"
+              >
+                <v-icon start>mdi-pencil</v-icon> {{ $t('DetailsPraxeDialog.buttons.edit') }}
+              </v-btn>
 
-            <v-btn
-              v-if="(tab === 'agreement' && canManageAgreement) || (tab ==='report' && canManageReport)"
-              color="green"
-              class="text-white"
-              rounded="lg" elevation="0"
-              @click="approveDocument(tab)">
-              <v-icon start>mdi-check</v-icon> {{ $t('DetailsPraxeDialog.buttons.approve') }}
-            </v-btn>
+              <v-btn
+                v-if="(tab === 'agreement' && canManageAgreement) || (tab ==='report' && canManageReport)"
+                color="green"
+                class="text-white"
+                rounded="lg" elevation="0"
+                @click="approveDocument(tab)">
+                <v-icon start>mdi-check</v-icon> {{ $t('DetailsPraxeDialog.buttons.approve') }}
+              </v-btn>
 
-            <v-btn
-              v-if="(tab === 'agreement' && canManageAgreement) || (tab ==='report' && canManageReport)"
-              color="red"
-              class="text-white"
-              rounded="lg"
-              elevation="0"
-              @click="rejectDocument(tab)">
-              <v-icon start>mdi-close</v-icon> {{ $t('DetailsPraxeDialog.buttons.reject') }}
-            </v-btn>
+              <v-btn
+                v-if="(tab === 'agreement' && canManageAgreement) || (tab ==='report' && canManageReport)"
+                color="red"
+                class="text-white"
+                rounded="lg"
+                elevation="0"
+                @click="rejectDocument(tab)">
+                <v-icon start>mdi-close</v-icon> {{ $t('DetailsPraxeDialog.buttons.reject') }}
+              </v-btn>
 
-            <v-btn
-              v-if="isStudent && tab === 'agreement' && ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(practice.status)"
-              class="text-white ml-2"
-              rounded="lg"
-              @click="submit"
-              style="background-color: #3A803D;"
-            >
-              <v-icon start>mdi-check</v-icon> {{ $t('DetailsPraxeDialog.buttons.submit_agreement') }}
-            </v-btn>
+              <v-btn
+                v-if="isStudent && tab === 'agreement' && ['created', 'agreement_rejected_by_company', 'agreement_rejected_by_supervisor'].includes(practice.status)"
+                class="text-white ml-2"
+                rounded="lg"
+                @click="submit"
+                style="background-color: #3A803D;"
+              >
+                <v-icon start>mdi-check</v-icon> {{ $t('DetailsPraxeDialog.buttons.submit_agreement') }}
+              </v-btn>
 
-            <v-btn
-              v-if="isStudent && tab === 'report' && ['agreement_confirmed_by_company', 'agreement_confirmed_by_supervisor', 'report_rejected_by_company', 'report_rejected_by_supervisor'].includes(practice.status)"
-              class="text-white ml-2"
-              rounded="lg"
-              @click="submitR"
-              style="background-color: #3A803D;"
-            >
-              <v-icon start>mdi-check</v-icon> {{ $t('DetailsPraxeDialog.buttons.submit_report') }}
-            </v-btn>
+              <v-btn
+                v-if="isStudent && tab === 'report' && ['agreement_confirmed_by_company', 'agreement_confirmed_by_supervisor', 'report_rejected_by_company', 'report_rejected_by_supervisor'].includes(practice.status)"
+                class="text-white ml-2"
+                rounded="lg"
+                @click="submitR"
+                style="background-color: #3A803D;"
+              >
+                <v-icon start>mdi-check</v-icon> {{ $t('DetailsPraxeDialog.buttons.submit_report') }}
+              </v-btn>
 
-            <v-btn
-              v-if="
+              <v-btn
+                v-if="
                   practice.status !== 'canceled' &&
                   ((practice.status === 'created' && isStudent))
                 "
-              color="red"
-              class="text-white ml-2"
-              rounded="lg"
-              :loading="loadingStore.is('deletePractice')"
-              @click="cancelPractice"
-            >
-              <v-icon start>mdi-cancel</v-icon> {{ $t('DetailsPraxeDialog.buttons.cancel_practice') }}
-            </v-btn>
-          </template>
+                color="red"
+                class="text-white ml-2"
+                rounded="lg"
+                :loading="loadingStore.is('deletePractice')"
+                @click="cancelPractice"
+              >
+                <v-icon start>mdi-cancel</v-icon> {{ $t('DetailsPraxeDialog.buttons.cancel_practice') }}
+              </v-btn>
+            </template>
+          </div>
         </v-card-actions>
       </v-card>
     </template>
@@ -1143,6 +1175,12 @@ export default {
 
 .status-select-chip :deep(.v-field__append-inner .v-icon) {
   font-size: 16px !important;
+}
+
+.btn__wrap {
+  white-space: normal;  /* allow text to wrap */
+  text-align: center;   /* center text inside button */
+  word-break: break-word; /* optional: break very long words */
 }
 </style>
 

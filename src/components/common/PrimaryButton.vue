@@ -5,6 +5,7 @@
     class="text-white"
     rounded="lg"
     style="background-color: #3a803d"
+    :variant="isOutlined ? 'outlined' : 'solo-filled'"
     :disabled="isDisabled"
     :type="type"
     @click="$emit('click', $event)"
@@ -33,6 +34,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isOutlined: {
+      type: Boolean,
+      default: false,
+    }
   },
   emits: ['click'],
 }

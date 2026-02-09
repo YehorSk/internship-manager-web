@@ -175,8 +175,8 @@
       "upload_step": "Krok 2 – Nahraj podpísanú dohodu",
       "upload_desc": "Vyber podpísaný PDF dokument a odošli ho na schválenie.",
       "upload_label": "Vyber podpísaný PDF dokument",
-      "upload_btn": "Nahrať dohodu",
-      "uploaded_btn": "Stiahnuť nahratú dohodu",
+      "upload_btn": "Nahrať",
+      "uploaded_btn": "Stiahnuť",
       "delete_btn": "Odstrániť",
       "not_uploaded": "Dohoda nebola zatial nahratá",
       "comment_placeholder": "Pridajte komentár"
@@ -190,8 +190,8 @@
       "upload_step": "Krok 4 – Nahraj vyplnenú správu",
       "upload_desc": "Vyber svoj vyplnený PDF súbor a odošli ho na schválenie.",
       "upload_label": "Vyber PDF súbor správy",
-      "upload_btn": "Nahrať správu",
-      "uploaded_btn": "Stiahnuť nahratú správu",
+      "upload_btn": "Nahrať",
+      "uploaded_btn": "Stiahnuť",
       "delete_btn": "Odstrániť",
       "not_uploaded": "Správa nebola zatial nahratá"
     },
@@ -200,8 +200,8 @@
       "edit": "Upraviť",
       "approve": "Schváliť",
       "reject": "Odmietnuť",
-      "submit_agreement": "Odoslať na schválenie dohody",
-      "submit_report": "Odoslať správu na schválenie",
+      "submit_agreement": "Odoslať na schválenie",
+      "submit_report": "Odoslať na schválenie",
       "cancel_practice": "Zrušiť prax"
     },
     "confirm": {

@@ -190,8 +190,8 @@
       "upload_step": "Step 4 – Upload completed report",
       "upload_desc": "Select your completed PDF.",
       "upload_label": "Choose PDF report",
-      "upload_btn": "Upload report",
-      "uploaded_btn": "Download uploaded report",
+      "upload_btn": "Upload",
+      "uploaded_btn": "Download",
       "delete_btn": "Delete",
       "not_uploaded": "No report uploaded yet"
     },
@@ -200,8 +200,8 @@
       "edit": "Edit",
       "approve": "Approve",
       "reject": "Reject",
-      "submit_agreement": "Submit agreement for approval",
-      "submit_report": "Submit report for approval",
+      "submit_agreement": "Submit for approval",
+      "submit_report": "Submit for approval",
       "cancel_practice": "Cancel practice"
     },
     "confirm": {
