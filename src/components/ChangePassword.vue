@@ -101,6 +101,7 @@ export default {
   created() {},
   methods: {
     async changePassword() {
+      console.log(this.form)
       const { valid } = await this.$refs.resetForm.validate()
       if (!valid) return
       if (this.form?.newPassword === this.form?.currentPassword) {

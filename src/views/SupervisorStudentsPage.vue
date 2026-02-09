@@ -26,6 +26,7 @@
                   v-model="filters.study_program"
                   :items="studyPrograms"
                   :label="$t('SupervisorStudentsPage.studyProgram')"
+                  :no-data-text="$t('common.no_data')"
                   variant="outlined"
                   density="comfortable"
                   clearable
@@ -39,6 +40,7 @@
                   item-title="full_name"
                   item-value="full_name"
                   :label="$t('SupervisorStudentsPage.student')"
+                  :no-data-text="$t('common.no_data')"
                   variant="outlined"
                   density="comfortable"
                   clearable

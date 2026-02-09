@@ -535,7 +535,8 @@
     "enter_ico": "Enter Company ID",
     "email": "Invalid email",
     "required": "Required field",
-    "last_added": "Last added"
+    "last_added": "Last added",
+    "no_data": "No data available"
   },
   "ReportsHistoryPage": {
     "title": "Reports History",

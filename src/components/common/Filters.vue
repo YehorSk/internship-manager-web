@@ -15,6 +15,7 @@
           :items="studyPrograms"
           :loading="loadingStore.is('fetchPrograms')"
           :label="$t('Filters.studyProgram')"
+          :no-data-text="$t('common.no_data')"
           variant="outlined"
           density="comfortable"
           clearable
@@ -27,6 +28,7 @@
           @update:modelValue="(v) => updateField('year', v)"
           :items="yearSuggestions"
           :label="$t('Filters.year')"
+          :no-data-text="$t('common.no_data')"
           variant="outlined"
           density="comfortable"
           clearable
@@ -41,6 +43,7 @@
           @update:modelValue="(v) => updateField('semester', v)"
           :items="semesterItems"
           :label="$t('Filters.semester')"
+          :no-data-text="$t('common.no_data')"
           variant="outlined"
           density="comfortable"
           clearable
@@ -55,6 +58,7 @@
           item-title="name"
           item-value="id"
           :label="$t('Filters.employer')"
+          :no-data-text="$t('common.no_data')"
           variant="outlined"
           density="comfortable"
           clearable
@@ -71,6 +75,7 @@
           item-title="label"
           item-value="value"
           :label="$t('Filters.status')"
+          :no-data-text="$t('common.no_data')"
           variant="outlined"
           density="comfortable"
           clearable
@@ -85,6 +90,7 @@
           item-title="full_name"
           item-value="full_name"
           :label="$t('Filters.student')"
+          :no-data-text="$t('common.no_data')"
           variant="outlined"
           density="comfortable"
           clearable

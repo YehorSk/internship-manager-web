@@ -536,7 +536,8 @@
     "enter_ico": "Zadajte IČO",
     "email": "Neplatný e-mail",
     "required": "Povinné pole",
-    "last_added": "Naposledy pridané"
+    "last_added": "Naposledy pridané",
+    "no_data": "Žiadne údaje"
   },
   "ReportsHistoryPage": {
     "title": "História reportov",

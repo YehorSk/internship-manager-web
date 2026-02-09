@@ -76,6 +76,7 @@
               <v-autocomplete
                 v-model="form.study_program_id"
                 :items="programsStore.list.map(p => ({ title: p.name, value: p.id }))"
+                :no-data-text="$t('common.no_data')"
                 item-title="title"
                 item-value="value"
                 rounded="lg"

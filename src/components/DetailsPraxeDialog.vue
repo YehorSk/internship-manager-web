@@ -61,7 +61,7 @@
 
       <v-card-subtitle>{{ $t('DetailsPraxeDialog.subtitle') }}</v-card-subtitle>
 
-        <v-card-text class="pa-2 pa-sm-4">
+        <v-card-text>
           <v-tabs v-model="tab" align-tabs="center" rounded="xl" class="mb-6">
             <v-tab value="info">{{ $t('DetailsPraxeDialog.tabs.info') }}</v-tab>
             <v-tab value="agreement">{{ $t('DetailsPraxeDialog.tabs.agreement') }}</v-tab>
@@ -82,6 +82,7 @@
                       v-model="edited.study_program_id"
                       :items="programsStore.list.map(p => ({ title: p.name, value: p.id }))"
                       :loading="loadingStore.is('fetchPrograms')"
+                      :no-data-text="$t('common.no_data')"
                       item-title="title"
                       item-value="value"
                       rounded="lg"
@@ -120,6 +121,7 @@
             v-model="edited.academic_year"
             :disabled="!isEditing || isLocked"
             :items="yearSuggestions"
+            :no-data-text="$t('common.no_data')"
             rounded="lg"
             density="compact"
             variant="solo-filled"

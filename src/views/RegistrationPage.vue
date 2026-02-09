@@ -197,6 +197,7 @@ export default {
                   :error-messages="fieldMsg('study_program')"
                   :items="studyPrograms.list"
                   :loading="loadingStore.is('fetchPrograms')"
+                  :no-data-text="$t('common.no_data')"
                   item-title="name"
                   item-value="id"
                   :placeholder="$t('RegistrationPage.student.study_program2')"
