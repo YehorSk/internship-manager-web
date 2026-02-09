@@ -174,7 +174,7 @@ export default {
             'agreement_rejected_by_company',
             'defended',
           ].includes(p.status),
-      )
+      ).concat(this.store.last_added_list)
     },
   },
   async mounted() {
