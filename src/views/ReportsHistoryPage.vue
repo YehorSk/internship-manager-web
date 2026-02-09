@@ -30,7 +30,7 @@
                 <div class="text-center py-10">{{ $t('common.loading') }}</div>
               </template>
 
-              <template v-else-if="!store.reports.length">
+              <template v-else-if="!store.reports.length && !store.last_added_reports.length && !loadingStore.is('fetchReports')">
                 <div class="text-center py-12 text-grey-darken-1">
                   <v-icon size="64" color="#3A803D" class="mb-3">mdi-file-document-outline</v-icon>
                   <p>{{ $t('ReportsHistoryPage.empty') }}</p>
