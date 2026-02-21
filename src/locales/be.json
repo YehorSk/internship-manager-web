@@ -656,6 +656,8 @@
     "student": "Студэнт"
   },
   "CompanyDetailsDialog": {
+    "companyDetails": "Дэталі кампаніі",
+    "companyName": "Назва кампаніі",
     "ico": "УНП",
     "address": "Адрас",
     "contactPosition": "Пасада кантактнай асобы",
@@ -669,5 +671,15 @@
     "registeredBy": "Зарэгістравана",
     "student": "Студэнт",
     "email": "Email"
+  },
+  "StudentDetailsDialog": {
+    "studentDetails": "Дадзеныя студэнта",
+    "studentEmail": "Студэнцкая электронная пошта",
+    "primaryEmail": "Асноўная электронная пошта",
+    "phone": "Нумар тэлефона",
+    "studyProgram": "Адукацыйная праграма",
+    "address": "Адрас",
+    "firstName": "Імя",
+    "lastName": "Прозвішча"
   }
 } 

@@ -85,7 +85,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="s in store.students" :key="s.id" class="hover:bg-grey-lighten-5">
+                    <tr
+                      v-for="s in store.students"
+                      :key="s.id"
+                      @click="openStudent(s.user_id)"
+                      class="hover:bg-grey-lighten-5 cursor-pointer"
+                    >
                       <td>{{ s.first_name }}</td>
                       <td>{{ s.last_name }}</td>
                       <td>{{ s.student_email }}</td>
@@ -115,6 +120,10 @@
       </v-row>
     </v-container>
   </v-main>
+  <StudentDetailsDialog
+    :student-id="selectedStudentId"
+    v-model="showStudentDialog"
+  />
 </template>
 
 <script>
@@ -123,15 +132,17 @@ import { useStudentsStore } from '@/stores/studentsStore.js'
 import { useStudyProgramsStore } from '@/stores/studyProgramsStore.js'
 import { debounce } from 'lodash'
 import { useLoadingStore } from '@/stores/loadingStore.js'
+import StudentDetailsDialog from "@/components/StudentDetailsDialog.vue";
 export default {
-  components: { Sidebar },
+  components: {StudentDetailsDialog, Sidebar },
 
   data() {
     return {
       store: useStudentsStore(),
       loadingStore: useLoadingStore(),
       programsStore: useStudyProgramsStore(),
-
+      showStudentDialog: false,
+      selectedStudentId: null,
       filters: {
         study_program: null,
         student: null,
@@ -204,6 +215,11 @@ export default {
       }
       this.debouncedSearchStudents(query)
     },
+
+    openStudent(id){
+      this.showStudentDialog = true
+      this.selectedStudentId = id
+    }
   },
 }
 </script>

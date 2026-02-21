@@ -14,10 +14,23 @@ export const useStudentsStore = defineStore('students', {
     total_items: 0,
     fieldErrors: {},
   }),
-
   actions: {
     setPage(page) {
       this.current_page = page
+    },
+    async getStudent(id) {
+      const toast = useToastStore()
+      const loading = useLoadingStore()
+      loading.start(`getStudent_${id}`)
+      try {
+        const { data: response } = await axios.get(`/api/students/${id}`)
+        console.log("Data "+ response)
+        return response.data
+      }catch (e) {
+        handleError(e, this, toast)
+      }finally {
+        loading.stop(`getStudent_${id}`)
+      }
     },
     async fetchStudents(filters = {}) {
       const toast = useToastStore()

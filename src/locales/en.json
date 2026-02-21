@@ -657,6 +657,8 @@
     "student": "Student"
   },
   "CompanyDetailsDialog": {
+    "companyDetails": "Company Details",
+    "companyName": "Company Name",
     "ico": "ICO",
     "address": "Address",
     "contactPosition": "Contact position",
@@ -670,5 +672,15 @@
     "registeredBy": "Registered by",
     "student": "Student",
     "email": "Email"
+  },
+  "StudentDetailsDialog": {
+    "studentDetails": "Student Details",
+    "studentEmail": "Student Email",
+    "primaryEmail": "Primary Email",
+    "phone": "Phone Number",
+    "studyProgram": "Study Program",
+    "address": "Address",
+    "firstName": "First Name",
+    "lastName": "Last Name"
   }
 }

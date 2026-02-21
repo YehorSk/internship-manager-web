@@ -657,6 +657,8 @@
     "student": "Студент"
   },
   "CompanyDetailsDialog": {
+    "companyDetails": "Дані компанії",
+    "companyName": "Назва компанії",
     "ico": "ІПН",
     "address": "Адреса",
     "contactPosition": "Посада контактної особи",
@@ -670,5 +672,15 @@
     "registeredBy": "Зареєстрована",
     "student": "Студент",
     "email": "Email"
+  },
+  "StudentDetailsDialog": {
+    "studentDetails": "Дані студента",
+    "studentEmail": "Студентська електронна пошта",
+    "primaryEmail": "Основна електронна пошта",
+    "phone": "Номер телефону",
+    "studyProgram": "Освітня програма",
+    "address": "Адреса",
+    "firstName": "Ім'я",
+    "lastName": "Прізвище"
   }
 }

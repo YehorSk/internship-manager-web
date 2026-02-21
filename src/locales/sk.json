@@ -658,6 +658,8 @@
     "student": "Študent"
   },
   "CompanyDetailsDialog": {
+    "companyDetails": "Údaje o spoločnosti",
+    "companyName": "Názov spoločnosti",
     "ico": "IČO",
     "address": "Adresa",
     "contactPosition": "Pozícia kontaktnej osoby",
@@ -671,5 +673,15 @@
     "registeredBy": "Zaregistrovaná",
     "student": "Študent",
     "email": "Email"
+  },
+  "StudentDetailsDialog": {
+    "studentDetails": "Údaje o študentovi",
+    "studentEmail": "Študentský e-mail",
+    "primaryEmail": "Primárny e-mail",
+    "phone": "Telefónne číslo",
+    "studyProgram": "Študijný program",
+    "address": "Adresa",
+    "firstName": "Meno",
+    "lastName": "Priezvisko"
   }
 }
