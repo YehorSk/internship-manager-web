@@ -535,7 +535,7 @@
     "enter_ico": "Введіть ЄДРПОУ",
     "email": "Некоректний email",
     "required": "Обов’язкове поле",
-    "last_added": "Останнє додано",
+    "last_added": "Останнє додано.",
     "no_data": "Немає даних"
   },
   "ReportsHistoryPage": {
@@ -550,7 +550,8 @@
     "started": "Початок",
     "ended": "Кінець",
     "actions": "Дії",
-    "download": "Завантажити"
+    "download": "Завантажити",
+    "refresh_page": "Будь ласка, оновіть сторінку, щоб продовжити."
   },
   "httpError": {
     "validationError": "Помилка валідації",

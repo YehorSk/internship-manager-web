@@ -534,7 +534,7 @@
     "enter_ico": "Увядзіце УНП",
     "email": "Няправільны email",
     "required": "Абавязковае поле",
-    "last_added": "Апошняе дададзена",
+    "last_added": "Апошняе дададзена.",
     "no_data": "Дадзеныя адсутнічаюць"
   },
   "ReportsHistoryPage": {
@@ -549,7 +549,8 @@
     "started": "Пачатак",
     "ended": "Канец",
     "actions": "Дзеянні",
-    "download": "Спампаваць"
+    "download": "Спампаваць",
+    "refresh_page": "Калі ласка, абнавіце старонку, каб працягнуць."
   },
   "httpError": {
     "validationError": "Памылка праверкі",

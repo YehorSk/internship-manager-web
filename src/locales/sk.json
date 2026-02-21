@@ -536,7 +536,7 @@
     "enter_ico": "Zadajte IČO",
     "email": "Neplatný e-mail",
     "required": "Povinné pole",
-    "last_added": "Naposledy pridané",
+    "last_added": "Naposledy pridané.",
     "no_data": "Žiadne údaje"
   },
   "ReportsHistoryPage": {
@@ -551,7 +551,8 @@
     "started": "Začiatok",
     "ended": "Koniec",
     "actions": "Akcie",
-    "download": "Stiahnuť"
+    "download": "Stiahnuť",
+    "refresh_page": "Na pokračovanie prosím obnovte stránku."
   },
   "httpError": {
     "validationError": "Chyba validácie",

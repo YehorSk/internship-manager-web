@@ -53,7 +53,7 @@
                   <tbody v-if="store.last_added_reports.length > 0">
                     <tr class="bg-green-lighten-5 text-green-darken-3">
                       <td colspan="7" class="text-caption font-weight-medium">
-                        {{ $t('common.last_added') }}
+                        {{ $t('common.last_added') + " " + $t('ReportsHistoryPage.refresh_page')}}
                       </td>
                     </tr>
                     <tr

@@ -535,7 +535,7 @@
     "enter_ico": "Enter Company ID",
     "email": "Invalid email",
     "required": "Required field",
-    "last_added": "Last added",
+    "last_added": "Last added.",
     "no_data": "No data available"
   },
   "ReportsHistoryPage": {
@@ -550,7 +550,8 @@
     "started": "Started At",
     "ended": "Ended At",
     "actions": "Actions",
-    "download": "Download"
+    "download": "Download",
+    "refresh_page": "Please refresh the page to continue."
   },
   "httpError": {
     "validationError": "Validation error",
